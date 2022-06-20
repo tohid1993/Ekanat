@@ -1,0 +1,228 @@
+@mixin btn_default_style {
+    outline: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    transition: 0.3s all;
+    font-style: normal;
+    padding: 18px 32px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 125%;
+    font-family: $DefaultFontFamily;
+    cursor: pointer;
+    min-height: 56px;
+}
+
+
+@mixin btn_style_generator(
+    $name , 
+    $color , $background,
+    $hoverColor , $hoverBackground,
+    $activeColor , $activeBackground,
+    $disableColor , $disableBackground,
+    $ghostBtn:false,
+    $hasBorder:false,
+    $borderColor:'',$hoverBorderColor:'',$activeBorderColor:'',$disableBorderColor:''
+){
+
+    .#{$name}_btn{
+        @include btn_default_style;
+
+        color: $color;
+        background-color: $background;
+        @if $hasBorder {
+            border: 1px solid $borderColor;
+        }@else{
+            border: none;
+        }
+
+        @if $ghostBtn {
+            padding: 0;
+            min-height: 20px;
+        }
+
+        &:hover{
+            color: $hoverColor;
+            background-color: $hoverBackground;
+            @if $hasBorder {
+                border: 1px solid $hoverBorderColor;
+            }
+        }
+
+        &:active{
+            color: $activeColor;
+            background-color: $activeBackground;
+            @if $hasBorder {
+                border: 1px solid $activeBorderColor;
+            }
+        }
+
+        &:disabled , &.disabled{
+            color: $disableColor;
+            background-color: $disableBackground;
+            cursor: not-allowed;
+
+            @if $hasBorder {
+                border: 1px solid $disableBorderColor;
+            }
+        }
+
+        &.medium_btn{
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 125%;
+
+
+            @if $ghostBtn {
+                padding: 0;
+                min-height: 20px;
+            }@else{
+                padding: 10px 24px;
+                min-height: 48px;
+            }
+
+            &.only_icon{
+                @if $ghostBtn {
+                    padding: 0;
+                    min-width: 20px;
+                }@else{
+                    padding: 8px;
+                    min-width: 48px;
+                }
+            }
+        }
+
+        @media only screen and (min-width:992px) {
+            &.medium_md_btn{
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 125%;
+    
+    
+                @if $ghostBtn {
+                    padding: 0;
+                    min-height: 20px;
+                }@else{
+                    padding: 10px 24px;
+                    min-height: 48px;
+                }
+    
+                &.only_icon{
+                    @if $ghostBtn {
+                        padding: 0;
+                        min-width: 20px;
+                    }@else{
+                        padding: 8px;
+                        min-width: 48px;
+                    }
+                }
+            }
+        }
+
+        &.small_btn{
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 125%;
+            border-radius: 4px;
+
+
+            @if $ghostBtn {
+                padding: 0;
+                min-height: 18px;
+            } @else{
+                padding: 8px;
+                min-height: 36px;
+            }
+
+            &.only_icon{
+                @if $ghostBtn {
+                    padding: 0;
+                    min-width: 18px;
+                }@else{
+                    padding: 5px;
+                    min-width: 36px;
+                }
+            }
+        }
+
+        @media only screen and (max-width:991px){
+            &.small_xs_btn{
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 125%;
+                border-radius: 4px;
+    
+    
+                @if $ghostBtn {
+                    padding: 0;
+                    min-height: 18px;
+                } @else{
+                    padding: 8px;
+                    min-height: 36px;
+                }
+    
+                &.only_icon{
+                    @if $ghostBtn {
+                        padding: 0;
+                        min-width: 18px;
+                    }@else{
+                        padding: 5px;
+                        min-width: 36px;
+                    }
+                }
+            }
+        }
+        
+        &.only_icon{
+            padding: 12px;
+            min-width: 56px;
+        }
+    }
+}
+
+
+// primary_btn
+@include btn_style_generator(
+    primary, 
+    $White, $Primary_100,
+    $White,$Primary_80,
+    $White,$Primary_60,
+    $White,$Primary_40
+);
+
+// secondary_btn
+@include btn_style_generator(
+    secondary, 
+    $LightGray_1, $Blue_100,
+    $LightGray_1,$Blue_90,
+    $LightGray_1,$Blue_Dark,
+    $LightGray_1,$Blue_30
+);
+
+
+// tertiary_btn
+@include btn_style_generator(
+    tertiary, 
+    $Dark_100, $LightGray_1,
+    $RoyalBlue_100,$Blue_5,
+    $RoyalBlue_100,$Blue_10,
+    $Dark_30,$LightGray_1,
+    false,
+    true,
+    $Blue_100,$Blue_100,$Blue_100,$Blue_30
+);
+
+// ghost_btn
+@include btn_style_generator(
+    ghost, 
+    $RoyalBlue_100, transparent,
+    $RoyalBlue_90, transparent,
+    $Blue_Dark, transparent,
+    $RoyalBlue_60, transparent,
+    true
+);
+
+
+

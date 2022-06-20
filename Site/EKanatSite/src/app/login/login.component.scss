@@ -1,0 +1,43 @@
+
+ngb-carousel{
+    height: 100%;
+}
+
+.slide-wrapper{
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    position: relative;
+
+    .carousel-image-wrapper{
+        width: 100%;
+        min-height: 100vh;
+        height: 100%;
+
+        img{
+            object-fit: cover;
+            object-position: center;
+            width: 100%;
+            min-height: 100vh;
+            height: 100%;
+        }
+    }
+
+    .carousel-caption{
+        z-index: 2;
+        bottom: 2rem;
+    }
+
+    &::before{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 50vh;
+        display: block;
+        content: "";
+        background: linear-gradient(0deg,rgba(0,0,0,.9) 20%,rgba(0,0,0,0) 100%);
+        z-index: 1;
+    }
+}
+

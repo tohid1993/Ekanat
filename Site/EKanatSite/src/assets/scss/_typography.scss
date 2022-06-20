@@ -1,0 +1,305 @@
+/** Typography For Desktop **/
+// @media (min-width:768px){
+    .heading_level_1{
+        font-size: 48px;
+        font-weight: 900;
+        line-height: 150%;
+    }
+    
+    .heading_level_2{
+        font-size: 34px;
+        font-weight: 800;
+        line-height: 150%;
+    }
+    
+    .heading_level_3{
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 135%;
+    }
+    
+    .heading_level_4{
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 135%;
+    }
+    
+    
+    
+    .primary_text{
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 130%;
+    }
+    
+    .secondary_text{
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 130%;
+    }
+
+
+    .bd_1_text{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    .bd_1_etr1_text{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    .bd_1_etr2_text{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 200%;
+    }
+
+
+    .bd_2_text{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 125%;
+    }
+
+    .bd_2_etr1_text{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 150%;
+    }
+
+    .bd_2_etr2_text{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 200%;
+    }
+
+    .bu_1_text{
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    .bu_2_text{
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 125%;
+    }
+
+    .bu_3_text{
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 125%;
+    }
+
+    .caption_text{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 125%;
+    }
+// }
+
+
+
+/** Typography For Mobile **/
+@media (max-width:767px){
+    .heading_level_1_mobile{
+        font-size: 30px;
+        font-weight: 900;
+        line-height: 150%;
+    }
+    
+    .heading_level_2_mobile{
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 150%;
+    }
+    
+    .heading_level_3_mobile{
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 135%;
+    }
+    
+    .heading_level_4_mobile{
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 135%;
+    }
+    
+    
+    
+    .primary_text_mobile{
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 130%;
+    }
+    
+    .secondary_text_mobile{
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 130%;
+    }
+
+
+    .bd_1_text_mobile{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 125%;
+    }
+
+    .bd_1_etr1_text_mobile{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 150%;
+    }
+
+    .bd_1_etr2_text_mobile{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 200%;
+    }
+
+
+    .bd_2_text_mobile{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 125%;
+    }
+
+    .bd_2_etr1_text_mobile{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 150%;
+    }
+
+    .bd_2_etr2_text_mobile{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 200%;
+    }
+
+    .bu_1_text_mobile{
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 125%;
+    }
+
+    .bu_2_text_mobile{
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 125%;
+    }
+
+    .bu_3_text_mobile{
+        font-style: normal;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 125%;
+    }
+
+    .caption_text_mobile{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 125%;
+    }
+}
+
+
+
+
+
+@mixin lineClampGenerator($line) {
+    .line-clamp-#{$line}{
+        display: -webkit-box;
+        -webkit-line-clamp: $line;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
+    }
+}
+
+@each $line in $lines {
+    @include lineClampGenerator($line);
+}
+
+
+
+
+@mixin fontSizeGenerator($size) {
+    .font-size-#{$size}{
+        font-size: $size;
+    }
+}
+
+@each $size in $sizes {
+    @include fontSizeGenerator($size);
+}
+
+
+
+
+
+.Dark_100_text{color: $Dark_100;}
+.Dark_90_text{color: $Dark_90;}
+.Dark_80_text{color: $Dark_80;}
+.Dark_70_text{color: $Dark_70;}
+.Dark_60_text{color: $Dark_60;}
+.Dark_50_text{color: $Dark_50;}
+.Dark_40_text{color: $Dark_40;}
+.Dark_30_text{color: $Dark_30;}
+.Dark_20_text{color: $Dark_20;}
+.Dark_10_text{color: $Dark_10;}
+.Dark_5_text{color: $Dark_5;}
+
+
+.RoyalBlue_100_text{color: $RoyalBlue_100;}
+.RoyalBlue_90_text{color: $RoyalBlue_90;}
+.RoyalBlue_80_text{color: $RoyalBlue_80;}
+.RoyalBlue_70_text{color: $RoyalBlue_70;}
+.RoyalBlue_60_text{color: $RoyalBlue_60;}
+.RoyalBlue_50_text{color: $RoyalBlue_50;}
+.RoyalBlue_40_text{color: $RoyalBlue_40;}
+.RoyalBlue_30_text{color: $RoyalBlue_30;}
+.RoyalBlue_20_text{color: $RoyalBlue_20;}
+.RoyalBlue_10_text{color: $RoyalBlue_10;}
+.RoyalBlue_5_text{color: $RoyalBlue_5;}
+
+
+.Green_100_text{color: $Green_100;}
+.Green_75_text{color: $Green_75;}
+.Green_50_text{color: $Green_50;}
+.Green_25_text{color: $Green_25;}
+.Green_10_text{color: $Green_10;}
+
+.Red_100_text{color: $Red_100;}
+.Red_75_text{color: $Red_75;}
+.Red_50_text{color: $Red_50;}
+.Red_25_text{color: $Red_25;}
+.Red_10_text{color: $Red_10;}
+
+
+.Primary_100_text{color:#006754;}
+.Primary_80_text{color:#15957d;}
+.Primary_60_text{color:#47a191;}
+.Primary_40_text{color:#95c5bc;}

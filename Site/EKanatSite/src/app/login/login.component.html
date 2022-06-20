@@ -1,0 +1,87 @@
+<div class="row mx-0 align-items-stretch login_page ">
+    <div class="col-12 col-md-6 min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="forms_wrapper w-100">
+            <div class="text-center">
+                <img src="./assets/images/logo.jpg" width="120" class="logo mb-2" alt="کانات">
+                <h3 class="heading_level_3 heading_level_3_mobile mb-4 Primary_80_text">کانات، نگرشی نوین بر زمین</h3>
+            </div>
+
+            <form class="login_form" *ngIf="FormStatus=='loginForm'">
+                <h4 class="secondary_text secondary_text_mobile text-center Primary_60_text mb-3 font-weight-bold">ورود به حساب کاربری</h4>
+                <div class="container">
+                    <div class="col-12 col-md-9 col-xl-7 mx-auto">
+                        <label for="username" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1">ایمیل یا شماره موبایل</label>
+                        <input type="email" class="form-control form-control-lg text-start" dir="ltr" id="username" autocomplete="off">
+                    </div>
+                    <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3">
+                        <label for="password" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1">رمز عبور</label>
+                        <input type="password" class="form-control form-control-lg text-start" dir="ltr" id="password" autocomplete="off">
+                    </div>
+                
+                    <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3">
+                        <button type="submit" class="primary_btn w-100">ورود به حساب کاربری</button>
+                    </div>
+                </div>
+            </form>
+
+            <form class="register_form" *ngIf="FormStatus=='registerForm'">
+                <h4 class="secondary_text secondary_text_mobile text-center Primary_60_text mb-3 font-weight-bold">ایجاد حساب کاربری</h4>
+                <div class="container">
+                    <div class="col-12 col-md-9 col-xl-7 mx-auto">
+                        <label for="username" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1">ایمیل یا شماره موبایل</label>
+                        <input type="email" class="form-control form-control-lg text-start" dir="ltr" id="username" autocomplete="off">
+                    </div>
+                    <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3">
+                        <label for="password" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1">رمز عبور</label>
+                        <input type="password" class="form-control form-control-lg text-start" dir="ltr" id="password" autocomplete="off">
+                    </div>
+                
+                    <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3">
+                        <button type="submit" class="primary_btn w-100">ایجاد حساب کاربری</button>
+                    </div>
+                </div>
+            </form>
+
+            <form class="reset_form" *ngIf="FormStatus=='resetForm'">
+                <h4 class="secondary_text secondary_text_mobile text-center Primary_60_text mb-3 font-weight-bold">بازیابی رمز عبور</h4>
+                <div class="container">
+                    <div class="col-12 col-md-9 col-xl-7 mx-auto">
+                        <label for="username" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1">ایمیل یا شماره موبایل</label>
+                        <input type="email" class="form-control form-control-lg text-start" dir="ltr" id="username" autocomplete="off">
+                    </div>
+        
+                    <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3">
+                        <button type="submit" class="primary_btn w-100">ارسال رمز عبور جدید</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-9 col-xl-7 mx-auto text-center mt-2 d-flex justify-content-between flex-wrap">
+                        <button class="ghost_btn small_btn mt-2" *ngIf="FormStatus!='registerForm'" (click)="FormStatus='registerForm'">حساب کاربری ندارید؟  ثبت نام کنید</button>
+                        <button class="ghost_btn small_btn mt-2" *ngIf="FormStatus!='loginForm'" (click)="FormStatus='loginForm'">حساب کاربری دارید؟</button>
+                        <button class="ghost_btn small_btn mt-2" *ngIf="FormStatus!='resetForm'" (click)="FormStatus='resetForm'">فراموشی رمز عبور</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12 col-md-6 p-0 min-vh-100">
+        <ngb-carousel *ngIf="CarouselItems" class="carousel-fade login_page_carousel" [interval]="0">
+            <ng-template ngbSlide *ngFor="let item of CarouselItems">
+                <div class="slide-wrapper">
+                    <div class="carousel-image-wrapper">
+                        <img [src]="item.imageUrl" [alt]="item.title">
+                    </div>
+                    <div class="carousel-caption">
+                        <h4 class="mb-3 heading_level_4 heading_level_4_mobile">{{item.title}}</h4>
+                        <p class="bd_2_etr1_text">{{item.text}}</p>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-carousel>
+    </div>
+</div>
+  
