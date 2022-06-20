@@ -11,6 +11,9 @@ const routes: Routes = [
     children: [
       {path:'' , component:DashboardComponent},
       {path:'dashboard' , component:DashboardComponent},
+
+      {path:'imagery' , loadChildren: () => import('../imagery/imagery.module').then(m => m.ImageryModule)},
+
       
       {path:'**' , redirectTo:'dashboard'}
     ]
@@ -25,7 +28,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes ),
     SharedModule,
   ]
 })
