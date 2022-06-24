@@ -1,0 +1,61 @@
+ // mozila
+ *{
+    scrollbar-color: rgb(238, 238, 238) #f1f1f1;
+    scrollbar-width: thin;
+ }
+ 
+ 
+ /* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 3px;
+}
+  
+  /* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(238, 238, 238);
+}
+  
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(228, 228, 228);
+} 
+
+.hide-scrollbar{
+    ::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+    *{
+        scrollbar-width: none;
+    }
+}
+
+@media screen and (min-width:768px){
+     // mozila
+    *{
+        scrollbar-color: rgb(172, 172, 172) #d4d4d4;
+        scrollbar-width: thin;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #d4d4d4;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: rgb(172, 172, 172);
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgb(157, 157, 157);
+    } 
+}

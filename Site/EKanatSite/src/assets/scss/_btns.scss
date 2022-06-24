@@ -13,6 +13,7 @@
     font-family: $DefaultFontFamily;
     cursor: pointer;
     min-height: 56px;
+    direction: rtl;
 }
 
 
@@ -195,10 +196,10 @@
 // secondary_btn
 @include btn_style_generator(
     secondary, 
-    $LightGray_1, $Blue_100,
-    $LightGray_1,$Blue_90,
-    $LightGray_1,$Blue_Dark,
-    $LightGray_1,$Blue_30
+    $LightGray_1, $Green_100,
+    $LightGray_1,$Green_75,
+    $LightGray_1,$Green_50,
+    $LightGray_1,$Green_50
 );
 
 

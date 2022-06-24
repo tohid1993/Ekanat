@@ -28,8 +28,8 @@
 }
 
 .leaflet-interactive{
-    stroke: #01483b;
-    fill: $Primary_100;
+    stroke: #2dd7b8;
+    fill: #37b7a0;
 }
 
 .leaflet-tooltip{
@@ -38,31 +38,24 @@
     font-weight: 400;
 }
 
-.leaflet-control-zoom{
-    display: flex;
-    gap: 4px;
-    border: none !important;
+.leaflet-draw-draw-polygon{
+    
+    background-image: url(/assets/images/icons/polygon.png) !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 75% !important;
 
-    a{
-        border-radius: 5px !important;
-        border: none !important;
-    }
 }
 
-.leaflet-draw-toolbar{
-    width: 65px;
-    border: none !important;
+.leaflet-draw-edit-remove{
+    background-image: url(/assets/images/icons/eraser.png) !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 75% !important;
+}
 
-    .leaflet-draw-draw-polygon {
-        width: 100% !important;
-        background-image: none;
-
-        &::before{
-            content: "رسم زمین";
-            font-size: 0.9rem;
-            display: block;
-            font-weight: 400;
-            font-family: "Vazir";
-        }
-    }
+.leaflet-draw-actions a {
+    background-color: #cfcfcf;
+    height: 30px !important;
+    padding-top: 3px;
 }
