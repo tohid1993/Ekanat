@@ -13,6 +13,8 @@ const routes: Routes = [
       {path:'dashboard' , component:DashboardComponent},
 
       {path:'imagery' , loadChildren: () => import('../imagery/imagery.module').then(m => m.ImageryModule)},
+      {path:'fields' , loadChildren: () => import('../fields/fields.module').then(m => m.FieldsModule)},
+
 
       
       {path:'**' , redirectTo:'dashboard'}

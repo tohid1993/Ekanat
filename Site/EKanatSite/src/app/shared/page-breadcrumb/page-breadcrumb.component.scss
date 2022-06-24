@@ -1,0 +1,22 @@
+@import "_vars"; 
+
+.breadcrumb_wrapper{
+    .page_title{
+        margin: 0;
+        background-color: $Primary_80;
+        color: $White;
+        padding: 16px;
+        border-radius: 8px;
+        justify-content: space-between;
+        display: flex;
+        align-items: center;
+
+        a{
+            color: $White;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+    }
+
+    margin: 1rem 0;
+}

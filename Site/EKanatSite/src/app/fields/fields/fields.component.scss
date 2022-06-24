@@ -1,0 +1,64 @@
+@import "_vars";
+
+.fields_wrapper{
+    .field_item{
+        background-image: url(/assets/images/fields/bg.png);
+        background-position: center left;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        transition: 0.3s all;
+        border: 1px solid $Primary_40;
+        display: flex;
+        border-radius: 8px;
+        padding: 8px 16px;
+        align-items: center;
+        height: 100%;
+
+        &:hover{
+            background-size: 120%;
+
+            .field_polygon{
+                transform: rotate(10deg);
+            }
+        }
+
+        .detail{
+            flex-grow: 1;
+        }
+
+        .field_polygon{
+            transition: 0.3s all;
+            transform: rotate(0deg);
+            width: 70px;
+            height: 70px;
+            object-fit: scale-down;
+            object-position: center;
+        }
+    }
+}
+
+.add_new_field_wrapper{
+    text-align: center;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
+    padding: 16px;
+    background: #f1f1f1;
+    border-radius: 8px;
+    background-image: url(/assets/images/fields/add_field_bg.png);
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    background-size: 70%;
+
+    img{
+        max-width: 200px;
+        opacity: 0.3;
+    }
+}
+
+@media only screen and (max-width:767px){
+    .add_new_field_wrapper{
+        background-image: none;
+    }
+}

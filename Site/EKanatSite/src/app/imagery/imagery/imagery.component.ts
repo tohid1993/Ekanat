@@ -22,6 +22,7 @@ export class ImageryComponent implements OnInit {
         maxZoom: 20,
         attribution: 'EKANAT.COM ❤️'
     }).addTo(this.map);
+    
   }
 
 }

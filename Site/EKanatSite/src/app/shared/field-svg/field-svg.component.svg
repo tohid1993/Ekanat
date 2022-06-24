@@ -1,0 +1,5 @@
+<svg [attr.viewBox]="viewBox" fill="#15957d">
+  <g>
+    <path [attr.d]="dAttr" />
+  </g>
+</svg>

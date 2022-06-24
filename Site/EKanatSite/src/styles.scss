@@ -15,3 +15,54 @@
         }
     }
 }
+
+.leaflet-div-icon {
+    background: $Primary_60;
+    border: 3px solid $Secondary;
+    border-radius: 50%;
+    box-shadow: 0 0 1px 2px #fff;
+}
+
+.leaflet-draw-guide-dash{
+    background-color: $Primary_60 !important;
+}
+
+.leaflet-interactive{
+    stroke: #01483b;
+    fill: $Primary_100;
+}
+
+.leaflet-tooltip{
+    font-family: 'Vazir';
+    direction: rtl;
+    font-weight: 400;
+}
+
+.leaflet-control-zoom{
+    display: flex;
+    gap: 4px;
+    border: none !important;
+
+    a{
+        border-radius: 5px !important;
+        border: none !important;
+    }
+}
+
+.leaflet-draw-toolbar{
+    width: 65px;
+    border: none !important;
+
+    .leaflet-draw-draw-polygon {
+        width: 100% !important;
+        background-image: none;
+
+        &::before{
+            content: "رسم زمین";
+            font-size: 0.9rem;
+            display: block;
+            font-weight: 400;
+            font-family: "Vazir";
+        }
+    }
+}
