@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as Leaflet from 'leaflet';
 import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
@@ -8,9 +9,14 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add-field',
   templateUrl: './add-field.component.html',
-  styleUrls: ['./add-field.component.scss']
+  styleUrls: ['./add-field.component.scss'],
+  providers: [NgbModalConfig, NgbModal]
 })
+
 export class AddFieldComponent implements OnInit {
+
+  @ViewChild('methodModal' , {static:true}) methodModal:ElementRef|undefined;
+
   map: Leaflet.Map|undefined;
 
   minHA:number = 1;
@@ -21,9 +27,19 @@ export class AddFieldComponent implements OnInit {
 
   currentStep:number = 1;
 
-  constructor() { }
+  showMethodSelect:boolean = true;
+
+  constructor(
+    config: NgbModalConfig, private modalService: NgbModal
+  ) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
+
 
   ngOnInit(): void {
+    this.openMethodModal();
+
     this.map = Leaflet.map('map').setView([38.0792, 46.2887], 10);
     Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {
         subdomains:['mt0','mt1','mt2','mt3'],
@@ -119,5 +135,23 @@ export class AddFieldComponent implements OnInit {
     })
   }
   
+
+  openMethodModal() {
+    this.modalService.open(this.methodModal, { centered: true });
+  }
+
+  choaseMethodModal(selectedMethod:number) {
+    this.modalService.dismissAll();
+
+    alert(selectedMethod);
+    // switch (selectedMethod) {
+    //   case value:
+        
+    //     break;
+    
+    //   default:
+    //     break;
+    // }
+  }
 
 }

@@ -43,3 +43,59 @@
         }
     }
 }
+
+
+.draw_methods{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: $DefaultFontFamily;
+
+
+    .methods_wrapper {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        button{
+            height: 8rem;
+            width: 8rem;
+            border: 1px solid $Dark_30;
+            border-radius: 8px;
+            display: inline-block;
+            padding: 8px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+            top: 0;
+            transition: 0.2s all;
+            outline: none;
+
+            &:hover:not(:disabled){
+                top: -4px;
+                background-color: $Primary_40;
+            }
+
+            img{
+                height: 2.5rem;
+                margin-bottom: 0.75rem;
+            }
+
+            &:disabled{
+                cursor: not-allowed;
+                opacity: 0.65;
+            }
+        }
+    }
+    
+
+
+}

@@ -33,7 +33,7 @@
 }
 
 .leaflet-tooltip{
-    font-family: 'Vazir';
+    font-family: $DefaultFontFamily;
     direction: rtl;
     font-weight: 400;
 }
@@ -59,3 +59,16 @@
     height: 30px !important;
     padding-top: 3px;
 }
+
+
+// .draw_methods {
+//     &+.leaflet-pane {
+//         z-index: 9;
+//         position: relative;
+
+//         &+.leaflet-control-container{
+//             z-index: 9;
+//             position: relative;
+//         }
+//     }
+// }
