@@ -61,14 +61,14 @@
 }
 
 
-// .draw_methods {
-//     &+.leaflet-pane {
-//         z-index: 9;
-//         position: relative;
+.leaflet-container{
+    .leaflet-draw{
+        display: none;
+    }
 
-//         &+.leaflet-control-container{
-//             z-index: 9;
-//             position: relative;
-//         }
-//     }
-// }
+    &.byDraw{
+        .leaflet-draw{
+            display: block;
+        }
+    }
+}

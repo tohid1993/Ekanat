@@ -20,26 +20,11 @@
     
     <div class="form_wrapper pb-3">
         <div class="map_wrapper text-center" dir="ltr" [hidden]="currentStep!=1">
-            <div id="map" class="mb-2">
-                <!-- <div class="draw_methods px-4" *ngIf="showMethodSelect">
-                    <div class="title heading_level_4 heading_level_4_mobile">نحوه انتخاب زمین روی نقشه را انتخاب نمایید</div>
-                    <div class="methods_wrapper">
-                        <button class="bd_2_etr1_text bd_2_etr1_text_mobile" id="polygon_method" (click)="showMethodSelect=false">
-                            <img src="./assets/images/icons/drawing.png" alt="">
-                            رسم چند ضلعی روی نقشه
-                        </button>
-                        <button class="bd_2_etr1_text bd_2_etr1_text_mobile" id="file_method">
-                            <img src="./assets/images/icons/upload.png" alt="">
-                            بارگذاری فایل زمین
-                            <span>( KML , SHP )</span>
-                        </button>
-                        <button class="bd_2_etr1_text bd_2_etr1_text_mobile" id="walking_method">
-                            <img src="./assets/images/icons/walking.png" alt="">
-                            قدم زدن دور زمین مورد نظر
-                        </button>
-                    </div>
-                </div> -->
+            <div id="map" class="mb-2" [ngClass]="{'byDraw':selectedMethod==1 , 'byFile':selectedMethod==2 ,'byWalking':selectedMethod==3 }">
             </div>
+
+            <input type="file" id="file_input" accept=".kml,.zip" (change)="fileChanged($event)">
+            <label for="file_input" class="upload_btn"><img src="./assets/images/icons/upload.png" alt="">انتخاب فایل</label>
 
             <button class="primary_btn medium_btn" [disabled]="!FieldCordinates" (click)="currentStep=2">
                 ادامه و ثبت مشخصات
@@ -106,7 +91,7 @@
                     <img src="./assets/images/icons/drawing.png" alt="">
                     رسم چند ضلعی روی نقشه
                 </button>
-                <button class="bd_2_etr1_text bd_2_etr1_text_mobile" id="file_method" (click)="choaseMethodModal(2)" disabled>
+                <button class="bd_2_etr1_text bd_2_etr1_text_mobile" id="file_method" (click)="choaseMethodModal(2)">
                     <img src="./assets/images/icons/upload.png" alt="">
                     بارگذاری فایل زمین
                     <span>( KML , SHP )</span>
