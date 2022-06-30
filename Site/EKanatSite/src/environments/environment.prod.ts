@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiRoot:"",
+  eeRoot:"http://ee.ekanat.com:/"
 };

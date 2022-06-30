@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageBreadcrumbComponent } from './page-breadcrumb/page-breadcrumb.component';
 import { FieldService } from './services/field.service';
 import { FieldSvgComponent } from './field-svg/field-svg.component';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { GeneralService } from '../service/general.service';
 
 
 @NgModule({
@@ -15,15 +18,21 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     NgbModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
   exports:[
     NgbModule,
     PageBreadcrumbComponent,
-    FieldSvgComponent
+    FieldSvgComponent,
+    HttpClientModule
   ],
   providers:[
-    FieldService
+    FieldService,
+    GeneralService,
+    NgbModalConfig, 
+    NgbModal
   ]
 })
 export class SharedModule { }

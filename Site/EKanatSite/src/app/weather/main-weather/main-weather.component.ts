@@ -1,16 +1,28 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FieldService } from 'src/app/shared/services/field.service';
 
 @Component({
-  selector: 'app-fields',
-  templateUrl: './fields.component.html',
-  styleUrls: ['./fields.component.scss']
+  selector: 'app-main-weather',
+  templateUrl: './main-weather.component.html',
+  styleUrls: ['./main-weather.component.scss']
 })
-export class FieldsComponent implements OnInit {
+export class MainWeatherComponent implements OnInit {
+
+  @ViewChild('fieldsModal' , {static:true}) fieldsModal:ElementRef|undefined;
+
+  SelectedField:any|undefined;
+  FieldLatLng:number[]|undefined;
 
   constructor(
+    config: NgbModalConfig, 
+    private modalService: NgbModal,
     private fieldService:FieldService
-  ) { }
+  ) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
+
 
   FieldsList= [
     {
@@ -82,6 +94,19 @@ export class FieldsComponent implements OnInit {
       var doc = parser.parseFromString(this.fieldService.drawPoly(field.cordinates),"image/svg+xml");
       this.FieldsShape[index] = doc;
     });
+
+    this.openFieldsModal();
   }
 
+
+  openFieldsModal() {
+    this.modalService.open(this.fieldsModal , { centered: true , size: 'xl'  });
+  }
+
+  choaseFieldModal(field:any){
+    this.SelectedField = field;
+    this.FieldLatLng = this.fieldService.centerOfField(this.SelectedField.cordinates);
+    
+    this.modalService.dismissAll();
+  }
 }

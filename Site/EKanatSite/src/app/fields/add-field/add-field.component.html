@@ -26,12 +26,24 @@
             <input type="file" id="file_input" accept=".kml,.zip" (change)="fileChanged($event)">
             <label for="file_input" class="upload_btn"><img src="./assets/images/icons/upload.png" alt="">انتخاب فایل</label>
 
-            <button class="primary_btn medium_btn" [disabled]="!FieldCordinates" (click)="currentStep=2">
-                ادامه و ثبت مشخصات
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left me-2" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                </svg>
-            </button>
+            <div class="w-100 mt-3" dir="rtl">
+                <div class="row">
+                    <div class="col-auto ms-auto ps-1">
+                        <button type="button" class="secondary_btn medium_btn" (click)="resetAll()">تغییر روش</button>
+                    </div>
+                    <div class="col-auto pe-0">
+                        <button class="primary_btn medium_btn px-3" [disabled]="!FieldCoordinates" (click)="currentStep=2">
+                            ادامه و ثبت مشخصات
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left me-2" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
         <div class="detail_form_wrapper" *ngIf="currentStep==2">
             <form class="detail_form">
@@ -85,7 +97,7 @@
 <ng-template #methodModal let-modal let-c="close" let-d="dismiss">
     <div class="modal-body">
         <div class="draw_methods py-3 px-4">
-            <div class="title heading_level_4 heading_level_4_mobile">نحوه انتخاب زمین روی نقشه را انتخاب نمایید</div>
+            <div class="title heading_level_4 heading_level_4_mobile text-center">نحوه انتخاب زمین روی نقشه را انتخاب نمایید</div>
             <div class="methods_wrapper">
                 <button class="bd_2_etr1_text bd_2_etr1_text_mobile" id="polygon_method" (click)="choaseMethodModal(1)">
                     <img src="./assets/images/icons/drawing.png" alt="">

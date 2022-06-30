@@ -66,4 +66,14 @@ export class FieldService {
     
     return str;
   }
+
+  centerOfField(cords:any[]){
+    var x = cords.map (function (a){ return a[0] });
+    var y = cords.map (function (a){ return a[1] });
+    var minX = Math.min.apply (null, x);
+    var maxX = Math.max.apply (null, x);
+    var minY = Math.min.apply (null, y);
+    var maxY = Math.max.apply (null, y);
+    return [(minX + maxX) / 2, (minY + maxY) / 2];
+  }
 }

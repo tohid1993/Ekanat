@@ -33,6 +33,7 @@
     "leaflet": "^1.8.0",
     "leaflet-draw": "^1.0.4",
     "leaflet-geosearch": "^3.6.1",
+    "ngx-toastr": "^14.3.0",
     "rxjs": "~7.5.0",
     "shpjs": "^4.0.2",
     "sweetalert2": "^11.4.18",

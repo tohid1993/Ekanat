@@ -14,6 +14,7 @@ const routes: Routes = [
 
       {path:'imagery' , loadChildren: () => import('../imagery/imagery.module').then(m => m.ImageryModule)},
       {path:'fields' , loadChildren: () => import('../fields/fields.module').then(m => m.FieldsModule)},
+      {path:'weather' , loadChildren: () => import('../weather/weather.module').then(m => m.WeatherModule)},
 
 
       

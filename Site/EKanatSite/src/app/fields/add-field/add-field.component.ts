@@ -8,13 +8,14 @@ import Swal from 'sweetalert2';
 import "src/assets/js/L.KML.js";
 import * as shp from "shpjs";
 import * as tj from "@tmcw/togeojson";
+import { GeneralService } from 'src/app/service/general.service';
+import { EeService } from 'src/app/service/ee.service';
 
 
 @Component({
   selector: 'app-add-field',
   templateUrl: './add-field.component.html',
   styleUrls: ['./add-field.component.scss'],
-  providers: [NgbModalConfig, NgbModal]
 })
 
 export class AddFieldComponent implements OnInit {
@@ -24,9 +25,9 @@ export class AddFieldComponent implements OnInit {
   map: Leaflet.Map|undefined;
 
   minHA:number = 1;
-  maxHA:number = 50;
+  maxHA:number = 100;
 
-  FieldCordinates:any;
+  FieldCoordinates:any|undefined;
   FieldArea:number = 0;
 
   currentStep:number = 1;
@@ -35,9 +36,13 @@ export class AddFieldComponent implements OnInit {
   selectedMethod:number = -1;
 
   drawnItems:any;
+  file: any
 
   constructor(
-    config: NgbModalConfig, private modalService: NgbModal
+    config: NgbModalConfig, 
+    private modalService: NgbModal,
+    private gService:GeneralService,
+    private eeService:EeService
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -46,8 +51,9 @@ export class AddFieldComponent implements OnInit {
 
   ngOnInit(): void {
     this.openMethodModal();
+    this.map = Leaflet.map('map').setView([38.0792, 46.2887], 10);
 
-    this.map = Leaflet.map('map').setView([38.0792, 46.2887], 10).invalidateSize();
+
     Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {
         // subdomains:['mt0','mt1','mt2','mt3'],
         maxZoom: 20,
@@ -100,39 +106,12 @@ export class AddFieldComponent implements OnInit {
     let self = this;
 
     this.map.on(Leaflet.Draw.Event.CREATED, function (event:any) {
-      var type = event.layerType,
-      layer = event.layer;
-
-
-      if (type === 'polygon') {
-   
-        var area = Leaflet.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
-        area = Math.round(((area/10000) + Number.EPSILON) * 100) / 100
-
-        if(area>=self.minHA && area<=self.maxHA){
-          layer.bindTooltip(area + " هکتار " , {direction:'rtl' , permanent:true}).openTooltip();
-          self.drawnItems.addLayer(layer);
-  
-          self.FieldCordinates = layer.getLatLngs();
-          self.FieldArea = area;
-  
-          drawControlFull.remove();
-          drawControlRemoveOnly.addTo(selfMap);
-        }else{
-          Swal.fire({
-            icon:"warning",
-            title:"زمین انتخابی نا معتبر است",
-            text:"اندازه زمین انتخابی باید بیشتر از "+self.minHA+" و کمتر از " + self.maxHA + " هکتار باشد.",
-            confirmButtonText:"متوجه شدم"
-          })
-        }
-      }  
+      self.addPolygonToMap(event.layer.toGeoJSON())
     })
 
 
-
     this.map.on(Leaflet.Draw.Event.DELETED, function(e) {
-      self.FieldCordinates = undefined;
+      self.FieldCoordinates = undefined;
       self.FieldArea = 0;
 
       drawControlRemoveOnly.remove();
@@ -166,27 +145,14 @@ export class AddFieldComponent implements OnInit {
 
 
 
-
-
-
-
-
-
-
-
-
-
-  file: any
-
   fileChanged(e:any) {
     this.file = e.target.files[0];
 
     let fileType = this.file.name.split('.');
     fileType = fileType[fileType.length-1];
 
-    console.log(fileType);
-    console.log(this.file);
-
+    // console.log(fileType);
+    // console.log(this.file);
 
     if(fileType == "zip")
       this.readShpFile(this.file);
@@ -199,14 +165,12 @@ export class AddFieldComponent implements OnInit {
       let fileReader = new FileReader();
       let self = this;
       fileReader.onload = async (e: any) => {
-  
         shp(e.target.result).then(function(geojson:any){
           // console.log(geojson);
-          self.addStaticPolygon(geojson)
+          self.addPolygonToMap(geojson)
         }).catch(error=>{
-          console.log(111111);
+          console.log(error);
         });
-
         return e.target.result;
       }
       fileReader.readAsArrayBuffer(file)
@@ -217,64 +181,108 @@ export class AddFieldComponent implements OnInit {
     let fileReader = new FileReader();
     let self = this;
     fileReader.onload = async (e: any) => {
-
       const parser = new DOMParser();
       const kml = parser.parseFromString(e.target.result, 'text/xml');
-
       let geoJSON = tj.kml(kml);
-
-      self.addStaticPolygon(geoJSON);
-
+      self.addPolygonToMap(geoJSON);
       // console.log(geoJSON);
-
       return e.target.result;
     }
     fileReader.readAsText(file)
    } catch (error) {
     console.log(error);
-    
    }
   }
 
   // ایجاد چند ضلعی با استفاده از geoJson
-  addStaticPolygon(states:any){
+  addPolygonToMap(states:any){
     if(this.map){
-      let geoJSON = Leaflet.geoJSON(states).addTo(this.map);
+      this.drawnItems.clearLayers();
+
+      let coordinates = this.GetCoordinates(states)[0];
+      let coords =  coordinates.map(function(val:any, index:number){
+        return [val[0],val[1]];
+      })
+
+      let geoJSON = Leaflet.geoJSON(states).addTo(this.drawnItems);
+      geoJSON.bindTooltip("درحال محاسبه مساحت ..." , {direction:"right" , permanent:true}).openTooltip();
       this.map.fitBounds(geoJSON.getBounds());
 
-  
-        
 
-
-      let coords = states.features[0].geometry.coordinates;
-      let coordsObj:any[] = [];
-
-      coords[0].forEach((item:number[]) => {
-        coordsObj.push({lat:item[0],lng:item[1]});
-      });
-      
-      
-      var area = Leaflet.GeometryUtil.geodesicArea(coordsObj);
-      area = Math.round(((area/10000) + Number.EPSILON) * 100) / 100;
-
-      console.log(area);
-      
-
-      // if(area>=this.minHA && area<=this.maxHA){
-      //   layer.bindTooltip(area + " هکتار " , {direction:'rtl' , permanent:true}).openTooltip();
-      //   this.drawnItems.addLayer(layer);
-
-      //   this.FieldCordinates = layer.getLatLngs();
-      //   this.FieldArea = area;
-      // }else{
-      //   Swal.fire({
-      //     icon:"warning",
-      //     title:"زمین انتخابی نا معتبر است",
-      //     text:"اندازه زمین انتخابی باید بیشتر از "+self.minHA+" و کمتر از " + self.maxHA + " هکتار باشد.",
-      //     confirmButtonText:"متوجه شدم"
-      //   })
-      // }
+      this.checkValidArea(coords , geoJSON);
     }
   }
 
+  checkValidArea(coords:any[] , geoJSON:any):any{
+    new Promise<number>(()=>{
+      let self = this;
+      this.eeService.calcArea(coords)
+      .subscribe(
+        {
+          next(res) {
+            let area = Math.round(((res.area/10000) + Number.EPSILON) * 100) / 100;
+            
+            if(area>=self.minHA && area<=self.maxHA){
+              self.FieldArea = area;
+              self.FieldCoordinates = coords;
+              geoJSON.bindTooltip(area.toString()+" هکتار " , {direction:'right' , permanent:true}).openTooltip();
+            }else{
+              Swal.fire({
+                icon:"warning",
+                title:"زمین انتخابی نا معتبر است",
+                text:"اندازه زمین انتخابی باید بیشتر از "+self.minHA+" و کمتر از " + self.maxHA + " هکتار باشد.",
+                confirmButtonText:"متوجه شدم"
+              })
+
+              self.drawnItems.clearLayers();
+            }
+
+          },
+          error(err) { 
+            console.error(err);
+            self.drawnItems.clearLayers();
+          },
+          complete() {}
+        }
+      )
+    })
+  }
+
+  GetCoordinates(theObject:any): any {
+    var result = null;
+    if(theObject instanceof Array) {
+        for(var i = 0; i < theObject.length; i++) {
+            result = this.GetCoordinates(theObject[i]);
+            if (result) {
+                break;
+            }
+        }
+    }
+    else
+    {
+        for(var prop in theObject) {
+            if(prop == 'coordinates') {
+              return theObject[prop];
+            }
+            if(theObject[prop] instanceof Object || theObject[prop] instanceof Array) {
+                result = this.GetCoordinates(theObject[prop]);
+                if (result) {
+                    break;
+                }
+            }
+        }
+    }
+    return result;
+  }
+
+
+  resetAll(){
+    this.drawnItems.clearLayers();
+    this.FieldArea = 0;
+    this.FieldCoordinates = undefined;
+
+    (document.querySelector('[title="Cancel drawing"]') as any).click();
+    
+    this.openMethodModal();
+  }
 }
