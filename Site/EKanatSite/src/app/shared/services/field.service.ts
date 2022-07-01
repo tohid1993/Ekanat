@@ -61,9 +61,7 @@ export class FieldService {
     svg.setAttribute('viewBox', [props.x, props.y, props.width, props.height].join(' '));
 
     var s = new XMLSerializer();
-    var str = s.serializeToString(svg);
-    console.log(str);
-    
+    var str = s.serializeToString(svg);    
     return str;
   }
 

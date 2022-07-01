@@ -1,6 +1,7 @@
 ﻿import * as moment from 'jalali-moment';
 import { formatDate } from '@angular/common';
-import { DateModel } from '../common/models';
+import { DateModel } from '../shared/models/model';
+// import { DateModel } from '../common/models';
 
 
 export class DateTimeService {
@@ -38,33 +39,27 @@ export class DateTimeService {
    * تبدیل تاریخ و ساعت به شمسی
    * @param date تاریخ و ساعت به صورت استرینگ
    */
-  toJalaliDateTime(date?:string)
+  toJalaliDateTime(date:string , format:string = "YYYY-M-D HH:mm:ss")
   {
-      if(date)
-      {
-        moment.locale('fa');
+    let dt =  moment(date, format)
+      .locale('fa')
+      .format('YYYY/M/D HH:mm:ss');
 
-        let strDate = '';let strTime = '';
-        if(date.indexOf('T') > 0){
-          let d = date.split('T');
-          strDate = d[0];
-          strTime = d[0];
-        }
-        else{
-          let d = date.split(' ');
-          strDate = d[0];
-          strTime = d[0];
-        }
-
-        strDate = moment(strDate, 'YYYY-MM-DD').locale('fa').format('YYYY-MM-DD');
-
-        let t = strTime.split('.');
-        strTime = t[0];
-
-        return strDate + " " + strTime;
-      }
-      return '';
+    return dt;
   }
+
+
+    /**
+   * تبدیل تاریخ و ساعت به شمسی
+   * @param date تاریخ و ساعت به صورت استرینگ
+   */
+    toJalaliDateTimeCustomFormat(date:string , format:string = "YYYY-M-D HH:mm:ss" , outPutFormat:string = "YYYY/M/D HH:mm:ss")
+    {
+      let dt =  moment(date, format)
+        .locale('fa')
+        .format('dddd M MMM YYYY - HH:mm');
+      return dt;
+    }
 
 
   /**
@@ -220,5 +215,10 @@ export class DateTimeService {
     }
 
     return datemodel;
+  }
+
+  timeStampToDateTime(timeStamp:number):any{
+    var date = new Date(timeStamp);
+    return date.toLocaleString('en-US',{hour12: false});
   }
 }

@@ -64,20 +64,5 @@ export class FieldSvgComponent implements OnInit {
 
     this.dAttr = props.path;
     this.viewBox = [props.x, props.y, props.width, props.height].join(' ');
-
-    // var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"),
-    //     g = document.createElementNS("http://www.w3.org/2000/svg", 'g'),
-    //     path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-        
-    // path.setAttribute('d', props.path);
-    // g.appendChild(path);
-    // svg.appendChild(g);
-    // svg.setAttribute('viewBox', [props.x, props.y, props.width, props.height].join(' '));
-
-    // var s = new XMLSerializer();
-    // var str = s.serializeToString(svg);
-    // console.log(str);
-    
-    // return str;
   }
 }

@@ -14,6 +14,8 @@ export class MainWeatherComponent implements OnInit {
   SelectedField:any|undefined;
   FieldLatLng:number[]|undefined;
 
+  isChanged:boolean = false;
+
   constructor(
     config: NgbModalConfig, 
     private modalService: NgbModal,
@@ -104,9 +106,15 @@ export class MainWeatherComponent implements OnInit {
   }
 
   choaseFieldModal(field:any){
-    this.SelectedField = field;
-    this.FieldLatLng = this.fieldService.centerOfField(this.SelectedField.cordinates);
-    
-    this.modalService.dismissAll();
+    this.isChanged = false;
+
+    setTimeout(() => {
+      this.SelectedField = field;
+      this.FieldLatLng = this.fieldService.centerOfField(this.SelectedField.cordinates);
+      this.isChanged = true;
+      this.modalService.dismissAll();
+
+    }, 10);
+
   }
 }

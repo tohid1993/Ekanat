@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { GeneralService } from '../service/general.service';
+import { DateTimeService } from '../service/dateTime.service';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { GeneralService } from '../service/general.service';
   providers:[
     FieldService,
     GeneralService,
+    DateTimeService,
     NgbModalConfig, 
     NgbModal
   ]
