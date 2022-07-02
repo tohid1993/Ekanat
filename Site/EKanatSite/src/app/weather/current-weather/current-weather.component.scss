@@ -17,8 +17,14 @@
                     display: inline-flex;
                     flex-direction: column;
                     td{
+                        &:first-child{
+                            background-color: $Green_10;
+                            font-weight: 900;
+                            font-size: 16px;
+                        }
+
                         direction: rtl;
-                        padding: 10px 0 10px 12px;
+                        padding: 10px 8px 10px 12px;
                         white-space: nowrap;
                         text-align: center;
                         height: 45px;
@@ -47,6 +53,12 @@
                     display: inline-flex;
                     flex-direction: column;
                     td{
+                        &:first-child{
+                            background-color: $Green_10;
+                            font-weight: 900;
+                            font-size: 16px;
+                        }
+
                         direction: ltr;
                         padding: 10px 12px;
                         white-space: nowrap;

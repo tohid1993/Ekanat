@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,10 +17,12 @@ import { SharedModule } from './shared/shared.module';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
-    
+    SharedModule,
   ],
   providers: [
     {
@@ -32,7 +36,8 @@ import { SharedModule } from './shared/shared.module';
     {
       provide:"environment",
       useValue:environment
-    },
+    }
+    
   ],
   bootstrap: [AppComponent]
 })

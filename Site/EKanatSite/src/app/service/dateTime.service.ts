@@ -57,7 +57,7 @@ export class DateTimeService {
     {
       let dt =  moment(date, format)
         .locale('fa')
-        .format('dddd M MMM YYYY - HH:mm');
+        .format(outPutFormat);
       return dt;
     }
 

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FieldService } from 'src/app/shared/services/field.service';
@@ -16,10 +17,15 @@ export class MainWeatherComponent implements OnInit {
 
   isChanged:boolean = false;
 
+  CurrentWeather:any|undefined;
+  NextHoursWeather:any|undefined;
+  NextDaysWeather:any|undefined;
+
   constructor(
     config: NgbModalConfig, 
     private modalService: NgbModal,
-    private fieldService:FieldService
+    private fieldService:FieldService,
+    private http:HttpClient,
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -100,6 +106,33 @@ export class MainWeatherComponent implements OnInit {
     this.openFieldsModal();
   }
 
+  getForecastWeather(){
+    let self = this;
+
+    if(this.FieldLatLng)
+      this.http.get("http://api.openweathermap.org/data/2.5/onecall",
+        {
+          headers:{
+            'Content-Type':'application/json'
+          },
+          params:{
+            appid:"85e1e6083125722b9ba2081c22d2609a",
+            lat:this.FieldLatLng[0],
+            lon:this.FieldLatLng[1],
+            units:'metric',
+          }
+        })
+        .subscribe({
+          next(res:any){
+              self.CurrentWeather = res.current;
+              self.NextHoursWeather = res.hourly;
+              self.NextDaysWeather = res.daily;
+          },
+          error(err){console.log(err);
+          },
+          complete(){}
+        })
+  }
 
   openFieldsModal() {
     this.modalService.open(this.fieldsModal , { centered: true , size: 'xl'  });
@@ -111,6 +144,7 @@ export class MainWeatherComponent implements OnInit {
     setTimeout(() => {
       this.SelectedField = field;
       this.FieldLatLng = this.fieldService.centerOfField(this.SelectedField.cordinates);
+      this.getForecastWeather();
       this.isChanged = true;
       this.modalService.dismissAll();
 
