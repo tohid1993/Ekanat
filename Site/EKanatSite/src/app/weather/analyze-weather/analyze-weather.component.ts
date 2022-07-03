@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
+import { GeneralService } from 'src/app/service/general.service';
 
 @Component({
   selector: 'app-analyze-weather',
@@ -9,26 +10,66 @@ import { EChartsOption } from 'echarts';
 export class AnalyzeWeatherComponent implements OnInit {
     options: EChartsOption = {};
     options1: EChartsOption = {};
-    constructor() { }
+    constructor(
+      private gService:GeneralService
+    ) { }
   
     ngOnInit(): void {
-      const xAxisData = [];
-      const data1 = [];
-      const data2 = [];
-      const data3 = [];
-  
-      for (let i = 0; i < 365; i++) {
-        xAxisData.push('روز' + i);
-        data1.push(Math.round((Math.random() + Number.EPSILON) * 100) / 100);
-        data2.push(Math.round((Math.random() + Number.EPSILON) * 100) / 100);
-        data3.push(Math.round((Math.random() + Number.EPSILON) * 100) / 100);
-      }
+      this.getPastWeather();
+    }
+
+    getPastWeather(){
+      let self = this;
+
+      this.gService.postObservable<any>("weather",{},{},true)
+      .subscribe({
+        next(res:any){
+          self.generateCharts(res);
+          
+        },
+        error(err){console.log(err);
+        },
+        complete(){}
+      })
+        
+    }
+
+    generateCharts(res:any){
+      const prLabel:string[] = [];
+      const prValue:number[] = [];
+
+
+      const tLabel:string[] = [];
+      const tMinValue:number[] = [];
+      const tMaxValue:number[] = [];
+
+      res.pr.forEach((item:any) => {
+        prLabel.push(item[0]);
+        prValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
+      });
+
+
+      res.tMax.forEach((item:any) => {
+        tLabel.push(item[0]);
+        tMaxValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
+      });
+
+      res.tMin.forEach((item:any) => {
+        tMinValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
+      });
   
       this.options = {
         legend: {
           data: ['بارندگی'],
           align: 'left',
 
+        },
+        grid: {
+          left: '2%',
+          right: '2%',
+          bottom: '2%',
+          top:'0%',
+          containLabel: true
         },
         tooltip: {
             trigger: 'item',
@@ -48,7 +89,7 @@ export class AnalyzeWeatherComponent implements OnInit {
                 
         },
         xAxis: {
-          data: xAxisData,
+          data: prLabel,
           silent: false,
           splitLine: {
             show: true,
@@ -58,7 +99,7 @@ export class AnalyzeWeatherComponent implements OnInit {
         series: [
           {
             type: 'bar',
-            data: data1,
+            data: prValue,
             
             itemStyle: {color: '#15957d'},
             animationDelay: (idx:any) => idx * 10,
@@ -68,6 +109,7 @@ export class AnalyzeWeatherComponent implements OnInit {
         animationDelayUpdate: (idx:any) => idx * 5,
       };
 
+
       this.options1 = {
         tooltip: {
           trigger: 'axis',
@@ -76,22 +118,30 @@ export class AnalyzeWeatherComponent implements OnInit {
             label: {
               backgroundColor: '#6a7985'
             }
+          },
+          // <span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} میلی متر
+          formatter: "<strong>{b}</strong><br>{a1}: {c1}<br>{a0}: {c0}",
+          textStyle:{
+              fontFamily:'Vazir',
+              align:'right',
+              
           }
         },
         legend: {
           data: ['کمترین دما','بیشترین دما']
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '2%',
+          right: '2%',
+          bottom: '2%',
+          top:'0%',
           containLabel: true
         },
         xAxis: [
           {
             type: 'category',
             boundaryGap: false,
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: tLabel
           }
         ],
         yAxis: [
@@ -103,16 +153,15 @@ export class AnalyzeWeatherComponent implements OnInit {
           {
             name: 'کمترین دما',
             type: 'line',
-            stack: 'counts',
-            areaStyle: {  },
-            data: [120, 132, 101, 134, 90, 230, 210]
+            areaStyle: { opacity:0 },
+            data: tMinValue
           },
           {
             name: 'بیشترین دما',
             type: 'line',
             stack: 'counts',
-            areaStyle: {  },
-            data: [220, 182, 191, 234, 290, 330, 310]
+            areaStyle: { opacity:0 },
+            data: tMaxValue
           }
         ]
       };

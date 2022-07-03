@@ -1,2 +1,17 @@
-<div echarts [options]="options" [autoResize]="true" class="demo-chart"></div>
-<div echarts [options]="options1" [autoResize]="true" class="demo-chart"></div>
+<div class="forecast_weather">
+    <div class="row mx-0">
+        <div class="col-12">
+            <div class="next_days_wrapper py-3">
+                <h4 class="heading_level_4 heading_level_4_mobile text-center">آب و هوای روزهای گذشته</h4>
+
+                <div class="py-2">
+                    <div echarts [options]="options" [autoResize]="true" class="demo-chart"></div>
+                </div>
+                <div class="py-2">
+                    <div echarts [options]="options1" [autoResize]="true" class="demo-chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
