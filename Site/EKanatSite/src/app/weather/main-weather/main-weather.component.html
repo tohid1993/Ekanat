@@ -13,7 +13,7 @@
     <div class="py-2"></div>
     <app-forecast-weather *ngIf="isChanged && NextDaysWeather" [NextDaysWeather]="NextDaysWeather"></app-forecast-weather>
 
-    <app-analyze-weather></app-analyze-weather>
+    <app-analyze-weather  *ngIf="isChanged && FieldLatLng" [FieldLatLng]="FieldLatLng"></app-analyze-weather>
 </div>
 
 

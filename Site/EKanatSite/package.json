@@ -36,6 +36,7 @@
     "leaflet-draw": "^1.0.4",
     "leaflet-geosearch": "^3.6.1",
     "ngx-echarts": "^8.0.1",
+    "ngx-spinner": "^13.1.1",
     "ngx-toastr": "^14.3.0",
     "rxjs": "~7.5.0",
     "shpjs": "^4.0.2",

@@ -18,7 +18,7 @@ export class DateTimeService {
   {
       if(date)
       {
-        moment.locale('fa');
+        // moment.locale('fa');
 
         let strDate = '';
         if(date.indexOf('T') > 0){

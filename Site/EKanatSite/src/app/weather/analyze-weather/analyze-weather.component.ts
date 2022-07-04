@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
+import { DateTimeService } from 'src/app/service/dateTime.service';
 import { GeneralService } from 'src/app/service/general.service';
 
 @Component({
@@ -8,29 +9,46 @@ import { GeneralService } from 'src/app/service/general.service';
   styleUrls: ['./analyze-weather.component.scss']
 })
 export class AnalyzeWeatherComponent implements OnInit {
+    @Input("FieldLatLng") FieldLatLng:number[]|undefined;
+
     options: EChartsOption = {};
     options1: EChartsOption = {};
+
+    showCharts:boolean = false;
+
     constructor(
-      private gService:GeneralService
+      private gService:GeneralService,
+      private dateTimeService:DateTimeService
     ) { }
   
-    ngOnInit(): void {
+    ngOnInit(): void {      
       this.getPastWeather();
     }
 
     getPastWeather(){
       let self = this;
 
-      this.gService.postObservable<any>("weather",{},{},true)
-      .subscribe({
-        next(res:any){
-          self.generateCharts(res);
-          
+      let toDate = new Date(new Date().setDate(new Date().getDate()));
+      let fromDate = new Date(new Date().setMonth(toDate.getMonth() - 1));
+
+      if(this.FieldLatLng)
+        this.gService.postObservable<any>("weather",
+        {
+          lat:this.FieldLatLng[0],
+          lng:this.FieldLatLng[1],
+          fromDate:fromDate.toISOString().split('T')[0],
+          toDate:toDate.toISOString().split('T')[0]
         },
-        error(err){console.log(err);
-        },
-        complete(){}
-      })
+        {},true)
+        .subscribe({
+          next(res:any){
+            self.generateCharts(res);
+            self.showCharts = true;
+          },
+          error(err){console.log(err);
+          },
+          complete(){}
+        })
         
     }
 
@@ -44,13 +62,17 @@ export class AnalyzeWeatherComponent implements OnInit {
       const tMaxValue:number[] = [];
 
       res.pr.forEach((item:any) => {
-        prLabel.push(item[0]);
+        console.log(this.dateTimeService.toJalaliDate(item[0]));
+        
+        prLabel.push(this.dateTimeService.toJalaliDate(item[0]));
         prValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
       });
 
 
       res.tMax.forEach((item:any) => {
-        tLabel.push(item[0]);
+        console.log(this.dateTimeService.toJalaliDate(item[0]));
+        
+        tLabel.push(this.dateTimeService.toJalaliDate(item[0]));
         tMaxValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
       });
 
@@ -59,6 +81,9 @@ export class AnalyzeWeatherComponent implements OnInit {
       });
   
       this.options = {
+        textStyle:{
+          fontFamily:'Vazir',
+        },
         legend: {
           data: ['بارندگی'],
           align: 'left',
@@ -68,7 +93,7 @@ export class AnalyzeWeatherComponent implements OnInit {
           left: '2%',
           right: '2%',
           bottom: '2%',
-          top:'0%',
+          top:'2%',
           containLabel: true
         },
         tooltip: {
@@ -84,7 +109,6 @@ export class AnalyzeWeatherComponent implements OnInit {
             textStyle:{
                 fontFamily:'Vazir',
                 align:'right',
-                
             }
                 
         },
@@ -111,6 +135,9 @@ export class AnalyzeWeatherComponent implements OnInit {
 
 
       this.options1 = {
+        textStyle:{
+          fontFamily:'Vazir',
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -128,13 +155,14 @@ export class AnalyzeWeatherComponent implements OnInit {
           }
         },
         legend: {
-          data: ['کمترین دما','بیشترین دما']
+          data: ['کمترین دما','بیشترین دما'],
+          top: '0px'
         },
         grid: {
           left: '2%',
           right: '2%',
           bottom: '2%',
-          top:'0%',
+          top:'10%',
           containLabel: true
         },
         xAxis: [
