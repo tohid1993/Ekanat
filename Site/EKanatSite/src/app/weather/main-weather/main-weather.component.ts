@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { FieldService } from 'src/app/shared/services/field.service';
 
 @Component({
@@ -26,6 +27,7 @@ export class MainWeatherComponent implements OnInit {
     private modalService: NgbModal,
     private fieldService:FieldService,
     private http:HttpClient,
+    private spinner: NgxSpinnerService,
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -109,6 +111,8 @@ export class MainWeatherComponent implements OnInit {
   getForecastWeather(){
     let self = this;
 
+    this.spinner.show();
+
     if(this.FieldLatLng)
       this.http.get("http://api.openweathermap.org/data/2.5/onecall",
         {
@@ -130,7 +134,9 @@ export class MainWeatherComponent implements OnInit {
           },
           error(err){console.log(err);
           },
-          complete(){}
+          complete(){
+            self.spinner.hide();
+          }
         })
   }
 

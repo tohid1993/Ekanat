@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DateTimeService } from 'src/app/service/dateTime.service';
+import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 
 @Component({
   selector: 'app-forecast-weather',

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -26,12 +30,81 @@ export class LoginComponent implements OnInit {
   
   ];
 
+  LoginForm:FormGroup;
 
-  FormStatus:string = 'loginForm';
+  vCodeSent:boolean = false;
+  retryRequestCode:boolean = false;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private userService:UserService,
+    private spinner:NgxSpinnerService,
+    private router:Router
+  ) {
+    this.LoginForm = new FormGroup({
+      mobile:new FormControl(null,[Validators.required , Validators.pattern("[\u06F0,0]{1}[\u06F9,9]{1}[\u06F0-\u06F9,0-9]{9}")]),
+      code:new FormControl(null,[])
+    })
   }
 
+  ngOnInit(): void {
+    let self = this;
+    this.userService.isAuth.subscribe(
+      {
+        next(res){
+          if(res==true)
+            self.router.navigate(['/dashboard']);
+        }
+      }
+    );
+  }
+
+  changeMobile(){
+    this.vCodeSent=false;
+    this.LoginForm.reset();
+    this.LoginForm.controls['code'].clearValidators();
+    this.LoginForm.controls['code'].updateValueAndValidity();
+    this.LoginForm.updateValueAndValidity();
+  }
+
+  RequestCode(){
+    this.spinner.show();
+    let self = this;
+    this.retryRequestCode = false;
+
+    this.userService.sendVCodeRequest(this.LoginForm.value.mobile)
+      .subscribe({
+        next(){
+          self.vCodeSent = true;
+          self.LoginForm.controls['code'].setValidators([Validators.required]);
+          self.LoginForm.controls['code'].updateValueAndValidity();
+          self.LoginForm.updateValueAndValidity();
+        },
+        error(){},
+        complete(){
+          self.spinner.hide();
+          setTimeout(() => {
+            self.retryRequestCode = true;
+          }, 60000);
+        }
+      })
+  }
+
+  login(){
+    
+    if(this.vCodeSent){
+      this.spinner.show();
+      let self = this;
+
+      this.userService.login(this.LoginForm.value)
+      .subscribe({
+        next(res:any){
+          localStorage.setItem("user_token",res.data);
+          self.userService.setIsAuth(true);
+        },
+        complete(){self.spinner.hide()}
+      })
+    }else{
+      this.RequestCode();
+    }
+  }
 }

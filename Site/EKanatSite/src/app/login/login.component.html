@@ -6,25 +6,41 @@
                 <h3 class="heading_level_3 heading_level_3_mobile mb-4 Primary_80_text">کانات، نگرشی نوین بر زمین</h3>
             </div>
 
-            <form class="login_form" *ngIf="FormStatus=='loginForm'">
+            <form class="login_form" [formGroup]="LoginForm" (ngSubmit)="login()" #Login="ngForm" novalidate>
                 <h4 class="secondary_text secondary_text_mobile text-center Primary_60_text mb-3 font-weight-bold">ورود به حساب کاربری</h4>
                 <div class="container">
                     <div class="col-12 col-md-9 col-xl-7 mx-auto">
-                        <label for="username" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1">ایمیل یا شماره موبایل</label>
-                        <input type="email" class="form-control form-control-lg text-start" dir="ltr" id="username" autocomplete="off">
+                        <label for="mobile" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1 d-flex justify-content-between align-items-end">
+                            شماره موبایل
+                            
+                            <button type="button" class="ghost_btn small_btn" *ngIf="vCodeSent"
+                                (click)="changeMobile()">تغییر شماره</button>
+                        </label>
+                        <input type="text" class="form-control form-control-lg text-start" [readonly]="vCodeSent" [maxLength]="11" formControlName="mobile" dir="ltr" id="mobile" autocomplete="off">
                     </div>
-                    <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3">
-                        <label for="password" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1">رمز عبور</label>
-                        <input type="password" class="form-control form-control-lg text-start" dir="ltr" id="password" autocomplete="off">
+                    <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3" *ngIf="vCodeSent">
+                        <label for="code" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1 d-flex align-items-end justify-content-between">
+                            کد اعتبار سنجی
+                            <button type="button" class="ghost_btn small_btn" *ngIf="retryRequestCode"
+                                (click)="RequestCode()">ارسال مجدد</button>
+                        </label>
+                        <input type="text" class="form-control form-control-lg text-start" formControlName="code" [maxLength]="4" dir="ltr" id="code" autocomplete="off">
                     </div>
                 
                     <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3">
-                        <a type="submit" class="primary_btn w-100" [routerLink]="['/dashboard']">ورود به حساب کاربری</a>
+                        <button type="submit" class="primary_btn w-100" [disabled]="Login.invalid">
+                            {{
+                                vCodeSent?
+                                "ورود به حساب کاربری"
+                                :
+                                "دریافت کد اعتبار سنجی"
+                            }}
+                        </button>
                     </div>
                 </div>
             </form>
 
-            <form class="register_form" *ngIf="FormStatus=='registerForm'">
+            <!-- <form class="register_form" *ngIf="FormStatus=='registerForm'">
                 <h4 class="secondary_text secondary_text_mobile text-center Primary_60_text mb-3 font-weight-bold">ایجاد حساب کاربری</h4>
                 <div class="container">
                     <div class="col-12 col-md-9 col-xl-7 mx-auto">
@@ -54,9 +70,9 @@
                         <button type="submit" class="primary_btn w-100">ارسال رمز عبور جدید</button>
                     </div>
                 </div>
-            </form>
+            </form> -->
 
-            <div class="container">
+            <!-- <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-9 col-xl-7 mx-auto text-center mt-2 d-flex justify-content-between flex-wrap">
                         <button class="ghost_btn small_btn mt-2" *ngIf="FormStatus!='registerForm'" (click)="FormStatus='registerForm'">حساب کاربری ندارید؟  ثبت نام کنید</button>
@@ -64,7 +80,7 @@
                         <button class="ghost_btn small_btn mt-2" *ngIf="FormStatus!='resetForm'" (click)="FormStatus='resetForm'">فراموشی رمز عبور</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>

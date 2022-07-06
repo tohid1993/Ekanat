@@ -8,8 +8,9 @@ import Swal from 'sweetalert2';
 import "src/assets/js/L.KML.js";
 import * as shp from "shpjs";
 import * as tj from "@tmcw/togeojson";
-import { GeneralService } from 'src/app/service/general.service';
-import { EeService } from 'src/app/service/ee.service';
+import { EeService } from 'src/app/shared/services/ee.service';
+import { GeneralService } from 'src/app/shared/services/general.service';
+
 
 
 @Component({

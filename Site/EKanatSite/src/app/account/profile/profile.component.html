@@ -1,0 +1,49 @@
+<app-page-breadcrumb [pageTitle]="'ویرایش پروفایل'" [backUrl]="'/'"></app-page-breadcrumb>
+
+<div class="container-fluid">
+    <div class="profile_form_wrapper pb-5">
+        <form class="profile_form" [formGroup]="ProfileForm" 
+            (ngSubmit)="saveProfile()" novalidate #FormDir="ngForm">
+            <div class="container pt-3">
+                <div class="col-12 profile_image_wrapper">
+                    <div class="profile_image">
+                        <img src="{{ProfileForm.value.image.size ? 'data:image/jpeg;base64,'+ProfileForm.value.image.base64File : ProfileForm.value.image.base64File }}" />
+                    
+                        <input type="file" id="profile_image_file" 
+                            accept='.jpg,.jpeg,.png'
+                            (change)="fileService.fileOnSelect($event,ProfileForm.controls['image'])">
+                        <label for="profile_image_file" class="profile_image_file_btn">
+                            <span>انتخاب تصویر</span>
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
+                    <label for="firstName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نام</label>
+                    <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="firstName" dir="rtl" id="firstName" autocomplete="off">
+                    <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','firstName')">وارد کردن این فیلد الزامی میباشد</small>
+                </div>
+                <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
+                    <label for="lastName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نام خانوادگی</label>
+                    <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="lastName" dir="rtl" id="lastName" autocomplete="off">
+                    <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','lastName')">وارد کردن این فیلد الزامی میباشد</small>
+                </div>
+                <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
+                    <label for="email" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">ایمیل <small>(اختیاری)</small></label>
+                    <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="email" dir="ltr" id="email" autocomplete="off">
+                </div>
+                <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
+                    <label for="mobile" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شماره موبایل</label>
+                    <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" readonly [value]="ProfileForm.value.mobile" dir="ltr" id="mobile" autocomplete="off">
+                </div>
+
+                <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3 row">
+                    <div class="col-auto mx-auto">
+                        <button type="submit" class="primary_btn medium_btn">ذخیره پروفایل</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

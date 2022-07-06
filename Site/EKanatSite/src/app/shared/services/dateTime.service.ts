@@ -1,6 +1,6 @@
 ﻿import * as moment from 'jalali-moment';
 import { formatDate } from '@angular/common';
-import { DateModel } from '../shared/models/model';
+import { DateModel } from '../models/model';
 // import { DateModel } from '../common/models';
 
 

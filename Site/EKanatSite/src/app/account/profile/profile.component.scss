@@ -1,0 +1,53 @@
+@import "_vars";
+
+.profile_image_wrapper{
+
+    .profile_image{
+        margin: 0 auto;
+        width: 9.25rem;
+        height: 9.25rem;
+        position: relative;
+        border:2px solid #b9b9b9;
+        background-color: #b9b9b9;
+        border-radius: 50%;
+        transition: 0.3s all;
+
+        img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+            overflow: hidden;
+            border-radius: 50%;
+
+            &[src=""]{
+                opacity: 0;
+            }
+            
+        }
+
+        #profile_image_file{
+            visibility: hidden;
+            transform: scale(0);
+            position: absolute;
+        }
+
+        .profile_image_file_btn{
+            position: absolute;
+            bottom: -8px;
+            left: calc(50% - 50px);
+            width: 100px;
+            height: 30px;
+            font-size: 0.75rem;
+            background: $Primary_60;
+            color: $White;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 22px;
+            cursor: pointer;
+        }
+    }
+
+
+}

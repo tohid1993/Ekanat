@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FileViewModel } from '../common/models';
+import { FileViewModel } from '../models/model';
 import { GeneralService } from './general.service';
 
 @Injectable({
@@ -39,7 +39,7 @@ export class FileService {
 
 
 
-        let fileRestriction:FileRestrictionsModel=undefined;
+        let fileRestriction:FileRestrictionsModel|undefined=undefined;
         if(event.target.dataset.filelimit){
           fileRestriction = this.getFileRestrictions(event.target.dataset.filelimit);
         }
@@ -99,55 +99,59 @@ export class FileService {
                 image.src = base64;
                 let gs = this.gService;
                 image.onload = function () {
+                  if(fileRestriction){
+                    if(fileRestriction.maxHeight && fileRestriction.maxHeight < image.height)
+                    {
+                      msg = 'ارتفاع فایل انتخابی باید کمتر از '+fileRestriction.maxHeight+'px باشد.';
+                    }
+          
+                    if(fileRestriction.minHeight && fileRestriction.minHeight > image.height)
+                    {
+                      msg = 'ارتفاع فایل انتخابی باید بیشتر از '+fileRestriction.minHeight+'px باشد.';
+                    }
+  
+                    if(fileRestriction.maxWidth && fileRestriction.maxWidth < image.width)
+                    {
+                      msg = 'عرض فایل انتخابی باید کمتر از '+fileRestriction.maxWidth+'px باشد.';
+                    }
+          
+                    if(fileRestriction.minWidth && fileRestriction.minWidth > image.width)
+                    {
+                      msg = 'عرض فایل انتخابی باید بیشتر از '+fileRestriction.minWidth+'px باشد.';
+                    }
+  
+                    if(
+                      (fileRestriction.minWidth && fileRestriction.maxWidth && fileRestriction.minWidth == fileRestriction.maxWidth) &&
+                      (fileRestriction.minHeight && fileRestriction.maxHeight && fileRestriction.minHeight == fileRestriction.maxHeight)
+                    )
+                    {
+                      if(fileRestriction.minWidth != image.width || fileRestriction.minHeight != image.height)
+                        msg = 'ابعاد فایل انتخابی باید '+ fileRestriction.minWidth + ' در ' + fileRestriction.minHeight + ' px باشد. ';
+                    }
+  
+                    if(fileRestriction.ratio)
+                    {
+                      let ratio = fileRestriction.ratio.split(':');
+                      if((Number)(ratio[1]) * image.width / image.height != (Number)(ratio[0])){
+                        msg = 'نسبت ابعاد فایل انتخابی باید  '+ratio[0] + ' به ' +ratio[1]+' باشد. ';
+                      }
+                    }
+
+                    if(msg!=''){
+                      gs.showErrorToastr(msg,title);
+                    }else{
+                      if(base64!=null){
+                        let base64string = base64.replace(/data.*;base64,/g,'');
+                        selectedFile.base64File = base64string;
+                        selectedFiles.push(selectedFile);
+                        gs.showSuccessToastr('فایل با موفقیت انتخاب شد.')
+                        returnValue.next(selectedFiles);
+                      }
+                    }
+                  }
                   
-                  if(fileRestriction.maxHeight && fileRestriction.maxHeight < image.height)
-                  {
-                    msg = 'ارتفاع فایل انتخابی باید کمتر از '+fileRestriction.maxHeight+'px باشد.';
-                  }
-        
-                  if(fileRestriction.minHeight && fileRestriction.minHeight > image.height)
-                  {
-                    msg = 'ارتفاع فایل انتخابی باید بیشتر از '+fileRestriction.minHeight+'px باشد.';
-                  }
 
-                  if(fileRestriction.maxWidth && fileRestriction.maxWidth < image.width)
-                  {
-                    msg = 'عرض فایل انتخابی باید کمتر از '+fileRestriction.maxWidth+'px باشد.';
-                  }
-        
-                  if(fileRestriction.minWidth && fileRestriction.minWidth > image.width)
-                  {
-                    msg = 'عرض فایل انتخابی باید بیشتر از '+fileRestriction.minWidth+'px باشد.';
-                  }
 
-                  if(
-                    (fileRestriction.minWidth && fileRestriction.maxWidth && fileRestriction.minWidth == fileRestriction.maxWidth) &&
-                    (fileRestriction.minHeight && fileRestriction.maxHeight && fileRestriction.minHeight == fileRestriction.maxHeight)
-                  )
-                  {
-                    if(fileRestriction.minWidth != image.width || fileRestriction.minHeight != image.height)
-                      msg = 'ابعاد فایل انتخابی باید '+ fileRestriction.minWidth + ' در ' + fileRestriction.minHeight + ' px باشد. ';
-                  }
-
-                  if(fileRestriction.ratio)
-                  {
-                    let ratio = fileRestriction.ratio.split(':');
-                    if((Number)(ratio[1]) * image.width / image.height != (Number)(ratio[0])){
-                      msg = 'نسبت ابعاد فایل انتخابی باید  '+ratio[0] + ' به ' +ratio[1]+' باشد. ';
-                    }
-                  }
-
-                  if(msg!=''){
-                    gs.showErrorToastr(msg,title);
-                  }else{
-                    if(base64!=null){
-                      let base64string = base64.replace(/data.*;base64,/g,'');
-                      selectedFile.base64File = base64string;
-                      selectedFiles.push(selectedFile);
-                      gs.showSuccessToastr('فایل با موفقیت انتخاب شد.')
-                      returnValue.next(selectedFiles);
-                    }
-                  }
                 }
             }else{
               if(base64!=null){
@@ -378,7 +382,7 @@ export class FileService {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
-    canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+    canvas.getContext('2d')!!.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
     let base64 = canvas.toDataURL("image/jpeg");
 
     let thumbnail = new FileViewModel();
@@ -397,7 +401,7 @@ export class FileService {
    * محاسبه حجم فایل از روی base64
    * @param base64String 
    */
-  calculateSizeFromBase64(base64String){
+  calculateSizeFromBase64(base64String:any){
     let padding, inBytes, base64StringLength;
     if(base64String.endsWith("==")) padding = 2;
     else if (base64String.endsWith("=")) padding = 1;
@@ -411,27 +415,28 @@ export class FileService {
 
 
 export class FileRestrictionsModel{
-  maxSize:number;
-  minSize:number;
+  maxSize:number|undefined;
+  minSize:number|undefined;
 
-  maxHeight:number;
-  minHeight:number;
+  maxHeight:number|undefined;
+  minHeight:number|undefined;
   
-  maxWidth:number;
-  minWidth:number;
+  maxWidth:number|undefined;
+  minWidth:number|undefined;
 
-  ratio:string;
+  ratio:string|undefined;
   type:string[];
 
   constructor(
-    maxSize,
-    minSize,
-    maxHeight,
-    minHeight,
-    maxWidth,
-    minWidth,
-    ratio,
-    type){
+    maxSize:number|undefined,
+    minSize:number|undefined,
+    maxHeight:number|undefined,
+    minHeight:number|undefined,
+    maxWidth:number|undefined,
+    minWidth:number|undefined,
+    ratio:string|undefined,
+    type:string[]){
+      
     this.maxSize =maxSize || undefined;
     this.minSize =minSize || undefined;
 

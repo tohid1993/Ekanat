@@ -10,3 +10,12 @@ export class DateModel{
     }
 
 }
+
+
+export class FileViewModel{
+    fileName:string |undefined;
+    size:number |undefined;
+    fileTypeName:string |undefined;
+    base64File:string |undefined;
+    sizeUnitTypeId:number |undefined;
+}

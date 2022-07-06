@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
-import { DateTimeService } from 'src/app/service/dateTime.service';
-import { GeneralService } from 'src/app/service/general.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { DateTimeService } from 'src/app/shared/services/dateTime.service';
+import { GeneralService } from 'src/app/shared/services/general.service';
+
 
 @Component({
   selector: 'app-analyze-weather',
@@ -18,7 +20,8 @@ export class AnalyzeWeatherComponent implements OnInit {
 
     constructor(
       private gService:GeneralService,
-      private dateTimeService:DateTimeService
+      private dateTimeService:DateTimeService,
+      private spinner: NgxSpinnerService,
     ) { }
   
     ngOnInit(): void {      
@@ -27,6 +30,7 @@ export class AnalyzeWeatherComponent implements OnInit {
 
     getPastWeather(){
       let self = this;
+      this.spinner.show();
 
       let toDate = new Date(new Date().setDate(new Date().getDate()));
       let fromDate = new Date(new Date().setMonth(toDate.getMonth() - 1));
@@ -47,7 +51,9 @@ export class AnalyzeWeatherComponent implements OnInit {
           },
           error(err){console.log(err);
           },
-          complete(){}
+          complete(){
+            self.spinner.hide();
+          }
         })
         
     }

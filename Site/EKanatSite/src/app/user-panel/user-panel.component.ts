@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-user-panel',
@@ -12,7 +13,8 @@ export class UserPanelComponent implements OnInit {
   windowWidth:number = window.innerWidth;
 
   constructor(
-    private router:Router
+    private router:Router,
+    private userService:UserService
   ) { }
 
   ngOnInit(): void {
@@ -20,9 +22,7 @@ export class UserPanelComponent implements OnInit {
 
 
   logOut(){
-    sessionStorage.clear();
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    this.userService.logout();
   }
 
   @HostListener('window:resize', ['$event'])
