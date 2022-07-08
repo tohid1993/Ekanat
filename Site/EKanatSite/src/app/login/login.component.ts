@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { GeneralService } from '../shared/services/general.service';
 import { UserService } from '../shared/services/user.service';
 
 @Component({
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService:UserService,
     private spinner:NgxSpinnerService,
-    private router:Router
+    private router:Router,
+    private gService:GeneralService
   ) {
     this.LoginForm = new FormGroup({
       mobile:new FormControl(null,[Validators.required , Validators.pattern("[\u06F0,0]{1}[\u06F9,9]{1}[\u06F0-\u06F9,0-9]{9}")]),
@@ -73,7 +75,8 @@ export class LoginComponent implements OnInit {
 
     this.userService.sendVCodeRequest(this.LoginForm.value.mobile)
       .subscribe({
-        next(){
+        next(res){
+          self.gService.showInfoToastr(res.data);
           self.vCodeSent = true;
           self.LoginForm.controls['code'].setValidators([Validators.required]);
           self.LoginForm.controls['code'].updateValueAndValidity();

@@ -67,7 +67,7 @@
                     <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
                         <label for="cultivationDate" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">تاریخ کاشت</label>
                         <div class="input-group" dir="ltr">
-                            <input class="form-control" placeholder="yyyy-mm-dd" readonly
+                            <input class="form-control" placeholder="yyyy-mm-dd" readonly [firstDayOfWeek]="6"
                                    name="dp" ngbDatepicker #d="ngbDatepicker">
                             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#383440" class="bi bi-calendar4-week" viewBox="0 0 16 16">

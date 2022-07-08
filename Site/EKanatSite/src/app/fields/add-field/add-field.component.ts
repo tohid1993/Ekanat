@@ -222,7 +222,7 @@ export class AddFieldComponent implements OnInit {
         {
           next(res) {
             let area = Math.round(((res.area/10000) + Number.EPSILON) * 100) / 100;
-            
+            alert(area);
             if(area>=self.minHA && area<=self.maxHA){
               self.FieldArea = area;
               self.FieldCoordinates = coords;

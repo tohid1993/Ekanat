@@ -207,12 +207,12 @@
 @include btn_style_generator(
     tertiary, 
     $Dark_100, $LightGray_1,
-    $RoyalBlue_100,$Blue_5,
-    $RoyalBlue_100,$Blue_10,
+    $Secondary,$Primary_40,
+    $Secondary,$Primary_20,
     $Dark_30,$LightGray_1,
     false,
     true,
-    $Blue_100,$Blue_100,$Blue_100,$Blue_30
+    $Secondary,$Secondary,$Secondary,$Primary_40
 );
 
 // ghost_btn

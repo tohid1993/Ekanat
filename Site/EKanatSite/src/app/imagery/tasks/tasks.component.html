@@ -1,0 +1,88 @@
+
+<div class="container-fluid">
+    <div class="tasks_wrapper">
+
+        <div class="row">
+          <div class="col-12 col-md-6">
+                <ngb-datepicker class="calendar_wrapper" [dayTemplate]="calendarDay"
+                                #dp
+                                [displayMonths]="1"
+                                [outsideDays]="'hidden'"
+                                [weekdays]="true"
+                                [firstDayOfWeek]="6"
+                                navigation="none">
+              
+                  <ng-template ngbDatepickerContent>
+
+                    <div *ngFor="let month of dp.state.months">
+                        <div class="row p-2">
+                            <div class="col-auto d-inline-flex align-items-center">
+                                <button type="button" class="secondary_btn small_btn only_icon" (click)="navigate(-1);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                                        <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
+                                    </svg>
+                                </button>
+                                <div class="current_month">{{ i18n.getMonthShortName(month.month) }} {{ month.year }}</div>
+                                <button type="button" class="secondary_btn small_btn only_icon" (click)="navigate(1)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
+                                        <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+              
+              
+                      <ngb-datepicker-month [month]="month">
+                          
+                      </ngb-datepicker-month>
+                    </div>
+                  </ng-template>
+              
+                </ngb-datepicker>
+          </div>
+      
+          <div class="col-12 col-md-6"></div>
+        </div>
+      
+      </div>
+</div>
+
+
+
+
+
+<ng-template #calendarDay let-date="date" let-currentMonth="currentMonth" let-selected="selected" let-disabled="disabled" let-focused="focused">
+  <span class="calendar_day" [ngClass]="{'event':date.day%5==0 , 'analyze':date.day%10==0}">
+    {{ date.day }}
+  </span>
+</ng-template>
+
+
+
+
+
+<!-- <form class="form-inline">
+    <div class="form-group custom">
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd" [markDisabled]="isDisabled"
+               name="dp" [(ngModel)]="model" ngbDatepicker  [dayTemplate]="calendarDay" #d="ngbDatepicker" (navigate)="navigate($event)">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  <ng-template #calendarDay let-date="date" let-currentMonth="currentMonth" let-selected="selected" let-disabled="disabled" let-focused="focused"
+  >
+    <span *ngIf="isCustomDisable(date)" class="custom-day"
+          [class.bg-primary]="selected"  [class.text-muted]="true">
+      {{ date.day }}
+    </span>
+    <span (click)="model=date;d.close()" *ngIf="!isCustomDisable(date)" class="custom-day"
+          [class.bg-primary]="selected"  >
+      {{ date.day }}
+    </span>
+  </ng-template> -->
+  
