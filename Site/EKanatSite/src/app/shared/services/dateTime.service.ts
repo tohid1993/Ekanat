@@ -221,4 +221,8 @@ export class DateTimeService {
     var date = new Date(timeStamp);
     return date.toLocaleString('en-US',{hour12: false});
   }
+
+  modelToString(date:DateModel){
+    return date.year+"-"+date.month+"-"+date.day;
+  }
 }

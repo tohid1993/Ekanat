@@ -132,6 +132,7 @@
             @if $ghostBtn {
                 padding: 0;
                 min-height: 18px;
+                min-width: 18px;
             } @else{
                 padding: 8px;
                 min-height: 36px;

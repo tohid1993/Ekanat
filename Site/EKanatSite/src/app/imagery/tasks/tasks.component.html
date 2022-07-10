@@ -1,9 +1,11 @@
 
+<app-page-breadcrumb [pageTitle]="'فعالیت های روزانه ' + '(مزرعه کلزا ینگجه)'" [backUrl]="'/imagery'"></app-page-breadcrumb>
+
 <div class="container-fluid">
     <div class="tasks_wrapper">
 
         <div class="row">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-7">
                 <ngb-datepicker class="calendar_wrapper" [dayTemplate]="calendarDay"
                                 #dp
                                 [displayMonths]="1"
@@ -30,19 +32,58 @@
                                 </button>
                             </div>
                         </div>
-
               
-              
-                      <ngb-datepicker-month [month]="month">
-                          
-                      </ngb-datepicker-month>
+                      <ngb-datepicker-month [month]="month"></ngb-datepicker-month>
                     </div>
                   </ng-template>
               
                 </ngb-datepicker>
           </div>
       
-          <div class="col-12 col-md-6"></div>
+          <div class="col-12 col-md-5">
+            <div class="tasks_list_wrapper" *ngIf="SelectedDay">
+              <div class="day_number_wrapper">
+                <img src="./assets/images/icons/calendar.png" width="75" alt="">
+                <div class="d-inline-flex flex-column me-3">
+                  <span id="day_number">{{SelectedDay.day}}</span>
+                  <span id="day_name">
+                    {{getSelectedDateByFormat(this.dateTime.modelToString(SelectedDay))}}
+                  </span>
+                </div>
+              </div>
+              <ul class="tasks_list">
+
+                <li class="item bu_3_text bu_3_text_mobile " *ngFor="let item of SelectedDayEvents">
+                  <button class="ghost_btn align-middle small_btn only_icon ms-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                      <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                    </svg>
+                  </button>
+                  <span class="title event">{{item.title}}</span>
+                </li>
+
+                <li class="item bu_3_text bu_3_text_mobile " *ngFor="let item of SelectedDayAnalyzis">
+                  <button class="ghost_btn align-middle small_btn ms-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text" viewBox="0 0 16 16">
+                      <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                  </button>
+                  <span class="title analyze">{{item.title}}</span>
+                </li>
+                
+              </ul>
+              <div class="text-center mb-4">
+                <button class="secondary_btn medium_btn px-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bookmark-plus ms-2" viewBox="0 0 16 16">
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                  </svg>
+                  ثبت فعالیت جدید
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       
       </div>
@@ -53,10 +94,33 @@
 
 
 <ng-template #calendarDay let-date="date" let-currentMonth="currentMonth" let-selected="selected" let-disabled="disabled" let-focused="focused">
-  <span class="calendar_day" [ngClass]="{'event':date.day%5==0 , 'analyze':date.day%10==0}">
+  <div class="calendar_day" 
+      [ngClass]="{'selected':(date.year == SelectedDay.year && date.month == SelectedDay.month && date.day == SelectedDay.day)}" 
+      (click)="dayChanged(date)">
+
+    <div class="dots_wrapper">
+      <i class="event" *ngIf="dayHasEvent(date)"></i>
+      <i class="analyze" *ngIf="dayHasAnalyze(date)"></i>
+    </div>
     {{ date.day }}
-  </span>
+  </div>
 </ng-template>
+
+
+
+
+<ng-template #tasksModal let-modal let-c="close" let-d="dismiss">
+  <div class="modal-body">
+      <div class="draw_methods py-3 px-4">
+          <div class="title heading_level_4 heading_level_4_mobile text-center">لیست رویداد های تاریخ انتخابی</div>
+         
+      </div>
+  </div>
+</ng-template>
+
+
+
+
 
 
 

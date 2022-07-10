@@ -7,6 +7,11 @@
     .current_month{
         width: 130px !important;
         text-align: center;
+        background: $Green_10;
+        margin: 0 3px;
+        padding: 6px;
+        border-radius: 4px;
+        font-size: 0.9rem;
     }
 
     .ngb-dp-header{
@@ -26,10 +31,10 @@
             text-align: center;
             flex-grow: 1;
             padding: 12px 0;
-            background-color: $Dark_10;
+            background-color: $Green_10;
             color: $Primary_60;
             font-size: 0.95rem;
-            font-weight: 500;
+            font-weight: 200;
             width: calc(100 / 7);
             
             &:not(:last-child){
@@ -55,8 +60,9 @@
             transform: unset;
             text-align: center;
             flex-grow: 1;
-            padding: 16px 10px;
-            font-size: 0.9rem;
+
+
+
 
             &:not(:last-child){
                 border-left: 1px solid $Primary_20;
@@ -65,6 +71,139 @@
             &.hidden{
                 padding: 0;
             }
+
+            .calendar_day{
+                padding: 16px 10px;
+                font-size: 0.9rem;
+                position: relative;
+                border: none !important;
+                background-color: transparent !important;
+
+                &.selected{
+                    background-color: $Green_25 !important;
+                }
+
+                .dots_wrapper{
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                    width: 10px;
+                    padding: 2px 2px 2px 0;
+    
+                    .event{
+                        width: 8px;
+                        height: 8px;
+                        background-color: $Blue_80;
+                        border-radius: 50%;
+                        display: inline-block;
+                        margin-bottom: 4px;
+                    }
+
+                    .analyze{
+                        width: 8px;
+                        height: 8px;
+                        background-color: $Orange_90;
+                        border-radius: 50%;
+                        display: inline-block;
+                        margin-bottom: 4px;
+                    }
+                }
+            }
+
+
+
+            &.ngb-dp-today{
+                background-color: $Green_10;
+            }
+
+            &:hover{
+                background-color: $Green_25;
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width:575px){
+    .calendar_wrapper{
+        .ngb-dp-weekdays{
+            .ngb-dp-weekday{
+                font-size: 0.75rem;
+            }
+        }
+    }
+}
+
+
+.tasks_list_wrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    // background: $Primary_80;
+    border-radius: 4px;
+    
+    .day_number_wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 12px 0 8px;
+        color: $Primary_80;
+        
+        #day_number {
+            font-size: 2.5rem;
+            font-weight: bolder;
+            height: 45px;
+        }
+
+        #day_name {
+            font-size: 1.2rem;
+            font-weight: bolder;
+        }
+    }
+
+    .tasks_list {
+        padding: 8px 16px;
+        list-style: none;
+        // flex-grow: 1;
+        overflow-y: auto;
+        color: $Secondary;
+
+        li{
+            display: flex;
+            align-items: center;
+
+           .title{
+                padding: 6px 10px;
+                position: relative;
+                display: block;
+
+                &::before{
+                    position: absolute;
+                    right: 0;
+                    width: 6px;
+                    top: 6px;
+                    bottom: 6px;
+                    display: block;
+                    content: "";
+                    border-radius: 4px;
+                }
+
+                &.event{
+                    &::before{
+                        background-color: $Blue_80;
+                    }
+                }
+
+                &.analyze{
+                    &::before{
+                        background-color: $Orange_90;
+                    }
+                }
+           }
         }
     }
 }

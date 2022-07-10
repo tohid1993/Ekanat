@@ -61,8 +61,9 @@
                 مراکز فروش سموم کشاورزی
             </a>
           </li>
-          <li class="nav-item mt-auto">
-            <a class="nav-link" [routerLink]="" [routerLinkActive]="'active'" aria-current="page">
+          <li class="nav-item mt-auto supportBtn" *ngIf="showSupportBtn">
+            <a class="nav-link" (click)="openRayChat()" aria-current="page">
+                <span id="new_message_count" *ngIf="newMessageCount">{{newMessageCount}}</span>
                 <img src="./assets/images/icons/support.svg" alt="">
                 پشتیبانی
             </a>
@@ -71,6 +72,8 @@
       </div>
     </div>
 </nav>
+
+
 
 <div id="top_bar" *ngIf="windowWidth>=992">
   <div class="container-fluid">
@@ -101,6 +104,8 @@
     </div>
   </div>
 </div>
+
+<div class="overlay" *ngIf="showMenu" (click)="showMenu=false"></div>
 
 <div class="content_wrapper">
   <router-outlet></router-outlet>
