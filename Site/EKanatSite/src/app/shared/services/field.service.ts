@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
+import { FieldsListVM } from '../models/model';
+import { GeneralService } from './general.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FieldService {
 
-  constructor() { }
+  constructor(
+    private gService:GeneralService
+  ) { }
 
   latLng2point(latlng:number[]) {
     return {
@@ -73,5 +77,17 @@ export class FieldService {
     var minY = Math.min.apply (null, y);
     var maxY = Math.max.apply (null, y);
     return [(minX + maxX) / 2, (minY + maxY) / 2];
+  }
+
+  saveField(data:any){
+    return this.gService.post("v1/Fields/Add",data,{})
+  }
+
+  getFieldsList(){
+    return this.gService.get("v1/Fields/GetList",{});
+  }
+
+  getFieldWeather(lat:number,lng:number){
+    return this.gService.get("v1/Fields/GetWeather",{latitude:lat,longitude:lng})
   }
 }

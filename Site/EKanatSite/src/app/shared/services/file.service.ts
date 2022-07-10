@@ -45,7 +45,7 @@ export class FileService {
         }
 
         // مدیریت سایز فایل
-        selectedFile.size = file.size;
+        selectedFile.size_Byte = file.size;
         if(fileRestriction){
           let msg='';
           let title='خطای حجم فایل !';
@@ -386,7 +386,7 @@ export class FileService {
     let base64 = canvas.toDataURL("image/jpeg");
 
     let thumbnail = new FileViewModel();
-    thumbnail.size = this.calculateSizeFromBase64(base64);
+    thumbnail.size_Byte = this.calculateSizeFromBase64(base64);
 
     if(base64!=null){
       base64 = base64.replace(/data.*;base64,/g,'');

@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { UserService } from '../shared/services/user.service';
 
 @Component({
@@ -15,13 +16,35 @@ export class UserPanelComponent implements OnInit {
   newMessageCount:string|null = "";
   showSupportBtn:boolean = false;
 
+  profileAvatar:string = "./assets/images/users/avatar.png";
+  
+
   constructor(
     private router:Router,
-    private userService:UserService
+    public userService:UserService
   ) { }
 
   ngOnInit(): void {
     this.initRaychat();
+    
+    let self = this;
+    this.userService.UserHomeInfo.subscribe
+    ({
+      next(res){
+        if(!res.profileCompeleted){
+          Swal.fire({
+            icon:"warning",
+            title:"پروفایل تکمیل نشده",
+            text:"برای ادامه فرایند و استفاده از قسمت های مختلف برنامه ، لطفا پروفایل خود را تکمیل نمایید",
+            confirmButtonText:"تکمیل پروفایل"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              self.router.navigate(['/account/profile']);
+            } 
+          })
+        }
+      }
+    })
   }
 
 

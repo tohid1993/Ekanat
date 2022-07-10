@@ -4,12 +4,18 @@ import * as Leaflet from 'leaflet';
 import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
 // import * as GeoSearch from 'leaflet-geosearch';
-import Swal from 'sweetalert2';
-import "src/assets/js/L.KML.js";
-import * as shp from "shpjs";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as tj from "@tmcw/togeojson";
+import { NgxSpinnerService } from 'ngx-spinner';
+import * as shp from "shpjs";
+import { DateModel } from 'src/app/shared/models/model';
+import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
+import { FieldService } from 'src/app/shared/services/field.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
+import "src/assets/js/L.KML.js";
+import Swal from 'sweetalert2';
 
 
 
@@ -39,14 +45,29 @@ export class AddFieldComponent implements OnInit {
   drawnItems:any;
   file: any
 
+  AddFieldForm:FormGroup;
+  cultivationDate!:DateModel;
+
   constructor(
     config: NgbModalConfig, 
     private modalService: NgbModal,
     private gService:GeneralService,
-    private eeService:EeService
+    private eeService:EeService,
+    private fieldService:FieldService,
+    private router:Router,
+    private dateTimeService:DateTimeService,
+    private spinner:NgxSpinnerService,
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
+
+    this.AddFieldForm = new FormGroup({
+      name:new FormControl(null,[Validators.required]),
+      productName:new FormControl(null,[Validators.required]),
+      area:new FormControl(null,[Validators.required]),
+      cultivationDate:new FormControl(null,[Validators.required]),
+      polygon:new FormControl(null,[Validators.required]),
+    })
   }
 
 
@@ -222,7 +243,6 @@ export class AddFieldComponent implements OnInit {
         {
           next(res) {
             let area = Math.round(((res.area/10000) + Number.EPSILON) * 100) / 100;
-            alert(area);
             if(area>=self.minHA && area<=self.maxHA){
               self.FieldArea = area;
               self.FieldCoordinates = coords;
@@ -231,7 +251,7 @@ export class AddFieldComponent implements OnInit {
               Swal.fire({
                 icon:"warning",
                 title:"زمین انتخابی نا معتبر است",
-                text:"اندازه زمین انتخابی باید بیشتر از "+self.minHA+" و کمتر از " + self.maxHA + " هکتار باشد.",
+                text:"مساحت زمین انتخابی "+area+" هکتار میباشد،"+"اندازه زمین انتخابی باید بیشتر از "+self.minHA+" و کمتر از " + self.maxHA + " هکتار باشد.",
                 confirmButtonText:"متوجه شدم"
               })
 
@@ -282,8 +302,45 @@ export class AddFieldComponent implements OnInit {
     this.FieldArea = 0;
     this.FieldCoordinates = undefined;
 
-    (document.querySelector('[title="Cancel drawing"]') as any).click();
+    try {
+      (document.querySelector('[title="Cancel drawing"]') as any).click();
+    } catch (error) {
+      
+    }
     
     this.openMethodModal();
+  }
+
+  GoToNextStep(){
+    let coords:any[] = [];
+    this.FieldCoordinates.forEach((coord:any) => {
+      coords.push({x:coord[0],y:coord[1]});
+    });
+    this.AddFieldForm.controls['polygon'].setValue(coords);
+    this.AddFieldForm.controls['area'].setValue(this.FieldArea);
+
+    this.currentStep = 2;
+  }
+
+  SaveField(){    
+    if(this.AddFieldForm.invalid) return;
+
+    this.spinner.show();
+
+    let self = this;
+    this.fieldService.saveField(this.AddFieldForm.value)
+      .subscribe({
+        next(){
+          self.gService.showSuccessToastr("زمین با موفقیت ثبت شد");
+          self.router.navigate(['/fields']);
+          self.spinner.hide();
+        }
+      })
+  }
+
+  setDate(){
+      this.AddFieldForm.controls['cultivationDate'].setValue(
+        this.dateTimeService.toGeorgianDate(this.cultivationDate.year+"-"+this.cultivationDate.month+"-"+this.cultivationDate.day)
+      );
   }
 }

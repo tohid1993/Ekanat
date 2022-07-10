@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { GeneralService } from './general.service';
 import { Router } from '@angular/router';
+import { UserHomeInfoVM } from '../models/model';
 
 
 @Injectable({
@@ -13,6 +14,9 @@ export class UserService  {
     private _isAuth = new BehaviorSubject<boolean>(false);
     isAuth = this._isAuth.asObservable();
 
+    private _UserHomeInfo = new Subject<UserHomeInfoVM>();
+    UserHomeInfo = this._UserHomeInfo.asObservable();
+
     private loggedIn = false;
 
     constructor(
@@ -20,11 +24,9 @@ export class UserService  {
         private router:Router,
         ) {
 
-
         this.loggedIn = !!localStorage.getItem('user_token');
  
         this._isAuth.next(this.loggedIn);
-
     }
 
 
@@ -53,15 +55,24 @@ export class UserService  {
 
 
     loadUserDetails(){
-        // this.generalService.getObservable<UserDetail>( 'Home/getUserInfoAsync' , {})
-        // .subscribe(
-        //     resp => {
-        //         this._profileObj.next(resp);
-        //     }
-        //     , error =>{
-        //     });
+        let self = this;
+        this.generalService.get( 'v1/Users/GetHomeInfo' , {})
+        .subscribe(
+            {
+                next(res:any){
+                    self._UserHomeInfo.next(res.data);
+                }
+            }
+        )
     }
 
+    updateUserProfile(data:any){
+        return this.generalService.update("v1/Users/EditProfile",data,{})
+    }
+
+    getUserProfile(){
+        return this.generalService.get("v1/Users/GetProfile",{})
+    }
 
 
     setIsAuth(x:boolean){

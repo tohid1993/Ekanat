@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModal, NgbModalConfig, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -9,14 +9,8 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { FieldSvgComponent } from './field-svg/field-svg.component';
 import { PageBreadcrumbComponent } from './page-breadcrumb/page-breadcrumb.component';
-import { AuthGuard } from './services/auth-guard.service';
-import { AuthService } from './services/auth.service';
-import { DateTimeService } from './services/dateTime.service';
 import { FieldService } from './services/field.service';
-import { FileService } from './services/file.service';
-import { GeneralService } from './services/general.service';
 import { TokenInterceptor } from './services/token-interceptor.service';
-import { UserService } from './services/user.service';
 
 
 @NgModule({
@@ -51,12 +45,6 @@ import { UserService } from './services/user.service';
   ],
   providers:[
     FieldService,
-    FileService,
-    GeneralService,
-    AuthGuard,
-    AuthService,
-    UserService,
-    DateTimeService,
     NgbModalConfig, 
     NgbModal,
     TokenInterceptor,

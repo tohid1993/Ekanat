@@ -7,11 +7,11 @@
             <div class="container pt-3">
                 <div class="col-12 profile_image_wrapper">
                     <div class="profile_image">
-                        <img src="{{ProfileForm.value.image.size ? 'data:image/jpeg;base64,'+ProfileForm.value.image.base64File : ProfileForm.value.image.base64File }}" />
+                        <img src="{{ProfileForm.value.image.size_Byte ? 'data:image/jpeg;base64,'+ProfileForm.value.image.base64File : ProfileForm.value.image.base64File }}" />
                     
                         <input type="file" id="profile_image_file" 
                             accept='.jpg,.jpeg,.png'
-                            (change)="fileService.fileOnSelect($event,ProfileForm.controls['image'])">
+                            (change)="fileService.fileOnSelect($event,ProfileForm.controls['image'],true)">
                         <label for="profile_image_file" class="profile_image_file_btn">
                             <span>انتخاب تصویر</span>
                         </label>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
                     <label for="mobile" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شماره موبایل</label>
-                    <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" readonly [value]="ProfileForm.value.mobile" dir="ltr" id="mobile" autocomplete="off">
+                    <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" readonly [value]="ProfileForm.value.userName" dir="ltr" id="mobile" autocomplete="off">
                 </div>
 
                 <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3 row">

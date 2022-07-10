@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbCalendar, NgbCalendarPersian, NgbDatepickerI18n, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { TranslationWidth } from '@angular/common';
+import { UserService } from './shared/services/user.service';
+import { Router } from '@angular/router';
 
 
 
@@ -24,9 +26,26 @@ export class NgbDatepickerI18nPersian extends NgbDatepickerI18n {
     {provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nPersian}
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'EKanatSite';
 
-  constructor(private spinner: NgxSpinnerService){
+  constructor(
+    private spinner: NgxSpinnerService,
+    private userService:UserService,
+    private router:Router
+    ){
+  }
+  ngOnInit(): void {
+    let self = this;
+    this.userService.isAuth.subscribe
+    ({
+      next(res){
+        if(res==true){
+          self.userService.loadUserDetails();
+        }else{
+          self.router.navigate(['/login']);
+        }
+      }
+    })
   }
 }

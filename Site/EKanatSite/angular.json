@@ -27,6 +27,7 @@
               "shpjs",
               "jalali-moment"
             ],
+            "resourcesOutputPath": "resources",
             "outputPath": "dist/ekanat-site",
             "index": "src/index.html",
             "main": "src/main.ts",

@@ -31,7 +31,10 @@
                     </div>
                     <div class="rainfall d-inline-flex flex-column align-items-center justify-content-center col-6 px-1 text-end">
                         <span class="label bu_3_text bu_3_text_mobile fw-bold">بارندگی</span>
-                        <span class="value bd_2_text mt-2" dir="ltr">{{CurrentWeather?.rain || CurrentWeather?.snow || 0}} mm</span>
+                        <span class="value bd_2_text mt-2" dir="ltr">
+                            {{CurrentWeather?.rain ? CurrentWeather.rain['1h'] : (CurrentWeather?.snow ? CurrentWeather.snow['1h'] : 0)}}
+                             mm
+                        </span>
                     </div>
                 </div>
             </div>

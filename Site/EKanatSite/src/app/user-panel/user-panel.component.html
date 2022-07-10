@@ -4,10 +4,10 @@
 
       <div ngbDropdown class="d-inline-block me-auto" *ngIf="windowWidth<992">
         <button type="button" class="ghost_btn small_btn" id="account_btn_dropdown_mobile" ngbDropdownToggle>
-          <img src="./assets/images/users/2.png" alt="">
+          <img [src]="(userService.UserHomeInfo|async)?.image || profileAvatar" alt="">
         </button>
         <div ngbDropdownMenu aria-labelledby="account_btn_dropdown_mobile" class="text-end">
-          <span class="w-100 text-center d-block">توحید کرباسی</span>
+          <span class="w-100 text-center d-block">{{(userService.UserHomeInfo|async)?.fullName}}</span>
           <div class="dropdown-divider"></div>
           <a ngbDropdownItem class="bu_3_text bu_3_text_mobile py-2" [routerLink]="['/account/profile']">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ms-1 bi bi-person" viewBox="0 0 16 16">
@@ -81,8 +81,8 @@
       <div class="col-auto me-auto">
         <div ngbDropdown class="d-inline-block">
           <button type="button" class="ghost_btn small_btn" id="account_btn_dropdown" ngbDropdownToggle>
-            <img src="./assets/images/users/2.png" alt="">
-            توحید کرباسی 
+            <img [src]="(userService.UserHomeInfo|async)?.image || profileAvatar" alt="">
+            {{(userService.UserHomeInfo|async)?.fullName}} 
           </button>
           <div ngbDropdownMenu aria-labelledby="account_btn_dropdown" class="text-end">
             <a ngbDropdownItem class="bu_3_text bu_3_text_mobile py-2" [routerLink]="['/account/profile']">

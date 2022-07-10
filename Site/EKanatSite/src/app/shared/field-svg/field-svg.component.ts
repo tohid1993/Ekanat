@@ -15,7 +15,11 @@ export class FieldSvgComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.drawPoly(this.cordinates);
+    let coords:any[] = [];
+    this.cordinates.forEach((coord:any)=>{
+      coords.push([coord.x,coord.y]);
+    })
+    this.drawPoly(coords);
   }
 
   latLng2point(latlng:number[]) {
@@ -60,6 +64,7 @@ export class FieldSvgComponent implements OnInit {
   }
 
   drawPoly(cords:any[]) {
+
     var props = this.poly_gm2svg(cords);
 
     this.dAttr = props.path;

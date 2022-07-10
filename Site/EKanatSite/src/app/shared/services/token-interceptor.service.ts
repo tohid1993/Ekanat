@@ -7,6 +7,7 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GeneralService } from './general.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,14 +15,15 @@ import { GeneralService } from './general.service';
 export class TokenInterceptor implements HttpInterceptor {
     constructor(
       private spinner: NgxSpinnerService,
-      private gService:GeneralService
+      private gService:GeneralService,
+      private auth:AuthService
     ) {      
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       request = request.clone({
         setHeaders: {
-          Authorization: 'Bearer' //`Bearer ${this.auth.getToken()}`,
+          Authorization: `Bearer ${this.auth.getToken()}`,
         }
       });
 
