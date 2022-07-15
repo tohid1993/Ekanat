@@ -30,7 +30,7 @@ export class MainWeatherComponent implements OnInit {
     private http:HttpClient,
     private spinner: NgxSpinnerService,
   ) {
-    config.backdrop = 'static';
+    // config.backdrop = 'static';
     config.keyboard = false;
   }
 

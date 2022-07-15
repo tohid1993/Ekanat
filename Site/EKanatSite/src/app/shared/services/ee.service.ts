@@ -13,7 +13,18 @@ export class EeService {
 
   calcArea(coords:any[]){
     return this.gService.postObservable<any>
-      ("getArea",{cords:coords},{},true)
+      ("v1/Fields/GetArea",{cords:coords},{})
+  }
+
+  getPastWeather(lat:number,lng:number,fromDate:string,toDate:string){
+    return this.gService.postObservable<any>
+      ("v1/Fields/GetPastWeather",
+      {
+          lat:lat,
+          lng:lng,
+          fromDate:fromDate,
+          toDate:toDate
+      },{})
   }
 
 }

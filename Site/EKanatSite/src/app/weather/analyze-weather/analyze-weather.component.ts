@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
+import { EeService } from 'src/app/shared/services/ee.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 
 
@@ -20,6 +21,7 @@ export class AnalyzeWeatherComponent implements OnInit {
 
     constructor(
       private gService:GeneralService,
+      private eeService:EeService,
       private dateTimeService:DateTimeService,
       private spinner: NgxSpinnerService,
     ) { }
@@ -36,17 +38,15 @@ export class AnalyzeWeatherComponent implements OnInit {
       let fromDate = new Date(new Date().setMonth(toDate.getMonth() - 1));
 
       if(this.FieldLatLng)
-        this.gService.postObservable<any>("weather",
-        {
-          lat:this.FieldLatLng[0],
-          lng:this.FieldLatLng[1],
-          fromDate:fromDate.toISOString().split('T')[0],
-          toDate:toDate.toISOString().split('T')[0]
-        },
-        {},true)
+        this.eeService.getPastWeather(
+          this.FieldLatLng[0],
+          this.FieldLatLng[1],
+          fromDate.toISOString().split('T')[0],
+          toDate.toISOString().split('T')[0]
+        )
         .subscribe({
           next(res:any){
-            self.generateCharts(res);
+            self.generateCharts(res.data);
             self.showCharts = true;
           },
           error(err){console.log(err);

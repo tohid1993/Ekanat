@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { FileViewModel, UserProfileVM } from 'src/app/shared/models/model';
 import { FileService } from 'src/app/shared/services/file.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -15,7 +16,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     public fileService:FileService,
-    private userService:UserService
+    private userService:UserService,
+    private spinner:NgxSpinnerService
   ) {
     this.ProfileForm = new FormGroup(
       {
@@ -42,11 +44,13 @@ export class ProfileComponent implements OnInit {
   }
 
   saveProfile(){
+    this.spinner.show();
     let self = this;
     this.userService.updateUserProfile(this.ProfileForm.value)
     .subscribe({
       complete(){
           self.userService.loadUserDetails();
+          self.spinner.hide();
       }
     })
   }

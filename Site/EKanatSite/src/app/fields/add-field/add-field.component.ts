@@ -242,7 +242,7 @@ export class AddFieldComponent implements OnInit {
       .subscribe(
         {
           next(res) {
-            let area = Math.round(((res.area/10000) + Number.EPSILON) * 100) / 100;
+            let area = Math.round((((+res.data)/10000) + Number.EPSILON) * 100) / 100;
             if(area>=self.minHA && area<=self.maxHA){
               self.FieldArea = area;
               self.FieldCoordinates = coords;
