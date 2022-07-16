@@ -72,3 +72,12 @@
         }
     }
 }
+
+
+ngb-modal-backdrop{
+    z-index: 1090 !important;
+}
+
+.modal{
+    z-index: 1090;
+}
