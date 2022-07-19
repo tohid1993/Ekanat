@@ -6,7 +6,7 @@ import { TasksComponent } from './tasks/tasks.component';
 import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
-  { path: '', component: ImageryComponent},
+  { path: 'analytics/:id', component: ImageryComponent},
   { path: 'tasks', component: TasksComponent},
 ];
 

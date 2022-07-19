@@ -1,9 +1,54 @@
-
+@import "_vars";
 
 .imagery_content_wrapper{
     #map { 
         margin: 0.5rem;
-        height: calc(100vh - 1rem - 50px);
+        height: 300px;
         overflow: hidden;
+    }
+}
+
+.field_details_wrapper {
+    background: $RoyalBlue_10;
+    border-radius: 8px;
+    overflow: hidden;;
+    display: flex;
+    flex-direction: column;
+
+    .field_detail{
+        background-color: $Green_25;
+        padding: 12px 8px;
+
+        .field_svg{
+            width: 75px;
+        }
+    }
+
+    .current_weather{
+        background-color: $Green_25;
+        padding: 12px 8px;
+        margin-top: 8px;
+
+        .wind_direction{
+            width: 14px;
+            height: 14px;
+            background-image: url(/assets/images/icons/wind-arrow.png);
+            background-position: center;
+            background-size: 100%;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+    }
+
+    .new_analytics{
+        background-color: $Dark_80;
+        padding: 12px 8px;
+        margin-top: 8px;
+    }
+
+    .ahead_tasks{
+        padding: 12px 8px;
+        padding-top: 32px;
     }
 }

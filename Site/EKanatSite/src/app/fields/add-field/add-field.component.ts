@@ -18,7 +18,6 @@ import "src/assets/js/L.KML.js";
 import Swal from 'sweetalert2';
 
 
-
 @Component({
   selector: 'app-add-field',
   templateUrl: './add-field.component.html',
@@ -73,7 +72,11 @@ export class AddFieldComponent implements OnInit {
 
   ngOnInit(): void {
     this.openMethodModal();
+
     this.map = Leaflet.map('map').setView([38.0792, 46.2887], 10);
+
+
+    this.map.scrollWheelZoom.disable();
 
 
     Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {
@@ -81,6 +84,7 @@ export class AddFieldComponent implements OnInit {
         maxZoom: 20,
         attribution: 'EKANAT.COM ❤️'
     }).addTo(this.map);
+
 
 
     this.drawnItems = Leaflet.featureGroup().addTo(this.map);
