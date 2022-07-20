@@ -2,9 +2,9 @@
 
 .imagery_content_wrapper{
     #map { 
-        margin: 0.5rem;
-        height: 300px;
+        height: 100%;
         overflow: hidden;
+        border-radius: 8px;
     }
 }
 
@@ -50,5 +50,45 @@
     .ahead_tasks{
         padding: 12px 8px;
         padding-top: 32px;
+    }
+}
+
+.indicators_wrapper{
+    display: flex;
+    flex-direction: column;
+
+    .dates_wrapper{
+        background-color: $Dark_10;
+        padding: 12px 8px;
+        border-radius: 8px;
+    }
+
+    .categories_wrapper{
+        background-color: $Dark_10;
+        padding: 12px 8px;
+        border-radius: 8px;
+        margin-top: 8px;
+        flex-grow: 1;
+
+        .item {
+            width: 100%;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: $White;
+            opacity: 0.8;
+            color: $Dark_80;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 900;
+            margin-top: 8px;
+            transition:  0.2s all;
+
+            &:hover{
+                opacity: 0.9;
+            }
+        }
     }
 }
