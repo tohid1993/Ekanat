@@ -1,0 +1,111 @@
+.input_wrapper{
+    position: relative;
+    
+    input{
+        &[type="radio"]{
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: $LightGray_1;
+            border: 2px solid $Dark_10;
+            vertical-align: middle;
+            cursor: pointer;
+
+
+            &:hover{
+                border-color: $Blue_30;
+            }
+
+            &:checked{
+                background: $Primary_100;
+                border-color: $Primary_100;
+                box-shadow: 0 0 0 3px $LightGray_1 inset;
+            }
+
+            &:disabled{
+                border-color: $Dark_5;
+
+                &:checked{
+                    background: $Primary_100;
+                    border-color: $Primary_100;
+                    box-shadow: 0 0 0 3px $LightGray_1 inset;
+                    opacity: 0.5;
+                }
+            }
+
+            &.isRequired:not(:checked){
+                border-color: $Red_100;
+            }
+        }
+
+        &[type="checkbox"]{
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            background: $LightGray_1;
+            border: 2px solid $Dark_10;
+            vertical-align: middle;
+            cursor: pointer;
+
+            &:hover{
+                border-color: $Blue_30;
+            }
+
+            &:checked{
+                background: $Blue_100;
+                border-color: $Blue_100;
+                background-image: url(../images/check.svg);
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
+            &:disabled{
+                border-color: $Dark_5;
+
+                &:checked{
+                    background: $Blue_100;
+                    border-color: $Blue_100;
+                    opacity: 0.5;
+                    background-image: url(../images/check.svg);
+                    background-position: center;
+                    background-repeat: no-repeat;
+                }
+            }
+
+            &.isRequired:not(:checked){
+                border-color: $Red_100;
+            }
+        }
+    }
+
+
+    label{
+        cursor: pointer;
+
+    }
+
+
+}
+
+.input_validation_msg{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 125%;
+    display: block;
+    margin-top: 8px;
+
+    &.invalid{
+        color: $Red_100;
+    }
+    &.valid{
+        color: $Green_100;
+    }
+
+}
+
+
+
+

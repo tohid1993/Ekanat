@@ -1,6 +1,8 @@
 @import "_vars";
 
 .imagery_content_wrapper{
+    width: 100%;
+    transition: 0.3s all;
     #map { 
         height: 100%;
         overflow: hidden;
@@ -79,16 +81,70 @@
             opacity: 0.8;
             color: $Dark_80;
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
             font-size: 14px;
             font-weight: 900;
             margin-top: 8px;
             transition:  0.2s all;
+            cursor: pointer;
+
+            img{
+                filter: grayscale(1);
+            }
 
             &:hover{
                 opacity: 0.9;
             }
+
+            &.active{
+                img{
+                    filter: grayscale(0);
+                }
+
+                .indicators_list{
+                    margin-top: 16px;
+                    padding-top: 16px;
+                    opacity: 1;
+                    max-height: 500px;
+                }
+            }
+
+            .indicators_list{
+
+                width: 100%;
+                border-top: 1px solid $Dark_20;
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                padding: 0;
+                margin: 0;
+                transition: 0.3s all;
+            }
         }
     }
+}
+
+
+#collapseBtn {
+    position: absolute;
+    z-index: 1010;
+    right: 24px;
+    top: 8px;
+    border: 1px solid #383440;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#tooltip_value {
+    display:none;
+    position:fixed;
+    overflow:hidden;
+    background-color: rgb(30, 29, 29);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 25px 25px 25px 0;
+    z-index: 1010;
+    direction: ltr;
 }

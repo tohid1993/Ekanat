@@ -81,3 +81,8 @@ ngb-modal-backdrop{
 .modal{
     z-index: 1090;
 }
+
+
+.leaflet-image-layer.addedImage{
+    z-index: 300 !important;
+}

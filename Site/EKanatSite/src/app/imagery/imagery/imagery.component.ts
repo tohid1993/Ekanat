@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as Leaflet from 'leaflet';
 import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
 import * as GeoSearch from 'leaflet-geosearch'
 import { DateModel } from 'src/app/shared/models/model';
+import { EeService } from 'src/app/shared/services/ee.service';
 
 @Component({
   selector: 'app-imagery',
   templateUrl: './imagery.component.html',
   styleUrls: ['./imagery.component.scss']
 })
-export class ImageryComponent implements OnInit {
+export class ImageryComponent implements OnInit , AfterViewInit {
 
   map: Leaflet.Map|undefined;
   drawnItems:any;
@@ -31,13 +32,28 @@ export class ImageryComponent implements OnInit {
     fromDate!:DateModel;
     toDate!:DateModel;
 
-  constructor() { }
+    SelectedCategory:number = 0;
+
+    showFieldDetails:boolean = true;
+
+  constructor(
+    private eeService:EeService
+  ) { }
+
+  ngAfterViewInit(): void {
+    
+  }
+
+  setHightOfImageryWrapper(){
+    let offsetTop = (document.querySelector('#imagery_wrapper') as HTMLElement).offsetTop + 32; 
+    (document.querySelector('#imagery_wrapper>.row') as HTMLElement).style.minHeight = "calc(100vh - "+offsetTop+"px)"
+  }
 
   ngOnInit(): void {
+    this.setHightOfImageryWrapper();
+
     this.map = Leaflet.map('map').setView([38.0792, 46.2887], 10);
     // this.map.scrollWheelZoom.disable();
-
-
 
     Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {
         subdomains:['mt0','mt1','mt2','mt3'],
@@ -47,9 +63,27 @@ export class ImageryComponent implements OnInit {
 
     this.drawnItems = Leaflet.featureGroup().addTo(this.map);
 
-    this.addPolygonToMap(this.cords)
+    this.addPolygonToMap(this.eeService.getLatLngFromXYarray(this.cords))
     
   }
+
+
+  getIndicators(key:string){
+    let self = this;
+    switch (key) {
+      case "ndvi":
+        this.eeService.getNdvi(this.eeService.getLatLngFromXYarray(this.cords),"2022-07-01","2022-07-21").subscribe({
+          next(res){self.addImageToMap(res.imageUrl,res.legendUrl,self.eeService.getLatLngFromXYarray(self.cords))}
+        })
+        break;
+    
+      default:
+        break;
+    }
+  }
+
+
+
 
 
   // ایجاد چند ضلعی با استفاده از geoJson
@@ -62,16 +96,7 @@ export class ImageryComponent implements OnInit {
       {
         "type": "Polygon",
         "coordinates": [
-          [
-            [47.51624064076141, 37.93231715852789],
-            [47.51456694233612, 37.92981229426884],
-            [47.51894430744842, 37.931877120986286],
-            [47.52044634449676, 37.93045544323541],
-            [47.52203421223358, 37.934618850438284],
-            [47.51877264607147, 37.933129528607815],
-            [47.516583963515316, 37.93472039400975],
-            [47.51370863545135, 37.932757193435556]
-          ]
+          coordinates
         ]
       }
      
@@ -80,6 +105,185 @@ export class ImageryComponent implements OnInit {
     }
   }
 
+
+  addImageToMap(imageUrl:string,legendUrl:string,cords:any[]){
+
+    this.loadEECanvas(imageUrl);
+    this.loadLegend(legendUrl);
+
+    let imageBounds:any[] = this.getImageBounds(cords);
+    
+
+    if(this.map){
+      let obj = Leaflet.imageOverlay(imageUrl, imageBounds , {className:'addedImage',interactive:true}).addTo(this.map)
+        .on('mousemove',(e)=>{
+          if(this.map){
+            console.log(1111);
+
+            var pixelStart = this.map.latLngToLayerPoint(obj.getBounds().getNorthEast());
+            var pixelEnd = this.map.latLngToLayerPoint(obj.getBounds().getSouthWest());
+
+            var startOfImage = [pixelEnd.x,pixelStart.y];
+            var position = this.map.latLngToLayerPoint(e.latlng);
+
+
+            var imgWidth = (e as any).originalEvent.target.naturalWidth;
+            var imgHeight = (e as any).originalEvent.target.naturalHeight;
+            
+
+            var layerWidth = pixelStart.x - pixelEnd.x;
+            var layerHeight = pixelEnd.y - pixelStart.y;
+
+            var px = position.x-startOfImage[0];
+            var py = position.y-startOfImage[1];
+
+            var x = Math.round(imgWidth*px/layerWidth);
+            var y = Math.round(imgHeight*py/layerHeight);
+
+            let value = this.getValueOfPoint(x,y);
+
+            var mx = e.originalEvent.clientX,
+            my = e.originalEvent.clientY;
+
+            document.getElementById('tooltip_value')!!.style.top = (my - 45) + 'px';
+            document.getElementById('tooltip_value')!!.style.left = (mx) + 'px';
+
+            if(value){
+              
+              document.getElementById('tooltip_value')!!.innerText = value.toString();
+              document.getElementById('tooltip_value')!!.style.display = "block";
+            }else{
+              document.getElementById('tooltip_value')!!.style.display = "none";
+            }
+          }
+      });
+      this.map.fitBounds(obj.getBounds());
+    }
+  }
+
+  getImageBounds(cords:any[]):any{
+
+    let minX = cords[0][0];
+    let minY = cords[0][1];
+    let maxX = cords[0][0];
+    let maxY = cords[0][1];
+
+    cords.forEach(cord => {
+      if(minX>cord[0]) minX = cord[0];
+      if(minY>cord[1]) minY = cord[1];
+      if(maxX<cord[0]) maxX = cord[0];
+      if(maxY<cord[1]) maxY = cord[1];
+    });
+    
+    return [[minY,minX],[maxY,maxX]];
+  }
+
+  context:any;
+  context2:any;
+  colors:any[] = [];
+
+  // بارگیری تصویر شاخص
+  loadEECanvas(imgUrl:string){
+    const eeImg = new Image();
+    eeImg.crossOrigin = "Anonymous";
+
+    eeImg.onload = () => {
+        let imgWidth = eeImg.width;
+        let imgHeight = eeImg.height;
+
+        this.context = document.createElement('canvas');
+        this.context.setAttribute('width',imgWidth);
+        this.context.setAttribute('height',imgHeight);
+
+        this.context = this.context.getContext('2d');
+
+        this.context.drawImage(eeImg, 0, 0, imgWidth , imgHeight ,0 ,0 , imgWidth , imgHeight);
+    }
+    eeImg.src = imgUrl;
+  }
+
+  // بارگیری راهنما
+  loadLegend(imgUrl:string){
+    const legendImg = new Image();
+    legendImg.crossOrigin = "Anonymous";
+
+    legendImg.onload = () => {
+        let imgWidth = legendImg.width;
+        let imgHeight = legendImg.height;
+
+        this.context2 = document.createElement('canvas');
+        this.context2.setAttribute('width',imgWidth);
+        this.context2.setAttribute('height',imgHeight);
+
+        this.context2 = this.context2.getContext('2d');
+        this.context2.drawImage(legendImg, 0, 0, imgWidth , imgHeight ,0 ,0 , imgWidth , imgHeight);
+
+
+        for(var i = 0; i< imgHeight ;i++){
+            var col = this.getRGBA(5,i,'legend');
+            this.colors.push(col);
+        }
+    }
+    legendImg.src = imgUrl;
+  }
+
+
+  // گرفتن مقدار شاخص
+  getValueOfPoint(x:number,y:number){
+
+    let color = this.getRGBA(x,y,'ee');
+    let index = this.colors.findIndex(c=>(c[0]==color[0] && c[1]==color[1] && c[2]==color[2] && c[3]==color[3]));
+    let finalValueOfPoint = undefined;
+
+    if(index>=0){
+        let value = ((this.colors.length/2)-index)/(this.colors.length/2);
+        let mode = value*100%5
+        let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
+
+        finalValueOfPoint = finalValue;
+    }else{
+        let flag = false;
+        for(let index = 0 ; index<this.colors.length ; index++) {
+            if(this.isNeighborColor(this.colors[index],color,10)){
+
+                let value = ((this.colors.length/2)-index)/(this.colors.length/2);
+                let mode = value*100%5
+                let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
+
+                finalValueOfPoint = finalValue;
+
+                flag = true;
+                break;
+            }
+        }
+
+        if(!flag){
+            finalValueOfPoint = undefined;
+        }
+    }
+
+    return finalValueOfPoint;
+  }
+
+
+  // گرفتن رنگ یک نقطه
+  getRGBA(x:number,y:number,img:string):any{
+      const {data} = img=='legend'? this.context2.getImageData(x,y, 1, 1) : this.context.getImageData(x,y, 1, 1);;
+      var color = Array.from(data);
+      return color;
+  }
+
+
+  // تشخیص نزدیکترین رنگ
+  isNeighborColor(color1:number[], color2:number[], tolerance:number) {
+    if(tolerance == undefined) {
+        tolerance = 32;
+    }
+
+    return Math.abs(color1[0] - color2[0]) <= tolerance
+        && Math.abs(color1[1] - color2[1]) <= tolerance
+        && Math.abs(color1[2] - color2[2]) <= tolerance;
+  }
 
 
 

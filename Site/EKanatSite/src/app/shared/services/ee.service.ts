@@ -27,4 +27,23 @@ export class EeService {
       },{})
   }
 
+  getNdvi(cords:any[],fromDate:string,toDate:string){
+    return this.gService.postObservable<any>
+      ("ndvi",
+      {
+          cords:cords,
+          fromDate:fromDate,
+          toDate:toDate
+      },{},true)
+  }
+
+  getLatLngFromXYarray(cords:any[]){
+    let latlng:any[] = [];
+
+    cords.forEach(cord => {
+      latlng.push([cord.x,cord.y]);
+    });
+
+    return latlng;
+  }
 }

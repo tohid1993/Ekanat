@@ -2,9 +2,9 @@
     [backUrl]="'/fields'"
     [pageTitle]="'پایش زمین کشاورزی '"></app-page-breadcrumb>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12 col-md-4 col-xl-3">
+<div class="container-fluid" id="imagery_wrapper">
+    <div class="row pb-3">
+        <div class="col-12 col-md-4 col-xl-3 ps-md-0" *ngIf="showFieldDetails">
             <div class="field_details_wrapper h-100">
                 <div class="field_detail">
                     <div class="d-flex">
@@ -88,7 +88,18 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8 col-xl-7 px-md-0">
+        <div class="col-12 col-md ps-md-0 position-relative">
+            <button id="collapseBtn" (click)="showFieldDetails = !showFieldDetails">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16" *ngIf="showFieldDetails">
+                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                </svg>
+                <span *ngIf="!showFieldDetails">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                    </svg>
+                    <span  class="me-1 bu_3_text bu_3_text_mobile">زمین بابونه تبریز</span>
+                </span>
+            </button>
             <div class="imagery_content_wrapper h-100">
                 <div id="map" dir="ltr"></div>
             </div>
@@ -126,20 +137,33 @@
 
                 <div class="categories_wrapper">
                     <h4 class="bd_2_text bd_2_text_mobile text-center Dark_80_text mt-1 mb-3">دسته بندی شاخص ها</h4>
-                    <button class="item">
+                    <div class="item" (click)="SelectedCategory = 1" [ngClass]="{'active':SelectedCategory==1}">
                         <img src="./assets/images/icons/plant.png" width="45" alt="">
                         <span>بررسی گیاه</span>
-                    </button>
-                    <button class="item">
+
+                        <div class="indicators_list">
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="ndvi" (click)="getIndicators('ndvi')">
+                                <label for="ndvi" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDVI</label>
+                            </div>
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="ndre">
+                                <label for="ndre" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDRE</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item" (click)="SelectedCategory = 2" [ngClass]="{'active':SelectedCategory==2}">
                         <img src="./assets/images/icons/soil.png" width="45" alt="">
                         <span>بررسی خاک</span>
-                    </button>
-                    <button class="item">
+                    </div>
+                    <div class="item" (click)="SelectedCategory = 3" [ngClass]="{'active':SelectedCategory==3}">
                         <img src="./assets/images/icons/water.png" width="45" alt="">
                         <span>بررسی آب</span>
-                    </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<span id="tooltip_value"></span>
