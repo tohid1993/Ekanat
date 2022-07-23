@@ -3,7 +3,9 @@ import * as Leaflet from 'leaflet';
 import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
 import * as GeoSearch from 'leaflet-geosearch'
+import { NgxSpinnerService } from 'ngx-spinner';
 import { DateModel } from 'src/app/shared/models/model';
+import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
 
 @Component({
@@ -36,8 +38,14 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
     showFieldDetails:boolean = true;
 
+    imageLayer:any;
+    selectedIndicator:string = "";
+
   constructor(
-    private eeService:EeService
+    private eeService:EeService,
+    private dateTimeService:DateTimeService,
+    private spinner:NgxSpinnerService,
+
   ) { }
 
   ngAfterViewInit(): void {
@@ -45,8 +53,11 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   setHightOfImageryWrapper(){
-    let offsetTop = (document.querySelector('#imagery_wrapper') as HTMLElement).offsetTop + 32; 
-    (document.querySelector('#imagery_wrapper>.row') as HTMLElement).style.minHeight = "calc(100vh - "+offsetTop+"px)"
+    // let offsetTop = 
+    // (document.querySelector('#top_bar') as HTMLElement).clientHeight +
+    // (document.querySelector('.breadcrumb_wrapper') as HTMLElement).clientHeight + 64; 
+
+    (document.querySelector('#imagery_wrapper>.row') as HTMLElement).style.minHeight = "calc(100vh - 144px)"
   }
 
   ngOnInit(): void {
@@ -68,21 +79,81 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
 
+  closeFieldDetailsSide(bool:boolean|undefined=undefined){
+    this.showFieldDetails = bool!=undefined? bool : !this.showFieldDetails;
+
+    setTimeout(() => {
+      if(this.map)
+        this.map.invalidateSize()
+    }, 100);
+
+  }
+
   getIndicators(key:string){
+    if(key=="") return;
+        
+    this.beforeIndicatorProcess();
+    this.spinner.show();
+
+    let fromDate = this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.fromDate));
+    let toDate = this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate));
+
     let self = this;
     switch (key) {
       case "ndvi":
-        this.eeService.getNdvi(this.eeService.getLatLngFromXYarray(this.cords),"2022-07-01","2022-07-21").subscribe({
-          next(res){self.addImageToMap(res.imageUrl,res.legendUrl,self.eeService.getLatLngFromXYarray(self.cords))}
+        this.eeService.getNdvi(this.eeService.getLatLngFromXYarray(this.cords),fromDate,toDate).subscribe({
+          next(res){self.addImageToMap(res.imageUrl,res.legendUrl,self.eeService.getLatLngFromXYarray(self.cords)); self.spinner.hide()}
         })
         break;
     
       default:
         break;
     }
+
+    this.selectedIndicator = key;
   }
 
 
+  // عملیات های قبل از درخواست شاخص ها
+  beforeIndicatorProcess(){
+    let toDate = new Date(new Date().setDate(new Date().getDate()));
+    let fromDate = new Date(new Date().setMonth(toDate.getMonth() - 1));
+
+
+    if(!this.toDate){
+      let persianDate = this.dateTimeService.toJalaliDateTimeCustomFormat(toDate.toLocaleString(),"M/D/YYYY HH:mm:ss" , "YYYY-MM-DD");
+      this.toDate = this.dateTimeService.getDateModel(persianDate,'-')
+    }
+    if(!this.fromDate){ 
+      let persianDate = this.dateTimeService.toJalaliDateTimeCustomFormat(fromDate.toLocaleString(),"M/D/YYYY HH:mm:ss" , "YYYY-MM-DD");
+      this.fromDate = this.dateTimeService.getDateModel(persianDate,'-')
+    }
+
+
+    if (this.map && this.imageLayer && this.map.hasLayer(this.imageLayer)) {
+      this.map.removeLayer(this.imageLayer);
+    }
+
+    this.closeFieldDetailsSide(false);
+  }
+
+
+  setDate(key:String){
+    switch (key) {
+      case "fromDate":
+        // this.AddFieldForm.controls['cultivationDate'].setValue(
+        //   this.dateTimeService.toGeorgianDate(this.cultivationDate.year+"-"+this.cultivationDate.month+"-"+this.cultivationDate.day)
+        // );
+        break;
+
+      case "toDate":
+        
+          break;
+      
+      default:
+        break;
+    }
+  }
 
 
 
@@ -118,7 +189,6 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       let obj = Leaflet.imageOverlay(imageUrl, imageBounds , {className:'addedImage',interactive:true}).addTo(this.map)
         .on('mousemove',(e)=>{
           if(this.map){
-            console.log(1111);
 
             var pixelStart = this.map.latLngToLayerPoint(obj.getBounds().getNorthEast());
             var pixelEnd = this.map.latLngToLayerPoint(obj.getBounds().getSouthWest());
@@ -142,14 +212,15 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
             let value = this.getValueOfPoint(x,y);
 
+            value = value==undefined? -2:value;
+
             var mx = e.originalEvent.clientX,
             my = e.originalEvent.clientY;
 
             document.getElementById('tooltip_value')!!.style.top = (my - 45) + 'px';
             document.getElementById('tooltip_value')!!.style.left = (mx) + 'px';
 
-            if(value){
-              
+            if(value>=-1 && value<=1){
               document.getElementById('tooltip_value')!!.innerText = value.toString();
               document.getElementById('tooltip_value')!!.style.display = "block";
             }else{
@@ -157,6 +228,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
             }
           }
       });
+
+      this.imageLayer = obj;
       this.map.fitBounds(obj.getBounds());
     }
   }
@@ -268,9 +341,13 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   // گرفتن رنگ یک نقطه
   getRGBA(x:number,y:number,img:string):any{
+    try {
       const {data} = img=='legend'? this.context2.getImageData(x,y, 1, 1) : this.context.getImageData(x,y, 1, 1);;
       var color = Array.from(data);
       return color;
+    } catch (error) {
+      
+    }
   }
 
 

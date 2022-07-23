@@ -4,7 +4,7 @@
 
 <div class="container-fluid" id="imagery_wrapper">
     <div class="row pb-3">
-        <div class="col-12 col-md-4 col-xl-3 ps-md-0" *ngIf="showFieldDetails">
+        <div class="col-12 col-xl-3 ps-md-0" *ngIf="showFieldDetails">
             <div class="field_details_wrapper h-100">
                 <div class="field_detail">
                     <div class="d-flex">
@@ -88,8 +88,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md ps-md-0 position-relative">
-            <button id="collapseBtn" (click)="showFieldDetails = !showFieldDetails">
+        <div class="col-12 col-xl-7 ps-md-0 position-relative" [ngClass]="{'col-xl-7':showFieldDetails , 'col-xl-10':!showFieldDetails}">
+            <button id="collapseBtn" (click)="closeFieldDetailsSide()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16" *ngIf="showFieldDetails">
                     <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
                 </svg>
@@ -111,7 +111,7 @@
                         <label for="fromDate" class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">از تاریخ</label>
                         <div class="input-group" dir="ltr">
                             <input class="form-control border-secondary bu_3_text bu_3_text_mobile" placeholder="پایش از تاریخ" [firstDayOfWeek]="6" [ngModelOptions]="{standalone: true}"
-                                   name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="fromDate">
+                                   name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="fromDate" (ngModelChange)="getIndicators(selectedIndicator)">
                             <button class="btn btn-outline-secondary bg-light" (click)="d.toggle()" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#383440" class="bi bi-calendar-plus" viewBox="0 0 16 16">
                                     <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
@@ -124,7 +124,7 @@
                         <label for="toDate" class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">تا تاریخ</label>
                         <div class="input-group" dir="ltr">
                             <input class="form-control border-secondary bu_3_text bu_3_text_mobile" placeholder="پایش تا تاریخ" [firstDayOfWeek]="6" [ngModelOptions]="{standalone: true}"
-                                   name="dp" ngbDatepicker #d1="ngbDatepicker" [(ngModel)]="toDate">
+                                   name="dp" ngbDatepicker #d1="ngbDatepicker" [(ngModel)]="toDate" (ngModelChange)="getIndicators(selectedIndicator)">
                             <button class="btn btn-outline-secondary bg-light calendar" (click)="d1.toggle()" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#383440" class="bi bi-calendar-plus" viewBox="0 0 16 16">
                                     <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
