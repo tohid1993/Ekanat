@@ -7,6 +7,7 @@
         height: 100%;
         overflow: hidden;
         border-radius: 8px;
+        min-height: 400px;
     }
 }
 
@@ -14,8 +15,6 @@
     background: $RoyalBlue_10;
     border-radius: 8px;
     overflow: hidden;;
-    display: flex;
-    flex-direction: column;
 
     .field_detail{
         background-color: $Green_25;

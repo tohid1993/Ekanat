@@ -3,63 +3,65 @@
     [pageTitle]="'پایش زمین کشاورزی '"></app-page-breadcrumb>
 
 <div class="container-fluid" id="imagery_wrapper">
-    <div class="row pb-3">
-        <div class="col-12 col-xl-3 ps-md-0" *ngIf="showFieldDetails">
-            <div class="field_details_wrapper h-100">
-                <div class="field_detail">
-                    <div class="d-flex">
-                        <div class="flex-grow-1">
-                            <h4 class="bd_1_text bd_1_text_mobile Primary_100_text">
-                                زمین بابونه تبریز
-                            </h4>
-                            <span class="d-block caption_text caption_text_mobile">
-                                بابونه
-                                <span dir="ltr">(1401-04-25)</span>
-                            </span>
-                            <span class="d-block caption_text caption_text_mobile">2.56 هکتار</span>
+    <div class="row g-3 pb-2">
+        <div class="col-12 col-md-12 col-xl-3" *ngIf="showFieldDetails || windowWidth<1200">
+            <div class="field_details_wrapper h-100 row w-100 mx-auto">
+                <div class="col-12 col-md-6 col-xl-12 px-0">
+                    <div class="field_detail">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <h4 class="bd_1_text bd_1_text_mobile Primary_100_text">
+                                    زمین بابونه تبریز
+                                </h4>
+                                <span class="d-block caption_text caption_text_mobile">
+                                    بابونه
+                                    <span dir="ltr">(1401-04-25)</span>
+                                </span>
+                                <span class="d-block caption_text caption_text_mobile">2.56 هکتار</span>
+                            </div>
+                            <app-field-svg class="field_svg" [cordinates]="cords"></app-field-svg>
                         </div>
-                        <app-field-svg class="field_svg" [cordinates]="cords"></app-field-svg>
                     </div>
-                </div>
-                <div class="current_weather">
-                    <h4 class="bd_1_text bd_1_text_mobile Primary_100_text">آب و هوای فعلی</h4>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="text-center d-flex align-items-center">
-                            <img src="./assets/images/icons/weather/01n.svg" width="35" alt="">
-                            <div>
-                                <div class="bu_3_text bu_3_text_mobile">درجه دما</div>
-                                <strong dir="ltr" class="caption_text caption_text_mobile">30 °C</strong>
+                    <div class="current_weather">
+                        <h4 class="bd_1_text bd_1_text_mobile Primary_100_text">آب و هوای فعلی</h4>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="text-center d-flex align-items-center">
+                                <img src="./assets/images/icons/weather/01n.svg" width="35" alt="">
+                                <div>
+                                    <div class="bu_3_text bu_3_text_mobile">درجه دما</div>
+                                    <strong dir="ltr" class="caption_text caption_text_mobile">30 °C</strong>
+                                </div>
+                            </div>
+                            <div class="text-center d-flex align-items-center" >
+                                <i class="wind_direction" style="transform: rotate(80deg);"></i>
+                                <div>
+                                    <div class="bu_3_text bu_3_text_mobile">جهت باد</div>
+                                    <strong dir="ltr" class="caption_text caption_text_mobile">3.09 m/s </strong>
+                                </div>
                             </div>
                         </div>
-                        <div class="text-center d-flex align-items-center" >
-                            <i class="wind_direction" style="transform: rotate(80deg);"></i>
-                            <div>
-                                <div class="bu_3_text bu_3_text_mobile">جهت باد</div>
-                                <strong dir="ltr" class="caption_text caption_text_mobile">3.09 m/s </strong>
-                            </div>
+                    </div>
+                    <div class="new_analytics">
+                        <h4 class="bd_1_text bd_1_text_mobile White_text">تحلیل کارشناس سنجش از دور</h4>
+                        <div class="unread_analytics pe-2">
+                            <button class="White_text border-0 bg-transparent caption_text d-block mt-2 mb-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                                    <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                                    <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                </svg>
+                                1401-04-25 - مشاهده کنید
+                            </button>
+                            <button class="White_text border-0 bg-transparent caption_text d-block mt-2 mb-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                                    <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                                    <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                </svg>
+                                1401-04-29 - مشاهده کنید
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="new_analytics">
-                    <h4 class="bd_1_text bd_1_text_mobile White_text">تحلیل کارشناس سنجش از دور</h4>
-                    <div class="unread_analytics pe-2">
-                        <button class="White_text border-0 bg-transparent caption_text d-block mt-2 mb-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
-                                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
-                                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-                            </svg>
-                            1401-04-25 - مشاهده کنید
-                        </button>
-                        <button class="White_text border-0 bg-transparent caption_text d-block mt-2 mb-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
-                                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
-                                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-                            </svg>
-                            1401-04-29 - مشاهده کنید
-                        </button>
-                    </div>
-                </div>
-                <div class="ahead_tasks mt-auto">
+                <div class="ahead_tasks mt-xl-auto col-12 col-md-6 col-xl-12">
                     <h4 class="bd_1_text bd_1_text_mobile Dark_80_text">فعالیت های پیش رو</h4>
                     <div class="tasks pe-2 mb-3">
                         <button class="Dark_70_text border-0 bg-transparent caption_text d-block mt-2 mb-1">
@@ -88,8 +90,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-xl-7 ps-md-0 position-relative" [ngClass]="{'col-xl-7':showFieldDetails , 'col-xl-10':!showFieldDetails}">
-            <button id="collapseBtn" (click)="closeFieldDetailsSide()">
+        <div class="col-12 col-md-8 col-xl-6 col-xxl-7 position-relative" 
+            [ngClass]="{'col-xl-6 col-xxl-7':(showFieldDetails && windowWidth>=1200) ,
+                         'col-xl-9 col-xxl-10':(!showFieldDetails && windowWidth>=1200)}">
+
+            <button id="collapseBtn" (click)="closeFieldDetailsSide()" *ngIf="windowWidth>=1200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16" *ngIf="showFieldDetails">
                     <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
                 </svg>
@@ -104,7 +109,7 @@
                 <div id="map" dir="ltr"></div>
             </div>
         </div>
-        <div class="col-12 col-xl-2">
+        <div class="col-12 col-md-4 col-xl-3 col-xxl-2">
             <div class="indicators_wrapper h-100">
                 <div class="dates_wrapper">
                     <div class="col-12 mb-2">

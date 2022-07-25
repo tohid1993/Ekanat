@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import * as Leaflet from 'leaflet';
 import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
@@ -41,6 +41,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     imageLayer:any;
     selectedIndicator:string = "";
 
+    windowWidth:number = window.innerWidth;
+
   constructor(
     private eeService:EeService,
     private dateTimeService:DateTimeService,
@@ -53,18 +55,19 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   setHightOfImageryWrapper(){
-    // let offsetTop = 
-    // (document.querySelector('#top_bar') as HTMLElement).clientHeight +
-    // (document.querySelector('.breadcrumb_wrapper') as HTMLElement).clientHeight + 64; 
-
     (document.querySelector('#imagery_wrapper>.row') as HTMLElement).style.minHeight = "calc(100vh - 144px)"
+  }
+
+  @HostListener('window:resize', ['$event'])
+    onResize() {
+      this.windowWidth = window.innerWidth;
   }
 
   ngOnInit(): void {
     this.setHightOfImageryWrapper();
 
     this.map = Leaflet.map('map').setView([38.0792, 46.2887], 10);
-    // this.map.scrollWheelZoom.disable();
+    this.map.scrollWheelZoom.disable();
 
     Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {
         subdomains:['mt0','mt1','mt2','mt3'],
@@ -138,25 +141,6 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
 
-  setDate(key:String){
-    switch (key) {
-      case "fromDate":
-        // this.AddFieldForm.controls['cultivationDate'].setValue(
-        //   this.dateTimeService.toGeorgianDate(this.cultivationDate.year+"-"+this.cultivationDate.month+"-"+this.cultivationDate.day)
-        // );
-        break;
-
-      case "toDate":
-        
-          break;
-      
-      default:
-        break;
-    }
-  }
-
-
-
   // ایجاد چند ضلعی با استفاده از geoJson
   addPolygonToMap(coordinates:any){
     if(this.map){
@@ -177,6 +161,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
 
+  // اضافه کردن تصویر شاخص به نقشه
   addImageToMap(imageUrl:string,legendUrl:string,cords:any[]){
 
     this.loadEECanvas(imageUrl);
