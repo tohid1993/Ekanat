@@ -87,6 +87,10 @@ export class FieldService {
     return this.gService.get("v1/Fields/GetList",{});
   }
 
+  getFieldDetails(fieldId:number){
+    return this.gService.get("v1/Fields/GetDetail",{id:fieldId});
+  }
+
   getFieldWeather(lat:number,lng:number){
     return this.gService.get("v1/Fields/GetWeather",{latitude:lat,longitude:lng})
   }

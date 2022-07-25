@@ -1,12 +1,14 @@
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as Leaflet from 'leaflet';
 import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
 import * as GeoSearch from 'leaflet-geosearch'
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DateModel } from 'src/app/shared/models/model';
+import { DateModel, FieldDetailViewModel, IndicatorsTypes } from 'src/app/shared/models/model';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
+import { FieldService } from 'src/app/shared/services/field.service';
 
 @Component({
   selector: 'app-imagery',
@@ -18,37 +20,39 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   map: Leaflet.Map|undefined;
   drawnItems:any;
 
-  cords = 
-    [
-      {x:47.51624064076141, y:37.93231715852789},
-      {x:47.51456694233612, y:37.92981229426884},
-      {x:47.51894430744842, y:37.931877120986286},
-      {x:47.52044634449676, y:37.93045544323541},
-      {x:47.52203421223358, y:37.934618850438284},
-      {x:47.51877264607147, y:37.933129528607815},
-      {x:47.516583963515316, y:37.93472039400975},
-      {x:47.51370863545135, y:37.932757193435556}
-    ]
+  fieldId!:number;
+  fieldDetail!:FieldDetailViewModel;
+  CurrentWeather:any;
   
+  fromDate!:DateModel;
+  toDate!:DateModel;
 
-    fromDate!:DateModel;
-    toDate!:DateModel;
+  SelectedCategory:number = 0;
 
-    SelectedCategory:number = 0;
+  showFieldDetails:boolean = true;
 
-    showFieldDetails:boolean = true;
+  imageLayer:any;
+  selectedIndicator!:IndicatorsTypes;
 
-    imageLayer:any;
-    selectedIndicator:string = "";
+  IndicatorsTypes=IndicatorsTypes;
 
-    windowWidth:number = window.innerWidth;
+  windowWidth:number = window.innerWidth;
+
+  Math=Math;
 
   constructor(
     private eeService:EeService,
     private dateTimeService:DateTimeService,
     private spinner:NgxSpinnerService,
-
-  ) { }
+    private fieldService:FieldService,
+    private route:ActivatedRoute
+  ) {
+    this.route.params.subscribe(
+      params=>{
+        this.fieldId = params['id'];
+      }
+    )
+  }
 
   ngAfterViewInit(): void {
     
@@ -64,6 +68,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.getFieldDetails();
     this.setHightOfImageryWrapper();
 
     this.map = Leaflet.map('map').setView([38.0792, 46.2887], 10);
@@ -77,8 +82,47 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
     this.drawnItems = Leaflet.featureGroup().addTo(this.map);
 
-    this.addPolygonToMap(this.eeService.getLatLngFromXYarray(this.cords))
-    
+  }
+
+
+  getFieldDetails(){
+    this.spinner.show();
+    let self = this;
+    this.fieldService.getFieldDetails(this.fieldId)
+      .subscribe({
+        next(res:any){
+          self.fieldDetail = (res.data as FieldDetailViewModel);
+          self.getForecastWeather();
+          self.addPolygonToMap(self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon));
+          self.spinner.hide();
+        }
+      })
+  }
+
+  getForecastWeather(){
+    let self = this;
+
+    this.spinner.show();
+
+    let coords:any[] = [];
+    this.fieldDetail.polygon.forEach((coord:any)=>{
+      coords.push([coord.x,coord.y]);
+    })
+    let FieldLatLng = this.fieldService.centerOfField(coords)
+
+    if(FieldLatLng)
+      // lat = y , lng = x
+      this.fieldService.getFieldWeather(FieldLatLng[1],FieldLatLng[0])
+        .subscribe({
+          next(res:any){
+              self.CurrentWeather = res.data.current;
+          },
+          error(err){console.log(err);
+          },
+          complete(){
+            self.spinner.hide();
+          }
+        })
   }
 
 
@@ -92,9 +136,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   }
 
-  getIndicators(key:string){
-    if(key=="") return;
-        
+  getIndicators(key:IndicatorsTypes){        
     this.beforeIndicatorProcess();
     this.spinner.show();
 
@@ -102,16 +144,13 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     let toDate = this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate));
 
     let self = this;
-    switch (key) {
-      case "ndvi":
-        this.eeService.getNdvi(this.eeService.getLatLngFromXYarray(this.cords),fromDate,toDate).subscribe({
-          next(res){self.addImageToMap(res.imageUrl,res.legendUrl,self.eeService.getLatLngFromXYarray(self.cords)); self.spinner.hide()}
-        })
-        break;
-    
-      default:
-        break;
-    }
+
+    this.eeService.getIndicators(key,this.eeService.getLatLngFromXYarray(this.fieldDetail.polygon),fromDate,toDate).subscribe({
+      next(res){
+        self.addImageToMap(res.toString(),self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon)); 
+        self.spinner.hide();
+      }
+    })
 
     this.selectedIndicator = key;
   }
@@ -162,10 +201,10 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
 
   // اضافه کردن تصویر شاخص به نقشه
-  addImageToMap(imageUrl:string,legendUrl:string,cords:any[]){
+  addImageToMap(imageUrl:string,cords:any[]){
 
     this.loadEECanvas(imageUrl);
-    this.loadLegend(legendUrl);
+    this.loadLegend('./assets/images/legend.jpg');
 
     let imageBounds:any[] = this.getImageBounds(cords);
     
@@ -212,6 +251,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
               document.getElementById('tooltip_value')!!.style.display = "none";
             }
           }
+      }).on("mouseout",(e)=>{
+        document.getElementById('tooltip_value')!!.style.display = "none";
       });
 
       this.imageLayer = obj;
@@ -288,39 +329,42 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   // گرفتن مقدار شاخص
   getValueOfPoint(x:number,y:number){
+    try {
+      let color = this.getRGBA(x,y,'ee');
+      let index = this.colors.findIndex(c=>(c[0]==color[0] && c[1]==color[1] && c[2]==color[2] && c[3]==color[3]));
+      let finalValueOfPoint = undefined;
 
-    let color = this.getRGBA(x,y,'ee');
-    let index = this.colors.findIndex(c=>(c[0]==color[0] && c[1]==color[1] && c[2]==color[2] && c[3]==color[3]));
-    let finalValueOfPoint = undefined;
+      if(index>=0){
+          let value = ((this.colors.length/2)-index)/(this.colors.length/2);
+          let mode = value*100%5
+          let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
 
-    if(index>=0){
-        let value = ((this.colors.length/2)-index)/(this.colors.length/2);
-        let mode = value*100%5
-        let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
+          finalValueOfPoint = finalValue;
+      }else{
+          let flag = false;
+          for(let index = 0 ; index<this.colors.length ; index++) {
+              if(this.isNeighborColor(this.colors[index],color,10)){
 
-        finalValueOfPoint = finalValue;
-    }else{
-        let flag = false;
-        for(let index = 0 ; index<this.colors.length ; index++) {
-            if(this.isNeighborColor(this.colors[index],color,10)){
+                  let value = ((this.colors.length/2)-index)/(this.colors.length/2);
+                  let mode = value*100%5
+                  let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
 
-                let value = ((this.colors.length/2)-index)/(this.colors.length/2);
-                let mode = value*100%5
-                let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
+                  finalValueOfPoint = finalValue;
 
-                finalValueOfPoint = finalValue;
+                  flag = true;
+                  break;
+              }
+          }
 
-                flag = true;
-                break;
-            }
-        }
+          if(!flag){
+              finalValueOfPoint = undefined;
+          }
+      }
 
-        if(!flag){
-            finalValueOfPoint = undefined;
-        }
+      return finalValueOfPoint;
+    } catch (error) {
+      return -2;
     }
-
-    return finalValueOfPoint;
   }
 
 

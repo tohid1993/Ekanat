@@ -43,3 +43,23 @@ export class FieldsListVM{
     polygon!: any[];
     geoJson!: string;
 }
+
+export enum IndicatorsTypes{
+    ndvi = 1 ,
+    ndre = 2,  
+    reci = 3 , 
+    sipi = 4,  
+    vari = 5, 
+    evi = 6, 
+    arvi = 7
+}
+
+export class FieldDetailViewModel
+{
+    id!:number;
+    name!:string;
+    productName!:string;
+    area!:number;
+    cultivationDate!:string;
+    polygon!:any[];
+}

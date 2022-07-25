@@ -7,36 +7,36 @@
         <div class="col-12 col-md-12 col-xl-3" *ngIf="showFieldDetails || windowWidth<1200">
             <div class="field_details_wrapper h-100 row w-100 mx-auto">
                 <div class="col-12 col-md-6 col-xl-12 px-0">
-                    <div class="field_detail">
+                    <div class="field_detail" *ngIf="fieldDetail">
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <h4 class="bd_1_text bd_1_text_mobile Primary_100_text">
-                                    زمین بابونه تبریز
+                                    {{fieldDetail.name}}
                                 </h4>
                                 <span class="d-block caption_text caption_text_mobile">
-                                    بابونه
-                                    <span dir="ltr">(1401-04-25)</span>
+                                    {{fieldDetail.productName}}
+                                    <span dir="ltr">({{fieldDetail.cultivationDate}})</span>
                                 </span>
-                                <span class="d-block caption_text caption_text_mobile">2.56 هکتار</span>
+                                <span class="d-block caption_text caption_text_mobile">{{fieldDetail.area}} هکتار</span>
                             </div>
-                            <app-field-svg class="field_svg" [cordinates]="cords"></app-field-svg>
+                            <app-field-svg class="field_svg" [cordinates]="fieldDetail.polygon"></app-field-svg>
                         </div>
                     </div>
                     <div class="current_weather">
                         <h4 class="bd_1_text bd_1_text_mobile Primary_100_text">آب و هوای فعلی</h4>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="text-center d-flex align-items-center">
-                                <img src="./assets/images/icons/weather/01n.svg" width="35" alt="">
+                                <img [src]="'./assets/images/icons/weather/'+CurrentWeather?.weather[0].icon+'.svg'" width="35" alt="">
                                 <div>
                                     <div class="bu_3_text bu_3_text_mobile">درجه دما</div>
-                                    <strong dir="ltr" class="caption_text caption_text_mobile">30 °C</strong>
+                                    <strong dir="ltr" class="caption_text caption_text_mobile">{{Math.round(CurrentWeather?.temp)}} °C</strong>
                                 </div>
                             </div>
                             <div class="text-center d-flex align-items-center" >
-                                <i class="wind_direction" style="transform: rotate(80deg);"></i>
+                                <i class="wind_direction" [ngStyle]="{'transform': 'rotate('+(CurrentWeather?.wind_deg || 0)+'deg)'}"></i>
                                 <div>
                                     <div class="bu_3_text bu_3_text_mobile">جهت باد</div>
-                                    <strong dir="ltr" class="caption_text caption_text_mobile">3.09 m/s </strong>
+                                    <strong dir="ltr" class="caption_text caption_text_mobile">{{CurrentWeather?.wind_speed || 0}} m/s </strong>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
                     </svg>
-                    <span  class="me-1 bu_3_text bu_3_text_mobile">زمین بابونه تبریز</span>
+                    <span  class="me-1 bu_3_text bu_3_text_mobile">{{fieldDetail.name}}</span>
                 </span>
             </button>
             <div class="imagery_content_wrapper h-100">
@@ -148,13 +148,34 @@
 
                         <div class="indicators_list">
                             <div class="input_wrapper mb-2">
-                                <input type="radio" name="plant_indicators" id="ndvi" (click)="getIndicators('ndvi')">
+                                <input type="radio" name="plant_indicators" id="ndvi" (click)="getIndicators(IndicatorsTypes.ndvi)">
                                 <label for="ndvi" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDVI</label>
                             </div>
                             <div class="input_wrapper mb-2">
-                                <input type="radio" name="plant_indicators" id="ndre">
+                                <input type="radio" name="plant_indicators" id="ndre" (click)="getIndicators(IndicatorsTypes.ndre)">
                                 <label for="ndre" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDRE</label>
                             </div>
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="reci" (click)="getIndicators(IndicatorsTypes.reci)">
+                                <label for="reci" class="me-2 bd_2_text bd_2_text_mobile">شاخص RECI</label>
+                            </div>
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="sipi" (click)="getIndicators(IndicatorsTypes.sipi)">
+                                <label for="sipi" class="me-2 bd_2_text bd_2_text_mobile">شاخص SIPI</label>
+                            </div>
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="vari" (click)="getIndicators(IndicatorsTypes.vari)">
+                                <label for="vari" class="me-2 bd_2_text bd_2_text_mobile">شاخص VARI</label>
+                            </div>
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="evi" (click)="getIndicators(IndicatorsTypes.evi)">
+                                <label for="evi" class="me-2 bd_2_text bd_2_text_mobile">شاخص EVI</label>
+                            </div>
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="arvi" (click)="getIndicators(IndicatorsTypes.arvi)">
+                                <label for="arvi" class="me-2 bd_2_text bd_2_text_mobile">شاخص ARVI</label>
+                            </div>
+
                         </div>
                     </div>
                     <div class="item" (click)="SelectedCategory = 2" [ngClass]="{'active':SelectedCategory==2}">

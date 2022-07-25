@@ -8,6 +8,8 @@
         overflow: hidden;
         border-radius: 8px;
         min-height: 400px;
+        position: relative;
+        z-index: 10;
     }
 }
 
@@ -128,7 +130,7 @@
 
 #collapseBtn {
     position: absolute;
-    z-index: 1010;
+    z-index: 11;
     right: 24px;
     top: 8px;
     border: 1px solid #383440;

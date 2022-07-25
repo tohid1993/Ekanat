@@ -38,6 +38,10 @@ export class TokenInterceptor implements HttpInterceptor {
                 else  
                   this.gService.showErrorToastr("خطایی رخ داده است");
               }
+
+              if(error.status==500){
+                this.gService.showErrorToastr("سمت سرور مشکلی پیش آمده است ، مجدد تلاش نمایید");
+              }
               return throwError(error);
           })
       );
