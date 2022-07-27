@@ -23,7 +23,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   fieldId!:number;
   fieldDetail!:FieldDetailViewModel;
   CurrentWeather:any;
-  
+
   fromDate!:DateModel;
   toDate!:DateModel;
 
@@ -55,7 +55,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    
+
   }
 
   setHightOfImageryWrapper(){
@@ -136,7 +136,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   }
 
-  getIndicators(key:IndicatorsTypes){        
+  getIndicators(key:IndicatorsTypes){
     this.beforeIndicatorProcess();
     this.spinner.show();
 
@@ -145,9 +145,9 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
     let self = this;
 
-    this.eeService.getIndicators(key,this.eeService.getLatLngFromXYarray(this.fieldDetail.polygon),fromDate,toDate).subscribe({
-      next(res){
-        self.addImageToMap(res.toString(),self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon)); 
+    this.eeService.getIndicators(this.fieldDetail.id,key,fromDate,toDate).subscribe({
+      next(res:any){
+        self.addImageToMap("data:image/png;base64,"+res.data,self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon));
         self.spinner.hide();
       }
     })
@@ -166,7 +166,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       let persianDate = this.dateTimeService.toJalaliDateTimeCustomFormat(toDate.toLocaleString(),"M/D/YYYY HH:mm:ss" , "YYYY-MM-DD");
       this.toDate = this.dateTimeService.getDateModel(persianDate,'-')
     }
-    if(!this.fromDate){ 
+    if(!this.fromDate){
       let persianDate = this.dateTimeService.toJalaliDateTimeCustomFormat(fromDate.toLocaleString(),"M/D/YYYY HH:mm:ss" , "YYYY-MM-DD");
       this.fromDate = this.dateTimeService.getDateModel(persianDate,'-')
     }
@@ -193,7 +193,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
           coordinates
         ]
       }
-     
+
       let geoJSON = Leaflet.geoJSON(status).addTo(this.drawnItems);
       this.map.fitBounds(geoJSON.getBounds());
     }
@@ -207,7 +207,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     this.loadLegend('./assets/images/legend.jpg');
 
     let imageBounds:any[] = this.getImageBounds(cords);
-    
+
 
     if(this.map){
       let obj = Leaflet.imageOverlay(imageUrl, imageBounds , {className:'addedImage',interactive:true}).addTo(this.map)
@@ -223,7 +223,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
             var imgWidth = (e as any).originalEvent.target.naturalWidth;
             var imgHeight = (e as any).originalEvent.target.naturalHeight;
-            
+
 
             var layerWidth = pixelStart.x - pixelEnd.x;
             var layerHeight = pixelEnd.y - pixelStart.y;
@@ -273,7 +273,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       if(maxX<cord[0]) maxX = cord[0];
       if(maxY<cord[1]) maxY = cord[1];
     });
-    
+
     return [[minY,minX],[maxY,maxX]];
   }
 
@@ -375,7 +375,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       var color = Array.from(data);
       return color;
     } catch (error) {
-      
+
     }
   }
 
