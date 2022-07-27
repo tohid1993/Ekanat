@@ -28,50 +28,15 @@ export class EeService {
       },{})
   }
 
-  getIndicators(type:IndicatorsTypes,cords:any[],fromDate:string,toDate:string){
-
-    let api = "";
-
-    switch (type) {
-      case IndicatorsTypes.ndvi:
-        api = "ndvi";
-        break;
-
-      case IndicatorsTypes.ndre:
-        api = "ndre";
-        break;
-
-      case IndicatorsTypes.reci:
-        api = "reci";
-        break;
-
-      case IndicatorsTypes.sipi:
-        api = "sipi";
-        break;
-
-      case IndicatorsTypes.vari:
-        api = "vari";
-        break;  
-
-      case IndicatorsTypes.evi:
-        api = "evi";
-        break; 
-        
-      case IndicatorsTypes.arvi:
-        api = "arvi";
-        break;  
-      default:
-        break;
-    }
-
+  getIndicators(fieldId:number,type:IndicatorsTypes,fromDate:string,toDate:string){
     return this.gService.post
-      (api,
+      ("v1/Fields/RemoteSense",
       {
+          fieldId:fieldId,
           type:type,
-          cords:cords,
           fromDate:fromDate,
           toDate:toDate
-      },{},'text',true)
+      },{})
   }
 
   getLatLngFromXYarray(cords:any[]){
