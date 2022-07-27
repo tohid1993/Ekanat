@@ -9,12 +9,12 @@ import { UserHomeInfoVM } from '../models/model';
     providedIn: 'root'
 })
 
-export class UserService  { 
+export class UserService  {
 
     private _isAuth = new BehaviorSubject<boolean>(false);
     isAuth = this._isAuth.asObservable();
 
-    private _UserHomeInfo = new Subject<UserHomeInfoVM>();
+    private _UserHomeInfo = new BehaviorSubject<any>(undefined);
     UserHomeInfo = this._UserHomeInfo.asObservable();
 
     private loggedIn = false;
@@ -25,7 +25,7 @@ export class UserService  {
         ) {
 
         this.loggedIn = !!localStorage.getItem('user_token');
- 
+
         this._isAuth.next(this.loggedIn);
     }
 
