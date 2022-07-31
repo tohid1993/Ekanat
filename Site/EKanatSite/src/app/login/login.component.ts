@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   vCodeSent:boolean = false;
   retryRequestCode:boolean = false;
 
+
   constructor(
     private userService:UserService,
     private spinner:NgxSpinnerService,
@@ -44,7 +45,8 @@ export class LoginComponent implements OnInit {
   ) {
     this.LoginForm = new FormGroup({
       mobile:new FormControl(null,[Validators.required , Validators.pattern("[\u06F0,0]{1}[\u06F9,9]{1}[\u06F0-\u06F9,0-9]{9}")]),
-      code:new FormControl(null,[])
+      code:new FormControl(null,[]),
+      selectedCountry:new FormControl(1,[]),
     })
   }
 
@@ -58,6 +60,8 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+
+    
   }
 
   changeMobile(){

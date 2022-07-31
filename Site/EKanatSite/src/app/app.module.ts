@@ -1,23 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JwtModule } from "@auth0/angular-jwt";
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { SharedModule } from './shared/shared.module';
-import { JwtModule } from "@auth0/angular-jwt";
-import { UserService } from './shared/services/user.service';
-import { FileService } from './shared/services/file.service';
 import { AuthGuard } from './shared/services/auth-guard.service';
 import { AuthService } from './shared/services/auth.service';
 import { DateTimeService } from './shared/services/dateTime.service';
+import { FileService } from './shared/services/file.service';
 import { GeneralService } from './shared/services/general.service';
+import { UserService } from './shared/services/user.service';
+import { SharedModule } from './shared/shared.module';
 
 export function tokenGetter() {
   return localStorage.getItem("user_token");
@@ -38,6 +38,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     SharedModule,
     NgxSpinnerModule,
+    NgSelectModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

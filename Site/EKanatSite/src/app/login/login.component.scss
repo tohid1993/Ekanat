@@ -42,3 +42,18 @@ ngb-carousel{
     }
 }
 
+
+.mobile_input_wrapper{
+    position: relative;
+
+    .countriesList{
+        position: absolute;
+        left: 6px;
+        top:6px;
+        width: 90px;
+    }
+
+    input{
+        padding-left: 105px;
+    }
+}

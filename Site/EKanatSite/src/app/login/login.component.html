@@ -1,46 +1,122 @@
-<div class="row mx-0 align-items-stretch login_page ">
-    <div class="col-12 col-md-6 min-vh-100 d-flex align-items-center justify-content-center">
-        <div class="forms_wrapper w-100">
-            <div class="text-center">
-                <img src="./assets/images/logo.jpg" width="120" class="logo mb-2" alt="کانات">
-                <h3 class="heading_level_3 heading_level_3_mobile mb-4 Primary_80_text">کانات، نگرشی نوین بر زمین</h3>
+<div class="row mx-0 align-items-stretch login_page">
+  <div
+    class="col-12 col-md-6 min-vh-100 d-flex align-items-center justify-content-center"
+  >
+    <div class="forms_wrapper w-100">
+      <div class="text-center">
+        <img
+          src="./assets/images/logo.jpg"
+          width="120"
+          class="logo mb-2"
+          alt="کانات"
+        />
+        <h3 class="heading_level_3 heading_level_3_mobile mb-4 Primary_80_text">
+          کانات، نگرشی نوین بر زمین
+        </h3>
+      </div>
+
+      <form
+        class="login_form"
+        [formGroup]="LoginForm"
+        (ngSubmit)="login()"
+        #Login="ngForm"
+        novalidate
+      >
+        <h4
+          class="secondary_text secondary_text_mobile text-center Primary_60_text mb-3 font-weight-bold"
+        >
+          ورود به حساب کاربری
+        </h4>
+        <div class="container">
+          <div class="col-12 col-md-9 col-xl-7 mx-auto">
+            <label
+              for="mobile"
+              class="bu_2_text bu_2_text_mobile Dark_70_text mb-1 d-flex justify-content-between align-items-end"
+            >
+              شماره موبایل
+
+              <button
+                type="button"
+                class="ghost_btn small_btn"
+                *ngIf="vCodeSent"
+                (click)="changeMobile()"
+              >
+                تغییر شماره
+              </button>
+            </label>
+            
+            <div class="mobile_input_wrapper">
+                <div class="countriesList">
+                    <ng-select
+                        bindLabel="name"
+                        bindValue="id"
+                        [multiple]="false"
+                        [clearable]="false"
+                        [items]="[{name:'+98',id:1,icon:'./assets/images/flags/4x3/ir.svg'}]"
+                        formControlName="selectedCountry"
+                        >
+                            <ng-template ng-label-tmp let-item="item">
+                                <small dir="ltr" class="align-text-bottom">{{item.name}}</small>
+                                <img height="15" width="15" class="me-2" [src]="item.icon"/>
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item">
+                                <small dir="ltr" class="align-text-bottom">{{item.name}}</small>
+                                <img height="15" width="15" class="me-2" [src]="item.icon"/>
+                            </ng-template>
+                    </ng-select>
+                </div>
+                <input
+                    type="text"
+                    class="form-control form-control-lg text-start"
+                    [readonly]="vCodeSent"
+                    [maxLength]="11"
+                    formControlName="mobile"
+                    dir="ltr"
+                    id="mobile"
+                    autocomplete="off"
+                />
             </div>
 
-            <form class="login_form" [formGroup]="LoginForm" (ngSubmit)="login()" #Login="ngForm" novalidate>
-                <h4 class="secondary_text secondary_text_mobile text-center Primary_60_text mb-3 font-weight-bold">ورود به حساب کاربری</h4>
-                <div class="container">
-                    <div class="col-12 col-md-9 col-xl-7 mx-auto">
-                        <label for="mobile" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1 d-flex justify-content-between align-items-end">
-                            شماره موبایل
-                            
-                            <button type="button" class="ghost_btn small_btn" *ngIf="vCodeSent"
-                                (click)="changeMobile()">تغییر شماره</button>
-                        </label>
-                        <input type="text" class="form-control form-control-lg text-start" [readonly]="vCodeSent" [maxLength]="11" formControlName="mobile" dir="ltr" id="mobile" autocomplete="off">
-                    </div>
-                    <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3" *ngIf="vCodeSent">
-                        <label for="code" class="bu_2_text bu_2_text_mobile Dark_70_text mb-1 d-flex align-items-end justify-content-between">
-                            کد اعتبار سنجی
-                            <button type="button" class="ghost_btn small_btn" *ngIf="retryRequestCode"
-                                (click)="RequestCode()">ارسال مجدد</button>
-                        </label>
-                        <input type="text" class="form-control form-control-lg text-start" formControlName="code" [maxLength]="4" dir="ltr" id="code" autocomplete="off">
-                    </div>
-                
-                    <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3">
-                        <button type="submit" class="primary_btn w-100" [disabled]="Login.invalid">
-                            {{
-                                vCodeSent?
-                                "ورود به حساب کاربری"
-                                :
-                                "دریافت کد اعتبار سنجی"
-                            }}
-                        </button>
-                    </div>
-                </div>
-            </form>
+          </div>
+          <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3" *ngIf="vCodeSent">
+            <label
+              for="code"
+              class="bu_2_text bu_2_text_mobile Dark_70_text mb-1 d-flex align-items-end justify-content-between"
+            >
+              کد اعتبار سنجی
+              <button
+                type="button"
+                class="ghost_btn small_btn"
+                *ngIf="retryRequestCode"
+                (click)="RequestCode()"
+              >
+                ارسال مجدد
+              </button>
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg text-start"
+              formControlName="code"
+              [maxLength]="4"
+              dir="ltr"
+              id="code"
+              autocomplete="off"
+            />
+          </div>
 
-            <!-- <form class="register_form" *ngIf="FormStatus=='registerForm'">
+          <div class="col-12 col-md-9 col-xl-7 mx-auto mt-3">
+            <button
+              type="submit"
+              class="primary_btn w-100"
+              [disabled]="Login.invalid"
+            >
+              {{ vCodeSent ? "ورود به حساب کاربری" : "دریافت کد اعتبار سنجی" }}
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- <form class="register_form" *ngIf="FormStatus=='registerForm'">
                 <h4 class="secondary_text secondary_text_mobile text-center Primary_60_text mb-3 font-weight-bold">ایجاد حساب کاربری</h4>
                 <div class="container">
                     <div class="col-12 col-md-9 col-xl-7 mx-auto">
@@ -72,7 +148,7 @@
                 </div>
             </form> -->
 
-            <!-- <div class="container">
+      <!-- <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-9 col-xl-7 mx-auto text-center mt-2 d-flex justify-content-between flex-wrap">
                         <button class="ghost_btn small_btn mt-2" *ngIf="FormStatus!='registerForm'" (click)="FormStatus='registerForm'">حساب کاربری ندارید؟  ثبت نام کنید</button>
@@ -81,23 +157,27 @@
                     </div>
                 </div>
             </div> -->
-
+    </div>
+  </div>
+  <div class="col-12 col-md-6 p-0 min-vh-100">
+    <ngb-carousel
+      *ngIf="CarouselItems"
+      class="carousel-fade login_page_carousel"
+      [interval]="0"
+    >
+      <ng-template ngbSlide *ngFor="let item of CarouselItems">
+        <div class="slide-wrapper">
+          <div class="carousel-image-wrapper">
+            <img [src]="item.imageUrl" [alt]="item.title" />
+          </div>
+          <div class="carousel-caption">
+            <h4 class="mb-3 heading_level_4 heading_level_4_mobile">
+              {{ item.title }}
+            </h4>
+            <p class="bd_2_etr1_text">{{ item.text }}</p>
+          </div>
         </div>
-    </div>
-    <div class="col-12 col-md-6 p-0 min-vh-100">
-        <ngb-carousel *ngIf="CarouselItems" class="carousel-fade login_page_carousel" [interval]="0">
-            <ng-template ngbSlide *ngFor="let item of CarouselItems">
-                <div class="slide-wrapper">
-                    <div class="carousel-image-wrapper">
-                        <img [src]="item.imageUrl" [alt]="item.title">
-                    </div>
-                    <div class="carousel-caption">
-                        <h4 class="mb-3 heading_level_4 heading_level_4_mobile">{{item.title}}</h4>
-                        <p class="bd_2_etr1_text">{{item.text}}</p>
-                    </div>
-                </div>
-            </ng-template>
-        </ngb-carousel>
-    </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
 </div>
-  
