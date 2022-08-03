@@ -204,7 +204,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   addImageToMap(imageUrl:string,cords:any[]){
 
     this.loadEECanvas(imageUrl);
-    this.loadLegend('./assets/images/legend.jpg');
+    if(this.colors.length==0)
+      this.loadLegend('./assets/images/legend.jpg');
 
     let imageBounds:any[] = this.getImageBounds(cords);
 
@@ -306,6 +307,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     const legendImg = new Image();
     legendImg.crossOrigin = "Anonymous";
 
+    this.colors = [];
+    
     legendImg.onload = () => {
         let imgWidth = legendImg.width;
         let imgHeight = legendImg.height;

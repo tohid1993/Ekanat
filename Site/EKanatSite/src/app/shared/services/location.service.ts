@@ -35,8 +35,8 @@ export class LocationService {
             field.setValue('');
 
         this.province.subscribe(
-            res=>{
-                let state = res.find(s=>s.id.toString()==stateId.toString());
+            (res:any)=>{
+                let state = res.find((s:any)=>s.id.toString()==stateId.toString());
 
                 if(state){
                     return state.cities;
@@ -76,13 +76,18 @@ export class LocationService {
 
     }
 
+    getCountriesCodes(){
+        return this.gService.getObservable<any[]>
+            ("v1/Countries/GetDropdown",{})
+    }
+
 }
 
 
 export class ProvinceSimpleViewModel
 {
-    id:number;
-    name:string;
+    id!:number;
+    name!:string;
     cities:CitySimpleViewModel[];
 
     constructor(){
@@ -92,8 +97,8 @@ export class ProvinceSimpleViewModel
 
 export class CitySimpleViewModel
 {
-    id:number;
-    name:string;
+    id!:number;
+    name!:string;
 }
 
 

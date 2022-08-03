@@ -31,7 +31,7 @@ export class UserPanelComponent implements OnInit {
     this.userService.UserHomeInfo.subscribe
     ({
       next(res){
-        if(!res.profileCompeleted){
+        if(res && !res.profileCompeleted){
           Swal.fire({
             icon:"warning",
             title:"پروفایل تکمیل نشده",

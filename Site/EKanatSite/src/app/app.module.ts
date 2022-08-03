@@ -16,6 +16,7 @@ import { AuthService } from './shared/services/auth.service';
 import { DateTimeService } from './shared/services/dateTime.service';
 import { FileService } from './shared/services/file.service';
 import { GeneralService } from './shared/services/general.service';
+import { LocationService } from './shared/services/location.service';
 import { UserService } from './shared/services/user.service';
 import { SharedModule } from './shared/shared.module';
 
@@ -55,6 +56,7 @@ export function tokenGetter() {
     AuthGuard,
     AuthService,
     DateTimeService,
+    LocationService,
     {
       provide:"BASE_URL",
       useValue:environment.apiRoot

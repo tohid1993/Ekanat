@@ -34,12 +34,13 @@ export class UserService  {
         return this.generalService.post('v1/Users/Login', loginform , {})
     }
 
-    sendVCodeRequest(mobile:string){
+    sendVCodeRequest(mobile:string,countryCode:string){
         return this.generalService.getObservable<any>
                 (
                     "v1/Users/SendVerifyCode",
                     {
                         mobile:mobile,
+                        countryCode: countryCode
                     }
                 )
     }

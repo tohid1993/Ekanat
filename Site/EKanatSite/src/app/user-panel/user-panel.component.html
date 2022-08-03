@@ -29,7 +29,7 @@
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" [ngClass]="{'show':showMenu}" id="navbarNav">
+      <div class="collapse w-100 navbar-collapse" [ngClass]="{'show':showMenu}" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/dashboard']" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
@@ -49,7 +49,7 @@
                 هواشناسی
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" [routerLink]="" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
                 <img src="./assets/images/icons/chart.svg" alt="">
                 اطلاعات پیشرفته
@@ -60,7 +60,7 @@
                 <img src="./assets/images/icons/shop.svg" alt="">
                 مراکز فروش سموم کشاورزی
             </a>
-          </li>
+          </li> -->
           <li class="nav-item mt-auto supportBtn" *ngIf="showSupportBtn">
             <a class="nav-link" (click)="openRayChat()" aria-current="page">
                 <span id="new_message_count" *ngIf="newMessageCount">{{newMessageCount}}</span>

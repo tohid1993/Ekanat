@@ -48,20 +48,25 @@
             <div class="mobile_input_wrapper">
                 <div class="countriesList">
                     <ng-select
-                        bindLabel="name"
-                        bindValue="id"
+                        bindLabel="code"
+                        bindValue="code"
+                        notFoundText="یافت نشد"
                         [multiple]="false"
                         [clearable]="false"
-                        [items]="[{name:'+98',id:1,icon:'./assets/images/flags/4x3/ir.svg'}]"
-                        formControlName="selectedCountry"
+                        [items]="CountriesCodes"
+                        formControlName="countryCode"
                         >
                             <ng-template ng-label-tmp let-item="item">
-                                <small dir="ltr" class="align-text-bottom">{{item.name}}</small>
-                                <img height="15" width="15" class="me-2" [src]="item.icon"/>
+                              <span class="d-block text-start">
+                                <small dir="ltr" class="align-text-bottom">{{item.code}}</small> 
+                                <img height="15" width="15" class="me-2" [src]="'./assets/images/flags/4x3/'+item.icon+'.svg'"/>
+                              </span>
                             </ng-template>
                             <ng-template ng-option-tmp let-item="item">
-                                <small dir="ltr" class="align-text-bottom">{{item.name}}</small>
-                                <img height="15" width="15" class="me-2" [src]="item.icon"/>
+                              <span class="d-block text-start">
+                                <small dir="ltr" class="align-text-bottom">{{item.code}}</small> 
+                                <img height="15" width="15" class="me-2" [src]="'./assets/images/flags/4x3/'+item.icon+'.svg'"/>
+                              </span>
                             </ng-template>
                     </ng-select>
                 </div>
@@ -69,7 +74,7 @@
                     type="text"
                     class="form-control form-control-lg text-start"
                     [readonly]="vCodeSent"
-                    [maxLength]="11"
+                    [maxLength]="15"
                     formControlName="mobile"
                     dir="ltr"
                     id="mobile"
