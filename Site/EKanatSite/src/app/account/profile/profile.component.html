@@ -5,42 +5,98 @@
         <form class="profile_form" [formGroup]="ProfileForm" 
             (ngSubmit)="saveProfile()" novalidate #FormDir="ngForm">
             <div class="container pt-3">
-                <div class="col-12 profile_image_wrapper">
-                    <div class="profile_image">
-                        <img src="{{ProfileForm.value.image.size_Byte ? 'data:image/jpeg;base64,'+ProfileForm.value.image.base64File : ProfileForm.value.image.base64File }}" />
-                    
-                        <input type="file" id="profile_image_file" 
-                            accept='.jpg,.jpeg,.png'
-                            (change)="fileService.fileOnSelect($event,ProfileForm.controls['image'],true)">
-                        <label for="profile_image_file" class="profile_image_file_btn">
-                            <span>انتخاب تصویر</span>
-                        </label>
+                <div class="row">
+                    <div class="col-12 profile_image_wrapper">
+                        <div class="profile_image">
+                            <img src="{{ProfileForm.value.image.size_Byte ? 'data:image/jpeg;base64,'+ProfileForm.value.image.base64File : ProfileForm.value.image.base64File }}" />
+                        
+                            <input type="file" id="profile_image_file" 
+                                accept='.jpg,.jpeg,.png'
+                                (change)="fileService.fileOnSelect($event,ProfileForm.controls['image'],true)">
+                            <label for="profile_image_file" class="profile_image_file_btn">
+                                <span>انتخاب تصویر</span>
+                            </label>
+                        </div>
                     </div>
-                </div>
+    
+    
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="firstName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نام</label>
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="firstName" dir="rtl" id="firstName" autocomplete="off">
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','firstName')">وارد کردن این فیلد الزامی میباشد</small>
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="lastName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نام خانوادگی</label>
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="lastName" dir="rtl" id="lastName" autocomplete="off">
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','lastName')">وارد کردن این فیلد الزامی میباشد</small>
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="email" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">ایمیل <small>(اختیاری)</small></label>
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="email" dir="ltr" id="email" autocomplete="off">
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="mobile" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شماره موبایل</label>
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" readonly [value]="ProfileForm.value.userName" dir="ltr" id="mobile" autocomplete="off">
+                    </div>
 
 
-                <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
-                    <label for="firstName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نام</label>
-                    <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="firstName" dir="rtl" id="firstName" autocomplete="off">
-                    <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','firstName')">وارد کردن این فیلد الزامی میباشد</small>
-                </div>
-                <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
-                    <label for="lastName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نام خانوادگی</label>
-                    <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="lastName" dir="rtl" id="lastName" autocomplete="off">
-                    <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','lastName')">وارد کردن این فیلد الزامی میباشد</small>
-                </div>
-                <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
-                    <label for="email" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">ایمیل <small>(اختیاری)</small></label>
-                    <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="email" dir="ltr" id="email" autocomplete="off">
-                </div>
-                <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
-                    <label for="mobile" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شماره موبایل</label>
-                    <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" readonly [value]="ProfileForm.value.userName" dir="ltr" id="mobile" autocomplete="off">
-                </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="nationalCode" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">کد ملی <small>(اختیاری)</small></label>
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="nationalCode" dir="rtl" id="nationalCode" maxlength="10" autocomplete="off">
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','nationalCode')">وارد کردن این فیلد الزامی میباشد</small>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('pattern','nationalCode')">وارد کردن این فیلد الزامی میباشد</small>
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="phone" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شماره تلفن <small>(اختیاری)</small></label>
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="phone" dir="rtl" id="phone" autocomplete="off">
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','phone')">وارد کردن این فیلد الزامی میباشد</small>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('pattern','phone')">وارد کردن این فیلد الزامی میباشد</small>
+                    </div>
 
-                <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3 row">
-                    <div class="col-auto mx-auto">
-                        <button type="submit" class="primary_btn medium_btn">ذخیره پروفایل</button>
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="countryId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">کشور</label>
+                        <select class="form-control form-control-lg bu_2_text bu_2_text_mobile" formControlName="countryId" id="countryId">
+                            <option value="">ایران</option>
+                        </select>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','countryId')">وارد کردن این فیلد الزامی میباشد</small>
+
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="provinceId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">استان</label>
+                        <select class="form-control form-control-lg bu_2_text bu_2_text_mobile" formControlName="provinceId" id="provinceId">
+                            <option value="">آذربایجان شرقی</option>
+                        </select>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','provinceId')">وارد کردن این فیلد الزامی میباشد</small>
+
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="cityId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شهر</label>
+                        <select class="form-control form-control-lg bu_2_text bu_2_text_mobile" formControlName="cityId" id="cityId">
+                            <option value="">تبریز</option>
+                        </select>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','cityId')">وارد کردن این فیلد الزامی میباشد</small>
+
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="villageId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">روستا</label>
+                        <select class="form-control form-control-lg bu_2_text bu_2_text_mobile" formControlName="villageId" id="villageId">
+                            <option value="">لیقوان</option>
+                        </select>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','villageId')">وارد کردن این فیلد الزامی میباشد</small>
+
+                    </div>
+                    <div class="col-12 mt-3">
+                        <label for="address" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">آدرس</label>
+                        <textarea class="form-control form-control-lg bu_2_text bu_2_text_mobile" formControlName="address" id="address">
+                        </textarea>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','address')">وارد کردن این فیلد الزامی میباشد</small>
+
+                    </div>
+    
+                    <div class="col-12 mt-3 row px-0">
+                        <div class="col-auto px-0 me-auto">
+                            <button type="submit" class="primary_btn medium_btn">ذخیره پروفایل</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@ import { FieldService } from 'src/app/shared/services/field.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import "src/assets/js/L.KML.js";
 import Swal from 'sweetalert2';
-
+import { GestureHandling } from "leaflet-gesture-handling";
 
 @Component({
   selector: 'app-add-field',
@@ -47,6 +47,14 @@ export class AddFieldComponent implements OnInit {
   AddFieldForm:FormGroup;
   cultivationDate!:DateModel;
 
+  cultivationList = [
+    {id:1 , name:"گندم"},
+    {id:2 , name:"جو"},
+    {id:3 , name:"کلزا"},
+    {id:4 , name:"ذرت"},
+    {id:0 , name:"سایر"}
+  ]
+
   constructor(
     config: NgbModalConfig, 
     private modalService: NgbModal,
@@ -73,7 +81,9 @@ export class AddFieldComponent implements OnInit {
   ngOnInit(): void {
     this.openMethodModal();
 
-    this.map = Leaflet.map('map').setView([38.0792, 46.2887], 10);
+    Leaflet.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
+    
+    this.map = Leaflet.map('map' , {gestureHandling: true} as any).setView([38.0792, 46.2887], 10);
 
 
     this.map.scrollWheelZoom.disable();

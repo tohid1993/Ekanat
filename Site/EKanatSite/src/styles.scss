@@ -87,3 +87,11 @@ ngb-modal-backdrop{
 .leaflet-image-layer.addedImage{
     z-index: 300 !important;
 }
+
+.ng-select.ng-select-single .ng-select-container {
+    height: 42px;
+}
+
+.form-control[readonly] {
+    background-color: #fff;
+}

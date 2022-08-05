@@ -9,6 +9,7 @@ import { DateModel, FieldDetailViewModel, IndicatorsTypes } from 'src/app/shared
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
 import { FieldService } from 'src/app/shared/services/field.service';
+import { GestureHandling } from "leaflet-gesture-handling";
 
 @Component({
   selector: 'app-imagery',
@@ -71,7 +72,9 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     this.getFieldDetails();
     this.setHightOfImageryWrapper();
 
-    this.map = Leaflet.map('map').setView([38.0792, 46.2887], 10);
+    Leaflet.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
+    this.map = Leaflet.map('map', {gestureHandling: true} as any).setView([38.0792, 46.2887], 10);
+
     this.map.scrollWheelZoom.disable();
 
     Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {

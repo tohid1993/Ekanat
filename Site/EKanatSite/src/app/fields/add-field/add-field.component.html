@@ -48,49 +48,114 @@
         <div class="detail_form_wrapper" *ngIf="currentStep==2">
             <form class="detail_form" [formGroup]="AddFieldForm" novalidate (ngSubmit)="SaveField()" #FormDir="ngForm">
                 <div class="container pt-3">
-                    <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
-                        <label for="fieldName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نام زمین</label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" 
-                            dir="rtl" id="fieldName" autocomplete="off" formControlName="name">
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','name')">وارد کردن این فیلد الزامی میباشد</small>
 
-                    </div>
-                    <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
-                        <label for="fieldArea" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">مساحت زمین</label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" dir="rtl" id="fieldArea" autocomplete="off" readonly [value]="FieldArea+' هکتار'">
-                    </div>
-                    <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
-                        <label for="productType" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نوع محصول</label>
-                        <select class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" 
-                            dir="rtl" id="productType" autocomplete="off" formControlName="productName">
-                            <option [ngValue]="'بابونه'">بابونه</option>
-                            <option [ngValue]="'یونجه'">یونجه</option>
-                            <option [ngValue]="'کلزا'">کلزا</option>
-                        </select>
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','productName')">وارد کردن این فیلد الزامی میباشد</small>
+                    <div class="row">
+                        <div class="col-12 col-md-6 mx-auto mt-3">
+                            <label for="fieldName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نام زمین</label>
+                            <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" 
+                                dir="rtl" id="fieldName" autocomplete="off" formControlName="name">
+                            <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','name')">وارد کردن این فیلد الزامی میباشد</small>
 
-                    </div>
-                    <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3">
-                        <label for="cultivationDate" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">تاریخ کاشت</label>
-                        <div class="input-group" dir="ltr">
-                            <input class="form-control" placeholder="yyyy-mm-dd" readonly [firstDayOfWeek]="6" [ngModelOptions]="{standalone: true}"
-                                   name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="cultivationDate" (dateSelect)="setDate()">
-                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#383440" class="bi bi-calendar4-week" viewBox="0 0 16 16">
-                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"/>
-                                    <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
-                                </svg>
-                            </button>
                         </div>
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','cultivationDate')">وارد کردن این فیلد الزامی میباشد</small>
-                    </div>
-
-                    <div class="col-12 col-md-9 col-xl-6 mx-auto mt-3 row">
-                        <div class="col-6 ps-1 pe-0">
-                            <button type="button" class="secondary_btn medium_btn w-100" (click)="currentStep=1">مرحله قبل</button>
+                        <div class="col-12 col-md-6 mx-auto mt-3">
+                            <label for="fieldArea" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">مساحت زمین</label>
+                            <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" dir="rtl" id="fieldArea" autocomplete="off" readonly [value]="FieldArea+' هکتار'">
                         </div>
-                        <div class="col-6 ps-0 pe-1">
-                            <button type="submit" class="primary_btn medium_btn px-1 w-100">ذخیره و ثبت زمین</button>
+                        <div class="col-12 col-md-6 mx-auto mt-3">
+                            <label for="productType" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">محصول فعلی زمین</label>
+                            <ng-select
+                                bindLabel="name"
+                                bindValue="name"
+                                notFoundText="نام محصول را بنویسید"
+                                [addTagText]="'اینجا کلیک کنید'"
+                                [multiple]="false"
+                                [clearable]="false"
+                                [addTag]="true"
+                                [items]="cultivationList"
+                                [placeholder]="'در صورتی که نام محصول نباشد، بنویسید و روی آن بزنید'"
+                                formControlName="productName"
+                                >
+                            </ng-select>
+                            <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','productName')">وارد کردن این فیلد الزامی میباشد</small>
+                        </div>
+                        <div class="col-12 col-md-6 mx-auto mt-3">
+                            <label for="productType" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">محصول قبلی زمین</label>
+                            <ng-select
+                                    bindLabel="name"
+                                    bindValue="name"
+                                    notFoundText="نام محصول را بنویسید"
+                                    [addTagText]="'اینجا کلیک کنید'"
+                                    [multiple]="false"
+                                    [clearable]="false"
+                                    [addTag]="true"
+                                    [items]="cultivationList"
+                                    [placeholder]="'در صورتی که نام محصول نباشد، بنویسید و روی آن بزنید'"
+                                    formControlName="productName"
+                                >
+                            </ng-select>
+                            <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','productName')">وارد کردن این فیلد الزامی میباشد</small>
+                        </div>
+                        <div class="col-12 col-md-6 mx-auto mt-3">
+                            <label for="cultivationDate" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">تاریخ کاشت محصول فعلی</label>
+                            <div class="input-group" dir="ltr">
+                                <input class="form-control" placeholder="yyyy-mm-dd" readonly [firstDayOfWeek]="6" [ngModelOptions]="{standalone: true}"
+                                    name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="cultivationDate" (dateSelect)="setDate()">
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#383440" class="bi bi-calendar4-week" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"/>
+                                        <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','cultivationDate')">وارد کردن این فیلد الزامی میباشد</small>
+                        </div>
+
+                        <div class="col-12 col-md-6 mx-auto mt-3">
+                            <label for="cultivationDate" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">تاریخ برداشت محصول قبلی</label>
+                            <div class="input-group" dir="ltr">
+                                <input class="form-control" placeholder="yyyy-mm-dd" readonly [firstDayOfWeek]="6" [ngModelOptions]="{standalone: true}"
+                                    name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="cultivationDate" (dateSelect)="setDate()">
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#383440" class="bi bi-calendar4-week" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"/>
+                                        <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','cultivationDate')">وارد کردن این فیلد الزامی میباشد</small>
+                        </div>
+
+                        <div class="col-12 col-md-6 mx-auto mt-3">
+                            <label for="cultivationDate" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">تاریخ آخرین زمان کوددهی</label>
+                            <div class="input-group" dir="ltr">
+                                <input class="form-control" placeholder="yyyy-mm-dd" readonly [firstDayOfWeek]="6" [ngModelOptions]="{standalone: true}"
+                                    name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="cultivationDate" (dateSelect)="setDate()">
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#383440" class="bi bi-calendar4-week" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"/>
+                                        <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','cultivationDate')">وارد کردن این فیلد الزامی میباشد</small>
+                        </div>
+
+                        <div class="col-12 col-md-6 mx-auto mt-3">
+                            <label for="fieldName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">مدت زمان دوره آبیاری <small>(از چند روز یکبار)</small></label>
+                            <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" 
+                                dir="rtl" id="fieldName" autocomplete="off" formControlName="name">
+                            <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','name')">وارد کردن این فیلد الزامی میباشد</small>
+
+                        </div>
+                    
+                    
+                        <div class="col-12 mx-auto mt-3 row">
+                            <div class="col-6 col-md-3 ps-1 pe-0">
+                                <button type="button" class="secondary_btn medium_btn w-100" (click)="currentStep=1">مرحله قبل</button>
+                            </div>
+                            <div class="col-6 col-md-3 ps-0 pe-1 me-auto">
+                                <button type="submit" class="primary_btn medium_btn px-1 w-100">ذخیره و ثبت زمین</button>
+                            </div>
                         </div>
                     </div>
                 </div>

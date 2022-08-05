@@ -51,7 +51,13 @@ export enum IndicatorsTypes{
     sipi = 4,  
     vari = 5, 
     evi = 6, 
-    arvi = 7
+    arvi = 7,
+
+    ndwi = 8,
+    msi = 9,
+
+    ndsi = 10,
+    savi = 11
 }
 
 export class FieldDetailViewModel

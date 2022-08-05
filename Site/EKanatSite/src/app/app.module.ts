@@ -39,7 +39,6 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     SharedModule,
     NgxSpinnerModule,
-    NgSelectModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

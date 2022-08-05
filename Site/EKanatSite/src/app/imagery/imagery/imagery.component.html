@@ -81,7 +81,7 @@
                             1401-04-29 - مشاهده کنید
                         </button>
                     </div>
-                    <a [routerLink]="['/imagery/tasks']" class="primary_btn medium_btn w-100">
+                    <a [routerLink]="['/fields/imagery/tasks']" class="primary_btn medium_btn w-100">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                         </svg>
@@ -181,10 +181,32 @@
                     <div class="item" (click)="SelectedCategory = 2" [ngClass]="{'active':SelectedCategory==2}">
                         <img src="./assets/images/icons/soil.png" width="45" alt="">
                         <span>بررسی خاک</span>
+
+                        <div class="indicators_list">
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="ndsi" (click)="getIndicators(IndicatorsTypes.ndsi)">
+                                <label for="ndsi" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDSI</label>
+                            </div>
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="savi" (click)="getIndicators(IndicatorsTypes.savi)">
+                                <label for="savi" class="me-2 bd_2_text bd_2_text_mobile">شاخص SAVI</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="item" (click)="SelectedCategory = 3" [ngClass]="{'active':SelectedCategory==3}">
                         <img src="./assets/images/icons/water.png" width="45" alt="">
                         <span>بررسی آب</span>
+
+                        <div class="indicators_list">
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="ndwi" (click)="getIndicators(IndicatorsTypes.ndwi)">
+                                <label for="ndwi" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDWI</label>
+                            </div>
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="msi" (click)="getIndicators(IndicatorsTypes.msi)">
+                                <label for="msi" class="me-2 bd_2_text bd_2_text_mobile">شاخص MSI</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

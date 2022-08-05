@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModal, NgbModalConfig, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -24,6 +25,7 @@ import { TokenInterceptor } from './services/token-interceptor.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgSelectModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-left',
@@ -41,6 +43,7 @@ import { TokenInterceptor } from './services/token-interceptor.service';
     NgxEchartsModule,
     NgbModule,
     FormsModule,
+    NgSelectModule,
     ReactiveFormsModule,
   ],
   providers:[

@@ -13,7 +13,7 @@ const routes: Routes = [
       {path:'', canActivate: [AuthGuard]  , component:DashboardComponent},
       {path:'dashboard' , canActivate: [AuthGuard] , component:DashboardComponent},
 
-      {path:'imagery' , canActivate: [AuthGuard] , loadChildren: () => import('../imagery/imagery.module').then(m => m.ImageryModule)},
+      {path:'fields/imagery' , canActivate: [AuthGuard] , loadChildren: () => import('../imagery/imagery.module').then(m => m.ImageryModule)},
       {path:'fields' , canActivate: [AuthGuard] , loadChildren: () => import('../fields/fields.module').then(m => m.FieldsModule)},
       {path:'weather' , canActivate: [AuthGuard] , loadChildren: () => import('../weather/weather.module').then(m => m.WeatherModule)},
       {path:'account' , canActivate: [AuthGuard] , loadChildren: () => import('../account/account.module').then(m => m.AccountModule)},

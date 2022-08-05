@@ -26,6 +26,14 @@ export class ProfileComponent implements OnInit {
         email:new FormControl(null,[Validators.email]),
         userName:new FormControl(null,[]),
         image:new FormControl(new FileViewModel()),
+
+        nationalCode:new FormControl(null,[Validators.pattern("[\u06F0-\u06F9,0-9]{10}")]),
+        phone:new FormControl(null,[Validators.pattern("[\u06F0-\u06F9,0-9]{10}[\u06F0-\u06F9,0-9]*") , Validators.maxLength(15)]),
+        countryId:new FormControl(null,[Validators.required]),
+        provinceId:new FormControl(null,[Validators.required]),
+        cityId:new FormControl(null,[Validators.required]),
+        villageId:new FormControl(null,[]),
+        address:new FormControl(null,[])
       }
     )
   }
@@ -44,6 +52,8 @@ export class ProfileComponent implements OnInit {
   }
 
   saveProfile(){
+    if(this.ProfileForm.invalid) return;
+    
     this.spinner.show();
     let self = this;
     this.userService.updateUserProfile(this.ProfileForm.value)
