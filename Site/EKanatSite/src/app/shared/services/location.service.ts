@@ -81,6 +81,11 @@ export class LocationService {
             ("v1/Countries/GetDropdown",{})
     }
 
+    getCountriesList(){
+        return this.gService.getObservable<any>
+        ("v1/Countries/GetDropdownTree",{})
+    }
+
 }
 
 

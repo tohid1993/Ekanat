@@ -94,4 +94,9 @@ export class FieldService {
   getFieldWeather(lat:number,lng:number){
     return this.gService.get("v1/Fields/GetWeather",{latitude:lat,longitude:lng})
   }
+
+
+  getFieldProductionslist(){
+    return this.gService.get("v1/FieldProducts/GetFieldProdutDropdown",{})
+  }
 }

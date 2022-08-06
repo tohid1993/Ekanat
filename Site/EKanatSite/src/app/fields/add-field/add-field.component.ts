@@ -4,7 +4,7 @@ import * as Leaflet from 'leaflet';
 import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
 // import * as GeoSearch from 'leaflet-geosearch';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as tj from "@tmcw/togeojson";
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -46,14 +46,10 @@ export class AddFieldComponent implements OnInit {
 
   AddFieldForm:FormGroup;
   cultivationDate!:DateModel;
+  harvestDate!:DateModel;
+  fertilizationDate!:DateModel;
 
-  cultivationList = [
-    {id:1 , name:"گندم"},
-    {id:2 , name:"جو"},
-    {id:3 , name:"کلزا"},
-    {id:4 , name:"ذرت"},
-    {id:0 , name:"سایر"}
-  ]
+  FieldProductsList:any[] = [{id:0 , title:"سایر"}]
 
   constructor(
     config: NgbModalConfig, 
@@ -70,15 +66,24 @@ export class AddFieldComponent implements OnInit {
 
     this.AddFieldForm = new FormGroup({
       name:new FormControl(null,[Validators.required]),
-      productName:new FormControl(null,[Validators.required]),
       area:new FormControl(null,[Validators.required]),
       cultivationDate:new FormControl(null,[Validators.required]),
       polygon:new FormControl(null,[Validators.required]),
+
+      fieldProductId:new FormControl(null,[Validators.required]),
+      otherProductTitle:new FormControl(null,[Validators.required]),
+      previousFieldProductId:new FormControl(null,[Validators.required]),
+      otherPreviousProductTitle:new FormControl(null,[Validators.required]),
+      harvestDate:new FormControl(null,[Validators.required]),
+      fertilizationDate:new FormControl(null,[Validators.required]),
+      irrigationPeriod:new FormControl(null,[Validators.required]),
+
     })
   }
 
 
   ngOnInit(): void {
+    this.getFieldProductsList();
     this.openMethodModal();
 
     Leaflet.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
@@ -155,6 +160,15 @@ export class AddFieldComponent implements OnInit {
     })
   }
   
+  getFieldProductsList(){
+    this.fieldService.getFieldProductionslist()
+      .subscribe(
+        (res:any)=>{
+          if(res.isSuccess)
+            this.FieldProductsList = res.data;
+            this.FieldProductsList.push({id:0 , title:"سایر"});
+      })
+  }
 
   openMethodModal() {
     this.modalService.open(this.methodModal, { centered: true });
@@ -341,6 +355,19 @@ export class AddFieldComponent implements OnInit {
 
     this.spinner.show();
 
+    let obj = this.gService.clone(this.AddFieldForm.value);
+
+    if(obj.fieldProductId==0)
+      obj.fieldProductId = null;
+    else
+      obj.otherProductTitle = null;
+
+
+    if(obj.previousFieldProductId==0)
+      obj.previousFieldProductId = null;
+    else
+      obj.otherPreviousProductTitle = null;
+
     let self = this;
     this.fieldService.saveField(this.AddFieldForm.value)
       .subscribe({
@@ -352,9 +379,38 @@ export class AddFieldComponent implements OnInit {
       })
   }
 
-  setDate(){
-      this.AddFieldForm.controls['cultivationDate'].setValue(
-        this.dateTimeService.toGeorgianDate(this.cultivationDate.year+"-"+this.cultivationDate.month+"-"+this.cultivationDate.day)
+  setDate(key:string){
+
+    switch (key) {
+      case 'cultivationDate':
+        this.AddFieldForm.controls['cultivationDate'].setValue(
+          this.dateTimeService.toGeorgianDate(this.cultivationDate.year+"-"+this.cultivationDate.month+"-"+this.cultivationDate.day)
+        );
+        break;
+
+    case 'harvestDate':
+      this.AddFieldForm.controls['harvestDate'].setValue(
+        this.dateTimeService.toGeorgianDate(this.harvestDate.year+"-"+this.harvestDate.month+"-"+this.harvestDate.day)
       );
+      break;
+
+    case 'fertilizationDate':
+      this.AddFieldForm.controls['fertilizationDate'].setValue(
+        this.dateTimeService.toGeorgianDate(this.fertilizationDate.year+"-"+this.fertilizationDate.month+"-"+this.fertilizationDate.day)
+      );
+      break;
+    
+      default:
+        break;
+    }
+
+  }
+
+  setProductName(event:any,key:string){
+    try {
+      this.AddFieldForm.controls[key].setValue(event==0? null : this.FieldProductsList.find(p=>p.id == event).title);
+    } catch (error) {
+      this.AddFieldForm.controls[key].setValue('سایر');
+    }
   }
 }

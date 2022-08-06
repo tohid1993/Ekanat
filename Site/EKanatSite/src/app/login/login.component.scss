@@ -48,12 +48,20 @@ ngb-carousel{
 
     .countriesList{
         position: absolute;
-        left: 6px;
-        top:7px;
+        left: 3px;
+        top: 3px;
         width: 90px;
     }
 
     input{
         padding-left: 105px;
+    }
+}
+
+
+@media only screen and(max-width:767px){
+    .right_side{
+        min-height: unset !important;
+        padding: 64px 0;
     }
 }
