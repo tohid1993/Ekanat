@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FieldsListVM } from 'src/app/shared/models/model';
@@ -29,6 +30,7 @@ export class MainWeatherComponent implements OnInit {
     private fieldService:FieldService,
     private http:HttpClient,
     private spinner: NgxSpinnerService,
+    private router:Router
   ) {
     // config.backdrop = 'static';
     config.keyboard = false;
@@ -98,5 +100,10 @@ export class MainWeatherComponent implements OnInit {
           self.spinner.hide();
         }
       })
+  }
+
+  goToAddNewField(){
+    this.modalService.dismissAll();
+    this.router.navigate(['/fields/add'])
   }
 }

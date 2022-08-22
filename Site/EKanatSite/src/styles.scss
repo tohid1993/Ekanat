@@ -1,6 +1,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import "~leaflet/dist/leaflet.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~leaflet-geosearch/dist/geosearch.css";
 @import "./assets/scss/_importedStyles";
 
 
@@ -88,10 +89,29 @@ ngb-modal-backdrop{
     z-index: 300 !important;
 }
 
+
+.leaflet-pane.leaflet-shadow-pane{
+    display: none;
+}
 .ng-select.ng-select-single .ng-select-container {
     height: 42px;
 }
 
 .form-control[readonly] {
     background-color: #fff;
+}
+
+.leaflet-geosearch-bar {
+    max-width: calc(100% - 120px);
+    margin: 10px 10px 0 auto;
+    font-family: 'Vazir';
+    direction: rtl;
+    
+    .reset {
+        padding: 1px 8px;
+        left: 2px !important;
+        font-size: 20px;
+        right: unset !important;
+        background-color: transparent;
+    }
 }

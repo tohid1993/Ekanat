@@ -3,7 +3,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as Leaflet from 'leaflet';
 import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
-// import * as GeoSearch from 'leaflet-geosearch';
+import * as GeoSearch from 'leaflet-geosearch';
 import { FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as tj from "@tmcw/togeojson";
@@ -75,7 +75,7 @@ export class AddFieldComponent implements OnInit {
       previousFieldProductId:new FormControl(null,[Validators.required]),
       otherPreviousProductTitle:new FormControl(null,[Validators.required]),
       harvestDate:new FormControl(null,[Validators.required]),
-      fertilizationDate:new FormControl(null,[Validators.required]),
+      // fertilizationDate:new FormControl(null,[Validators.required]),
       irrigationPeriod:new FormControl(null,[Validators.required]),
 
     })
@@ -90,8 +90,23 @@ export class AddFieldComponent implements OnInit {
     
     this.map = Leaflet.map('map' , {gestureHandling: true} as any).setView([38.0792, 46.2887], 10);
 
-
     this.map.scrollWheelZoom.disable();
+
+    let marker = Leaflet.icon({
+      iconUrl: './assets/images/icons/map-pin.svg',
+      iconSize: [50, 75],
+    });
+
+    const search = new (GeoSearch.GeoSearchControl as any)({
+      provider: new GeoSearch.OpenStreetMapProvider(),
+      notFoundMessage: 'موردی یافت نشد',
+      searchLabel:'نام شهر، روستا، منطقه',
+      style:'bar',
+      marker:{
+        icon : marker
+      }
+    });
+    this.map.addControl(search);
 
 
     Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {

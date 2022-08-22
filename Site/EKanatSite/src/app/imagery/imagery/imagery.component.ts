@@ -41,6 +41,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   Math=Math;
 
+  showLegend:boolean = false;
+
   constructor(
     private eeService:EeService,
     private dateTimeService:DateTimeService,
@@ -150,6 +152,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
     this.eeService.getIndicators(this.fieldDetail.id,key,fromDate,toDate).subscribe({
       next(res:any){
+        self.showLegend = true;
         self.addImageToMap("data:image/png;base64,"+res.data,self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon));
         self.spinner.hide();
       }

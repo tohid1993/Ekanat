@@ -9,6 +9,17 @@
 </app-page-breadcrumb>
 
 <div class="container-fluid">
+    <div class="card text-center" *ngIf="!isChanged">
+        <div class="card-header">
+          هواشناسی
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">هواشناسی زمین کشاورزی</h5>
+          <p class="card-text">برای استعلام وضعیت هواشناسی زمین های کشاورزی، یکی از زمین های خود را انتخاب نمایید</p>
+          <button class="primary_btn small_btn" (click)="openFieldsModal()">انتخاب زمین</button>
+        </div>
+    </div>
+
     <app-current-weather *ngIf="isChanged && CurrentWeather" [CurrentWeather]="CurrentWeather" [NextHoursWeather]="NextHoursWeather"></app-current-weather>
     <div class="py-2"></div>
     <app-forecast-weather *ngIf="isChanged && NextDaysWeather" [NextDaysWeather]="NextDaysWeather"></app-forecast-weather>
@@ -18,6 +29,10 @@
 
 
 <ng-template #fieldsModal let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">انتخاب زمین</h6>
+        <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
     <div class="modal-body">
         <div class="draw_methods py-3 px-4">
             <div class="title heading_level_4 heading_level_4_mobile text-center">یکی از زمین های کشاورزی را جهت بررسی وضعیت آب و هوایی انتخاب نمایید</div>
@@ -37,7 +52,7 @@
                 </div>
 
                 <div class="col-12 text-center mt-3">
-                    <a [routerLink]="['/fields/add']" class="primary_btn">
+                    <a (click)="goToAddNewField()" class="primary_btn">
                         افزودن زمین جدید
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-plus-lg me-2" viewBox="0 0 16 16">
                             <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>

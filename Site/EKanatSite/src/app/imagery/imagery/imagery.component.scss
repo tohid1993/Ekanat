@@ -11,6 +11,26 @@
         position: relative;
         z-index: 10;
     }
+
+    .imagery_legend {
+        position: absolute;
+        left: 16px;
+        bottom: 8px;
+        z-index: 10;
+        background-color: #fff;
+        padding: 3px 8px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 3px;
+        align-items: center;
+        direction: ltr;
+        border-radius: 4px;
+
+        img{
+            height: 100px;
+            width: 10px;
+        }
+    }
 }
 
 .field_details_wrapper {

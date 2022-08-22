@@ -36,16 +36,16 @@
                     </div>
                     <div class="col-12 col-md-6 mt-3">
                         <label for="mobile" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شماره موبایل</label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" readonly [value]="ProfileForm.value.userName" dir="ltr" id="mobile" autocomplete="off">
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" readonly [value]="findCountryCode() + (ProfileForm.value.userName || '')" dir="ltr" id="mobile" autocomplete="off">
                     </div>
 
 
-                    <div class="col-12 col-md-6 mt-3">
+                    <!-- <div class="col-12 col-md-6 mt-3">
                         <label for="nationalCode" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">کد ملی <small>(اختیاری)</small></label>
                         <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="nationalCode" dir="rtl" id="nationalCode" maxlength="10" autocomplete="off">
                         <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','nationalCode')">وارد کردن این فیلد الزامی میباشد</small>
                         <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('pattern','nationalCode')">ورودی نامعتبر است</small>
-                    </div>
+                    </div> -->
                     <!-- <div class="col-12 col-md-6 mt-3">
                         <label for="phone" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شماره تلفن <small>(اختیاری)</small></label>
                         <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="phone" dir="rtl" id="phone" autocomplete="off">

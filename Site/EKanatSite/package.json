@@ -38,6 +38,7 @@
     "leaflet-draw": "^1.0.4",
     "leaflet-geosearch": "^3.6.1",
     "leaflet-gesture-handling": "^1.2.2",
+    "leaflet-search": "^3.0.2",
     "ngx-echarts": "^8.0.1",
     "ngx-spinner": "^13.1.1",
     "ngx-toastr": "^14.3.0",

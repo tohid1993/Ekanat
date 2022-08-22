@@ -358,7 +358,7 @@
               >
             </div>
 
-            <div class="col-12 col-md-6 mb-4">
+            <!-- <div class="col-12 col-md-6 mb-4">
               <label
                 for="fertilizationDate"
                 class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
@@ -407,7 +407,7 @@
                 "
                 >وارد کردن این فیلد الزامی میباشد</small
               >
-            </div>
+            </div> -->
 
             <div class="col-12 col-md-6 mb-4">
               <label
@@ -457,6 +457,10 @@
 </div>
 
 <ng-template #methodModal let-modal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">انتخاب روش</h6>
+    <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
   <div class="modal-body">
     <div class="draw_methods py-3 px-4">
       <div class="title heading_level_4 heading_level_4_mobile text-center">

@@ -107,6 +107,11 @@
             </button>
             <div class="imagery_content_wrapper h-100">
                 <div id="map" dir="ltr"></div>
+                <div class="imagery_legend" *ngIf="showLegend">
+                    <span>+1</span>
+                    <img src="./assets/images/legend.jpg" alt="">
+                    <span>-1</span>
+                </div>
             </div>
         </div>
         <div class="col-12 col-md-4 col-xl-3 col-xxl-2">

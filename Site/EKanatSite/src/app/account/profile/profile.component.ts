@@ -21,6 +21,9 @@ export class ProfileComponent implements OnInit {
   CitiesList: any[] = [];
   VillagesList: any[] = [];
 
+  countriesCodesList:any[] = [];
+  mobileCountryId!:number;
+
   constructor(
     public fileService:FileService,
     private userService:UserService,
@@ -36,7 +39,7 @@ export class ProfileComponent implements OnInit {
         userName:new FormControl(null,[]),
         image:new FormControl(new FileViewModel()),
 
-        nationalCode:new FormControl(null,[Validators.pattern("[\u06F0-\u06F9,0-9]{10}")]),
+        // nationalCode:new FormControl(null,[Validators.pattern("[\u06F0-\u06F9,0-9]{10}")]),
         // phone:new FormControl(null,[Validators.pattern("[\u06F0-\u06F9,0-9]{10}[\u06F0-\u06F9,0-9]*") , Validators.maxLength(15)]),
         countryId:new FormControl(null,[]),
         provinceId:new FormControl(null,[]),
@@ -49,6 +52,8 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCountriesList();
+    this.getCountryCodes();
+
     let self = this;
     this.userService.getUserProfile()
       .subscribe({
@@ -58,6 +63,8 @@ export class ProfileComponent implements OnInit {
           image.base64File = res.data.image;
           self.ProfileForm.controls['image'].setValue(image);
           self.setAddressDetails();
+
+          self.mobileCountryId = res.data.mobileCountryId;
         }
       })
   }
@@ -115,6 +122,25 @@ export class ProfileComponent implements OnInit {
     if(this.ProfileForm.value.countryId) this.LoadProvincesList(false);
     if(this.ProfileForm.value.provinceId) this.LoadCitiesList(false);
     if(this.ProfileForm.value.cityId) this.LoadVillagsList(false);
+  }
+
+  getCountryCodes(){
+    this.locationService.getCountriesCodes()
+      .subscribe(
+        (res:any)=>{
+          if(res.isSuccess)
+            this.countriesCodesList = res.data;
+        }
+      )
+  }
+
+  findCountryCode(){
+    if(this.countriesCodesList && this.mobileCountryId){
+      let country = this.countriesCodesList.find(c=>c.id == this.mobileCountryId);
+      return country? country.code : '' ;
+    }
+
+    return '';
   }
 
 }
