@@ -28,14 +28,15 @@ export class EeService {
       },{})
   }
 
-  getIndicators(fieldId:number,type:IndicatorsTypes,fromDate:string,toDate:string){
+  getIndicators(fieldId:number,type:IndicatorsTypes,fromDate:string,toDate:string,imageIndex:number = -1){
     return this.gService.post
       ("v1/Fields/RemoteSense",
       {
           fieldId:fieldId,
           type:type,
           fromDate:fromDate,
-          toDate:toDate
+          toDate:toDate,
+          imageIndex:imageIndex
       },{})
   }
 
