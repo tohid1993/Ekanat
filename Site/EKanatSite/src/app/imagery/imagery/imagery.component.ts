@@ -43,9 +43,11 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   showLegend:boolean = false;
 
+  indicatorDetails:any;
+
   constructor(
     private eeService:EeService,
-    private dateTimeService:DateTimeService,
+    public dateTimeService:DateTimeService,
     private spinner:NgxSpinnerService,
     private fieldService:FieldService,
     private route:ActivatedRoute
@@ -141,7 +143,13 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   }
 
-  getIndicators(key:IndicatorsTypes){
+
+/**
+ * دریافت عکس شاخص
+ * @param key indicator type
+ * @param imageIndex image index
+ */
+  getIndicators(key:IndicatorsTypes,imageIndex:number=-1){
     this.beforeIndicatorProcess();
     this.spinner.show();
 
@@ -150,11 +158,32 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
     let self = this;
 
-    this.eeService.getIndicators(this.fieldDetail.id,key,fromDate,toDate).subscribe({
+    this.eeService.getIndicators(
+      this.fieldDetail.id,
+      key,
+      fromDate,
+      toDate,
+      imageIndex
+    ).subscribe({
       next(res:any){
-        self.showLegend = true;
-        self.addImageToMap("data:image/png;base64,"+res.data,self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon));
-        self.spinner.hide();
+        if(res.isSuccess){
+          self.showLegend = true;
+          self.indicatorDetails = res.data;
+          self.addImageToMap(
+            "data:image/png;base64,"+self.indicatorDetails.imageBase64,
+            self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon)
+          );
+          self.spinner.hide();
+
+          try {
+            setTimeout(() => {
+              (document.querySelector(".indicators_dates_wrapper .scrollable") as HTMLElement).scrollTo((self.indicatorDetails.imageIndex * 115),0)
+            }, 100);
+          } catch (error) {
+            
+          }
+        }
+
       }
     })
 
@@ -251,7 +280,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
             document.getElementById('tooltip_value')!!.style.top = (my - 45) + 'px';
             document.getElementById('tooltip_value')!!.style.left = (mx) + 'px';
 
-            if(value>=-1 && value<=1){
+            if(value>=this.indicatorDetails.legendRange[0] && value<=this.indicatorDetails.legendRange[1]){
               document.getElementById('tooltip_value')!!.innerText = value.toString();
               document.getElementById('tooltip_value')!!.style.display = "block";
             }else{
@@ -327,7 +356,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
         this.context2.drawImage(legendImg, 0, 0, imgWidth , imgHeight ,0 ,0 , imgWidth , imgHeight);
 
 
-        for(var i = 0; i< imgHeight ;i++){
+        for(var i = imgHeight-1; i>=0 ;i--){
             var col = this.getRGBA(5,i,'legend');
             this.colors.push(col);
         }
@@ -344,7 +373,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       let finalValueOfPoint = undefined;
 
       if(index>=0){
-          let value = ((this.colors.length/2)-index)/(this.colors.length/2);
+          // let value = ((this.colors.length/2)-index)/(this.colors.length/2);
+          let value = ((index/(this.colors.length-1)) * (this.indicatorDetails.legendRange[1] - this.indicatorDetails.legendRange[0])) + this.indicatorDetails.legendRange[0];
           let mode = value*100%5
           let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
 
@@ -354,7 +384,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
           for(let index = 0 ; index<this.colors.length ; index++) {
               if(this.isNeighborColor(this.colors[index],color,10)){
 
-                  let value = ((this.colors.length/2)-index)/(this.colors.length/2);
+                  // let value = ((this.colors.length/2)-index)/(this.colors.length/2);
+                  let value = ((index/(this.colors.length-1)) * (this.indicatorDetails.legendRange[1] - this.indicatorDetails.legendRange[0])) + this.indicatorDetails.legendRange[0];
                   let mode = value*100%5
                   let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
 
@@ -369,7 +400,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
               finalValueOfPoint = undefined;
           }
       }
-
+      console.log(finalValueOfPoint);
+      
       return finalValueOfPoint;
     } catch (error) {
       return -2;

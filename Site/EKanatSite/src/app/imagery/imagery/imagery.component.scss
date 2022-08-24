@@ -31,6 +31,44 @@
             width: 10px;
         }
     }
+
+    .indicators_dates_wrapper{
+        position: absolute;
+        bottom: 23px;
+        z-index: 10;
+        background: rgb(255 255 255 / 70%);
+        left: 50px;
+        right: 16px;
+        padding: 10px;
+        border-radius: 8px;
+
+        div{
+            width: 100%;
+            white-space: nowrap;
+            overflow-x: auto;
+            display: flex;
+            flex-direction: row-reverse;
+
+            .date{
+                border: 1px solid $Secondary;
+                margin-left: 5px;
+                border-radius: 5px;
+                background: $Green_10;
+                color: $Secondary;
+                font-size: 15px;
+                font-weight: 400;
+                padding: 5px 11px 2px;
+                display: inline-block;
+                width: 115px;
+                
+                &.active{
+                    background: $Secondary;
+                    color: $Green_10;
+                }
+            }
+        }
+        
+    }
 }
 
 .field_details_wrapper {
@@ -169,3 +207,5 @@
     z-index: 1010;
     direction: ltr;
 }
+
+
