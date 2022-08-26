@@ -10,6 +10,7 @@ import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
 import { FieldService } from 'src/app/shared/services/field.service';
 import { GestureHandling } from "leaflet-gesture-handling";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-imagery',
@@ -50,7 +51,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     public dateTimeService:DateTimeService,
     private spinner:NgxSpinnerService,
     private fieldService:FieldService,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private toastr:ToastrService
   ) {
     this.route.params.subscribe(
       params=>{
@@ -150,6 +152,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
  * @param imageIndex image index
  */
   getIndicators(key:IndicatorsTypes,imageIndex:number=-1){
+    if(!key) return;
     this.beforeIndicatorProcess();
     this.spinner.show();
 
@@ -167,12 +170,17 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     ).subscribe({
       next(res:any){
         if(res.isSuccess){
-          self.showLegend = true;
-          self.indicatorDetails = res.data;
-          self.addImageToMap(
-            "data:image/png;base64,"+self.indicatorDetails.imageBase64,
-            self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon)
-          );
+          if(res.data.imageBase64){
+            self.showLegend = true;
+            self.indicatorDetails = res.data;
+            self.addImageToMap(
+              "data:image/png;base64,"+self.indicatorDetails.imageBase64,
+              self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon)
+            );
+          }else{
+            self.toastr.error("تصویری برای این بازه زمانی یافت نشد");
+          }
+
           self.spinner.hide();
 
           try {
