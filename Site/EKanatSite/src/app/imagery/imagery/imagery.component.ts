@@ -280,7 +280,10 @@ export class ImageryComponent implements OnInit , AfterViewInit {
             document.getElementById('tooltip_value')!!.style.top = (my - 45) + 'px';
             document.getElementById('tooltip_value')!!.style.left = (mx) + 'px';
 
+            // console.log(value,this.indicatorDetails.legendRange[0] ,this.indicatorDetails.legendRange[1]);
+            
             if(value>=this.indicatorDetails.legendRange[0] && value<=this.indicatorDetails.legendRange[1]){
+              
               document.getElementById('tooltip_value')!!.innerText = value.toString();
               document.getElementById('tooltip_value')!!.style.display = "block";
             }else{
@@ -375,21 +378,21 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       if(index>=0){
           // let value = ((this.colors.length/2)-index)/(this.colors.length/2);
           let value = ((index/(this.colors.length-1)) * (this.indicatorDetails.legendRange[1] - this.indicatorDetails.legendRange[0])) + this.indicatorDetails.legendRange[0];
-          let mode = value*100%5
-          let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
+          // let mode = value*100%5
+          // let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
 
-          finalValueOfPoint = finalValue;
+          finalValueOfPoint = value.toFixed(2); //finalValue;
       }else{
           let flag = false;
           for(let index = 0 ; index<this.colors.length ; index++) {
-              if(this.isNeighborColor(this.colors[index],color,10)){
+              if(this.isNeighborColor(this.colors[index],color,30)){
 
                   // let value = ((this.colors.length/2)-index)/(this.colors.length/2);
                   let value = ((index/(this.colors.length-1)) * (this.indicatorDetails.legendRange[1] - this.indicatorDetails.legendRange[0])) + this.indicatorDetails.legendRange[0];
-                  let mode = value*100%5
-                  let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
+                  // let mode = value*100%5
+                  // let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
 
-                  finalValueOfPoint = finalValue;
+                  finalValueOfPoint = value.toFixed(2) //finalValue;
 
                   flag = true;
                   break;
