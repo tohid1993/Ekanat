@@ -45,19 +45,29 @@ export class FieldsListVM{
 }
 
 export enum IndicatorsTypes{
-    ndvi = 1 ,
-    ndre = 2,  
-    reci = 3 , 
-    sipi = 4,  
-    vari = 5, 
-    evi = 6, 
-    arvi = 7,
+    ndvi = 1,
+    reci = 2,
+    msavi = 3,
 
-    ndwi = 8,
-    msi = 9,
+    ndwi = 4,
+    ndmi = 5,
 
-    ndsi = 10,
-    savi = 11
+    ndre = 6,
+    
+    sipi = 7
+    // ndvi = 1 ,
+    // ndre = 2,  
+    // reci = 3 , 
+    // sipi = 4,  
+    // vari = 5, 
+    // evi = 6, 
+    // arvi = 7,
+
+    // ndwi = 8,
+    // msi = 9,
+
+    // ndsi = 10,
+    // savi = 11
 }
 
 export class FieldDetailViewModel

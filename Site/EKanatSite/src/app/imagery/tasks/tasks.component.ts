@@ -1,5 +1,7 @@
 
+import { Location } from '@angular/common';
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {NgbDatepicker, NgbDatepickerI18n} from '@ng-bootstrap/ng-bootstrap';
 import { DateModel } from 'src/app/shared/models/model';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
@@ -50,14 +52,21 @@ export class TasksComponent implements OnInit {
   SelectedDayEvents:any[] = [];
   SelectedDayAnalyzis:any = [];
 
+  fieldId!:number;
+
   constructor(
     public i18n: NgbDatepickerI18n,
-    public dateTime:DateTimeService  
-  ) {}
+    public dateTime:DateTimeService,
+    private route:ActivatedRoute
+  ) {
+    this.route.params.subscribe(params=>{this.fieldId = params['id']})
+  }
 
   ngOnInit(): void {
     const {calendar} = this.datepicker;
     this.SelectedDay = calendar.getToday();
+
+      
   }
 
   navigate(number: number) {
