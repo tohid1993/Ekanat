@@ -3,9 +3,9 @@
     [pageTitle]="'پایش زمین کشاورزی '"></app-page-breadcrumb>
 
 <div class="container-fluid" id="imagery_wrapper">
-    <div class="row g-3 pb-2">
-        <div class="col-12 col-md-12 col-xl-3" *ngIf="showFieldDetails || windowWidth<1200">
-            <div class="field_details_wrapper h-100 row w-100 mx-auto">
+    <div class="row g-3 pb-2 overflow-hidden">
+        <div class="col-12 col-md-12 col-xl-3 " [ngStyle]="{'max-height':colsHeight}" *ngIf="showFieldDetails || windowWidth<1200">
+            <div class="field_details_wrapper h-100 overflow-auto row w-100 mx-auto">
                 <div class="col-12 col-md-6 col-xl-12 px-0">
                     <div class="field_detail" *ngIf="fieldDetail">
                         <div class="d-flex">
@@ -91,6 +91,7 @@
             </div>
         </div>
         <div class="col-12 col-md-8 col-xl-6 col-xxl-7 position-relative"
+            [ngStyle]="{'max-height':colsHeight}"
             [ngClass]="{'col-xl-6 col-xxl-7':(showFieldDetails && windowWidth>=1200) ,
                          'col-xl-9 col-xxl-10':(!showFieldDetails && windowWidth>=1200)}">
 
@@ -106,8 +107,22 @@
                 </span>
             </button>
             <div class="imagery_content_wrapper h-100">
-                <div id="map" dir="ltr"></div>
+                <div id="map" [ngClass]="{'t100':transparency==100 , 't70':transparency==70 , 't0':transparency==0}" dir="ltr"></div>
                 <div class="imagery_legend" *ngIf="showLegend">
+                    <div class="transparency">
+                        <div class="item">
+                            <input type="radio" name="transparency" [(ngModel)]="transparency" [value]="100" id="t100">
+                            <label for="t100">شفاف</label>
+                        </div>
+                        <div class="item">
+                            <input type="radio" name="transparency" [(ngModel)]="transparency" [value]="70" id="t70">
+                            <label for="t70">شیشه‌ای</label>
+                        </div>
+                        <div class="item">
+                            <input type="radio" name="transparency" [(ngModel)]="transparency" [value]="0" id="t0">
+                            <label for="t0">مخفی</label>
+                        </div>
+                    </div>
                     <span>{{indicatorDetails?.legendRange[1]}}</span>
                     <img src="./assets/images/legend.jpg" alt="">
                     <span>{{indicatorDetails?.legendRange[0]}}</span>
@@ -125,14 +140,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-4 col-xl-3 col-xxl-2">
-            <div class="indicators_wrapper h-100">
+        <div class="col-12 col-md-4 col-xl-3 col-xxl-2" [ngStyle]="{'max-height':colsHeight}">
+            <div class="indicators_wrapper h-100 overflow-auto">
                 <div class="dates_wrapper">
                     <div class="col-12 mb-2">
                         <label for="fromDate" class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">از تاریخ</label>
                         <div class="input-group" dir="ltr">
                             <input class="form-control border-secondary bu_3_text bu_3_text_mobile" placeholder="پایش از تاریخ" [firstDayOfWeek]="6" [ngModelOptions]="{standalone: true}"
-                                   name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="fromDate" (ngModelChange)="getIndicators(selectedIndicator)">
+                                   name="dp" ngbDatepicker #d="ngbDatepicker" [maxDate]="toDate" [(ngModel)]="fromDate" > <!--(ngModelChange)="getIndicators(selectedIndicator)"-->
                             <button class="btn btn-outline-secondary bg-light" (click)="d.toggle()" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#383440" class="bi bi-calendar-plus" viewBox="0 0 16 16">
                                     <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
@@ -145,7 +160,7 @@
                         <label for="toDate" class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">تا تاریخ</label>
                         <div class="input-group" dir="ltr">
                             <input class="form-control border-secondary bu_3_text bu_3_text_mobile" placeholder="پایش تا تاریخ" [firstDayOfWeek]="6" [ngModelOptions]="{standalone: true}"
-                                   name="dp" ngbDatepicker #d1="ngbDatepicker" [(ngModel)]="toDate" (ngModelChange)="getIndicators(selectedIndicator)">
+                                   name="dp" ngbDatepicker #d1="ngbDatepicker" [minDate]="fromDate" [(ngModel)]="toDate" > <!--(ngModelChange)="getIndicators(selectedIndicator)"-->
                             <button class="btn btn-outline-secondary bg-light calendar" (click)="d1.toggle()" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#383440" class="bi bi-calendar-plus" viewBox="0 0 16 16">
                                     <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
@@ -153,6 +168,9 @@
                                   </svg>
                             </button>
                         </div>
+                    </div>
+                    <div class="col-12 mt-3" *ngIf="selectedIndicator">
+                        <button class="primary_btn w-100 small_btn" (click)="getIndicators(selectedIndicator)">اعمال فیلتر</button>
                     </div>
                 </div>
 

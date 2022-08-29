@@ -212,6 +212,8 @@
                     class="form-control"
                     placeholder="yyyy-mm-dd"
                     readonly
+                    [minDate]="harvestDate"
+                    [placement]="'bottom'"
                     [firstDayOfWeek]="6"
                     [ngModelOptions]="{ standalone: true }"
                     name="dp"
@@ -318,6 +320,8 @@
                   class="form-control"
                   placeholder="yyyy-mm-dd"
                   readonly
+                  [maxDate]="cultivationDate"
+                  [placement]="'bottom'"
                   [firstDayOfWeek]="6"
                   [ngModelOptions]="{ standalone: true }"
                   name="dp"

@@ -46,6 +46,10 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   indicatorDetails:any;
 
+  colsHeight = "500px";
+
+  transparency:number = 100;
+
   constructor(
     private eeService:EeService,
     public dateTimeService:DateTimeService,
@@ -66,7 +70,9 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   setHightOfImageryWrapper(){
-    (document.querySelector('#imagery_wrapper>.row') as HTMLElement).style.minHeight = "calc(100vh - 144px)"
+    (document.querySelector('#imagery_wrapper>.row') as HTMLElement).style.minHeight = "calc(100vh - 144px)";
+
+    this.colsHeight = "calc(100vh - 160px)";
   }
 
   @HostListener('window:resize', ['$event'])

@@ -75,18 +75,25 @@ export class MainWeatherComponent implements OnInit {
     setTimeout(() => {
       this.SelectedField = field;
 
-      let coords:any[] = [];
-      this.SelectedField?.polygon.forEach((coord:any)=>{
-        coords.push([coord.x,coord.y]);
-      })
-      this.FieldLatLng = this.fieldService.centerOfField(coords);
+      localStorage.setItem('selectedFieldId',field.id);
 
-      this.getForecastWeather();
-      this.isChanged = true;
-      this.modalService.dismissAll();
+      this.beforeGetWeather();
 
     }, 10);
 
+  }
+
+
+  beforeGetWeather(){
+    let coords:any[] = [];
+    this.SelectedField?.polygon.forEach((coord:any)=>{
+      coords.push([coord.x,coord.y]);
+    })
+    this.FieldLatLng = this.fieldService.centerOfField(coords);
+
+    this.getForecastWeather();
+    this.isChanged = true;
+    this.modalService.dismissAll();
   }
 
   getFields(){
@@ -96,7 +103,14 @@ export class MainWeatherComponent implements OnInit {
       .subscribe({
         next(res:any){
           self.FieldsList = res.data;
-          self.openFieldsModal();
+
+          let fid = localStorage.getItem('selectedFieldId');
+          if(fid){
+            self.SelectedField = self.FieldsList.find(f=>f.id.toString() == fid)
+            self.beforeGetWeather();;
+          }else{
+            self.openFieldsModal();
+          }
           self.spinner.hide();
         }
       })

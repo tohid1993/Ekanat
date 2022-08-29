@@ -30,6 +30,40 @@
             height: 100px;
             width: 10px;
         }
+
+        .transparency{
+            display: flex;
+            max-width: 35px;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #efeeee;
+            padding-bottom: 10px;
+
+            .item{
+                input{
+                    position: absolute;
+                    transform: scale(0);
+                    opacity: 0;
+                    visibility: hidden;
+
+                    &:checked{
+                        &+label{
+                            background-color: $Primary_100;
+                            color: $White;
+                        }
+                    }
+                }
+
+                label{
+                    font-size: 12px;
+                    padding: 2px 4px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+            }
+        }
     }
 
     .indicators_dates_wrapper{
@@ -153,6 +187,12 @@
                 filter: grayscale(1);
             }
 
+            span{
+                width: calc(100% - 50px);
+                display: inline-flex;
+                justify-content: flex-end;
+            }
+
             &:hover{
                 opacity: 0.9;
             }
@@ -209,3 +249,8 @@
 }
 
 
+@media only screen and (max-width:1199px){
+    #imagery_wrapper>.row>div{
+        max-height: unset !important;
+    }
+}

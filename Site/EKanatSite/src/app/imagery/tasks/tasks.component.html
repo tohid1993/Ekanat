@@ -40,7 +40,7 @@
                 </ngb-datepicker>
           </div>
       
-          <div class="col-12 col-md-5">
+          <div class="col-12 col-md-5" *ngIf="!goToSubmitNewTask">
             <div class="tasks_list_wrapper" *ngIf="SelectedDay">
               <div class="day_number_wrapper">
                 <img src="./assets/images/icons/calendar.png" width="75" alt="">
@@ -74,7 +74,7 @@
                 
               </ul>
               <div class="text-center mb-4">
-                <button class="secondary_btn medium_btn px-4">
+                <button class="secondary_btn medium_btn px-4" (click)="goToNewTask()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bookmark-plus ms-2" viewBox="0 0 16 16">
                     <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
                     <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
@@ -84,6 +84,38 @@
               </div>
             </div>
           </div>
+
+          <!-- <div class="col-12 col-md-5" *ngIf="goToSubmitNewTask">
+            <div class="mb-3">
+              <label class="form-label">نوع فعالیت</label>
+              <select class="form-control" [(ngModel)]="SelectedTaskType" (change)="getTaskFields()">
+                <option value="" disabled selected>انتخاب نمایید...</option>
+
+                <optgroup [label]="task.taskTitle" *ngFor="let task of TasksList">
+                  <option [value]="type.typeTitle" *ngFor="let type of task.taskTypes">{{type.typeTitle}}</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="mb-3" *ngFor="let field of SelectedTaskFieldsList">
+              <label class="form-label">{{field.fieldTitle}}</label>
+              <select class="form-control" *ngIf="field.fieldItems">
+                <option value="" disabled selected>انتخاب نمایید...</option>
+                <option [value]="item" *ngFor="let item of field.fieldItems">{{item}}</option>
+              </select>
+              <input type="text" class="form-control" *ngIf="!field.fieldItems">
+            </div>
+            <div class="mb-3" *ngIf="SelectedTaskType">
+              <label class="form-label">توضیحات <small class="text-danger">(اختیاری)</small></label>
+              <textarea maxlength="250" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <button class="secondary_btn medium_btn px-5">ذخیره</button>
+              <button class="btn btn-danger">برگشت</button>
+            </div>
+          </div> -->
+
         </div>
       
       </div>
@@ -109,12 +141,43 @@
 
 
 
-<ng-template #tasksModal let-modal let-c="close" let-d="dismiss">
+<ng-template #newTaskModal let-modal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      <h6 class="modal-title" id="modal-basic-title">
+        ثبت فعالیت برای تاریخ <strong dir="ltr">{{dateTime.modelToString(SelectedDay)}}</strong>
+      </h6>
+      <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
   <div class="modal-body">
-      <div class="draw_methods py-3 px-4">
-          <div class="title heading_level_4 heading_level_4_mobile text-center">لیست رویداد های تاریخ انتخابی</div>
-         
-      </div>
+    <div class="mb-3">
+      <label class="form-label">نوع فعالیت</label>
+      <select class="form-control" [(ngModel)]="SelectedTaskType" (change)="getTaskFields()">
+        <option value="" disabled selected>انتخاب نمایید...</option>
+
+        <optgroup [label]="task.taskTitle" *ngFor="let task of TasksList">
+          <option [value]="type.typeTitle" *ngFor="let type of task.taskTypes">{{type.typeTitle}}</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="mb-3" *ngFor="let field of SelectedTaskFieldsList">
+      <label class="form-label">{{field.fieldTitle}}</label>
+      <select class="form-control" *ngIf="field.fieldItems">
+        <option value="" disabled selected>انتخاب نمایید...</option>
+        <option [value]="item" *ngFor="let item of field.fieldItems">{{item}}</option>
+      </select>
+      <input type="text" class="form-control" *ngIf="!field.fieldItems">
+    </div>
+    <div class="mb-3" *ngIf="SelectedTaskType">
+      <label class="form-label">توضیحات <small class="text-danger">(اختیاری)</small></label>
+      <textarea maxlength="250" class="form-control" rows="4"></textarea>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button class="secondary_btn small_btn px-5">
+        ذخیره فعالیت
+      </button>
+    </div>
   </div>
 </ng-template>
 
@@ -125,28 +188,4 @@
 
 
 
-
-<!-- <form class="form-inline">
-    <div class="form-group custom">
-      <div class="input-group">
-        <input class="form-control" placeholder="yyyy-mm-dd" [markDisabled]="isDisabled"
-               name="dp" [(ngModel)]="model" ngbDatepicker  [dayTemplate]="calendarDay" #d="ngbDatepicker" (navigate)="navigate($event)">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-        </div>
-      </div>
-    </div>
-  </form>
-  
-  <ng-template #calendarDay let-date="date" let-currentMonth="currentMonth" let-selected="selected" let-disabled="disabled" let-focused="focused"
-  >
-    <span *ngIf="isCustomDisable(date)" class="custom-day"
-          [class.bg-primary]="selected"  [class.text-muted]="true">
-      {{ date.day }}
-    </span>
-    <span (click)="model=date;d.close()" *ngIf="!isCustomDisable(date)" class="custom-day"
-          [class.bg-primary]="selected"  >
-      {{ date.day }}
-    </span>
-  </ng-template> -->
   

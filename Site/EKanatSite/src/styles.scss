@@ -34,6 +34,12 @@
     fill: #37b7a0;
 }
 
+.leaflet-control-layers-base{
+    font-family: $DefaultFontFamily;
+    text-align: right;
+    direction: rtl;
+}
+
 .leaflet-tooltip{
     font-family: $DefaultFontFamily;
     direction: rtl;
@@ -87,7 +93,13 @@ ngb-modal-backdrop{
 
 .leaflet-image-layer.addedImage{
     z-index: 300 !important;
+    transition: 0.5s;
+    opacity: 1;
 }
+
+.t100 .addedImage{opacity: 1;}
+.t70 .addedImage{opacity: 0.7;}
+.t0 .addedImage{opacity: 0;}
 
 
 .leaflet-pane.leaflet-shadow-pane{
@@ -115,3 +127,4 @@ ngb-modal-backdrop{
         background-color: transparent;
     }
 }
+

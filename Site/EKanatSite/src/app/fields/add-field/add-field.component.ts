@@ -109,11 +109,32 @@ export class AddFieldComponent implements OnInit {
     this.map.addControl(search);
 
 
-    Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {
-        // subdomains:['mt0','mt1','mt2','mt3'],
-        maxZoom: 20,
-        attribution: 'EKANAT.COM ❤️'
-    }).addTo(this.map);
+
+    var osm = Leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 20,
+      attribution: 'EKANAT.COM ❤️'
+    });
+
+    var satilate = Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {
+      // subdomains:['mt0','mt1','mt2','mt3'],
+      maxZoom: 20,
+      attribution: 'EKANAT.COM ❤️'
+    })
+    
+
+    this.map.addLayer(satilate);
+
+    var baseMaps = {
+      "نمای خیابان": osm,
+      "نمای ماهواره ای": satilate
+    };
+    var layerControl = Leaflet.control.layers(baseMaps,{},{position:'bottomleft'}).addTo(this.map);
+
+    // Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {
+    //     // subdomains:['mt0','mt1','mt2','mt3'],
+    //     maxZoom: 20,
+    //     attribution: 'EKANAT.COM ❤️'
+    // }).addTo(this.map);
 
 
 
@@ -155,6 +176,7 @@ export class AddFieldComponent implements OnInit {
       }
     });
 
+    
 
     this.map.addControl(drawControlFull);
 

@@ -25,7 +25,7 @@ export class UserPanelComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initRaychat();
+    // this.initRaychat();
     
     let self = this;
     this.userService.UserHomeInfo.subscribe
