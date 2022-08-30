@@ -96,7 +96,7 @@
                     <table class="value_table">
                         <tr *ngFor="let item of NextHoursWeather">
                             <td>{{getTime(item.dt)}}</td>
-                            <td>{{Math.round(CurrentWeather?.temp)}} <span class="unit">°C</span></td>
+                            <td>{{Math.round(item?.temp)}} <span class="unit">°C</span></td>
                             <td>{{item.wind_speed || 0}} m/s 
                                 <i class="wind_direction" [ngStyle]="{'transform': 'rotate('+(item.wind_deg || 0)+'deg)'}"></i>
                             </td>
