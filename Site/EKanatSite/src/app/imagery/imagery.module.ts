@@ -7,7 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   { path: 'analytics/:id', component: ImageryComponent},
-  { path: 'tasks/:id', component: TasksComponent},
+  { path: 'tasks/:id/:name', component: TasksComponent},
 ];
 
 @NgModule({

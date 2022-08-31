@@ -93,19 +93,9 @@
                     width: 10px;
                     padding: 2px 2px 2px 0;
     
-                    .event{
+                    .task{
                         width: 8px;
                         height: 8px;
-                        background-color: $Blue_80;
-                        border-radius: 50%;
-                        display: inline-block;
-                        margin-bottom: 4px;
-                    }
-
-                    .analyze{
-                        width: 8px;
-                        height: 8px;
-                        background-color: $Orange_90;
                         border-radius: 50%;
                         display: inline-block;
                         margin-bottom: 4px;
@@ -180,7 +170,8 @@
                 padding: 6px 10px;
                 position: relative;
                 display: block;
-
+                cursor: pointer;
+                
                 &::before{
                     position: absolute;
                     right: 0;
@@ -190,20 +181,25 @@
                     display: block;
                     content: "";
                     border-radius: 4px;
+                    background-color: var(--task-color);
                 }
 
-                &.event{
-                    &::before{
-                        background-color: $Blue_80;
-                    }
-                }
+                // &.event{
+                //     &::before{
+                //         background-color: $Blue_80;
+                //     }
+                // }
 
-                &.analyze{
-                    &::before{
-                        background-color: $Orange_90;
-                    }
-                }
+                // &.analyze{
+                //     &::before{
+                //         background-color: $Orange_90;
+                //     }
+                // }
            }
         }
     }
+}
+
+.ng-submitted .form-control.ng-invalid{
+    border-color: $Red_100;
 }

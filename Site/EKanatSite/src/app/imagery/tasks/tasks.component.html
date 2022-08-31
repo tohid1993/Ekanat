@@ -1,5 +1,5 @@
 
-<app-page-breadcrumb [pageTitle]="'فعالیت های روزانه ' + '(مزرعه کلزا ینگجه)'" [backUrl]="'/fields/imagery/analytics/'+fieldId"></app-page-breadcrumb>
+<app-page-breadcrumb [pageTitle]="'فعالیت های روزانه ' + '('+fieldName+')'" [backUrl]="'/fields/imagery/analytics/'+fieldId"></app-page-breadcrumb>
 
 <div class="container-fluid">
     <div class="tasks_wrapper">
@@ -53,24 +53,16 @@
               </div>
               <ul class="tasks_list">
 
-                <li class="item bu_3_text bu_3_text_mobile " *ngFor="let item of SelectedDayEvents">
+                <li class="item bu_3_text bu_3_text_mobile " *ngFor="let item of SelectedDayTasks">
                   <button class="ghost_btn align-middle small_btn only_icon ms-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                       <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
                     </svg>
                   </button>
-                  <span class="title event">{{item.title}}</span>
+                  <span class="title" (click)="showTaskDetails(item)"
+                    [style]="'--task-color:'+item.colorCode">{{item.activityGroupName}}</span>
                 </li>
 
-                <li class="item bu_3_text bu_3_text_mobile " *ngFor="let item of SelectedDayAnalyzis">
-                  <button class="ghost_btn align-middle small_btn ms-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text" viewBox="0 0 16 16">
-                      <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                      <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-                    </svg>
-                  </button>
-                  <span class="title analyze">{{item.title}}</span>
-                </li>
                 
               </ul>
               <div class="text-center mb-4">
@@ -85,36 +77,6 @@
             </div>
           </div>
 
-          <!-- <div class="col-12 col-md-5" *ngIf="goToSubmitNewTask">
-            <div class="mb-3">
-              <label class="form-label">نوع فعالیت</label>
-              <select class="form-control" [(ngModel)]="SelectedTaskType" (change)="getTaskFields()">
-                <option value="" disabled selected>انتخاب نمایید...</option>
-
-                <optgroup [label]="task.taskTitle" *ngFor="let task of TasksList">
-                  <option [value]="type.typeTitle" *ngFor="let type of task.taskTypes">{{type.typeTitle}}</option>
-                </optgroup>
-              </select>
-            </div>
-
-            <div class="mb-3" *ngFor="let field of SelectedTaskFieldsList">
-              <label class="form-label">{{field.fieldTitle}}</label>
-              <select class="form-control" *ngIf="field.fieldItems">
-                <option value="" disabled selected>انتخاب نمایید...</option>
-                <option [value]="item" *ngFor="let item of field.fieldItems">{{item}}</option>
-              </select>
-              <input type="text" class="form-control" *ngIf="!field.fieldItems">
-            </div>
-            <div class="mb-3" *ngIf="SelectedTaskType">
-              <label class="form-label">توضیحات <small class="text-danger">(اختیاری)</small></label>
-              <textarea maxlength="250" class="form-control" rows="4"></textarea>
-            </div>
-
-            <div class="d-flex justify-content-between">
-              <button class="secondary_btn medium_btn px-5">ذخیره</button>
-              <button class="btn btn-danger">برگشت</button>
-            </div>
-          </div> -->
 
         </div>
       
@@ -131,8 +93,7 @@
       (click)="dayChanged(date)">
 
     <div class="dots_wrapper">
-      <i class="event" *ngIf="dayHasEvent(date)"></i>
-      <i class="analyze" *ngIf="dayHasAnalyze(date)"></i>
+      <i class="task" [style]="'background-color:'+task['colorCode']" *ngFor="let task of dayHasTask(date)"></i>
     </div>
     {{ date.day }}
   </div>
@@ -149,42 +110,103 @@
       <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <div class="mb-3">
-      <label class="form-label">نوع فعالیت</label>
-      <select class="form-control" [(ngModel)]="SelectedTaskType" (change)="getTaskFields()">
-        <option value="" disabled selected>انتخاب نمایید...</option>
+    <form [formGroup]="TaskForm" (ngSubmit)="sendTask()" #FormDir="ngForm" novalidate>
+      <div class="mb-3">
+        <label class="form-label">نوع فعالیت</label>
+        <select class="form-control" formControlName="activityGroupId" (change)="getTaskFields()">
+          <option [ngValue]="null" disabled selected>انتخاب نمایید...</option>
+  
+          <!-- <optgroup [label]="'نام دسته'" *ngFor="let task of ActivityList"> -->
+            <option [ngValue]="activity.id" *ngFor="let activity of ActivityList">{{activity?.title}}</option>
+          <!-- </optgroup> -->
+        </select>
+      </div>
+  
+      <div class="mb-3" *ngIf="SelectedActivity?.types?.length>0">
+        <label class="form-label">{{SelectedActivity?.typeTitle}}</label>
+        <select class="form-control" formControlName="activityGroupTypeId">
+          <option [ngValue]="null" disabled selected>انتخاب نمایید...</option>
+          <option [ngValue]="item.id" *ngFor="let item of SelectedActivity?.types">{{item.title}}</option>
+        </select>
+      </div>
 
-        <optgroup [label]="task.taskTitle" *ngFor="let task of TasksList">
-          <option [value]="type.typeTitle" *ngFor="let type of task.taskTypes">{{type.typeTitle}}</option>
-        </optgroup>
-      </select>
-    </div>
+      <div class="row mb-3">
+        <div class="col-6" *ngIf="SelectedActivity?.hasValue">
+          <label class="form-label">مقدار</label>
+          <input type="text" class="form-control" formControlName="value">
+        </div>
+        <div class="col-6" *ngIf="SelectedActivity?.hasValueUnit">
+          <label class="form-label">واحد اندازه گیری</label>
+          <select class="form-control" formControlName="valueUnit">
+            <option [ngValue]="null" disabled selected>انتخاب نمایید...</option>
+            <option [ngValue]="1">لیتر</option>
+            <option [ngValue]="2">کیلوگرم</option>
+          </select>
+        </div>
+      </div>
 
-    <div class="mb-3" *ngFor="let field of SelectedTaskFieldsList">
-      <label class="form-label">{{field.fieldTitle}}</label>
-      <select class="form-control" *ngIf="field.fieldItems">
-        <option value="" disabled selected>انتخاب نمایید...</option>
-        <option [value]="item" *ngFor="let item of field.fieldItems">{{item}}</option>
-      </select>
-      <input type="text" class="form-control" *ngIf="!field.fieldItems">
-    </div>
-    <div class="mb-3" *ngIf="SelectedTaskType">
-      <label class="form-label">توضیحات <small class="text-danger">(اختیاری)</small></label>
-      <textarea maxlength="250" class="form-control" rows="4"></textarea>
-    </div>
 
-    <div class="d-flex justify-content-between">
-      <button class="secondary_btn small_btn px-5">
-        ذخیره فعالیت
-      </button>
-    </div>
+
+
+      <div class="mb-3" *ngIf="TaskForm.value.activityGroupId">
+        <label class="form-label">توضیحات <small class="text-danger">(اختیاری)</small></label>
+        <textarea maxlength="250" class="form-control" rows="4" formControlName="description"></textarea>
+      </div>
+  
+      <div class="d-flex justify-content-between">
+        <button class="secondary_btn small_btn px-5">
+          ذخیره فعالیت
+        </button>
+      </div>
+    </form>
   </div>
 </ng-template>
 
 
 
 
+<ng-template #TaskDetailModal let-modal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      <h6 class="modal-title" id="modal-basic-title">
+        جزئیات فعالیت
+      </h6>
+      <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+      <div class="mb-3">
+        <label class="form-label">تاریخ فعالیت</label>
+        <div class="form-control">{{dateTime.toJalaliDate(TaskDetail?.dateTime?.substring(0,10))}}</div>
+      </div>
 
+      <div class="mb-3">
+        <label class="form-label">نوع فعالیت</label>
+        <div class="form-control">{{TaskDetail?.activityGroupName}}</div>
+      </div>
+
+      <div class="mb-3" *ngIf="TaskDetail?.activityGroupTypeName">
+        <label class="form-label">نوع</label>
+        <div class="form-control">{{TaskDetail?.activityGroupTypeName}}</div>
+      </div>
+
+      <div class="row mb-3" *ngIf="TaskDetail?.value">
+        <div class="col-6">
+          <label class="form-label">مقدار</label>
+          <div class="form-control">{{TaskDetail?.value}}</div>
+        </div>
+        <div class="col-6" *ngIf="TaskDetail?.valueUnit">
+          <label class="form-label">واحد اندازه گیری</label>
+          <div class="form-control" *ngIf="TaskDetail?.valueUnit==1">لیتر</div>
+          <div class="form-control" *ngIf="TaskDetail?.valueUnit==2">کیلوگرم</div>
+        </div>
+      </div>
+
+      <div class="mb-3" *ngIf="TaskDetail?.description">
+        <label class="form-label">توضیحات</label>
+        <div class="form-control overflow-hidden">{{TaskDetail?.description}}</div>
+
+      </div>
+  </div>
+</ng-template>
 
 
 

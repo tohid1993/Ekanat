@@ -61,27 +61,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="ahead_tasks mt-xl-auto col-12 col-md-6 col-xl-12">
-                    <h4 class="bd_1_text bd_1_text_mobile Dark_80_text">فعالیت های پیش رو</h4>
-                    <div class="tasks pe-2 mb-3">
-                        <button class="Dark_70_text border-0 bg-transparent caption_text d-block mt-2 mb-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-                            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-                            </svg>
-                            1401-04-25 - مشاهده کنید
-                        </button>
-                        <button class="Dark_70_text border-0 bg-transparent caption_text d-block mt-2 mb-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-                            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-                            </svg>
-                            1401-04-29 - مشاهده کنید
-                        </button>
-                    </div>
-                    <a [routerLink]="['/fields/imagery/tasks',fieldId]" class="primary_btn medium_btn w-100">
+                <div class="ahead_tasks mt-xl-auto col-12 col-md-6 col-xl-12" >
+                    <ng-container *ngIf="SubmitedTasksList.length>0">
+                        <h4 class="bd_1_text bd_1_text_mobile Dark_80_text">فعالیت های پیش رو</h4>
+                        <div class="tasks pe-2 mb-3">
+                            <button (click)="showTaskDetails(task)"
+                                *ngFor="let task of SubmitedTasksList" 
+                                class="Dark_70_text border-0 bg-transparent caption_text d-block mt-2 mb-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                                </svg>
+                                {{dateTimeService.toJalaliDate(task.dateTime.substring(0,10))}} - {{task.activityGroupName}}
+                            </button>
+                        </div>
+                    </ng-container>
+                    <a [routerLink]="['/fields/imagery/tasks',fieldId,fieldDetail.name]" class="primary_btn medium_btn w-100">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                         </svg>
@@ -239,3 +235,46 @@
 </div>
 
 <span id="tooltip_value"></span>
+
+<ng-template #TaskDetailModal let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">
+          جزئیات فعالیت
+        </h6>
+        <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">تاریخ فعالیت</label>
+          <div class="form-control">{{dateTimeService.toJalaliDate(TaskDetail?.dateTime?.substring(0,10))}}</div>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label">نوع فعالیت</label>
+          <div class="form-control">{{TaskDetail?.activityGroupName}}</div>
+        </div>
+  
+        <div class="mb-3" *ngIf="TaskDetail?.activityGroupTypeName">
+          <label class="form-label">نوع</label>
+          <div class="form-control">{{TaskDetail?.activityGroupTypeName}}</div>
+        </div>
+  
+        <div class="row mb-3" *ngIf="TaskDetail?.value">
+          <div class="col-6">
+            <label class="form-label">مقدار</label>
+            <div class="form-control">{{TaskDetail?.value}}</div>
+          </div>
+          <div class="col-6" *ngIf="TaskDetail?.valueUnit">
+            <label class="form-label">واحد اندازه گیری</label>
+            <div class="form-control" *ngIf="TaskDetail?.valueUnit==1">لیتر</div>
+            <div class="form-control" *ngIf="TaskDetail?.valueUnit==2">کیلوگرم</div>
+          </div>
+        </div>
+  
+        <div class="mb-3" *ngIf="TaskDetail?.description">
+          <label class="form-label">توضیحات</label>
+          <div class="form-control overflow-hidden">{{TaskDetail?.description}}</div>
+  
+        </div>
+    </div>
+  </ng-template>

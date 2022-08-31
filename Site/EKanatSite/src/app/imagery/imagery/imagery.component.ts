@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as Leaflet from 'leaflet';
 import "leaflet-draw";
@@ -11,6 +11,8 @@ import { EeService } from 'src/app/shared/services/ee.service';
 import { FieldService } from 'src/app/shared/services/field.service';
 import { GestureHandling } from "leaflet-gesture-handling";
 import { ToastrService } from 'ngx-toastr';
+import { GeneralService } from 'src/app/shared/services/general.service';
+import { NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-imagery',
@@ -18,6 +20,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./imagery.component.scss']
 })
 export class ImageryComponent implements OnInit , AfterViewInit {
+  @ViewChild('TaskDetailModal' , {static:true}) TaskDetailModal:ElementRef|undefined;
 
   map: Leaflet.Map|undefined;
   drawnItems:any;
@@ -56,7 +59,9 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     private spinner:NgxSpinnerService,
     private fieldService:FieldService,
     private route:ActivatedRoute,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private gService:GeneralService,
+    private modalService: NgbModal,
   ) {
     this.route.params.subscribe(
       params=>{
@@ -100,6 +105,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
 
+
+
   getFieldDetails(){
     this.spinner.show();
     let self = this;
@@ -131,6 +138,12 @@ export class ImageryComponent implements OnInit , AfterViewInit {
         .subscribe({
           next(res:any){
               self.CurrentWeather = res.data.current;
+              let CurrentDateTime =
+                self.dateTimeService.toJalaliDateTimeCustomFormat(
+                self.dateTimeService.timeStampToDateTime(self.CurrentWeather.dt*1000) , "M/D/YYYY HH:mm:ss" , "YYYY-MM-DD"
+              );
+                
+              self.getSubmitedTasksList(CurrentDateTime)
           },
           error(err){console.log(err);
           },
@@ -450,5 +463,24 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
 
+  SubmitedTasksList:any[] = [];
+  getSubmitedTasksList(dateTime:string){
+    let curentDate = this.dateTimeService.getDateModel(dateTime,'-');
+    let firstDayDate = this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(curentDate))
+  
+    this.gService.get("v1/Activity/GetList",{fieldId:this.fieldId , fromDate:firstDayDate})
+      .subscribe(
+        (res:any)=>{
+          if(res.isSuccess){
+            this.SubmitedTasksList = res.data;
+          }
+        }
+      )
+  }
 
+  TaskDetail:any;
+  showTaskDetails(item:any){
+    this.TaskDetail = item;
+    this.modalService.open(this.TaskDetailModal , { centered: true , size: 'md'  });
+  }
 }
