@@ -59,10 +59,15 @@ export class ProfileComponent implements OnInit {
       .subscribe({
         next(res:any){
           self.ProfileForm.patchValue(res.data);
+
           let image = new FileViewModel();
-          image.base64File = res.data.image;
-          self.ProfileForm.controls['image'].setValue(image);
+          self.gService.toDataUrl(res.data.image, function(myBase64:string) {
+            image.base64File  = myBase64.replace(/data.*;base64,/g,'');
+            self.ProfileForm.controls['image'].setValue(image);
+          });
+
           self.setAddressDetails();
+
 
           self.mobileCountryId = res.data.mobileCountryId;
         }
@@ -83,18 +88,15 @@ export class ProfileComponent implements OnInit {
 
   saveProfile(){
     if(this.ProfileForm.invalid) return;
-    
-    let obj = this.gService.clone(this.ProfileForm.value)
-    if(!obj.image.size_Byte)
-      obj['image'] = null;
 
     this.spinner.show();
     let self = this;
-    this.userService.updateUserProfile(obj)
+    this.userService.updateUserProfile(this.ProfileForm.value)
     .subscribe({
       complete(){
           self.userService.loadUserDetails();
           self.spinner.hide();
+          self.gService.showSuccessToastr("پروفایل با موفقیت ویرایش شد");
       }
     })
   }
@@ -142,5 +144,8 @@ export class ProfileComponent implements OnInit {
 
     return '';
   }
+
+
+
 
 }
