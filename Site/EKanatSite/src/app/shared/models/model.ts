@@ -79,3 +79,32 @@ export class FieldDetailViewModel
     cultivationDate!:string;
     polygon!:any[];
 }
+
+
+export enum IrrigationType
+{
+    /// <summary>
+    /// غرقابی
+    /// </summary>
+    Flooded = 1,
+    /// <summary>
+    /// فارو
+    /// </summary>
+    Furrow = 2,
+    /// <summary>
+    /// نواری
+    /// </summary>
+    Tip = 3,
+    /// <summary>
+    /// بارانی
+    /// </summary>
+    Rainy = 4,
+    /// <summary>
+    /// قطره ای
+    /// </summary>
+    Drip = 5,
+    /// <summary>
+    /// زیرزمینی
+    /// </summary>
+    Underground = 6,
+}

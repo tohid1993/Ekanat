@@ -1,1 +1,34 @@
-<p>dashboard works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-4"></div>
+        <div class="col-12 col-lg-8">
+            <div class="row g-3 fields_wrapper pb-3 mt-1">
+                <div class="col-12" *ngFor="let field of FieldsList|slice:0:listLength;let index = index">
+                    <div class="field_item d-flex p-2 row mx-0">
+                        <div class="field_details col-12 col-md col-lg-12 col-xl d-flex align-items-center">
+                            <div class="field_polygon ms-3">
+                                <app-field-svg [cordinates]="field.polygon"></app-field-svg>
+                            </div>
+                            <div class="detail">
+                                <h3 class="field_title heading_level_4 primary_text_mobile Primary_100_text mb-2">{{field.name}}</h3>
+                                <h6 class="cultivated_crop bu_2_text bu_3_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} هکتار</h6>
+                            </div>
+                        </div>
+                        <div class="field_actions col-12 col-md-auto col-lg-12 col-xl-auto text-start mt-2 mt-md-0 mt-lg-2">
+                            <button (click)="goToWeatherPage(field.id)" class="btn btn-dark btn-sm small_btn my-1 me-1" >هواشناسی</button>
+                            <a [routerLink]="['/fields/imagery/analytics',field.id]" class="btn btn-success btn-sm small_btn my-1 me-1">بررسی زمین</a>
+                            <a [routerLink]="['/fields/imagery/tasks',field.id,field.name]" class="btn btn-success btn-sm small_btn my-1 me-1">ثبت فعالیت</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="FieldsList.length>0">
+                    <button class="btn btn-sm" 
+                        [ngClass]="{'btn-outline-danger':listLength==4 , 'btn-danger':listLength>4}" 
+                        (click)="toggleShowList()">
+                        {{listLength==4?'مشاهده همه':'بستن لیست'}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

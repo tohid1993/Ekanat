@@ -138,12 +138,17 @@ export class ImageryComponent implements OnInit , AfterViewInit {
         .subscribe({
           next(res:any){
               self.CurrentWeather = res.data.current;
-              let CurrentDateTime =
+
+              try {
+                let CurrentDateTime =
                 self.dateTimeService.toJalaliDateTimeCustomFormat(
-                self.dateTimeService.timeStampToDateTime(self.CurrentWeather.dt*1000) , "M/D/YYYY HH:mm:ss" , "YYYY-MM-DD"
-              );
-                
-              self.getSubmitedTasksList(CurrentDateTime)
+                  self.dateTimeService.timeStampToDateTime(self.CurrentWeather.dt*1000) ,
+                  "M/D/YYYY HH:mm:ss" ,
+                  "YYYY-MM-DD"
+                );
+
+                self.getSubmitedTasksList(CurrentDateTime)
+              } catch (error) {}
           },
           error(err){console.log(err);
           },

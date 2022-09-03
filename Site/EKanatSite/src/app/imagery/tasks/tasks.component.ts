@@ -114,15 +114,15 @@ export class TasksComponent implements OnInit {
   }
 
   dayHasTask(date:DateModel){
-    let gDate = this.dateTime.toGeorgianDate(date.year+"-"+date.month+"-"+date.day);
+    let gDate = this.dateTime.toJalaliDate(this.dateTime.toGeorgianDate(date.year+"-"+date.month+"-"+date.day));
     let tasks = this.SubmitedTasksList.filter((task:any)=>(task.dateTime.substring(0,10)==gDate));
     
     return tasks;
   }
 
   dayHasImage(date:DateModel){
-    let gDate = this.dateTime.toGeorgianDate(date.year+"-"+date.month+"-"+date.day);
-    let images = this.SubmitedImagesList.filter((image:any)=>(this.dateTime.toGeorgianDate(image.takeFileDateTime.substring(0,10))==gDate));
+    let gDate = this.dateTime.toJalaliDate(this.dateTime.toGeorgianDate(date.year+"-"+date.month+"-"+date.day));
+    let images = this.SubmitedImagesList.filter((image:any)=>(image.takeFileDateTime.substring(0,10)==gDate));
     
     return images;
   }

@@ -115,7 +115,8 @@
         padding: 12px 8px;
 
         .field_svg{
-            width: 75px;
+            max-width: 75px;
+            max-height: 75px;
         }
     }
 

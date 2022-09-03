@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="new_analytics">
-                        <h4 class="bd_1_text bd_1_text_mobile White_text">تحلیل کارشناس سنجش از دور</h4>
+                        <h4 class="bd_1_text bd_1_text_mobile White_text">تحلیل کارشناس کشاورزی</h4>
                         <div class="unread_analytics pe-2">
                             <button class="White_text border-0 bg-transparent caption_text d-block mt-2 mb-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
@@ -73,11 +73,11 @@
                                 <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
                                 <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
                                 </svg>
-                                {{dateTimeService.toJalaliDate(task.dateTime.substring(0,10))}} - {{task.activityGroupName}}
+                                {{task.dateTime.substring(0,10)}} - {{task.activityGroupName}}
                             </button>
                         </div>
                     </ng-container>
-                    <a [routerLink]="['/fields/imagery/tasks',fieldId,fieldDetail.name]" class="primary_btn medium_btn w-100">
+                    <a [routerLink]="['/fields/imagery/tasks',fieldId,fieldDetail?.name]" class="primary_btn medium_btn w-100">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                         </svg>
@@ -246,7 +246,7 @@
     <div class="modal-body">
         <div class="mb-3">
           <label class="form-label">تاریخ فعالیت</label>
-          <div class="form-control">{{dateTimeService.toJalaliDate(TaskDetail?.dateTime?.substring(0,10))}}</div>
+          <div class="form-control">{{TaskDetail?.dateTime?.substring(0,10)}}</div>
         </div>
   
         <div class="mb-3">

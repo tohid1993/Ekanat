@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import * as tj from "@tmcw/togeojson";
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as shp from "shpjs";
-import { DateModel } from 'src/app/shared/models/model';
+import { DateModel, IrrigationType } from 'src/app/shared/models/model';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
 import { FieldService } from 'src/app/shared/services/field.service';
@@ -49,7 +49,34 @@ export class AddFieldComponent implements OnInit {
   harvestDate!:DateModel;
   fertilizationDate!:DateModel;
 
-  FieldProductsList:any[] = [{id:0 , title:"سایر"}]
+  FieldProductsList:any[] = []
+
+  IrrigationType = [
+      {
+        title:'غرقابی',
+        id: IrrigationType.Flooded
+      },
+      {
+        title:'فارو',
+        id: IrrigationType.Furrow
+      },
+      {
+        title:'نواری',
+        id: IrrigationType.Tip
+      },
+      {
+        title:'بارانی',
+        id: IrrigationType.Rainy
+      },
+      {
+        title:'قطره ای',
+        id: IrrigationType.Drip
+      },
+      {
+        title:'زیرزمینی',
+        id: IrrigationType.Underground
+      }
+  ];
 
   constructor(
     config: NgbModalConfig, 
@@ -71,13 +98,13 @@ export class AddFieldComponent implements OnInit {
       polygon:new FormControl(null,[Validators.required]),
 
       fieldProductId:new FormControl(null,[Validators.required]),
-      otherProductTitle:new FormControl(null,[Validators.required]),
+      // otherProductTitle:new FormControl(null,[Validators.required]),
       previousFieldProductId:new FormControl(null,[Validators.required]),
-      otherPreviousProductTitle:new FormControl(null,[Validators.required]),
+      // otherPreviousProductTitle:new FormControl(null,[Validators.required]),
       harvestDate:new FormControl(null,[Validators.required]),
       // fertilizationDate:new FormControl(null,[Validators.required]),
       irrigationPeriod:new FormControl(null,[Validators.required]),
-
+      irrigationType:new FormControl(null,[Validators.required])
     })
   }
 
@@ -203,7 +230,7 @@ export class AddFieldComponent implements OnInit {
         (res:any)=>{
           if(res.isSuccess)
             this.FieldProductsList = res.data;
-            this.FieldProductsList.push({id:0 , title:"سایر"});
+            // this.FieldProductsList.push({id:0 , title:"سایر"});
       })
   }
 
@@ -443,11 +470,11 @@ export class AddFieldComponent implements OnInit {
 
   }
 
-  setProductName(event:any,key:string){
-    try {
-      this.AddFieldForm.controls[key].setValue(event==0? null : this.FieldProductsList.find(p=>p.id == event).title);
-    } catch (error) {
-      this.AddFieldForm.controls[key].setValue('سایر');
-    }
-  }
+  // setProductName(event:any,key:string){
+  //   try {
+  //     this.AddFieldForm.controls[key].setValue(event==0? null : this.FieldProductsList.find(p=>p.id == event).title);
+  //   } catch (error) {
+  //     this.AddFieldForm.controls[key].setValue('سایر');
+  //   }
+  // }
 }

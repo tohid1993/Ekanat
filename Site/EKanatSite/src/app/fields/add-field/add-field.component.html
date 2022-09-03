@@ -156,8 +156,8 @@
               <select
                 class="form-control form-control-lg bu_2_text bu_2_text_mobile"
                 formControlName="fieldProductId"
-                (ngModelChange)="setProductName($event, 'otherProductTitle')"
               >
+                <!--(ngModelChange)="setProductName($event, 'otherProductTitle')"-->
                 <option
                   [ngValue]="item.id"
                   *ngFor="let item of FieldProductsList"
@@ -174,7 +174,7 @@
                 >وارد کردن این فیلد الزامی میباشد</small
               >
             </div>
-            <div class="col-12 col-md-6 mb-4"
+            <!-- <div class="col-12 col-md-6 mb-4"
               *ngIf="AddFieldForm.value.fieldProductId == 0"
             >
               <label
@@ -199,60 +199,60 @@
                 "
                 >وارد کردن این فیلد الزامی میباشد</small
               >
-            </div>
+            </div> -->
 
             <div class="col-12 col-md-6 mb-4">
-                <label
-                  for="cultivationDate"
-                  class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
-                  >تاریخ کاشت محصول فعلی</label
+              <label
+                for="cultivationDate"
+                class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
+                >تاریخ کاشت محصول فعلی</label
+              >
+              <div class="input-group" dir="ltr">
+                <input
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  readonly
+                  [minDate]="harvestDate"
+                  [placement]="'bottom'"
+                  [firstDayOfWeek]="6"
+                  [ngModelOptions]="{ standalone: true }"
+                  name="dp"
+                  ngbDatepicker
+                  #d1="ngbDatepicker"
+                  [(ngModel)]="cultivationDate"
+                  (dateSelect)="setDate('cultivationDate')"
+                />
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="d1.toggle()"
+                  type="button"
                 >
-                <div class="input-group" dir="ltr">
-                  <input
-                    class="form-control"
-                    placeholder="yyyy-mm-dd"
-                    readonly
-                    [minDate]="harvestDate"
-                    [placement]="'bottom'"
-                    [firstDayOfWeek]="6"
-                    [ngModelOptions]="{ standalone: true }"
-                    name="dp"
-                    ngbDatepicker
-                    #d1="ngbDatepicker"
-                    [(ngModel)]="cultivationDate"
-                    (dateSelect)="setDate('cultivationDate')"
-                  />
-                  <button
-                    class="btn btn-outline-secondary calendar"
-                    (click)="d1.toggle()"
-                    type="button"
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="23"
+                    height="23"
+                    fill="#383440"
+                    class="bi bi-calendar4-week"
+                    viewBox="0 0 16 16"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="23"
-                      height="23"
-                      fill="#383440"
-                      class="bi bi-calendar4-week"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"
-                      />
-                      <path
-                        d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <small
-                  class="text-danger"
-                  *ngIf="
-                    FormDir.submitted &&
-                    FormDir.hasError('required', 'cultivationDate')
-                  "
-                  >وارد کردن این فیلد الزامی میباشد</small
-                >
+                    <path
+                      d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"
+                    />
+                    <path
+                      d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"
+                    />
+                  </svg>
+                </button>
               </div>
+              <small
+                class="text-danger"
+                *ngIf="
+                  FormDir.submitted &&
+                  FormDir.hasError('required', 'cultivationDate')
+                "
+                >وارد کردن این فیلد الزامی میباشد</small
+              >
+            </div>
 
             <div class="col-12 col-md-6 mb-4">
               <label class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
@@ -261,10 +261,12 @@
               <select
                 class="form-control form-control-lg bu_2_text bu_2_text_mobile"
                 formControlName="previousFieldProductId"
-                (ngModelChange)="
+              >
+                <!--
+                  (ngModelChange)="
                   setProductName($event, 'otherPreviousProductTitle')
                 "
-              >
+              -->
                 <option
                   [ngValue]="item.id"
                   *ngFor="let item of FieldProductsList"
@@ -281,7 +283,7 @@
                 >وارد کردن این فیلد الزامی میباشد</small
               >
             </div>
-            <div
+            <!-- <div
               class="col-12 col-md-6 mb-4"
               *ngIf="AddFieldForm.value.previousFieldProductId == 0"
             >
@@ -307,7 +309,7 @@
                 "
                 >وارد کردن این فیلد الزامی میباشد</small
               >
-            </div>
+            </div> -->
 
             <div class="col-12 col-md-6 mb-4">
               <label
@@ -437,6 +439,31 @@
               >
             </div>
 
+            <div class="col-12 col-md-6 mb-4">
+              <label class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
+                >روش آبیاری</label
+              >
+              <select
+                class="form-control form-control-lg bu_2_text bu_2_text_mobile"
+                formControlName="irrigationType"
+              >
+                <option
+                  [ngValue]="item.id"
+                  *ngFor="let item of IrrigationType"
+                >
+                  {{ item.title }}
+                </option>
+              </select>
+              <small
+                class="text-danger"
+                *ngIf="
+                  FormDir.submitted &&
+                  FormDir.hasError('required', 'irrigationType')
+                "
+                >وارد کردن این فیلد الزامی میباشد</small
+              >
+            </div>
+
             <div class="col-12 mx-auto mb-4 row">
               <div class="col-6 col-md-3 ps-1 pe-0">
                 <button
@@ -463,7 +490,12 @@
 <ng-template #methodModal let-modal let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h6 class="modal-title" id="modal-basic-title">انتخاب روش</h6>
-    <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    <button
+      type="button"
+      class="btn-close me-auto ms-0"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
   </div>
   <div class="modal-body">
     <div class="draw_methods py-3 px-4">
