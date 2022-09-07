@@ -5,7 +5,7 @@ import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
 import * as GeoSearch from 'leaflet-geosearch'
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DateModel, FieldDetailViewModel, IndicatorsTypes } from 'src/app/shared/models/model';
+import { AnalysViewModel, DateModel, FieldDetailViewModel, IndicatorsTypes } from 'src/app/shared/models/model';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
 import { FieldService } from 'src/app/shared/services/field.service';
@@ -21,6 +21,7 @@ import { NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ImageryComponent implements OnInit , AfterViewInit {
   @ViewChild('TaskDetailModal' , {static:true}) TaskDetailModal:ElementRef|undefined;
+  @ViewChild('AnalyzDetailModal' , {static:true}) AnalyzDetailModal:ElementRef|undefined;
 
   map: Leaflet.Map|undefined;
   drawnItems:any;
@@ -87,6 +88,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   ngOnInit(): void {
     this.getFieldDetails();
+    this.GetAnalyzList();
     this.setHightOfImageryWrapper();
 
     Leaflet.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
@@ -488,4 +490,28 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     this.TaskDetail = item;
     this.modalService.open(this.TaskDetailModal , { centered: true , size: 'md'  });
   }
+
+  AnalyzList:any = [];
+  GetAnalyzList(){
+    this.gService.get("v1/Analysis/GetList",{fieldId:this.fieldId})
+      .subscribe({
+        next:(res:any)=>{
+          if(res.isSuccess) this.AnalyzList = res.data;
+        }
+      })
+  }
+
+  AnalyzDetail:AnalysViewModel|undefined = undefined;
+  ShowAnalyzDetail(analyzId:number) {
+    this.gService.get("v1/Analysis/GetDetail",{id:analyzId})
+    .subscribe({
+      next:(res:any)=>{
+        if(res.isSuccess){
+          this.AnalyzDetail = res.data;
+          this.modalService.open(this.AnalyzDetailModal, { fullscreen: true , scrollable: true });
+        }
+      }
+    })
+  }
 }
+
