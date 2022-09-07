@@ -108,3 +108,31 @@ export enum IrrigationType
     /// </summary>
     Underground = 6,
 }
+
+
+export class AnalysViewModel
+{
+    id!:number;
+    title!:string;
+    description!:string;
+    subAnalysis!:SubAnalysViewModel[];
+    files!:AnalysFile[];
+}
+
+export class SubAnalysViewModel
+{
+    id!:number;
+    remoteSensingType!:IndicatorsTypes;
+    remoteSensingTypeTitle!:string;
+    title!:string;
+    description!:string;
+    image!:string;
+    imageDateTime!:string;
+}
+
+export class AnalysFile
+{
+    id!:number;
+    title!:string;
+    file!:FileViewModel;
+}
