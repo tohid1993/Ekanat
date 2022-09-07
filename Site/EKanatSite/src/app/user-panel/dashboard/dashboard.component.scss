@@ -1,0 +1,62 @@
+@import "_vars";
+
+
+.tasks_list_wrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    // background: $Primary_80;
+    border-radius: 4px;
+    
+    .day_number_wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 0px 0 8px;
+        color: $Primary_80;
+        
+        #day_number {
+            font-size: 1.5rem;
+            font-weight: bolder;
+            height: 28px;
+        }
+
+        #day_name {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+    }
+
+    .tasks_list {
+        padding: 8px 16px;
+        list-style: none;
+        // flex-grow: 1;
+        overflow-y: auto;
+        color: $Secondary;
+
+        li{
+            display: flex;
+            align-items: center;
+
+           .title{
+                padding: 6px 10px;
+                position: relative;
+                display: block;
+                cursor: pointer;
+                
+                &::before{
+                    position: absolute;
+                    right: 0;
+                    width: 6px;
+                    top: 6px;
+                    bottom: 6px;
+                    display: block;
+                    content: "";
+                    border-radius: 4px;
+                    background-color: var(--task-color);
+                }
+           }
+        }
+    }
+}

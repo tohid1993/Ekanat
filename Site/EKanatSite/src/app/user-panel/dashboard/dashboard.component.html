@@ -1,9 +1,68 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-lg-4"></div>
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-lg-5 ps-lg-0">
+            <div class="row g-3 mt-1">
+                <div class="col-12">
+                    <ngb-datepicker class="calendar_wrapper" [dayTemplate]="calendarDay"
+                        #dp
+                        [displayMonths]="1"
+                        [outsideDays]="'hidden'"
+                        [weekdays]="true"
+                        [firstDayOfWeek]="6"
+                        navigation="none">
+
+                        <ng-template ngbDatepickerContent>
+
+                            <div *ngFor="let month of dp.state.months">
+                                <div class="row p-2">
+                                    <div class="col-auto d-inline-flex align-items-center">
+                                        <button type="button" class="secondary_btn small_btn only_icon" (click)="navigate(-1);">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                                                <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
+                                            </svg>
+                                        </button>
+                                        <div class="current_month">{{ i18n.getMonthShortName(month.month) }} {{ month.year }}</div>
+                                        <button type="button" class="secondary_btn small_btn only_icon" (click)="navigate(1)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
+                                                <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            <ngb-datepicker-month [month]="month"></ngb-datepicker-month>
+                            </div>
+                        </ng-template>
+
+                    </ngb-datepicker>
+
+                    <div class="w-100">
+                        <div class="tasks_list_wrapper" *ngIf="SelectedDay && SelectedDayTasks.length>0">
+                            <!-- <div class="day_number_wrapper">
+                              <img src="./assets/images/icons/calendar.png" width="45" alt="">
+                              <div class="d-inline-flex flex-column me-3">
+                                <span id="day_number">{{SelectedDay.day}}</span>
+                                <span id="day_name">
+                                  {{getSelectedDateByFormat(this.dateTime.modelToString(SelectedDay))}}
+                                </span>
+                              </div>
+                            </div> -->
+              
+                            <ul class="tasks_list mb-3">
+                              <h6>لیست فعالیت ها</h6>
+                              <li class="item bu_3_text bu_3_text_mobile " *ngFor="let item of SelectedDayTasks">
+                                <span class="title" (click)="showTaskDetails(item)"
+                                  [style]="'--task-color:'+item.colorCode">{{item.activityGroupName}} - زمین "{{item.fieldName}}"</span>
+                              </li>  
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-7">
             <div class="row g-3 fields_wrapper pb-3 mt-1">
-                <div class="col-12" *ngFor="let field of FieldsList|slice:0:listLength;let index = index">
+                <div class="col-12" *ngFor="let field of FieldsList|slice:0:minLength;let index = index">
                     <div class="field_item d-flex p-2 row mx-0">
                         <div class="field_details col-12 col-md col-lg-12 col-xl d-flex align-items-center">
                             <div class="field_polygon ms-3">
@@ -14,21 +73,91 @@
                                 <h6 class="cultivated_crop bu_2_text bu_3_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} هکتار</h6>
                             </div>
                         </div>
-                        <div class="field_actions col-12 col-md-auto col-lg-12 col-xl-auto text-start mt-2 mt-md-0 mt-lg-2">
+                        <div class="field_actions col-12 col-md-auto col-lg-12 col-xl-auto text-start mt-2 mt-md-0 mt-lg-2 mt-xl-0">
                             <button (click)="goToWeatherPage(field.id)" class="btn btn-dark btn-sm small_btn my-1 me-1" >هواشناسی</button>
                             <a [routerLink]="['/fields/imagery/analytics',field.id]" class="btn btn-success btn-sm small_btn my-1 me-1">بررسی زمین</a>
                             <a [routerLink]="['/fields/imagery/tasks',field.id,field.name]" class="btn btn-success btn-sm small_btn my-1 me-1">ثبت فعالیت</a>
                         </div>
                     </div>
                 </div>
-                <div class="text-center" *ngIf="FieldsList.length>0">
+                <div class="text-center" *ngIf="FieldsList.length>5">
                     <button class="btn btn-sm" 
-                        [ngClass]="{'btn-outline-danger':listLength==4 , 'btn-danger':listLength>4}" 
+                        [ngClass]="{'btn-outline-danger':minLength==5 , 'btn-danger':minLength>5}" 
                         (click)="toggleShowList()">
-                        {{listLength==4?'مشاهده همه':'بستن لیست'}}
+                        {{minLength==5?'مشاهده همه':'بستن لیست'}}
                     </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+<ng-template #calendarDay let-date="date" let-currentMonth="currentMonth" let-selected="selected" let-disabled="disabled" let-focused="focused">
+    <div class="calendar_day" 
+        [ngClass]="{'selected':(date.year == SelectedDay.year && date.month == SelectedDay.month && date.day == SelectedDay.day)}" 
+        (click)="dayChanged(date)">
+  
+      <div class="dots_wrapper">
+        <i class="task" [style]="'background-color:'+task['colorCode']" *ngFor="let task of dayHasTask(date)"></i>
+        <!-- <i class="task" [style]="'background-color:#484848'" *ngFor="let image of dayHasImage(date)"></i> -->
+      </div>
+      {{ date.day }}
+    </div>
+</ng-template>
+
+
+<ng-template #TaskDetailModal let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">
+          جزئیات فعالیت
+        </h6>
+        <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <label class="form-label">نام زمین</label>
+            <div class="form-control">{{TaskDetail?.fieldName}}</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">تاریخ فعالیت</label>
+          <div class="form-control">{{TaskDetail?.dateTime?.substring(0,10)}}</div>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label">نوع فعالیت</label>
+          <div class="form-control">{{TaskDetail?.activityGroupName}}</div>
+        </div>
+  
+        <div class="mb-3" *ngIf="TaskDetail?.activityGroupTypeName">
+          <label class="form-label">{{TaskDetail?.typeTitle}}</label>
+          <div class="form-control">{{TaskDetail?.activityGroupTypeName}}</div>
+        </div>
+  
+        <div class="row mb-3" *ngIf="TaskDetail?.value">
+          <div class="col-6">
+            <label class="form-label">مقدار</label>
+            <div class="form-control">{{TaskDetail?.value}}</div>
+          </div>
+          <div class="col-6" *ngIf="TaskDetail?.valueUnit">
+            <label class="form-label">واحد اندازه گیری</label>
+            <div class="form-control" *ngIf="TaskDetail?.valueUnit==1">لیتر</div>
+            <div class="form-control" *ngIf="TaskDetail?.valueUnit==2">کیلوگرم</div>
+          </div>
+        </div>
+  
+        <div class="mb-3" *ngIf="TaskDetail?.description">
+          <label class="form-label">توضیحات</label>
+          <div class="form-control overflow-hidden">{{TaskDetail?.description}}</div>
+  
+        </div>
+    </div>
+  </ng-template>
