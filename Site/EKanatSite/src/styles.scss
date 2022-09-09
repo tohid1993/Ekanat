@@ -257,3 +257,13 @@ ngb-modal-backdrop{
 }
 
 
+.accordion-button::after{
+    margin-right: auto;
+    margin-left: unset;
+    filter: hue-rotate(221deg);
+}
+
+.accordion-button:not(.collapsed) {
+    color: $Secondary;
+    background-color: $Green_10;
+}

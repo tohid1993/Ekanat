@@ -1,20 +1,37 @@
-<div class="past_days_weather pt-4">
-    <div class="row mx-0">
-        <div class="col-12">
-            <div class="next_days__wrapper py-4" *ngIf="showCharts">
-                <h4 class="heading_level_4 heading_level_4_mobile text-center">میزان بارش در یک ماه اخیر</h4>
-                <div class="py-2">
-                    <div echarts [options]="options" [autoResize]="true" class="demo-chart"></div>
-                </div>
-            </div>
-
-            <div class="next_days__wrapper py-4" *ngIf="showCharts">
-                <h4 class="heading_level_4 heading_level_4_mobile text-center">تغییرات دما در یک ماه اخیر</h4>
-                <div class="py-2">
-                    <div echarts [options]="options1" [autoResize]="true" class="demo-chart"></div>
-                </div>
-            </div>
+<div class="past_days_weather">
+    <div class="row mx-0 pb-4">
+        <div class="col-12 py-2">
+            <ngb-accordion #acc="ngbAccordion" *ngIf="showCharts"> 
+                <ngb-panel>
+                  <ng-template ngbPanelTitle>
+                    <span class="primary_text primary_text_mobile text-center">میزان بارش در یک ماه اخیر</span>
+                  </ng-template>
+                  <ng-template ngbPanelContent>
+                    <div class="py-2">
+                        <div echarts [options]="options" [autoResize]="true" class="demo-chart"></div>
+                    </div>
+                  </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
+        </div>
+        <div class="col-12 py-2">
+            <ngb-accordion #acc="ngbAccordion" *ngIf="showCharts"> 
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
+                        <span class="primary_text primary_text_mobile text-center">تغییرات دما در یک ماه اخیر</span> 
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                      <div class="py-2">
+                        <div echarts [options]="options1" [autoResize]="true" class="demo-chart"></div>
+                      </div>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
         </div>
     </div>
+
 </div>
+
+
+
 
