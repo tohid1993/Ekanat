@@ -30,8 +30,8 @@ export class AddFieldComponent implements OnInit {
 
   map: Leaflet.Map|undefined;
 
-  minHA:number = 1;
-  maxHA:number = 100;
+  minHA:number = 2;
+  maxHA:number = 10;
 
   FieldCoordinates:any|undefined;
   FieldArea:number = 0;

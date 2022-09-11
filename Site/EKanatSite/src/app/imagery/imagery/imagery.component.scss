@@ -70,10 +70,10 @@
         position: absolute;
         bottom: 23px;
         z-index: 10;
-        background: rgb(255 255 255 / 70%);
+        background: rgba(255,255,255,1);
         left: 72px;
         right: 16px;
-        padding: 10px;
+        padding: 10px 10px 4px 10px;
         border-radius: 8px;
 
         div{
@@ -82,6 +82,27 @@
             overflow-x: auto;
             display: flex;
             flex-direction: row-reverse;
+
+                /* width */
+            &::-webkit-scrollbar {
+                height: 6px;
+            }
+            
+            /* Track */
+            &::-webkit-scrollbar-track {
+                background: #d4d4d4;
+            }
+            
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+                background: #acacac;
+            }
+            
+            /* Handle on hover */
+            &::-webkit-scrollbar-thumb:hover {
+                background: #acacac;
+            }
+
 
             .date{
                 border: 1px solid $Secondary;
@@ -94,6 +115,7 @@
                 padding: 5px 11px 2px;
                 display: inline-block;
                 width: 115px;
+                margin-bottom: 6px;
                 
                 &.active{
                     background: $Secondary;
