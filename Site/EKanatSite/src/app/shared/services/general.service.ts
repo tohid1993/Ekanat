@@ -150,6 +150,28 @@ export class GeneralService {
     return copy;
   }
 
+
+  getBase64Image(url:string,callback:any){
+    const img = new Image();
+    img.setAttribute('crossOrigin', 'anonymous');
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      
+      if(ctx){
+        ctx.drawImage(img, 0, 0);
+        const dataURL = canvas.toDataURL("image/png");
+        callback(dataURL);
+      }else{
+        callback("");
+      }
+
+    }
+    img.src = url
+  }
+
   toDataUrl(url:string, callback:any) {
     var xhr = new XMLHttpRequest();
     xhr.onload = function() {

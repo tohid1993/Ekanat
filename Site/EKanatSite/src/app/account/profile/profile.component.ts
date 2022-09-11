@@ -61,10 +61,15 @@ export class ProfileComponent implements OnInit {
           self.ProfileForm.patchValue(res.data);
 
           let image = new FileViewModel();
-          self.gService.toDataUrl(res.data.image, function(myBase64:string) {
+          self.gService.getBase64Image(res.data.image, function(myBase64:string) {
             image.base64File  = myBase64.replace(/data.*;base64,/g,'');
             self.ProfileForm.controls['image'].setValue(image);
           });
+
+          // self.gService.toDataUrl(res.data.image, function(myBase64:string) {
+          //   image.base64File  = myBase64.replace(/data.*;base64,/g,'');
+          //   self.ProfileForm.controls['image'].setValue(image);
+          // });
 
           self.setAddressDetails();
 
