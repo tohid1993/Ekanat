@@ -155,16 +155,31 @@
 
             <div class="col-12 col-md-6 mb-4">
               <label
+                for="country"
+                class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
+                >کشور</label
+              >
+              <select (change)="LoadProvincesList()"
+                formControlName="countryId"
+                class="form-control form-control-lg bu_2_text bu_2_text_mobile"
+                id="country"
+              >
+                <option [ngValue]="country.id" *ngFor="let country of CountriesList">{{country.title}}</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-6 mb-4">
+              <label
                 for="provinec"
                 class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
-                >استان زمین انتخابی</label
+                >استان</label
               >
               <select
                 class="form-control form-control-lg bu_2_text bu_2_text_mobile"
                 id="provinec"
                 formControlName="provinceId"
               >
-
+                <option [ngValue]="province.id" *ngFor="let province of ProvincesList">{{province.title}}</option>
               </select>
             </div>
 

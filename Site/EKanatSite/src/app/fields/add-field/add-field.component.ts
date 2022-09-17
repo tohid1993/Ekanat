@@ -17,6 +17,7 @@ import { GeneralService } from 'src/app/shared/services/general.service';
 import "src/assets/js/L.KML.js";
 import Swal from 'sweetalert2';
 import { GestureHandling } from "leaflet-gesture-handling";
+import { LocationService } from 'src/app/shared/services/location.service';
 
 
 @Component({
@@ -33,6 +34,9 @@ export class AddFieldComponent implements OnInit {
 
   minHA:number = 2;
   maxHA:number = 10;
+  remainingHA:number = 30;
+  LimitHA:number = 30;
+
 
   FieldCoordinates:any|undefined;
   FieldArea:number = 0;
@@ -79,6 +83,9 @@ export class AddFieldComponent implements OnInit {
       }
   ];
 
+  CountriesList: any[] = [];
+  ProvincesList: any[] = [];
+
   constructor(
     config: NgbModalConfig, 
     private modalService: NgbModal,
@@ -88,6 +95,7 @@ export class AddFieldComponent implements OnInit {
     private router:Router,
     private dateTimeService:DateTimeService,
     private spinner:NgxSpinnerService,
+    private locationService:LocationService
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -95,6 +103,7 @@ export class AddFieldComponent implements OnInit {
     this.AddFieldForm = new FormGroup({
       name:new FormControl(null,[Validators.required]),
       area:new FormControl(null,[Validators.required]),
+      countryId:new FormControl(null,[Validators.required]),
       provinceId:new FormControl(null,[Validators.required]),
       cultivationDate:new FormControl(null,[Validators.required]),
       polygon:new FormControl(null,[Validators.required]),
@@ -112,6 +121,7 @@ export class AddFieldComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getCountriesList();
     this.getFieldProductsList();
     this.openMethodModal();
 
@@ -230,7 +240,23 @@ export class AddFieldComponent implements OnInit {
       drawControlFull.addTo(selfMap);
     })
   }
+
+  getCountriesList(){
+    this.locationService.getCountriesList()
+      .subscribe(
+        res=>{
+          if(res.isSuccess){
+            this.CountriesList = res.data;
+          }
+        }
+      )
+  }
   
+  LoadProvincesList(){
+    this.AddFieldForm.controls['provinceId'].setValue(null);
+    this.ProvincesList = this.CountriesList.find(c=>c.id == this.AddFieldForm.value.countryId).provinces;
+  }
+
   getFieldProductsList(){
     this.fieldService.getFieldProductionslist()
       .subscribe(
@@ -342,24 +368,48 @@ export class AddFieldComponent implements OnInit {
         {
           next(res) {
             let area = Math.round((((+res.data)/10000) + Number.EPSILON) * 100) / 100;
+
             if(area>=self.minHA && area<=self.maxHA){
               self.FieldArea = area;
               self.FieldCoordinates = coords;
               geoJSON.bindTooltip(area.toString()+" هکتار " , {direction:'right' , permanent:true}).openTooltip();
             }else{
-              Swal.fire({
-                icon:"warning",
-                title:"زمین انتخابی نا معتبر است",
-                text:"مساحت زمین انتخابی "+area+" هکتار میباشد،"+"اندازه زمین انتخابی باید بیشتر از "+self.minHA+" و کمتر از " + self.maxHA + " هکتار باشد.",
-                confirmButtonText:"متوجه شدم"
-              })
+
+              if(area<self.minHA){
+                Swal.fire({
+                  icon:"warning",
+                  title:"زمین انتخابی نا معتبر است",
+                  text:"مساحت زمین انتخابی "+area+" هکتار میباشد،"+"اندازه زمین انتخابی باید بیشتر از "+self.minHA+" و کمتر از " + self.maxHA + " هکتار باشد.",
+                  confirmButtonText:"متوجه شدم"
+                })
+              }
+
+              if(area>self.maxHA){
+                if(area<=self.remainingHA){
+                  Swal.fire({
+                    icon:"warning",
+                    title:"زمین انتخابی نا معتبر است",
+                    text:"مساحت زمین انتخابی "+area+" هکتار میباشد،"+"اندازه زمین انتخابی باید بیشتر از "+self.minHA+" و کمتر از " + self.maxHA + " هکتار باشد.",
+                    confirmButtonText:"متوجه شدم"
+                  })
+                }
+
+                if(area>self.remainingHA){
+                  Swal.fire({
+                    icon:"warning",
+                    title:"زمین انتخابی نا معتبر است",
+                    text:"با این انتخاب مجموع زمین های انتخابی شما بیشتر از "+self.LimitHA+" هکتار میشود و باید پکیج سازمانی را تهیه فرمایید.",
+                    confirmButtonText:"متوجه شدم"
+                  })
+                }
+              }
+
 
               self.drawnItems.clearLayers();
             }
 
           },
           error(err) { 
-            console.error(err);
             self.drawnItems.clearLayers();
           },
           complete() {}
