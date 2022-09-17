@@ -52,7 +52,11 @@
           byFile: selectedMethod == 2,
           byWalking: selectedMethod == 3
         }"
-      ></div>
+      >
+      <button class="user_geo_location" (click)="getLocation()" title="برو به مکان شما">
+        <img src="./assets/images/icons/geo_location.svg" alt="">
+      </button>
+    </div>
 
       <input
         type="file"
@@ -147,6 +151,21 @@
                 readonly
                 [value]="FieldArea + ' هکتار'"
               />
+            </div>
+
+            <div class="col-12 col-md-6 mb-4">
+              <label
+                for="provinec"
+                class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
+                >استان زمین انتخابی</label
+              >
+              <select
+                class="form-control form-control-lg bu_2_text bu_2_text_mobile"
+                id="provinec"
+                formControlName="provinceId"
+              >
+
+              </select>
             </div>
 
             <div class="col-12 col-md-6 mb-4">

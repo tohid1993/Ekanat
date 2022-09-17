@@ -1,2 +1,42 @@
 @import "_vars";
 
+.field_item{
+    position: relative;
+    overflow: hidden;
+
+    .remove_btn {
+        border: none;
+        background: $Dark_10;
+        padding: 3px 4px 1px 4px;
+        display: inline-block;
+        border-radius: 6px;
+        color: $Red_100;
+        margin-left: 5px;
+        box-shadow: $boxShadow;
+    }
+
+    &.hasPackage{
+        .remove_btn{
+            display: none;
+        }
+        &::before{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #ff9d3f;
+            content: "";
+            z-index: 3;
+            background-image: url(/assets/images/icons/permium.png);
+            background-size: 16px;
+            background-repeat: no-repeat;
+            clip-path: polygon(100% 0, 0% 100%, 0 0);
+            background-position: top 2px left 4px;
+        }
+    }
+
+
+
+
+}

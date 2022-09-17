@@ -18,6 +18,7 @@ import "src/assets/js/L.KML.js";
 import Swal from 'sweetalert2';
 import { GestureHandling } from "leaflet-gesture-handling";
 
+
 @Component({
   selector: 'app-add-field',
   templateUrl: './add-field.component.html',
@@ -94,6 +95,7 @@ export class AddFieldComponent implements OnInit {
     this.AddFieldForm = new FormGroup({
       name:new FormControl(null,[Validators.required]),
       area:new FormControl(null,[Validators.required]),
+      provinceId:new FormControl(null,[Validators.required]),
       cultivationDate:new FormControl(null,[Validators.required]),
       polygon:new FormControl(null,[Validators.required]),
 
@@ -119,10 +121,12 @@ export class AddFieldComponent implements OnInit {
 
     this.map.scrollWheelZoom.disable();
 
+
     let marker = Leaflet.icon({
       iconUrl: './assets/images/icons/map-pin.svg',
       iconSize: [50, 75],
     });
+
 
     const search = new (GeoSearch.GeoSearchControl as any)({
       provider: new GeoSearch.OpenStreetMapProvider(),
@@ -155,6 +159,9 @@ export class AddFieldComponent implements OnInit {
       "نمای خیابان": osm,
       "نمای ماهواره ای": satilate
     };
+
+
+
     var layerControl = Leaflet.control.layers(baseMaps,{},{position:'bottomleft'}).addTo(this.map);
 
     // Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {
@@ -470,11 +477,52 @@ export class AddFieldComponent implements OnInit {
 
   }
 
-  // setProductName(event:any,key:string){
-  //   try {
-  //     this.AddFieldForm.controls[key].setValue(event==0? null : this.FieldProductsList.find(p=>p.id == event).title);
-  //   } catch (error) {
-  //     this.AddFieldForm.controls[key].setValue('سایر');
-  //   }
-  // }
+
+
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
+    } else {
+      Swal.fire({
+        text:"این قابلیت در مرورگر شما پشتیبانی نمیشود، لطفا از یک مرورگر بروز استفاده نمایید",
+        icon:"warning"
+      }) 
+    }
+  }
+  
+  showPosition(position:any) {
+    if(this.map){
+      Leaflet.marker([position.coords.latitude,position.coords.longitude]).addTo(this.map);
+      this.map.setView([position.coords.latitude,position.coords.longitude],18);
+    }
+  }
+  
+  showError(error:any) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        Swal.fire({
+          text:"شما مجوز دسترسی به مکان یابی را لغو کرده اید",
+          icon:"error"
+        }) 
+        break;
+      case error.POSITION_UNAVAILABLE:
+        Swal.fire({
+          text:"اطلاعاتی یافت نشد",
+          icon:"error"
+        }) 
+        break;
+      case error.TIMEOUT:
+        Swal.fire({
+          text:"اطلاعاتی یافت نشد، مجددا تلاش نمایید",
+          icon:"error"
+        }) 
+        break;
+      case error.UNKNOWN_ERROR:
+        Swal.fire({
+          text:"خطایی رخ داد ، مجددا تلاش نمایید",
+          icon:"error"
+        }) 
+        break;
+    }
+  }
 }
