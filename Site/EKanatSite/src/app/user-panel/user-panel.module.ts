@@ -17,6 +17,7 @@ const routes: Routes = [
       {path:'fields' , canActivate: [AuthGuard] , loadChildren: () => import('../fields/fields.module').then(m => m.FieldsModule)},
       {path:'weather' , canActivate: [AuthGuard] , loadChildren: () => import('../weather/weather.module').then(m => m.WeatherModule)},
       {path:'account' , canActivate: [AuthGuard] , loadChildren: () => import('../account/account.module').then(m => m.AccountModule)},
+      {path:'package' , canActivate: [AuthGuard] , loadChildren: () => import('../package/package.module').then(m => m.PackageModule)},
       
       {path:'**' , canActivate: [AuthGuard] , redirectTo:'dashboard'}
     ]

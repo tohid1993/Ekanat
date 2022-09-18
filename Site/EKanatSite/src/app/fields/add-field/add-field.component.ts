@@ -33,9 +33,9 @@ export class AddFieldComponent implements OnInit {
   map: Leaflet.Map|undefined;
 
   minHA:number = 2;
-  maxHA:number = 10;
-  remainingHA:number = 30;
-  LimitHA:number = 30;
+  maxHA:number = 100;
+  remainingHA:number = 100;
+  LimitHA:number = 100;
 
 
   FieldCoordinates:any|undefined;
@@ -379,30 +379,29 @@ export class AddFieldComponent implements OnInit {
                 Swal.fire({
                   icon:"warning",
                   title:"زمین انتخابی نا معتبر است",
-                  text:"مساحت زمین انتخابی "+area+" هکتار میباشد،"+"اندازه زمین انتخابی باید بیشتر از "+self.minHA+" و کمتر از " + self.maxHA + " هکتار باشد.",
+                  text:`کاربر گرامی، مساحت زمین انتخابی شما ${area} هکتار می‌باشد. مساحت زمین برای ثبت باید بیش از ${self.minHA} هکتار باشد`,
                   confirmButtonText:"متوجه شدم"
                 })
               }
 
-              if(area>self.maxHA){
-                if(area<=self.remainingHA){
-                  Swal.fire({
-                    icon:"warning",
-                    title:"زمین انتخابی نا معتبر است",
-                    text:"مساحت زمین انتخابی "+area+" هکتار میباشد،"+"اندازه زمین انتخابی باید بیشتر از "+self.minHA+" و کمتر از " + self.maxHA + " هکتار باشد.",
-                    confirmButtonText:"متوجه شدم"
-                  })
-                }
-
-                if(area>self.remainingHA){
-                  Swal.fire({
-                    icon:"warning",
-                    title:"زمین انتخابی نا معتبر است",
-                    text:"با این انتخاب مجموع زمین های انتخابی شما بیشتر از "+self.LimitHA+" هکتار میشود و باید پکیج سازمانی را تهیه فرمایید.",
-                    confirmButtonText:"متوجه شدم"
-                  })
-                }
+              if(area>self.remainingHA && area<=self.LimitHA){
+                Swal.fire({
+                  icon:"warning",
+                  title:"زمین انتخابی نا معتبر است",
+                  text:`کاربر گرامی، مساحت باقیمانده مجاز شما برای ثبت زمین ${self.remainingHA} هکتار می‌باشد. با فعالسازی خدمات پایش بر روی زمین‌های ثبت شده خود می‌توانید مساحت باقیمانده مجاز را افزایش دهید`,
+                  confirmButtonText:"متوجه شدم"
+                })
               }
+
+              if(area>self.LimitHA){
+                Swal.fire({
+                  icon:"warning",
+                  title:"زمین انتخابی نا معتبر است",
+                  text:`کاربر گرامی،مساحت زمین انتخابی شما ${area} هکتار می‌باشد. جهت دریافت خدمات پایش برای زمین‌های بالای 100 هکتار با شماره 09304916440 تماس بگیرید`,
+                  confirmButtonText:"متوجه شدم"
+                })
+              }
+
 
 
               self.drawnItems.clearLayers();
