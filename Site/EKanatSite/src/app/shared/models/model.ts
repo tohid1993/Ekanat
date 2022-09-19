@@ -75,8 +75,12 @@ export class FieldDetailViewModel
     id!:number;
     name!:string;
     productName!:string;
+    previousProductName!:string;
     area!:number;
     cultivationDate!:string;
+    harvestDate!:string;
+    irrigationPeriod!:number;
+    irrigationType!:number;
     polygon!:any[];
 }
 

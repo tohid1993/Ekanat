@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from "@auth0/angular-jwt";
-import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -45,7 +44,7 @@ export function tokenGetter() {
         // allowedDomains: ["example.com"],
         // disallowedRoutes: ["http://example.com/examplebadroute/"],
       },
-    })
+    }),
   ],
 
   providers: [

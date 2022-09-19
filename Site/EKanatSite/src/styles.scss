@@ -267,3 +267,27 @@ ngb-modal-backdrop{
     color: $Secondary;
     background-color: $Green_10;
 }
+
+.box {
+    box-shadow: 0px 0px 3px 0 #a9a7a7;
+    border-radius: 8px;
+    padding: 2.5rem 1.5rem 1.5rem;
+
+    .box_header{
+        figure{
+            width: 65px;
+            height: 65px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            object-position: center;
+            background-image: url(/assets/images/icons/shape.png);
+            background-size: contain;
+        }
+    }
+
+    ul{
+        list-style: circle;
+    }
+}

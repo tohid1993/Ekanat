@@ -1,1 +1,167 @@
-<p>package-invoice works!</p>
+<app-page-breadcrumb [pageTitle]="'خرید پکیج استاندارد'">
+    <button class="text-white border btn-sm border-white bg-transparent h6 m-0 p-2 rounded text-nowrap" (click)="openFieldsModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="d-none d-sm-inline-block bi bi-pin-map ms-1" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z"/>
+            <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"/>
+          </svg> 
+        انتخاب زمین 
+    </button>
+</app-page-breadcrumb>
+
+
+<div class="container-fluid">
+    <div class="card text-center" *ngIf="!isChanged">
+        <div class="card-header">
+          خرید پکیج استاندارد
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">پکیج استاندارد برای زمین کشاورزی</h5>
+          <p class="card-text">برای خرید پکیج استاندارد برای زمین های کشاورزی، یکی از زمین های خود را انتخاب نمایید</p>
+          <button class="primary_btn small_btn" (click)="openFieldsModal()">انتخاب زمین</button>
+        </div>
+    </div>
+
+    <div class="container" *ngIf="SelectedField">
+        <div class="row mt-0 col-12 col-lg-10 mx-auto">
+            <div class="col-12 col-lg-6 mb-3">
+                <div class="box">
+                    <div class="box_header text-center mb-3">
+                        <h4 class="primary_text primary_text_mobile Primary_100_text mb-3">مشخصات</h4>
+                        <figure>
+                            <img src="./assets/images/icons/detail.png" height="40" alt="">
+                        </figure>
+                    </div>
+                    <div class="box_body">
+                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">اطلاعات زمین</h6>
+                        <ul class="list-group list-group-flush p-0 mb-5">
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">نام زمین </span>
+                                <span>{{SelectedField.name}}</span>
+                            </li>
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">نام محصول </span>
+                                <span>{{SelectedField.productName}}</span>
+                            </li>
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">مساحت زمین </span>
+                                <span>{{SelectedField.area}} هکتار</span>
+                            </li>
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">تاریخ کشت </span>
+                                <span dir="ltr">{{SelectedField.cultivationDate}}</span>
+                            </li>
+                        </ul>
+
+                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">اطلاعات پکیج</h6>
+                        <ul class="list-group list-group-flush p-0">
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">تاریخ شروع پکیج </span>
+                                <span>{{SelectedField.cultivationDate}}</span>
+                            </li>
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">تاریخ انقضای پکیج </span>
+                                <span>{{SelectedField.cultivationDate}}</span>
+                            </li>
+                        </ul>
+
+                        <div class="alert alert-warning bu_3_text bu_3_text_mobile text-justify lh-base mt-4" role="alert">
+                            کاربر گرامی، خدمات پایش برای زمین 
+                            «{{SelectedField.name}}» 
+                            از تاریخ 
+                            <span dir="ltr">{{SelectedField.cultivationDate}}</span> 
+                            تا تاریخ 
+                            <span dir="ltr">{{SelectedField.cultivationDate}}</span> 
+                            قابل فعالسازی میباشد و گزارش تحلیل زمین 
+                            «{{SelectedField.name}}» 
+                            از تاریخ 
+                            <span dir="ltr">{{SelectedField.cultivationDate}}</span> 
+                            تا تاریخ 
+                            <span dir="ltr">{{SelectedField.cultivationDate}}</span> 
+                            طی یک هفته اتی در میز کار زمین شما قابل مشاهده خواهد بود.
+                        </div>
+                    </div>
+                    <!-- <div class="box_footer text-center pt-3 row">
+
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6 mb-3">
+                <div class="box h-100">
+                    <div class="box_header text-center mb-3">
+                        <h4 class="primary_text primary_text_mobile Primary_100_text mb-3">پیش فاکتور</h4>
+                        <figure>
+                            <img src="./assets/images/icons/invoice.png" height="40" alt="">
+                        </figure>
+                    </div>
+                    <div class="box_body">
+                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">جزئیات</h6>
+                        <ul class="list-group list-group-flush p-0 mb-5">
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">نوع سرویس</span>
+                                <span>پکیج استاندارد</span>
+                            </li>
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">مبلغ</span>
+                                <span>{{350000|number:"0.0-0"}} <small>تومان</small></span>
+                            </li>
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">ارزش افزوده</span>
+                                <span>{{35000|number:"0.0-0"}} <small>تومان</small></span>
+                            </li>
+                            <li class="bu_3_text bu_3_text_mobile list-group-item d-flex align-items-center justify-content-between RoyalBlue_10_bg">
+                                <span class="fw-bold">مبلغ قابل پرداخت</span>
+                                <span class="fw-bold">{{400000|number:"0.0-0"}} <small>تومان</small></span>
+                            </li>
+                        </ul>
+
+                        <div class="text-center">
+                            <button class="primary_btn medium_btn">ادامه و پرداخت آنلاین</button>
+                        </div>
+                    </div>
+                    <!-- <div class="box_footer text-center pt-3 row">
+
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #fieldsModal let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">انتخاب زمین</h6>
+        <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="draw_methods py-3 px-4">
+            <div class="title heading_level_4 heading_level_4_mobile text-center">یکی از زمین های کشاورزی را جهت خرید پکیج استاندارد انتخاب نمایید</div>
+            <div class="row g-3 fields_wrapper mt-3 justify-content-center">
+                <div class="col-12 col-sm-6 col-xl-4" (click)="choaseFieldModal(field)"
+                    *ngFor="let field of FieldsList;let index = index" >
+                    <div class="field_item">
+                        <div class="detail">
+                            <h3 class="field_title heading_level_4 heading_level_4_mobile Primary_100_text mb-3">{{field.name}}</h3>
+                            <h6 class="cultivated_crop bu_2_text bu_2_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} هکتار</h6>
+                        </div>
+        
+                        <div class="field_polygon">
+                            <app-field-svg [cordinates]="field.polygon"></app-field-svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 text-center mt-3">
+                    <a (click)="goToAddNewField()" class="primary_btn">
+                        افزودن زمین جدید
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-plus-lg me-2" viewBox="0 0 16 16">
+                            <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

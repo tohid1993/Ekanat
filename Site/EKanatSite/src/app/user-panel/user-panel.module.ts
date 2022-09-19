@@ -18,6 +18,7 @@ const routes: Routes = [
       {path:'weather' , canActivate: [AuthGuard] , loadChildren: () => import('../weather/weather.module').then(m => m.WeatherModule)},
       {path:'account' , canActivate: [AuthGuard] , loadChildren: () => import('../account/account.module').then(m => m.AccountModule)},
       {path:'package' , canActivate: [AuthGuard] , loadChildren: () => import('../package/package.module').then(m => m.PackageModule)},
+      {path:'shopingcenters' , canActivate: [AuthGuard] , loadChildren: () => import('../shoping-centers/shoping-centers.module').then(m => m.ShopingCentersModule)},
       
       {path:'**' , canActivate: [AuthGuard] , redirectTo:'dashboard'}
     ]

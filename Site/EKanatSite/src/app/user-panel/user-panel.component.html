@@ -50,17 +50,17 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/package/list']" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
+            <a class="nav-link" [routerLink]="['/package']" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
                 <img src="./assets/images/icons/chart.svg" alt="">
                 ارتقای سرویس
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" [routerLink]="" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/shopingcenters']" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
                 <img src="./assets/images/icons/shop.svg" alt="">
-                مراکز فروش سموم کشاورزی
+                مراکز فروش سموم 
             </a>
-          </li> -->
+          </li>
           <li class="nav-item mt-auto supportBtn" *ngIf="showSupportBtn">
             <a class="nav-link" (click)="openRayChat()" aria-current="page">
                 <span id="new_message_count" *ngIf="newMessageCount">{{newMessageCount}}</span>

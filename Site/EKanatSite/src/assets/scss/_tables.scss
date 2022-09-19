@@ -1,0 +1,276 @@
+.table-responsive{
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px $RoyalBlue_30; 
+
+    .table_fn{
+        box-shadow: none;
+    }
+}
+
+.table_fn{
+
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    border-style: hidden;
+    box-shadow: 0 0 0 1px $RoyalBlue_30; 
+    overflow: hidden; 
+
+    &.no_wrap{
+        td,th{
+            white-space: nowrap;
+        }
+    }
+
+    thead{
+        tr{
+            th{
+                padding: 14px 20px;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 18px;
+                line-height: 24px;
+                color: $White;
+            }
+
+            background-color: $Primary_40;
+        }
+    }
+
+    tbody{
+        tr{
+            td{
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 26px;
+                color: $Dark_80;
+                padding: 13px 20px;
+
+                .unit{
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 21px;
+                    color: $LightGray_3;
+                }
+
+                .link{
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    line-height: 26px;
+                    color: $Primary_100;
+                    transition: 0.3s all;
+
+                    .icon{
+                        vertical-align: middle;
+                    }
+
+                    &:hover{
+                        color: $Secondary;
+                    }
+                }
+
+
+            }
+
+            &:not(:last-child){
+                border-bottom: 1px solid $RoyalBlue_30;
+            }
+        }
+    }
+
+    .show_more_detail_btn{
+        width: 100%;
+        font-weight: 500;
+        font-size: 14px;
+        color: $Primary_100;
+        background: transparent;
+        border: none;
+        display: inline-block;
+        height: 26px;
+        pointer-events: all;
+    }
+
+    &.hover{
+        tbody{
+            tr:hover{
+                cursor: pointer;
+                background-color: $Green_10;
+            }
+        }
+    }
+}
+
+
+.liner_table{
+    border:1px solid $RoyalBlue_30;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+
+    &.secound_alternative{
+        .table_row{
+            &:nth-child(2n-1){
+                background-color: $White;
+            }
+            &:nth-child(2n){
+                background-color: $Dark_30;
+            }
+        }
+    }
+
+
+    .table_row{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-evenly;
+        padding: 16px 20px;
+
+        &:nth-child(2n-1){
+            background-color: $Dark_30;
+        }
+
+
+
+
+        .label{
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 21px;
+            color: $LightGray_3;
+            white-space: nowrap;
+        }
+
+        .value{
+            flex-grow: 1;
+            text-align: left;
+
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 21px;
+            color: $Dark_80;
+            padding-right: 10px;
+            
+            .unit{
+                font-size: 14px;
+                color: $Primary_60;
+            }
+        }
+
+        .strong{
+            font-weight: 600;
+            color: $Dark_80;
+        }
+    }
+}
+
+
+@media only screen and (max-width:767px){
+    .table-responsive{
+        box-shadow: none; 
+        border-radius: unset;
+    }
+
+    .table_fn{
+        box-shadow: none;
+
+        thead{
+            display: none;
+        }
+
+        tbody{
+            tr{
+                display: flex;
+                flex-direction: column;
+                border:1px solid $RoyalBlue_30;
+                border-radius: 8px;
+                position: relative;
+                pointer-events: none;
+
+
+                &:hover{
+                    background-color: unset !important;
+                }
+
+                td{
+                    display: flex;
+                    display: -ms-flexbox;
+                    display: -webkit-flex;
+
+                    text-align: left;
+                    padding: 16px 8px;
+
+                    &:first-child{
+                        border-radius: 8px 8px 0 0;
+                    }
+
+                    &:last-child{
+                        border-radius: 0 0 8px 8px;
+                    }
+
+                    .unit{
+                        margin-right: 3px;
+                    }
+                    
+                    &::before{
+                        content: attr(data-label);
+                        position: relative;
+                        display: block;
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 14px;
+                        // line-height: 21px;
+                        text-align: right;
+                        color: $Dark_80; 
+                        margin-left: auto;
+                        padding-left: 10px;
+                    }
+
+                    &:nth-child(2n-1){
+                        background-color: $Dark_5;
+                    }
+
+                }
+
+                &:not(:last-child){
+                    margin:  0 0 48px;
+                    &::after{
+                        content: "";
+                        position: absolute;
+                        display: block;
+                        height: 1px;
+                        left: 0;
+                        right: 0;
+                        bottom: -24px;
+                        background-color: $RoyalBlue_70;
+                    }
+                }
+
+            }
+        }
+    }
+
+    .liner_table{
+        .table_row{
+            padding: 16px 8px;
+
+            .label{
+                font-size: 14px;
+            }
+    
+            .value{
+                font-size: 14px;
+                
+                .unit{
+                    font-size: 12px;
+                }
+            }
+    
+        }
+    }
+}
