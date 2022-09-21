@@ -17,6 +17,8 @@ export class PackageInvoiceComponent implements OnInit {
   isChanged:boolean = false;
   FieldsList:FieldsListVM[] = [];
 
+  PeriodCount:number=1;
+
   
   constructor(
     config: NgbModalConfig, 

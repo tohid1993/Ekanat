@@ -24,7 +24,7 @@
     <div class="container" *ngIf="SelectedField">
         <div class="row mt-0 col-12 col-lg-10 mx-auto">
             <div class="col-12 col-lg-6 mb-3">
-                <div class="box">
+                <div class="box h-100">
                     <div class="box_header text-center mb-3">
                         <h4 class="primary_text primary_text_mobile Primary_100_text mb-3">مشخصات</h4>
                         <figure>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="box_body">
                         <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">اطلاعات زمین</h6>
-                        <ul class="list-group list-group-flush p-0 mb-5">
+                        <ul class="list-group list-group-flush p-0 mb-3">
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">نام زمین </span>
                                 <span>{{SelectedField.name}}</span>
@@ -50,19 +50,45 @@
                                 <span class="fw-bold">تاریخ کشت </span>
                                 <span dir="ltr">{{SelectedField.cultivationDate}}</span>
                             </li>
+
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-start justify-content-between">
+                                <span class="fw-bold">دوره(های) رشد </span>
+                                <div>
+                                    <table class="growth_period">
+                                        <tr>
+                                            <td>1 فروردین </td>
+                                            <td>الــــی</td>
+                                            <td>31 خرداد</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1 تیر </td>
+                                            <td>الــــی</td>
+                                            <td>31 شهریور</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1 مهر </td>
+                                            <td>الــــی</td>
+                                            <td>30 آذر</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1 دی </td>
+                                            <td>الــــی</td>
+                                            <td>29 اسفند</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
                         </ul>
 
-                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">اطلاعات پکیج</h6>
-                        <ul class="list-group list-group-flush p-0">
-                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">تاریخ شروع پکیج </span>
-                                <span>{{SelectedField.cultivationDate}}</span>
-                            </li>
-                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">تاریخ انقضای پکیج </span>
-                                <span>{{SelectedField.cultivationDate}}</span>
-                            </li>
-                        </ul>
+                        <h4 class="secondary_text secondary_text_mobile Primary_80_text mb-2">خرید پکیج برای</h4>
+                        <div class="d-flex align-items-center justify-content-start selectGrowthPeriod flex-wrap">
+                            <button class="btn btn-sm me-1 my-1 px-3" (click)="PeriodCount=1" [ngClass]="{'btn-outline-success':PeriodCount!=1,'btn-success':PeriodCount==1}">1 دوره رشد</button>
+                            <button class="btn btn-sm me-1 my-1 px-3" (click)="PeriodCount=2" [ngClass]="{'btn-outline-success':PeriodCount!=2,'btn-success':PeriodCount==2}">2 دوره رشد</button>
+                            <button class="btn btn-sm me-1 my-1 px-3" (click)="PeriodCount=3" [ngClass]="{'btn-outline-success':PeriodCount!=3,'btn-success':PeriodCount==3}">3 دوره رشد</button>
+                            <button class="btn btn-sm me-1 my-1 px-3" (click)="PeriodCount=4" [ngClass]="{'btn-outline-success':PeriodCount!=4,'btn-success':PeriodCount==4}">4 دوره رشد</button>
+                        </div>
+
+                        
 
                         <div class="alert alert-warning bu_3_text bu_3_text_mobile text-justify lh-base mt-4" role="alert">
                             کاربر گرامی، خدمات پایش برای زمین 
@@ -95,12 +121,24 @@
                         </figure>
                     </div>
                     <div class="box_body">
-                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">جزئیات</h6>
-                        <ul class="list-group list-group-flush p-0 mb-5">
+                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">جزئیات سرویس</h6>
+                        <ul class="list-group list-group-flush p-0 mb-4">
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">نوع سرویس</span>
                                 <span>پکیج استاندارد</span>
                             </li>
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">تاریخ شروع پکیج </span>
+                                <span>{{SelectedField.cultivationDate}}</span>
+                            </li>
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">تاریخ انقضای پکیج </span>
+                                <span>{{SelectedField.cultivationDate}}</span>
+                            </li>
+                        </ul>
+                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">جزئیات پرداخت</h6>
+                        <ul class="list-group list-group-flush p-0 mb-3">
+
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">مبلغ</span>
                                 <span>{{350000|number:"0.0-0"}} <small>تومان</small></span>

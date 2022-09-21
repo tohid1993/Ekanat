@@ -1,0 +1,22 @@
+.growth_period{
+    tr{
+        td:nth-child(1){
+            text-align: right;
+        }
+
+        td:nth-child(2){
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        td:nth-child(3){
+            text-align: left;
+        }
+    }
+}
+
+.selectGrowthPeriod{
+    .btn{
+        border-radius: 500px;
+    }
+}
