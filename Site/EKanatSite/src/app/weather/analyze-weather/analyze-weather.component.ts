@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { EChartsOption } from 'echarts';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -13,21 +15,26 @@ import { GeneralService } from 'src/app/shared/services/general.service';
 })
 export class AnalyzeWeatherComponent implements OnInit {
     @Input("FieldLatLng") FieldLatLng:number[]|undefined;
+    @Input("FieldId") FieldId:number|undefined;
+    @Input("hasPackage") hasPackage:boolean = false;
 
     options: EChartsOption = {};
     options1: EChartsOption = {};
 
     showCharts:boolean = false;
 
+
     constructor(
       private gService:GeneralService,
       private eeService:EeService,
       private dateTimeService:DateTimeService,
       private spinner: NgxSpinnerService,
+      private router:Router
     ) { }
   
-    ngOnInit(): void {      
-      this.getPastWeather();
+    ngOnInit(): void {    
+      if(this.hasPackage)  
+        this.getPastWeather();
     }
 
     getPastWeather(){
@@ -199,5 +206,23 @@ export class AnalyzeWeatherComponent implements OnInit {
           }
         ]
       };
+    }
+
+
+    showPackageAlert(){
+      if(!this.hasPackage){
+        Swal.fire({
+          // title:"",
+          text:"برای دسترسی به امکانات بیشتر از جمله تحلیل شاخص ها و وضعیت آب و هوایی و ... ، باید برای این زمین کشاورزی پکیج استاندارد خریداری شود",
+          icon:"warning",
+          cancelButtonText:"متوجه شدم",
+          confirmButtonText:"خرید پکیج",
+          showCancelButton:true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate(['/package/invoice'],{queryParams:{fieldId:this.FieldId}});
+          }
+        })
+      }
     }
 }

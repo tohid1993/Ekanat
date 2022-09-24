@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-forecast-weather',
@@ -9,11 +11,14 @@ import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 export class ForecastWeatherComponent implements OnInit {
 
   @Input("NextDaysWeather") NextDaysWeather:any|undefined;
+  @Input("FieldId") FieldId:number|undefined;
+  @Input("hasPackage") hasPackage:boolean = false;
 
   Math=Math;
 
   constructor(
-    private dateTimeService:DateTimeService
+    private dateTimeService:DateTimeService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +31,23 @@ export class ForecastWeatherComponent implements OnInit {
       );        
 
     return date;
+  }
+
+  showPackageAlert(){
+    if(!this.hasPackage){
+      Swal.fire({
+        // title:"",
+        text:"برای دسترسی به امکانات بیشتر از جمله تحلیل شاخص ها و وضعیت آب و هوایی و ... ، باید برای این زمین کشاورزی پکیج استاندارد خریداری شود",
+        icon:"warning",
+        cancelButtonText:"متوجه شدم",
+        confirmButtonText:"خرید پکیج",
+        showCancelButton:true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/package/invoice'],{queryParams:{fieldId:this.FieldId}});
+        }
+      })
+    }
   }
 
 }

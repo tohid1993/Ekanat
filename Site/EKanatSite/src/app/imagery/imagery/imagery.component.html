@@ -176,12 +176,12 @@
                                 <label for="ndvi" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDVI</label>
                             </div>
                             <div class="input_wrapper mb-2">
-                                <input type="radio" name="plant_indicators" id="reci" (click)="getIndicators(IndicatorsTypes.reci)">
-                                <label for="reci" class="me-2 bd_2_text bd_2_text_mobile">شاخص RECI</label>
+                                <input type="radio" name="plant_indicators" id="reci" [disabled]="!hasPackage" (click)="getIndicators(IndicatorsTypes.reci)">
+                                <label (click)="showPackageAlert()" for="reci" class="me-2 bd_2_text bd_2_text_mobile">شاخص RECI</label>
                             </div>
                             <div class="input_wrapper mb-2">
-                                <input type="radio" name="plant_indicators" id="msavi" (click)="getIndicators(IndicatorsTypes.msavi)">
-                                <label for="msavi" class="me-2 bd_2_text bd_2_text_mobile">شاخص MSAVI</label>
+                                <input type="radio" name="plant_indicators" id="msavi" [disabled]="!hasPackage" (click)="getIndicators(IndicatorsTypes.msavi)">
+                                <label (click)="showPackageAlert()" for="msavi" class="me-2 bd_2_text bd_2_text_mobile">شاخص MSAVI</label>
                             </div>
                         </div>
                     </div>
@@ -191,12 +191,12 @@
 
                         <div class="indicators_list">
                             <div class="input_wrapper mb-2">
-                                <input type="radio" name="plant_indicators" id="ndwi" (click)="getIndicators(IndicatorsTypes.ndwi)">
-                                <label for="ndwi" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDWI</label>
+                                <input type="radio" name="plant_indicators" id="ndwi" [disabled]="!hasPackage" (click)="getIndicators(IndicatorsTypes.ndwi)">
+                                <label (click)="showPackageAlert()" for="ndwi" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDWI</label>
                             </div>
                             <div class="input_wrapper mb-2">
-                                <input type="radio" name="plant_indicators" id="ndmi" (click)="getIndicators(IndicatorsTypes.ndmi)">
-                                <label for="ndmi" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDMI</label>
+                                <input type="radio" name="plant_indicators" id="ndmi" [disabled]="!hasPackage" (click)="getIndicators(IndicatorsTypes.ndmi)">
+                                <label (click)="showPackageAlert()" for="ndmi" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDMI</label>
                             </div>
                         </div>
                     </div>
@@ -206,8 +206,8 @@
 
                         <div class="indicators_list">
                             <div class="input_wrapper mb-2">
-                                <input type="radio" name="plant_indicators" id="ndre" (click)="getIndicators(IndicatorsTypes.ndre)">
-                                <label for="ndre" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDRE</label>
+                                <input type="radio" name="plant_indicators" id="ndre" [disabled]="!hasPackage" (click)="getIndicators(IndicatorsTypes.ndre)">
+                                <label (click)="showPackageAlert()" for="ndre" class="me-2 bd_2_text bd_2_text_mobile">شاخص NDRE</label>
                             </div>
                         </div>
                     </div>
@@ -217,8 +217,8 @@
 
                         <div class="indicators_list">
                             <div class="input_wrapper mb-2">
-                                <input type="radio" name="plant_indicators" id="sipi" (click)="getIndicators(IndicatorsTypes.sipi)">
-                                <label for="sipi" class="me-2 bd_2_text bd_2_text_mobile">شاخص SIPI</label>
+                                <input type="radio" name="plant_indicators" id="sipi" [disabled]="!hasPackage" (click)="getIndicators(IndicatorsTypes.sipi)">
+                                <label (click)="showPackageAlert()" for="sipi" class="me-2 bd_2_text bd_2_text_mobile">شاخص SIPI</label>
                             </div>
                         </div>
                     </div>

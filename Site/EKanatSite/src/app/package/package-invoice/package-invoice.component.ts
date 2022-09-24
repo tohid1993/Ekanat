@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FieldDetailViewModel, FieldsListVM } from 'src/app/shared/models/model';
@@ -19,14 +19,18 @@ export class PackageInvoiceComponent implements OnInit {
 
   PeriodCount:number=1;
 
+  fieldId?:number;
   
   constructor(
     config: NgbModalConfig, 
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private fieldService:FieldService,
-    private router:Router
-  ) { }
+    private router:Router,
+    private route:ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(params=>{this.fieldId = params['fieldId']})
+  }
 
   ngOnInit(): void {
     this.getFields();
@@ -47,6 +51,9 @@ export class PackageInvoiceComponent implements OnInit {
             this.modalService.dismissAll();
             this.spinner.hide();
           }
+        },
+        error:()=>{
+          this.isChanged = false;
         }
       })
     
@@ -54,6 +61,11 @@ export class PackageInvoiceComponent implements OnInit {
 
 
   getFields(){
+    if(this.fieldId){
+      this.choaseFieldModal({id:this.fieldId});
+      return;
+    }
+
     this.spinner.show();
     this.fieldService.getFieldsList()
       .subscribe({

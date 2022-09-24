@@ -2,10 +2,13 @@
     <div class="row mx-0">
         <div class="col-12">
             <div class="next_days_wrapper py-2">
-                <ngb-accordion #acc="ngbAccordion"> 
-                    <ngb-panel>
+                <ngb-accordion #acc="ngbAccordion" (click)="showPackageAlert()"> 
+                    <ngb-panel [disabled]="!hasPackage">
                       <ng-template ngbPanelTitle>
-                        <span class="primary_text primary_text_mobile text-center">آب و هوای روزهای آینده</span>                  
+                        <span class="primary_text primary_text_mobile text-center">
+                            آب و هوای روزهای آینده
+                            <span class="btn btn-sm btn-warning py-0 me-1" *ngIf="!hasPackage">خرید پکیج</span>
+                        </span>                  
                       </ng-template>
                       <ng-template ngbPanelContent>
                         <div class="next_days mt-3">

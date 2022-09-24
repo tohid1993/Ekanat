@@ -22,9 +22,14 @@
 
     <app-current-weather *ngIf="isChanged && CurrentWeather" [CurrentWeather]="CurrentWeather" [NextHoursWeather]="NextHoursWeather"></app-current-weather>
     <div class="py-2"></div>
-    <app-forecast-weather *ngIf="isChanged && NextDaysWeather" [NextDaysWeather]="NextDaysWeather"></app-forecast-weather>
+    <app-forecast-weather *ngIf="isChanged && NextDaysWeather"
+        [hasPackage]="false" [FieldId]="SelectedField?.id" 
+        [NextDaysWeather]="NextDaysWeather">
+    </app-forecast-weather>
 
-    <app-analyze-weather  *ngIf="isChanged && FieldLatLng" [FieldLatLng]="FieldLatLng"></app-analyze-weather>
+    <app-analyze-weather  *ngIf="isChanged && FieldLatLng" 
+        [FieldLatLng]="FieldLatLng" [hasPackage]="false" [FieldId]="SelectedField?.id">
+    </app-analyze-weather>
 </div>
 
 

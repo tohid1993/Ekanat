@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as Leaflet from 'leaflet';
 import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
@@ -13,6 +13,7 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import { ToastrService } from 'ngx-toastr';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-imagery',
@@ -54,6 +55,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   transparency:number = 100;
 
+  hasPackage:boolean = false;
+
   constructor(
     private eeService:EeService,
     public dateTimeService:DateTimeService,
@@ -63,6 +66,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     private toastr:ToastrService,
     private gService:GeneralService,
     private modalService: NgbModal,
+    private router:Router
   ) {
     this.route.params.subscribe(
       params=>{
@@ -512,6 +516,23 @@ export class ImageryComponent implements OnInit , AfterViewInit {
         }
       }
     })
+  }
+
+  showPackageAlert(){
+    if(!this.hasPackage){
+      Swal.fire({
+        // title:"",
+        text:"برای دسترسی به امکانات بیشتر از جمله تحلیل شاخص ها و وضعیت آب و هوایی و ... ، باید برای این زمین کشاورزی پکیج استاندارد خریداری شود",
+        icon:"warning",
+        cancelButtonText:"متوجه شدم",
+        confirmButtonText:"خرید پکیج",
+        showCancelButton:true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/package/invoice'],{queryParams:{fieldId:this.fieldId}});
+        }
+      })
+    }
   }
 }
 

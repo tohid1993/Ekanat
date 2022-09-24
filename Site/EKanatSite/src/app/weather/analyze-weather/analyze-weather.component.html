@@ -1,10 +1,13 @@
-<div class="past_days_weather">
+<div class="past_days_weather" >
     <div class="row mx-0 pb-4">
-        <div class="col-12 py-2">
-            <ngb-accordion #acc="ngbAccordion" *ngIf="showCharts"> 
-                <ngb-panel>
+        <div class="col-12 py-2" >
+            <ngb-accordion #acc="ngbAccordion" *ngIf="showCharts || !hasPackage" (click)="showPackageAlert()"> 
+                <ngb-panel [disabled]="!hasPackage">
                   <ng-template ngbPanelTitle>
-                    <span class="primary_text primary_text_mobile text-center">میزان بارش در یک ماه اخیر</span>
+                    <span class="primary_text primary_text_mobile text-center">
+                      میزان بارش در یک ماه اخیر
+                      <span class="btn btn-sm btn-warning py-0 me-1" *ngIf="!hasPackage">خرید پکیج</span>
+                    </span>
                   </ng-template>
                   <ng-template ngbPanelContent>
                     <div class="py-2">
@@ -15,10 +18,13 @@
             </ngb-accordion>
         </div>
         <div class="col-12 py-2">
-            <ngb-accordion #acc="ngbAccordion" *ngIf="showCharts"> 
-                <ngb-panel>
+            <ngb-accordion #acc="ngbAccordion" *ngIf="showCharts || !hasPackage" (click)="showPackageAlert()"> 
+                <ngb-panel [disabled]="!hasPackage">
                     <ng-template ngbPanelTitle>
-                        <span class="primary_text primary_text_mobile text-center">تغییرات دما در یک ماه اخیر</span> 
+                        <span class="primary_text primary_text_mobile text-center">
+                          تغییرات دما در یک ماه اخیر
+                          <span class="btn btn-sm btn-warning py-0 me-1" *ngIf="!hasPackage">خرید پکیج</span>
+                        </span> 
                     </ng-template>
                     <ng-template ngbPanelContent>
                       <div class="py-2">
