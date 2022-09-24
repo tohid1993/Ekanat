@@ -8,6 +8,7 @@ ngb-carousel{
     min-height: 100vh;
     height: 100%;
     position: relative;
+    background: #efefef;
 
     .carousel-image-wrapper{
         width: 100%;
@@ -37,7 +38,7 @@ ngb-carousel{
         height: 50vh;
         display: block;
         content: "";
-        background: linear-gradient(0deg,rgba(0,0,0,.9) 20%,rgba(0,0,0,0) 100%);
+        // background: linear-gradient(0deg,rgba(0,0,0,.9) 20%,rgba(0,0,0,0) 100%);
         z-index: 1;
     }
 }

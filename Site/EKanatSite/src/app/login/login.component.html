@@ -168,7 +168,7 @@
       class="carousel-fade login_page_carousel"
       [interval]="0"
     >
-      <ng-template ngbSlide *ngFor="let item of CarouselItems">
+      <!-- <ng-template ngbSlide *ngFor="let item of CarouselItems">
         <div class="slide-wrapper">
           <div class="carousel-image-wrapper">
             <img [src]="item.imageUrl" [alt]="item.title" />
@@ -180,7 +180,44 @@
             <p class="bd_2_etr1_text">{{ item.text }}</p>
           </div>
         </div>
+      </ng-template> -->
+
+      <!-- لوگو
+تیتر
+متن
+تصویر -->
+
+      <ng-template ngbSlide>
+        <div class="slide-wrapper">
+          <div class="d-flex align-items-center flex-column justify-content-center h-100">
+            <h6 class="primary_text primary_text_mobile Primary_80_text">ثبت زمین</h6>
+            <div class="my-4">با ترسیم دستی حدود زمین یا پیمایش محیط آن و ثبت نقاط</div>
+            <img src="./assets/images/carousel/a1.png" class="w-50" />
+          </div>
+        </div>
       </ng-template>
+
+      <ng-template ngbSlide>
+        <div class="slide-wrapper">
+          <div class="d-flex align-items-center flex-column justify-content-center h-100">
+            <h6 class="primary_text primary_text_mobile Primary_80_text">مدیریت بهینه مزرعه</h6>
+            <div class="my-4">تحلیل ها و راهکارهای کارشناسان را دریافت کنید و زمین خود را به بهترین شکل مدیریت کنید</div>
+            <img src="./assets/images/carousel/a2.png" class="w-50" />
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template ngbSlide>
+        <div class="slide-wrapper">
+          <div class="d-flex align-items-center flex-column justify-content-center h-100">
+            <h6 class="primary_text primary_text_mobile Primary_80_text">پایش زمین</h6>
+            <div class="my-4">وضعیت مزرعه یا باغ خود را با دیدگاهی جدید ببینید</div>
+            <img src="./assets/images/carousel/a3.png" class="w-50" />
+          </div>
+        </div>
+      </ng-template>
+
+
     </ngb-carousel>
   </div>
 </div>
