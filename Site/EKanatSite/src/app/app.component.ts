@@ -36,16 +36,19 @@ export class AppComponent implements OnInit {
     ){
   }
   ngOnInit(): void {
-    let self = this;
-    this.userService.isAuth.subscribe
-    ({
-      next(res){
-        if(res==true){
-          self.userService.loadUserDetails();
-        }else{
-          self.router.navigate(['/login']);
+    if(this.router.url!='/' && this.router.url!='/home'){
+      let self = this;
+      this.userService.isAuth.subscribe
+      ({
+        next(res){
+          if(res==true){
+            self.userService.loadUserDetails();
+          }else{
+            self.router.navigate(['/login']);
+          }
         }
-      }
-    })
+      })
+    }
+
   }
 }

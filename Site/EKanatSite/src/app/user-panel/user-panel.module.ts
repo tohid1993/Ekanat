@@ -10,7 +10,7 @@ const routes: Routes = [
 
   { path: '', component: UserPanelComponent,
     children: [
-      {path:'', canActivate: [AuthGuard]  , component:DashboardComponent},
+      // {path:'', canActivate: [AuthGuard]  , component:DashboardComponent},
       {path:'dashboard' , canActivate: [AuthGuard] , component:DashboardComponent},
 
       {path:'fields/imagery' , canActivate: [AuthGuard] , loadChildren: () => import('../imagery/imagery.module').then(m => m.ImageryModule)},
@@ -20,7 +20,7 @@ const routes: Routes = [
       {path:'package' , canActivate: [AuthGuard] , loadChildren: () => import('../package/package.module').then(m => m.PackageModule)},
       {path:'shopingcenters' , canActivate: [AuthGuard] , loadChildren: () => import('../shoping-centers/shoping-centers.module').then(m => m.ShopingCentersModule)},
       
-      {path:'**' , canActivate: [AuthGuard] , redirectTo:'dashboard'}
+      // {path:'**' , canActivate: [AuthGuard] , redirectTo:'dashboard'}
     ]
   }
 

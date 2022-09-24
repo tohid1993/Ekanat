@@ -18,6 +18,7 @@ import { GeneralService } from './shared/services/general.service';
 import { LocationService } from './shared/services/location.service';
 import { UserService } from './shared/services/user.service';
 import { SharedModule } from './shared/shared.module';
+import { HomeComponent } from './home/home.component';
 
 export function tokenGetter() {
   return localStorage.getItem("user_token");
@@ -27,7 +28,8 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
