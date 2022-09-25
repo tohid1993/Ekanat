@@ -95,7 +95,7 @@ export class AddFieldComponent implements OnInit {
     private router:Router,
     private dateTimeService:DateTimeService,
     private spinner:NgxSpinnerService,
-    private locationService:LocationService
+    private locationService:LocationService,
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -389,7 +389,13 @@ export class AddFieldComponent implements OnInit {
                   icon:"warning",
                   title:"زمین انتخابی نا معتبر است",
                   text:`کاربر گرامی، مساحت باقیمانده مجاز شما برای ثبت زمین ${self.remainingHA} هکتار می‌باشد. با فعالسازی خدمات پایش بر روی زمین‌های ثبت شده خود می‌توانید مساحت باقیمانده مجاز را افزایش دهید`,
-                  confirmButtonText:"متوجه شدم"
+                  confirmButtonText:"خرید پکیج",
+                  cancelButtonText:"متوجه شدم",
+                  showCancelButton:true
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    self.router.navigate(['/package/list']);
+                  }
                 })
               }
 
@@ -398,7 +404,13 @@ export class AddFieldComponent implements OnInit {
                   icon:"warning",
                   title:"زمین انتخابی نا معتبر است",
                   text:`کاربر گرامی،مساحت زمین انتخابی شما ${area} هکتار می‌باشد. جهت دریافت خدمات پایش برای زمین‌های بالای 100 هکتار با شماره 09304916440 تماس بگیرید`,
-                  confirmButtonText:"متوجه شدم"
+                  confirmButtonText:"خرید پکیج",
+                  cancelButtonText:"متوجه شدم",
+                  showCancelButton:true
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    self.router.navigate(['/package/list']);
+                  }
                 })
               }
 

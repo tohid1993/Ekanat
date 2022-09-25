@@ -8,7 +8,8 @@ const routes: Routes = [
   {path:'home' , component:HomeComponent},
   {path:'login' , component:LoginComponent},
   {path:'' , loadChildren: () => import('./user-panel/user-panel.module').then(m => m.UserPanelModule)},
-  {path:'**' , component:HomeComponent},
+  {path:'payments' , loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)},
+  {path:'**' , redirectTo:''},
 ];
 
 @NgModule({
