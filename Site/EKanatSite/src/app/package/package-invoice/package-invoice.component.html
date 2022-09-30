@@ -55,25 +55,10 @@
                                 <span class="fw-bold">دوره(های) رشد </span>
                                 <div>
                                     <table class="growth_period">
-                                        <tr>
-                                            <td>1 فروردین </td>
+                                        <tr *ngFor="let item of FieldPhenologiesList">
+                                            <td>{{item.startDate}} </td>
                                             <td>الــــی</td>
-                                            <td>31 خرداد</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1 تیر </td>
-                                            <td>الــــی</td>
-                                            <td>31 شهریور</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1 مهر </td>
-                                            <td>الــــی</td>
-                                            <td>30 آذر</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1 دی </td>
-                                            <td>الــــی</td>
-                                            <td>29 اسفند</td>
+                                            <td>{{item.endDate}}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -82,14 +67,13 @@
 
                         <h4 class="secondary_text secondary_text_mobile Primary_80_text mb-2">خرید پکیج برای</h4>
                         <div class="d-flex align-items-center justify-content-start selectGrowthPeriod flex-wrap">
-                            <button class="btn btn-sm me-1 my-1 px-3" (click)="PeriodCount=1" [ngClass]="{'btn-outline-success':PeriodCount!=1,'btn-success':PeriodCount==1}">1 دوره رشد</button>
-                            <button class="btn btn-sm me-1 my-1 px-3" (click)="PeriodCount=2" [ngClass]="{'btn-outline-success':PeriodCount!=2,'btn-success':PeriodCount==2}">2 دوره رشد</button>
-                            <button class="btn btn-sm me-1 my-1 px-3" (click)="PeriodCount=3" [ngClass]="{'btn-outline-success':PeriodCount!=3,'btn-success':PeriodCount==3}">3 دوره رشد</button>
-                            <button class="btn btn-sm me-1 my-1 px-3" (click)="PeriodCount=4" [ngClass]="{'btn-outline-success':PeriodCount!=4,'btn-success':PeriodCount==4}">4 دوره رشد</button>
+                            <button class="btn btn-sm me-1 my-1 px-3" *ngFor="let item of MaxPeriodCount"
+                                (click)="PeriodCount=item" [ngClass]="{'btn-outline-success':PeriodCount!=item,'btn-success':PeriodCount==item}">
+                                {{item}} دوره رشد
+                            </button>
                         </div>
 
                         
-
                         <!-- <div class="alert alert-warning bu_3_text bu_3_text_mobile text-justify lh-base mt-4" role="alert">
                             کاربر گرامی، خدمات پایش برای زمین 
                             «{{SelectedField.name}}» 
@@ -106,9 +90,7 @@
                             طی یک هفته اتی در میز کار زمین شما قابل مشاهده خواهد بود.
                         </div> -->
                     </div>
-                    <!-- <div class="box_footer text-center pt-3 row">
 
-                    </div> -->
                 </div>
             </div>
 
@@ -129,11 +111,15 @@
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">تاریخ شروع پکیج </span>
-                                <span>{{SelectedField.cultivationDate}}</span>
+                                <span>{{OrderDetail?.packageStartDate}}</span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">تاریخ انقضای پکیج </span>
-                                <span>{{SelectedField.cultivationDate}}</span>
+                                <span>{{OrderDetail?.packageEndDate}}</span>
+                            </li>
+                            <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
+                                <span class="fw-bold">تاریخ ثبت سفارش </span>
+                                <span>{{OrderDetail?.orderDate}}</span>
                             </li>
                         </ul>
                         <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">جزئیات پرداخت</h6>
@@ -141,15 +127,18 @@
 
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">مبلغ</span>
-                                <span>{{350000|number:"0.0-0"}} <small>تومان</small></span>
+                                <span *ngIf="SelectedField">{{basePrice*SelectedField.area|number:"0.0-0"}} <small>تومان</small></span>
+                                <span *ngIf="!SelectedField">- <small>تومان</small></span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">ارزش افزوده</span>
-                                <span>{{35000|number:"0.0-0"}} <small>تومان</small></span>
+                                <span *ngIf="SelectedField">{{((basePrice*SelectedField.area)*taxPercent/100)|number:"0.0-0"}} <small>تومان</small></span>
+                                <span *ngIf="!SelectedField">- <small>تومان</small></span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item d-flex align-items-center justify-content-between RoyalBlue_10_bg">
                                 <span class="fw-bold">مبلغ قابل پرداخت</span>
-                                <span class="fw-bold">{{400000|number:"0.0-0"}} <small>تومان</small></span>
+                                <span class="fw-bold" *ngIf="SelectedField">{{(basePrice*SelectedField.area + ((basePrice*SelectedField.area)*taxPercent/100))|number:"0.0-0"}} <small>تومان</small></span>
+                                <span *ngIf="!SelectedField">- <small>تومان</small></span>
                             </li>
                         </ul>
 

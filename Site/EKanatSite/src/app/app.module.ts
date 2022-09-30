@@ -19,6 +19,7 @@ import { LocationService } from './shared/services/location.service';
 import { UserService } from './shared/services/user.service';
 import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
+import { PaymentService } from './shared/services/payment.service';
 
 export function tokenGetter() {
   return localStorage.getItem("user_token");
@@ -57,6 +58,7 @@ export function tokenGetter() {
     AuthService,
     DateTimeService,
     LocationService,
+    PaymentService,
     {
       provide:"BASE_URL",
       useValue:environment.apiRoot

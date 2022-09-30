@@ -2,8 +2,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { FieldDetailViewModel, FieldsListVM } from 'src/app/shared/models/model';
+import { FieldDetailViewModel, FieldsListVM, PhenologiesVM } from 'src/app/shared/models/model';
 import { FieldService } from 'src/app/shared/services/field.service';
+import { PaymentService } from 'src/app/shared/services/payment.service';
 
 @Component({
   selector: 'app-package-invoice',
@@ -18,14 +19,20 @@ export class PackageInvoiceComponent implements OnInit {
   FieldsList:FieldsListVM[] = [];
 
   PeriodCount:number=1;
-
+  MaxPeriodCount:number[] = [1];
+  FieldPhenologiesList: PhenologiesVM[] = []
   fieldId?:number;
   
+  basePrice:number = 100000;
+  taxPercent:number = 9;
+  OrderDetail:any;
+
   constructor(
     config: NgbModalConfig, 
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private fieldService:FieldService,
+    private paymentService:PaymentService,
     private router:Router,
     private route:ActivatedRoute
   ) {
@@ -57,6 +64,8 @@ export class PackageInvoiceComponent implements OnInit {
         }
       })
     
+    this.getFieldPhenologiesList(field.id);
+    this.SubmitPlaceOrder(field.id);
   }
 
 
@@ -70,6 +79,8 @@ export class PackageInvoiceComponent implements OnInit {
     this.fieldService.getFieldsList()
       .subscribe({
         next:(res:any)=>{
+          this.SelectedField = undefined;
+          this.OrderDetail = undefined;
           this.FieldsList = res.data;
           this.openFieldsModal();  
           this.spinner.hide();
@@ -80,6 +91,36 @@ export class PackageInvoiceComponent implements OnInit {
   goToAddNewField(){
     this.modalService.dismissAll();
     this.router.navigate(['/fields/add'])
+  }
+
+  getFieldPhenologiesList(fieldId:number){
+    this.fieldService.getFieldPhenologiesList(fieldId)
+      .subscribe({
+        next:(res:any)=>{
+          if(res.isSuccess)
+          {
+            this.FieldPhenologiesList = res.data;
+          }
+        }
+      })
+  }
+
+  SubmitPlaceOrder(fieldId:number){
+    this.paymentService.PlaceOrder(
+      {
+        packageId: 0,
+        fieldId: fieldId,
+        phenologyCount: this.PeriodCount,
+        basePrice: this.basePrice
+      }
+    ).subscribe({
+        next:(res:any)=>{
+          if(res.isSuccess)
+          {
+            this.OrderDetail = res.data;
+          }
+        }
+      })
   }
 
 }

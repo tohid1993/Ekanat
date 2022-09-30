@@ -99,4 +99,9 @@ export class FieldService {
   getFieldProductionslist(){
     return this.gService.get("v1/FieldProducts/GetFieldProdutDropdown",{})
   }
+
+  getFieldPhenologiesList(fieldId:number){
+    return this.gService.get("v1/Phenologies/GetList",{fieldId})
+  }
 }
+

@@ -140,3 +140,11 @@ export class AnalysFile
     title!:string;
     file!:FileViewModel;
 }
+
+export class PhenologiesVM{
+    id!: number;
+    fieldProductId!: number;
+    provinceId!: number;
+    startDate!: string;
+    endDate!: string;
+}
