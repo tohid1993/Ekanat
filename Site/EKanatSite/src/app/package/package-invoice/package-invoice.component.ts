@@ -48,6 +48,10 @@ export class PackageInvoiceComponent implements OnInit {
   }
 
   choaseFieldModal(field:any){
+    this.fieldId = field.id;
+    this.SelectedField = undefined;
+    this.OrderDetail = undefined;
+
     this.isChanged = true;
     this.spinner.show();
     this.fieldService.getFieldDetails(field.id)
@@ -65,7 +69,7 @@ export class PackageInvoiceComponent implements OnInit {
       })
     
     this.getFieldPhenologiesList(field.id);
-    this.SubmitPlaceOrder(field.id);
+    this.SubmitPlaceOrder();
   }
 
 
@@ -79,8 +83,6 @@ export class PackageInvoiceComponent implements OnInit {
     this.fieldService.getFieldsList()
       .subscribe({
         next:(res:any)=>{
-          this.SelectedField = undefined;
-          this.OrderDetail = undefined;
           this.FieldsList = res.data;
           this.openFieldsModal();  
           this.spinner.hide();
@@ -105,11 +107,12 @@ export class PackageInvoiceComponent implements OnInit {
       })
   }
 
-  SubmitPlaceOrder(fieldId:number){
+  SubmitPlaceOrder(){
+    this.spinner.show();
     this.paymentService.PlaceOrder(
       {
         packageId: 0,
-        fieldId: fieldId,
+        fieldId: this.fieldId,
         phenologyCount: this.PeriodCount,
         basePrice: this.basePrice
       }
@@ -118,6 +121,7 @@ export class PackageInvoiceComponent implements OnInit {
           if(res.isSuccess)
           {
             this.OrderDetail = res.data;
+            this.spinner.hide();
           }
         }
       })

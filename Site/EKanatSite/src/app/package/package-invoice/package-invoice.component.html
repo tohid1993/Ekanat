@@ -68,7 +68,7 @@
                         <h4 class="secondary_text secondary_text_mobile Primary_80_text mb-2">خرید پکیج برای</h4>
                         <div class="d-flex align-items-center justify-content-start selectGrowthPeriod flex-wrap">
                             <button class="btn btn-sm me-1 my-1 px-3" *ngFor="let item of MaxPeriodCount"
-                                (click)="PeriodCount=item" [ngClass]="{'btn-outline-success':PeriodCount!=item,'btn-success':PeriodCount==item}">
+                                (click)="PeriodCount=item;SubmitPlaceOrder();" [ngClass]="{'btn-outline-success':PeriodCount!=item,'btn-success':PeriodCount==item}">
                                 {{item}} دوره رشد
                             </button>
                         </div>
