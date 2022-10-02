@@ -2,7 +2,9 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><img src="./assets/images/logo-text.png" alt=""></a>
 
-      <div ngbDropdown class="d-inline-block me-auto" *ngIf="windowWidth<992">
+      <div ngbDropdown class="d-inline-flex align-items-center justify-content-center me-auto" *ngIf="windowWidth<992">
+        <a (click)="open(content)" class="d-inline-block bu_3_text bu_3_text_mobile btn btn-warning btn-sm small_btn my-1 ms-2" >مجوزها</a>
+
         <button type="button" class="ghost_btn small_btn" id="account_btn_dropdown_mobile" ngbDropdownToggle>
           <img [src]="(userService.UserHomeInfo|async)?.image || profileAvatar" alt="">
         </button>
@@ -23,6 +25,7 @@
             خروج از حساب
           </button>
         </div>
+        
       </div>
       <button class="navbar-toggler" type="button" (click)="showMenu=!showMenu"
         data-bs-toggle="collapse" data-bs-target="#navbarNav" 
@@ -77,8 +80,11 @@
 
 <div id="top_bar" *ngIf="windowWidth>=992">
   <div class="container-fluid">
-    <div class="row">
+    <div class="row align-items-center">
       <div class="col-auto me-auto">
+        <a (click)="open(content)" class="d-inline-block bu_3_text bu_3_text_mobile btn btn-warning btn-sm small_btn my-1 me-1" >مجوزها</a>
+      </div>
+      <div class="col-auto">
         <div ngbDropdown class="d-inline-block">
           <button type="button" class="ghost_btn small_btn" id="account_btn_dropdown" ngbDropdownToggle>
             <img [src]="(userService.UserHomeInfo|async)?.image || profileAvatar" alt="">
@@ -110,3 +116,15 @@
 <div class="content_wrapper">
   <router-outlet></router-outlet>
 </div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">مجوزها</h4>
+    <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body text-center">
+    <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=300607&amp;Code=h10Zv2SZ6fl2U5dnUrnH"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=300607&amp;Code=h10Zv2SZ6fl2U5dnUrnH" alt="" style="cursor:pointer" id="h10Zv2SZ6fl2U5dnUrnH"></a>
+  </div>
+
+</ng-template>

@@ -13,5 +13,9 @@ export class PaymentService {
   PlaceOrder(data:any){
     return this.gService.post("v1/Packages/PlaceOrder",data,{})
   }
+
+  goToPayment(data:any){
+    return this.gService.post("v1/Payments/Payment",data,{})
+  }
 }
 

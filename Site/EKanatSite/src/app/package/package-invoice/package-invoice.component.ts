@@ -3,8 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FieldDetailViewModel, FieldsListVM, PhenologiesVM } from 'src/app/shared/models/model';
+import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { FieldService } from 'src/app/shared/services/field.service';
 import { PaymentService } from 'src/app/shared/services/payment.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-package-invoice',
@@ -33,6 +35,7 @@ export class PackageInvoiceComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private fieldService:FieldService,
     private paymentService:PaymentService,
+    private dateTimeService:DateTimeService,
     private router:Router,
     private route:ActivatedRoute
   ) {
@@ -121,6 +124,66 @@ export class PackageInvoiceComponent implements OnInit {
           if(res.isSuccess)
           {
             this.OrderDetail = res.data;
+            this.spinner.hide();
+
+            setTimeout(() => {
+              this.calcDatesDifferent()
+
+            }, 1000);  
+          }
+        }
+      })
+  }
+
+  calcDatesDifferent(){
+    if(
+      this.OrderDetail && this.OrderDetail.orderDate && 
+      this.SelectedField && this.SelectedField.cultivationDate &&
+      this.FieldPhenologiesList && this.FieldPhenologiesList[0].startDate  
+    ){
+      let _orderDate = this.dateTimeService.toGeorgianDate(this.OrderDetail.orderDate);
+      let orderDate = new Date(_orderDate).getTime();
+
+      let _cultivationDate = this.dateTimeService.toGeorgianDate(this.SelectedField.cultivationDate);
+      let cultivationDate = new Date(_cultivationDate).getTime();
+
+      let _startPeriod = this.dateTimeService.toGeorgianDate(this.FieldPhenologiesList[0].startDate);
+      let startPeriod = new Date(_startPeriod).getTime();
+
+      if(orderDate-cultivationDate>0 && orderDate-startPeriod>0){
+        Swal.fire({
+          html:` کاربر گرامی، خدمات پایش برای زمین 
+          «${this.SelectedField.name}» 
+          از تاریخ 
+          <span dir="ltr" class="d-inline-block">${this.OrderDetail.packageStartDate}</span> 
+          تا تاریخ 
+          <span dir="ltr" class="d-inline-block">${this.OrderDetail.packageEndDate}</span> 
+          قابل فعالسازی میباشد و گزارش تحلیل زمین 
+          «${this.SelectedField.name}» 
+          از تاریخ 
+          <span dir="ltr" class="d-inline-block">${this.OrderDetail.packageStartDate}</span> 
+          تا تاریخ 
+          <span dir="ltr" class="d-inline-block">${this.OrderDetail.orderDate}</span> 
+          طی یک هفته اتی در میز کار زمین شما قابل مشاهده خواهد بود.`,
+          icon:'info'
+        })
+      }
+    }
+  }
+
+
+  goToPayment(){
+    this.spinner.show();
+    this.paymentService.goToPayment(
+      {
+        orderId: this.OrderDetail.orderId,
+      }
+    ).subscribe({
+        next:(res:any)=>{
+          if(res.isSuccess)
+          {
+            console.log(res.data);
+            
             this.spinner.hide();
           }
         }

@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { UserService } from '../shared/services/user.service';
 
@@ -21,8 +22,14 @@ export class UserPanelComponent implements OnInit {
 
   constructor(
     private router:Router,
-    public userService:UserService
+    public userService:UserService,
+    private modalService: NgbModal
   ) { }
+
+
+  open(content:any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
+  }
 
   ngOnInit(): void {
     // this.initRaychat();
