@@ -60,6 +60,7 @@
                                             <td>الــــی</td>
                                             <td>{{item.endDate}}</td>
                                         </tr>
+                                        <tr *ngIf="FieldPhenologiesList.length==0"><td>دوره رشدی یافت نشد</td></tr>
                                     </table>
                                 </div>
                             </li>
@@ -68,7 +69,7 @@
                         <ng-container *ngIf="FieldPhenologiesList.length>0">
                             <h4 class="secondary_text secondary_text_mobile Primary_80_text mb-2">خرید پکیج برای</h4>
                             <div class="d-flex align-items-center justify-content-start selectGrowthPeriod flex-wrap">
-                                <button class="btn btn-sm me-1 my-1 px-3" *ngFor="let item of MaxPeriodCount"
+                                <button class="btn btn-sm me-1 my-1 px-3" *ngFor="let item of MaxPeriodCount" [disabled]="PeriodCount==item"
                                     (click)="PeriodCount=item;SubmitPlaceOrder();" [ngClass]="{'btn-outline-success':PeriodCount!=item,'btn-success':PeriodCount==item}">
                                     {{item}} دوره رشد
                                 </button>
@@ -114,24 +115,27 @@
 
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">مبلغ</span>
-                                <span *ngIf="SelectedField">{{basePrice*SelectedField.area|number:"0.0-0"}} <small>تومان</small></span>
-                                <span *ngIf="!SelectedField">- <small>تومان</small></span>
+                                <span *ngIf="SelectedField && PeriodCount">{{basePrice*SelectedField.area|number:"0.0-0"}} <small>تومان</small></span>
+                                <span *ngIf="!SelectedField || !PeriodCount">- <small>تومان</small></span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">ارزش افزوده</span>
-                                <span *ngIf="SelectedField">{{((basePrice*SelectedField.area)*taxPercent/100)|number:"0.0-0"}} <small>تومان</small></span>
-                                <span *ngIf="!SelectedField">- <small>تومان</small></span>
+                                <span *ngIf="SelectedField && PeriodCount">{{((basePrice*SelectedField.area)*taxPercent/100)|number:"0.0-0"}} <small>تومان</small></span>
+                                <span *ngIf="!SelectedField || !PeriodCount">- <small>تومان</small></span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item d-flex align-items-center justify-content-between RoyalBlue_10_bg">
                                 <span class="fw-bold">مبلغ قابل پرداخت</span>
-                                <span class="fw-bold" *ngIf="SelectedField">{{(basePrice*SelectedField.area + ((basePrice*SelectedField.area)*taxPercent/100))|number:"0.0-0"}} <small>تومان</small></span>
-                                <span *ngIf="!SelectedField">- <small>تومان</small></span>
+                                <span class="fw-bold" *ngIf="SelectedField && PeriodCount">{{(basePrice*SelectedField.area + ((basePrice*SelectedField.area)*taxPercent/100))|number:"0.0-0"}} <small>تومان</small></span>
+                                <span *ngIf="!SelectedField || !PeriodCount">- <small>تومان</small></span>
                             </li>
                         </ul>
 
                         <div class="text-center">
-                            <button class="primary_btn medium_btn" (click)="goToPayment()"
+                            <button class="primary_btn medium_btn" (click)="goToPayment()" *ngIf="PeriodCount"
                                 [disabled]="!OrderDetail?.orderId">ادامه و پرداخت آنلاین</button>
+
+                            <button class="btn btn-danger medium_btn" *ngIf="!PeriodCount"
+                                disabled>تعداد دوره رشد را انتخاب کنید</button>
                         </div>
                     </div>
                     <!-- <div class="box_footer text-center pt-3 row">

@@ -20,7 +20,7 @@ export class PackageInvoiceComponent implements OnInit {
   isChanged:boolean = false;
   FieldsList:FieldsListVM[] = [];
 
-  PeriodCount:number=1;
+  PeriodCount:number|null = null;
   MaxPeriodCount:number[] = [1];
   FieldPhenologiesList: PhenologiesVM[] = []
   fieldId?:number;
@@ -72,7 +72,6 @@ export class PackageInvoiceComponent implements OnInit {
       })
     
     this.getFieldPhenologiesList(field.id);
-    this.SubmitPlaceOrder();
   }
 
 
@@ -105,6 +104,13 @@ export class PackageInvoiceComponent implements OnInit {
           if(res.isSuccess)
           {
             this.FieldPhenologiesList = res.data;
+            if(this.FieldPhenologiesList.length==0){
+              Swal.fire({
+                icon:"info",
+                text:"برای این محصول در استان شما دوره ی رشدی تعریف نشده است، لطفا با شماره 09304916440 تماس بگیرید"
+              })
+            }
+
           }
         }
       })
