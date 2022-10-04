@@ -18,7 +18,8 @@ export class UserPanelComponent implements OnInit {
   showSupportBtn:boolean = false;
 
   profileAvatar:string = "./assets/images/users/avatar.png";
-  
+  isDotCom:boolean = false;
+  isDotIr:boolean = false;
 
   constructor(
     private router:Router,
@@ -34,6 +35,9 @@ export class UserPanelComponent implements OnInit {
   ngOnInit(): void {
     // this.initRaychat();
     
+    if(window.location.host=="ekanat.ir") this.isDotIr = true;
+    if(window.location.host=="ekanat.com") this.isDotCom = true;
+
     let self = this;
     this.userService.UserHomeInfo.subscribe
     ({

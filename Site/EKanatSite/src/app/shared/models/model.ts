@@ -42,6 +42,7 @@ export class FieldsListVM{
     area!: number;
     polygon!: any[];
     geoJson!: string;
+    hasPackage!:boolean
 }
 
 export enum IndicatorsTypes{
@@ -82,6 +83,7 @@ export class FieldDetailViewModel
     irrigationPeriod!:number;
     irrigationType!:number;
     polygon!:any[];
+    hasPackage!:boolean;
 }
 
 

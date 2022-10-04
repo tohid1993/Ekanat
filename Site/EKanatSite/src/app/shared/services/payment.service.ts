@@ -15,7 +15,7 @@ export class PaymentService {
   }
 
   goToPayment(data:any){
-    return this.gService.post("v1/Payments/Payment",data,{})
+    return this.gService.post("v1/Payments/Payment",{},data)
   }
 }
 

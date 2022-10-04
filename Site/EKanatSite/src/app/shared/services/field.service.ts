@@ -103,5 +103,9 @@ export class FieldService {
   getFieldPhenologiesList(fieldId:number){
     return this.gService.get("v1/Phenologies/GetList",{fieldId})
   }
+
+  deleteField(fieldId:number){
+    return this.gService.delete({fieldId:fieldId},"v1/Fields/Delete")
+  }
 }
 

@@ -188,9 +188,8 @@ export class PackageInvoiceComponent implements OnInit {
         next:(res:any)=>{
           if(res.isSuccess)
           {
-            console.log(res.data);
-            
             this.spinner.hide();
+            window.location.href = res.data;            
           }
         }
       })

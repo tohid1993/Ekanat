@@ -95,6 +95,8 @@
                                 <span class="fw-bold">نوع سرویس</span>
                                 <span>پکیج استاندارد</span>
                             </li>
+
+                            
                             <ng-container *ngIf="OrderDetail">
                                 <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                     <span class="fw-bold">تاریخ شروع پکیج </span>
@@ -115,18 +117,21 @@
 
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">مبلغ</span>
-                                <span *ngIf="SelectedField && PeriodCount">{{basePrice*SelectedField.area|number:"0.0-0"}} <small>تومان</small></span>
-                                <span *ngIf="!SelectedField || !PeriodCount">- <small>تومان</small></span>
+                                <span>
+                                    <small *ngIf="OrderDetail">
+                                        {{OrderDetail?.packageBaseAmount|number:"0.0-0"}} × ({{SelectedField?.area}} هکتار) × ({{OrderDetail?.phenologyCount}} دوره رشد)  = 
+                                    </small>
+                                    {{((OrderDetail?.packageBaseAmount||0) * (SelectedField?.area||0) * OrderDetail?.phenologyCount)|number:"0.0-0"}}
+                                    <small>تومان</small>
+                                </span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">ارزش افزوده</span>
-                                <span *ngIf="SelectedField && PeriodCount">{{((basePrice*SelectedField.area)*taxPercent/100)|number:"0.0-0"}} <small>تومان</small></span>
-                                <span *ngIf="!SelectedField || !PeriodCount">- <small>تومان</small></span>
+                                <span>{{(OrderDetail?.taxAmount || '0')|number:"0.0-0"}} <small>تومان</small></span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item d-flex align-items-center justify-content-between RoyalBlue_10_bg">
                                 <span class="fw-bold">مبلغ قابل پرداخت</span>
-                                <span class="fw-bold" *ngIf="SelectedField && PeriodCount">{{(basePrice*SelectedField.area + ((basePrice*SelectedField.area)*taxPercent/100))|number:"0.0-0"}} <small>تومان</small></span>
-                                <span *ngIf="!SelectedField || !PeriodCount">- <small>تومان</small></span>
+                                <span class="fw-bold">{{(OrderDetail?.totalAmount || '0')|number:"0.0-0"}} <small>تومان</small></span>
                             </li>
                         </ul>
 

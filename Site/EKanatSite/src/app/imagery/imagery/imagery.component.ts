@@ -57,6 +57,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   hasPackage:boolean = false;
 
+
+
   constructor(
     private eeService:EeService,
     public dateTimeService:DateTimeService,
@@ -91,6 +93,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   ngOnInit(): void {
+
+
     this.getFieldDetails();
     this.GetAnalyzList();
     this.setHightOfImageryWrapper();
@@ -120,6 +124,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       .subscribe({
         next(res:any){
           self.fieldDetail = (res.data as FieldDetailViewModel);
+          self.hasPackage = self.fieldDetail.hasPackage
           self.getForecastWeather();
           self.addPolygonToMap(self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon));
           self.spinner.hide();

@@ -367,52 +367,60 @@ export class AddFieldComponent implements OnInit {
       .subscribe(
         {
           next(res) {
-            let area = Math.round((((+res.data)/10000) + Number.EPSILON) * 100) / 100;
+            let area = Math.round((((+res.area)/10000) + Number.EPSILON) * 100) / 100;
 
-            if(area>=self.minHA && area<=self.maxHA){
+            // if(area>=self.minHA && area<=self.maxHA){
+            if(res.isValid){
               self.FieldArea = area;
               self.FieldCoordinates = coords;
               geoJSON.bindTooltip(area.toString()+" هکتار " , {direction:'right' , permanent:true}).openTooltip();
             }else{
 
-              if(area<self.minHA){
                 Swal.fire({
                   icon:"warning",
                   title:"زمین انتخابی نا معتبر است",
-                  text:`کاربر گرامی، مساحت زمین انتخابی شما ${area} هکتار می‌باشد. مساحت زمین برای ثبت باید بیش از ${self.minHA} هکتار باشد`,
+                  text:res.errorMessage,
                   confirmButtonText:"متوجه شدم"
                 })
-              }
 
-              if(area>self.remainingHA && area<=self.LimitHA){
-                Swal.fire({
-                  icon:"warning",
-                  title:"زمین انتخابی نا معتبر است",
-                  text:`کاربر گرامی، مساحت باقیمانده مجاز شما برای ثبت زمین ${self.remainingHA} هکتار می‌باشد. با فعالسازی خدمات پایش بر روی زمین‌های ثبت شده خود می‌توانید مساحت باقیمانده مجاز را افزایش دهید`,
-                  confirmButtonText:"خرید پکیج",
-                  cancelButtonText:"متوجه شدم",
-                  showCancelButton:true
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    self.router.navigate(['/package/list']);
-                  }
-                })
-              }
+              // if(area<self.minHA){
+              //   Swal.fire({
+              //     icon:"warning",
+              //     title:"زمین انتخابی نا معتبر است",
+              //     text:`کاربر گرامی، مساحت زمین انتخابی شما ${area} هکتار می‌باشد. مساحت زمین برای ثبت باید بیش از ${self.minHA} هکتار باشد`,
+              //     confirmButtonText:"متوجه شدم"
+              //   })
+              // }
 
-              if(area>self.LimitHA){
-                Swal.fire({
-                  icon:"warning",
-                  title:"زمین انتخابی نا معتبر است",
-                  text:`کاربر گرامی،مساحت زمین انتخابی شما ${area} هکتار می‌باشد. جهت دریافت خدمات پایش برای زمین‌های بالای 100 هکتار با شماره 09304916440 تماس بگیرید`,
-                  confirmButtonText:"خرید پکیج",
-                  cancelButtonText:"متوجه شدم",
-                  showCancelButton:true
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    self.router.navigate(['/package/list']);
-                  }
-                })
-              }
+              // if(area>self.remainingHA && area<=self.LimitHA){
+              //   Swal.fire({
+              //     icon:"warning",
+              //     title:"زمین انتخابی نا معتبر است",
+              //     text:`کاربر گرامی، مساحت باقیمانده مجاز شما برای ثبت زمین ${self.remainingHA} هکتار می‌باشد. با فعالسازی خدمات پایش بر روی زمین‌های ثبت شده خود می‌توانید مساحت باقیمانده مجاز را افزایش دهید`,
+              //     confirmButtonText:"خرید پکیج",
+              //     cancelButtonText:"متوجه شدم",
+              //     showCancelButton:true
+              //   }).then((result) => {
+              //     if (result.isConfirmed) {
+              //       self.router.navigate(['/package/list']);
+              //     }
+              //   })
+              // }
+
+              // if(area>self.LimitHA){
+              //   Swal.fire({
+              //     icon:"warning",
+              //     title:"زمین انتخابی نا معتبر است",
+              //     text:`کاربر گرامی،مساحت زمین انتخابی شما ${area} هکتار می‌باشد. جهت دریافت خدمات پایش برای زمین‌های بالای 100 هکتار با شماره 09304916440 تماس بگیرید`,
+              //     confirmButtonText:"خرید پکیج",
+              //     cancelButtonText:"متوجه شدم",
+              //     showCancelButton:true
+              //   }).then((result) => {
+              //     if (result.isConfirmed) {
+              //       self.router.navigate(['/package/list']);
+              //     }
+              //   })
+              // }
 
 
 
