@@ -91,8 +91,8 @@ export class FieldService {
     return this.gService.get("v1/Fields/GetDetail",{id:fieldId});
   }
 
-  getFieldWeather(lat:number,lng:number){
-    return this.gService.get("v1/Fields/GetWeather",{latitude:lat,longitude:lng})
+  getFieldWeather(lat:number,lng:number,fieldId:number){
+    return this.gService.get("v1/Fields/GetWeather",{latitude:lat,longitude:lng,fieldId:fieldId})
   }
 
 

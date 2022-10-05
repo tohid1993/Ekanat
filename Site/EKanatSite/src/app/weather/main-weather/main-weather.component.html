@@ -23,12 +23,12 @@
     <app-current-weather *ngIf="isChanged && CurrentWeather" [CurrentWeather]="CurrentWeather" [NextHoursWeather]="NextHoursWeather"></app-current-weather>
     <div class="py-2"></div>
     <app-forecast-weather *ngIf="isChanged && NextDaysWeather"
-        [hasPackage]="false" [FieldId]="SelectedField?.id" 
+        [hasPackage]="hasPackage" [FieldId]="SelectedField?.id" 
         [NextDaysWeather]="NextDaysWeather">
     </app-forecast-weather>
 
     <app-analyze-weather  *ngIf="isChanged && FieldLatLng" 
-        [FieldLatLng]="FieldLatLng" [hasPackage]="false" [FieldId]="SelectedField?.id">
+        [FieldLatLng]="FieldLatLng" [hasPackage]="hasPackage" [FieldId]="SelectedField?.id">
     </app-analyze-weather>
 </div>
 
@@ -44,7 +44,7 @@
             <div class="row g-3 fields_wrapper mt-3 justify-content-center">
                 <div class="col-12 col-sm-6 col-xl-4" (click)="choaseFieldModal(field)"
                     *ngFor="let field of FieldsList;let index = index" >
-                    <div class="field_item">
+                    <div class="field_item" [ngClass]="{'hasPackage':field.hasPackage}">
                         <div class="detail">
                             <h3 class="field_title heading_level_4 heading_level_4_mobile Primary_100_text mb-3">{{field.name}}</h3>
                             <h6 class="cultivated_crop bu_2_text bu_2_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} هکتار</h6>

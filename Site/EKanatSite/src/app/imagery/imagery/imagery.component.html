@@ -22,7 +22,24 @@
                             <app-field-svg class="field_svg" [cordinates]="fieldDetail.polygon"></app-field-svg>
                         </div>
                     </div>
-                    <div class="current_weather">
+                    <div class="field_detail mt-2" *ngIf="fieldDetail?.hasPackage">
+                        <div class="d-flex">
+                            <figure class="package_icon">
+                                <img src="./assets/images/icons/permium.png" width="30" height="30" alt="">
+                            </figure>
+                            <div class="flex-grow-1">
+                                <h4 class="bd_1_text bd_1_text_mobile Primary_100_text">
+                                    پکیج استاندارد
+                                </h4>
+                                <span class="d-block caption_text caption_text_mobile">
+                                    <span dir="ltr">{{fieldDetail.packageStartDate}}</span>
+                                     الی 
+                                    <span dir="ltr">{{fieldDetail.packageEndDate}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="current_weather" *ngIf="CurrentWeather">
                         <h4 class="bd_1_text bd_1_text_mobile Primary_100_text">آب و هوای فعلی</h4>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="text-center d-flex align-items-center">

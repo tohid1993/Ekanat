@@ -367,7 +367,7 @@ export class AddFieldComponent implements OnInit {
       .subscribe(
         {
           next(res) {
-            let area = Math.round((((+res.area)/10000) + Number.EPSILON) * 100) / 100;
+            let area = Math.round((((+res.data.area)/10000) + Number.EPSILON) * 100) / 100;
 
             // if(area>=self.minHA && area<=self.maxHA){
             if(res.isValid){
@@ -378,8 +378,8 @@ export class AddFieldComponent implements OnInit {
 
                 Swal.fire({
                   icon:"warning",
-                  title:"زمین انتخابی نا معتبر است",
-                  text:res.errorMessage,
+                  title:"زمین انتخابی شما: " + area + " هکتار ",
+                  text:res.data.errorMessage,
                   confirmButtonText:"متوجه شدم"
                 })
 

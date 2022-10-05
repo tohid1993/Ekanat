@@ -140,6 +140,21 @@
             max-width: 75px;
             max-height: 75px;
         }
+
+        .package_icon {
+            margin: 0;
+            margin-left: 10px;
+            padding: 8px;
+            width: 40px;
+            height: 40px;
+            background: #ff9507;
+            overflow: hidden;
+            border-radius: 50%;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
     }
 
     .current_weather{

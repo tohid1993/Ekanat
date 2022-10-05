@@ -24,6 +24,8 @@ export class MainWeatherComponent implements OnInit {
   NextHoursWeather:any|undefined;
   NextDaysWeather:any|undefined;
 
+  hasPackage:boolean = false;
+
   constructor(
     config: NgbModalConfig, 
     private modalService: NgbModal,
@@ -50,7 +52,7 @@ export class MainWeatherComponent implements OnInit {
 
     if(this.FieldLatLng)
       // lat = y , lng = x
-      this.fieldService.getFieldWeather(this.FieldLatLng[1],this.FieldLatLng[0])
+      this.fieldService.getFieldWeather(this.FieldLatLng[1],this.FieldLatLng[0],this.SelectedField!.id)
         .subscribe({
           next(res:any){
               self.CurrentWeather = res.data.current;
@@ -74,7 +76,6 @@ export class MainWeatherComponent implements OnInit {
 
     setTimeout(() => {
       this.SelectedField = field;
-
       localStorage.setItem('selectedFieldId',field.id);
 
       this.beforeGetWeather();
@@ -86,6 +87,7 @@ export class MainWeatherComponent implements OnInit {
 
   beforeGetWeather(){
     let coords:any[] = [];
+    this.hasPackage = this.SelectedField?.hasPackage||false;
     this.SelectedField?.polygon.forEach((coord:any)=>{
       coords.push([coord.x,coord.y]);
     })

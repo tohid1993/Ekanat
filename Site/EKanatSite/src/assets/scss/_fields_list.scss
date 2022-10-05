@@ -12,6 +12,8 @@
         align-items: center;
         height: 100%;
         cursor: pointer;
+        position: relative;
+        overflow: hidden;
 
         &:hover{
             background-size: 120%;
@@ -32,6 +34,27 @@
             height: 70px;
             object-fit: scale-down;
             object-position: center;
+        }
+
+        &.hasPackage{
+            .remove_btn{
+                display: none;
+            }
+            &::before{
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 40px;
+                height: 40px;
+                background-color: #ff9d3f;
+                content: "";
+                z-index: 3;
+                background-image: url(/assets/images/icons/permium.png);
+                background-size: 16px;
+                background-repeat: no-repeat;
+                clip-path: polygon(100% 0, 0% 100%, 0 0);
+                background-position: top 2px left 4px;
+            }
         }
     }
 }

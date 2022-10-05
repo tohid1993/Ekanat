@@ -145,7 +145,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
     if(FieldLatLng)
       // lat = y , lng = x
-      this.fieldService.getFieldWeather(FieldLatLng[1],FieldLatLng[0])
+      this.fieldService.getFieldWeather(FieldLatLng[1],FieldLatLng[0],this.fieldDetail.id)
         .subscribe({
           next(res:any){
               self.CurrentWeather = res.data.current;

@@ -84,6 +84,8 @@ export class FieldDetailViewModel
     irrigationType!:number;
     polygon!:any[];
     hasPackage!:boolean;
+    packageStartDate?:string;
+    packageEndDate?:string;
 }
 
 

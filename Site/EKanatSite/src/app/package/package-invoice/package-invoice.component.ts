@@ -64,6 +64,9 @@ export class PackageInvoiceComponent implements OnInit {
             this.SelectedField = res.data;
             this.modalService.dismissAll();
             this.spinner.hide();
+
+            this.PeriodCount = null;
+            this.OrderDetail = null;
           }
         },
         error:()=>{

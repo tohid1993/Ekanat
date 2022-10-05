@@ -163,19 +163,20 @@
         <div class="draw_methods py-3 px-4">
             <div class="title heading_level_4 heading_level_4_mobile text-center">یکی از زمین های کشاورزی را جهت خرید پکیج استاندارد انتخاب نمایید</div>
             <div class="row g-3 fields_wrapper mt-3 justify-content-center">
-                <div class="col-12 col-sm-6 col-xl-4" (click)="choaseFieldModal(field)"
-                    *ngFor="let field of FieldsList;let index = index" >
-                    <div class="field_item">
-                        <div class="detail">
-                            <h3 class="field_title heading_level_4 heading_level_4_mobile Primary_100_text mb-3">{{field.name}}</h3>
-                            <h6 class="cultivated_crop bu_2_text bu_2_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} هکتار</h6>
+                <ng-container *ngFor="let field of FieldsList;let index = index">
+                    <div class="col-12 col-sm-6 col-xl-4" (click)="choaseFieldModal(field)">
+                        <div class="field_item" [ngClass]="{'hasPackage':field.hasPackage}">
+                            <div class="detail">
+                                <h3 class="field_title heading_level_4 heading_level_4_mobile Primary_100_text mb-3">{{field.name}}</h3>
+                                <h6 class="cultivated_crop bu_2_text bu_2_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} هکتار</h6>
+                            </div>
+            
+                            <div class="field_polygon">
+                                <app-field-svg [cordinates]="field.polygon"></app-field-svg>
+                            </div>
                         </div>
-        
-                        <div class="field_polygon">
-                            <app-field-svg [cordinates]="field.polygon"></app-field-svg>
-                        </div>
-                    </div>
-                </div>
+                    </div>    
+                </ng-container>
 
                 <div class="col-12 text-center mt-3">
                     <a (click)="goToAddNewField()" class="primary_btn">
