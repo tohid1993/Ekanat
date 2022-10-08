@@ -17,5 +17,9 @@ export class PaymentService {
   goToPayment(data:any){
     return this.gService.post("v1/Payments/Payment",{},data)
   }
+
+  getOrderPaymentDetail(orderId:number){
+    return this.gService.get("v1/Payments/GetOrderPaymentInfo",{orderId:orderId})
+  }
 }
 

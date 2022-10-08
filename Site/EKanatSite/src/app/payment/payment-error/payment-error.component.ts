@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-payment-error',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentErrorComponent implements OnInit {
 
-  constructor() { }
+  description!:string;
+
+  constructor(
+    private route:ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(params=>{this.description = params['description']})
+  }
 
   ngOnInit(): void {
   }

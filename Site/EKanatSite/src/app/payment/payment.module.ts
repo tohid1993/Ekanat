@@ -8,7 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   { path: 'prepayment', component: PrepaymentComponent},
-  { path: 'success', component: PaymentBillComponent},
+  { path: 'success/:orderId', component: PaymentBillComponent},
   { path: 'failure', component: PaymentErrorComponent},
 ];
 

@@ -370,7 +370,7 @@ export class AddFieldComponent implements OnInit {
             let area = Math.round((((+res.data.area)/10000) + Number.EPSILON) * 100) / 100;
 
             // if(area>=self.minHA && area<=self.maxHA){
-            if(res.isValid){
+            if(res.data.isValid){
               self.FieldArea = area;
               self.FieldCoordinates = coords;
               geoJSON.bindTooltip(area.toString()+" هکتار " , {direction:'right' , permanent:true}).openTooltip();
