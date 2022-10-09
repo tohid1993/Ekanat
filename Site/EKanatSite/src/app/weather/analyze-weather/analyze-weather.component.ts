@@ -49,7 +49,8 @@ export class AnalyzeWeatherComponent implements OnInit {
           this.FieldLatLng[0],
           this.FieldLatLng[1],
           fromDate.toISOString().split('T')[0],
-          toDate.toISOString().split('T')[0]
+          toDate.toISOString().split('T')[0],
+          this.FieldId||0
         )
         .subscribe({
           next(res:any){

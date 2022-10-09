@@ -3,7 +3,7 @@
     <div class="forms_wrapper w-100">
       <div class="text-center">
         <img
-          src="./assets/images/logo.jpg"
+          src="./assets/images/logo.png"
           width="120"
           class="logo mb-2"
           alt="کانات"
@@ -73,6 +73,7 @@
                     class="form-control form-control-lg text-start"
                     [readonly]="vCodeSent"
                     [maxLength]="10"
+                    placeholder="912×××××××"
                     formControlName="mobile"
                     dir="ltr"
                     id="mobile"
@@ -166,7 +167,7 @@
     <ngb-carousel
       *ngIf="CarouselItems"
       class="carousel-fade login_page_carousel"
-      [interval]="0"
+      [interval]="5000"
     >
       <!-- <ng-template ngbSlide *ngFor="let item of CarouselItems">
         <div class="slide-wrapper">
@@ -187,15 +188,7 @@
 متن
 تصویر -->
 
-      <ng-template ngbSlide>
-        <div class="slide-wrapper">
-          <div class="d-flex align-items-center flex-column justify-content-center h-100">
-            <h6 class="primary_text primary_text_mobile Primary_80_text">ثبت زمین</h6>
-            <div class="my-4">با ترسیم دستی حدود زمین یا پیمایش محیط آن و ثبت نقاط</div>
-            <img src="./assets/images/carousel/a1.png" class="w-50" />
-          </div>
-        </div>
-      </ng-template>
+
 
       <ng-template ngbSlide>
         <div class="slide-wrapper">
@@ -213,6 +206,16 @@
             <h6 class="primary_text primary_text_mobile Primary_80_text">پایش زمین</h6>
             <div class="my-4">وضعیت مزرعه یا باغ خود را با دیدگاهی جدید ببینید</div>
             <img src="./assets/images/carousel/a3.png" class="w-50" />
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template ngbSlide>
+        <div class="slide-wrapper">
+          <div class="d-flex align-items-center flex-column justify-content-center h-100">
+            <h6 class="primary_text primary_text_mobile Primary_80_text">ثبت زمین</h6>
+            <div class="my-4">با ترسیم دستی یا پیمایش محیط زمین و ثبت نقاط، محدوده زمین خود را ثبت کنید</div>
+            <img src="./assets/images/carousel/a1.png" class="w-50" />
           </div>
         </div>
       </ng-template>
