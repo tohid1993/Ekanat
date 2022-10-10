@@ -22,14 +22,17 @@
         opacity: 0;
         background: #ffffffdb;
         border-radius: 8px;
-        padding:0 16px;
+        padding: 0 16px;
         right: 50%;
         display: flex;
         align-items: center;
+        justify-content: space-around;
         animation: fadeIn 2s;
         animation-delay: 1s;
         animation-fill-mode: forwards;
-        transform: translate(50%, 0px);
+        transform: translate(50%);
+        min-width: 50%;
+    
 
         .logo_link {
             display: inline-block;

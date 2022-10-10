@@ -59,7 +59,9 @@
                             flex-direction: column;
                             align-items: center;
                             justify-content: center;
-                            font-size: 14px;
+                            font-size: 13px;
+                            white-space: nowrap;
+                            word-spacing: -2px;
                             cursor: pointer;
                             margin: 0;
                             font-weight: 400;

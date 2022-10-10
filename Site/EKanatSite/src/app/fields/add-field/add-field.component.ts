@@ -80,8 +80,14 @@ export class AddFieldComponent implements OnInit {
       {
         title:'زیرزمینی',
         id: IrrigationType.Underground
+      },
+      {
+        title:'دیم',
+        id: IrrigationType.Rainfed
       }
   ];
+
+  IrrigationTypes=IrrigationType;
 
   CountriesList: any[] = [];
   ProvincesList: any[] = [];
@@ -289,6 +295,14 @@ export class AddFieldComponent implements OnInit {
     }
   }
 
+
+  irrigationTypeChange(){
+    setTimeout(() => {
+      if(this.AddFieldForm.value.irrigationType == IrrigationType.Rainfed){
+        this.AddFieldForm.controls['irrigationPeriod'].setValue(0)
+      }
+    }, 100);
+  }
 
 
 

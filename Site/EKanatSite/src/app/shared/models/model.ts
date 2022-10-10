@@ -115,6 +115,10 @@ export enum IrrigationType
     /// زیرزمینی
     /// </summary>
     Underground = 6,
+    /// <summary>
+    /// دیم
+    /// </summary>
+    Rainfed = 7
 }
 
 

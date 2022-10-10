@@ -449,7 +449,35 @@
               >
             </div> -->
 
+
+
             <div class="col-12 col-md-6 mb-4">
+              <label class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
+                >روش آبیاری</label
+              >
+              <select
+                class="form-control form-control-lg bu_2_text bu_2_text_mobile"
+                formControlName="irrigationType"
+                (change)="irrigationTypeChange()"
+              >
+                <option
+                  [ngValue]="item.id"
+                  *ngFor="let item of IrrigationType"
+                >
+                  {{ item.title }}
+                </option>
+              </select>
+              <small
+                class="text-danger"
+                *ngIf="
+                  FormDir.submitted &&
+                  FormDir.hasError('required', 'irrigationType')
+                "
+                >وارد کردن این فیلد الزامی میباشد</small
+              >
+            </div>
+
+            <div class="col-12 col-md-6 mb-4" *ngIf="AddFieldForm.value.irrigationType != IrrigationTypes.Rainfed">
               <label
                 for="irrigationPeriod"
                 class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
@@ -468,31 +496,6 @@
                 *ngIf="
                   FormDir.submitted &&
                   FormDir.hasError('required', 'irrigationPeriod')
-                "
-                >وارد کردن این فیلد الزامی میباشد</small
-              >
-            </div>
-
-            <div class="col-12 col-md-6 mb-4">
-              <label class="bu_1_text bu_1_text_mobile Dark_70_text mb-1"
-                >روش آبیاری</label
-              >
-              <select
-                class="form-control form-control-lg bu_2_text bu_2_text_mobile"
-                formControlName="irrigationType"
-              >
-                <option
-                  [ngValue]="item.id"
-                  *ngFor="let item of IrrigationType"
-                >
-                  {{ item.title }}
-                </option>
-              </select>
-              <small
-                class="text-danger"
-                *ngIf="
-                  FormDir.submitted &&
-                  FormDir.hasError('required', 'irrigationType')
                 "
                 >وارد کردن این فیلد الزامی میباشد</small
               >
