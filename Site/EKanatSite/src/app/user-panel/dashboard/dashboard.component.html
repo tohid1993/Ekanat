@@ -63,7 +63,7 @@
         <div class="col-12 col-lg-7">
             <div class="row g-3 fields_wrapper pb-3 mt-1">
                 <div class="col-12" *ngFor="let field of FieldsList|slice:0:minLength;let index = index">
-                    <div class="field_item d-flex p-2 row mx-0">
+                    <div class="field_item d-flex p-2 row mx-0" [ngClass]="{'hasPackage':field.hasPackage}">
                         <div class="field_details col-12 col-md col-lg-12 col-xl d-flex align-items-center">
                             <div class="field_polygon ms-3">
                                 <app-field-svg [cordinates]="field.polygon"></app-field-svg>
@@ -74,9 +74,9 @@
                             </div>
                         </div>
                         <div class="field_actions col-12 col-md-auto col-lg-12 col-xl-auto text-start mt-2 mt-md-0 mt-lg-2 mt-xl-0">
-                            <button (click)="goToWeatherPage(field.id)" class="btn btn-dark btn-sm small_btn my-1 me-1" >هواشناسی</button>
-                            <a [routerLink]="['/fields/imagery/analytics',field.id]" class="btn btn-success btn-sm small_btn my-1 me-1">بررسی زمین</a>
-                            <a [routerLink]="['/fields/imagery/tasks',field.id,field.name]" class="btn btn-success btn-sm small_btn my-1 me-1">ثبت فعالیت</a>
+                            <button (click)="goToWeatherPage(field.id)" class="btn btn-outline-success btn-sm small_btn my-1 me-1" >هواشناسی</button>
+                            <a [routerLink]="['/fields/imagery/analytics',field.id]" class="btn btn-outline-success btn-sm small_btn my-1 me-1">بررسی زمین</a>
+                            <a [routerLink]="['/fields/imagery/tasks',field.id,field.name]" class="btn btn-outline-success btn-sm small_btn my-1 me-1">ثبت فعالیت</a>
                         </div>
                     </div>
                 </div>

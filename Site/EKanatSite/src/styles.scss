@@ -99,7 +99,7 @@ ngb-modal-backdrop{
 
 
 @mixin transparencyGenerator($size) {
-    .t#{$size} .addedImage{opacity:$size/100;}
+    .t#{$size} .addedImage{opacity: calc($size / 100);}
 }
 
 @for $size from 0 through 100 {
@@ -132,6 +132,9 @@ ngb-modal-backdrop{
     }
 }
 
+.carousel-control-next-icon , .carousel-control-prev-icon {
+    filter: grayscale(1) brightness(0.6);
+}
 
 .calendar_wrapper{
     width: 100%;
@@ -294,4 +297,19 @@ ngb-modal-backdrop{
     ul{
         list-style: circle;
     }
+}
+
+
+.btn-outline-success{
+    border-color: $Primary_100;
+
+    &:hover{
+        background-color: $Primary_100;
+        border-color: $Primary_100;
+
+    }
+}
+
+.ngb-dp-weekday{
+    font-style: normal !important;
 }

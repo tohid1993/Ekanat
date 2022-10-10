@@ -187,6 +187,10 @@ export class ImageryComponent implements OnInit , AfterViewInit {
  * @param imageIndex image index
  */
   getIndicators(key:IndicatorsTypes,imageIndex:number=-1){
+    if(!this.hasPackage && key != IndicatorsTypes.ndvi){
+      this.showPackageAlert()
+      return
+    }
     if(!key) return;
     this.beforeIndicatorProcess();
     this.spinner.show();

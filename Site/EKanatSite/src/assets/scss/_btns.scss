@@ -52,13 +52,13 @@
             }
         }
 
-        &:active{
-            color: $activeColor;
-            background-color: $activeBackground;
-            @if $hasBorder {
-                border: 1px solid $activeBorderColor;
-            }
-        }
+        // &:active{
+        //     color: $activeColor;
+        //     background-color: $activeBackground;
+        //     @if $hasBorder {
+        //         border: 1px solid $activeBorderColor;
+        //     }
+        // }
 
         &:disabled , &.disabled{
             color: $disableColor;

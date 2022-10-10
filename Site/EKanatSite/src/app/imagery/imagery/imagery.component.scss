@@ -109,7 +109,7 @@
                 margin-left: 5px;
                 border-radius: 5px;
                 background: $Green_10;
-                color: $Secondary;
+                color: $Primary_100;
                 font-size: 15px;
                 font-weight: 400;
                 padding: 5px 11px 2px;
@@ -118,7 +118,7 @@
                 margin-bottom: 6px;
                 
                 &.active{
-                    background: $Secondary;
+                    background: $Primary_80;
                     color: $Green_10;
                 }
             }
@@ -128,7 +128,7 @@
 }
 
 .field_details_wrapper {
-    background: $RoyalBlue_10;
+    background: #eaeeea;
     border-radius: 8px;
     overflow: hidden;;
 
@@ -199,13 +199,13 @@
     flex-direction: column;
 
     .dates_wrapper{
-        background-color: $Dark_10;
+        background-color: #eaeeea;
         padding: 12px 8px;
         border-radius: 8px;
     }
 
     .categories_wrapper{
-        background-color: $Dark_10;
+        background-color: #eaeeea;
         padding: 12px 8px;
         border-radius: 8px;
         margin-top: 8px;
@@ -216,7 +216,9 @@
             border: none;
             padding: 8px 16px;
             border-radius: 8px;
-            background: $White;
+            background: #fff;
+            opacity: 1;
+            border: 1px solid $Primary_80;
             opacity: 0.8;
             color: $Dark_80;
             display: flex;
