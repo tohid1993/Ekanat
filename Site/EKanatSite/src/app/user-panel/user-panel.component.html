@@ -3,7 +3,9 @@
       <a class="navbar-brand" href="#"><img src="./assets/images/logo.png" alt=""></a>
 
       <div ngbDropdown class="d-inline-flex align-items-center justify-content-center me-auto" *ngIf="windowWidth<992">
-        <a (click)="open(content)" class="d-inline-block bu_3_text bu_3_text_mobile btn btn-warning btn-sm small_btn my-1 ms-2" >مجوزها</a>
+        <a (click)="open(content)" class="d-inline-block bu_3_text bu_3_text_mobile my-1 ms-2" >
+          <img src="./assets/images/icons/enamad.png" height="30" alt="">
+        </a>
 
         <button type="button" class="ghost_btn small_btn" id="account_btn_dropdown_mobile" ngbDropdownToggle>
           <img [src]="(userService.UserHomeInfo|async)?.image || profileAvatar" alt="">
@@ -82,7 +84,9 @@
   <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-auto me-auto">
-        <a (click)="open(content)" class="d-inline-block bu_3_text bu_3_text_mobile btn btn-warning btn-sm small_btn my-1 me-1" >مجوزها</a>
+        <a (click)="open(content)" class="d-inline-block bu_3_text bu_3_text_mobile my-1 me-1" >
+          <img src="./assets/images/icons/enamad.png" height="30" alt="">
+        </a>
       </div>
       <div class="col-auto">
         <div ngbDropdown class="d-inline-block">

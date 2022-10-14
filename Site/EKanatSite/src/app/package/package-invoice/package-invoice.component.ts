@@ -20,7 +20,7 @@ export class PackageInvoiceComponent implements OnInit {
   isChanged:boolean = false;
   FieldsList:FieldsListVM[] = [];
 
-  PeriodCount:number|null = null;
+  PeriodCount:number|null = 1;
   MaxPeriodCount:number[] = [1];
   FieldPhenologiesList: PhenologiesVM[] = []
   fieldId?:number;
@@ -65,7 +65,7 @@ export class PackageInvoiceComponent implements OnInit {
             this.modalService.dismissAll();
             this.spinner.hide();
 
-            this.PeriodCount = null;
+            this.PeriodCount = 1;
             this.OrderDetail = null;
           }
         },
@@ -112,6 +112,8 @@ export class PackageInvoiceComponent implements OnInit {
                 icon:"info",
                 text:"برای این محصول در استان شما دوره ی رشدی تعریف نشده است، لطفا با شماره 09304916440 تماس بگیرید"
               })
+            }else{
+              this.SubmitPlaceOrder();
             }
 
           }

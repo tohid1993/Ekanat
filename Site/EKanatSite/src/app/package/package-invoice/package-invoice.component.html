@@ -52,7 +52,7 @@
                             </li>
 
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-start justify-content-between">
-                                <span class="fw-bold">دوره(های) رشد </span>
+                                <span class="fw-bold">دوره رشد </span>
                                 <div>
                                     <table class="growth_period">
                                         <tr *ngFor="let item of FieldPhenologiesList">
@@ -66,7 +66,7 @@
                             </li>
                         </ul>
 
-                        <ng-container *ngIf="FieldPhenologiesList.length>0">
+                        <!-- <ng-container *ngIf="FieldPhenologiesList.length>0">
                             <h4 class="secondary_text secondary_text_mobile Primary_80_text mb-2">تعداد خرید دوره رشد</h4>
                             <div class="d-flex align-items-center justify-content-start selectGrowthPeriod flex-wrap">
                                 <button class="btn btn-sm me-1 my-1 px-3" *ngFor="let item of MaxPeriodCount" [disabled]="PeriodCount==item"
@@ -74,7 +74,7 @@
                                     {{item}} دوره رشد
                                 </button>
                             </div>
-                        </ng-container>
+                        </ng-container> -->
                     </div>
 
                 </div>
@@ -93,17 +93,17 @@
                         <ul class="list-group list-group-flush p-0 mb-4">
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">نوع سرویس</span>
-                                <span>پکیج استاندارد</span>
+                                <span> استاندارد</span>
                             </li>
 
                             
                             <ng-container *ngIf="OrderDetail">
                                 <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                    <span class="fw-bold">تاریخ شروع پکیج </span>
+                                    <span class="fw-bold">تاریخ شروع سرویس </span>
                                     <span>{{OrderDetail?.packageStartDate}}</span>
                                 </li>
                                 <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                    <span class="fw-bold">تاریخ انقضای پکیج </span>
+                                    <span class="fw-bold">تاریخ انقضای سرویس </span>
                                     <span>{{OrderDetail?.packageEndDate}}</span>
                                 </li>
                                 <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
@@ -118,9 +118,6 @@
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">مبلغ</span>
                                 <span>
-                                    <small *ngIf="OrderDetail">
-                                        {{OrderDetail?.packageBaseAmount|number:"0.0-0"}} × ({{SelectedField?.area}} هکتار) × ({{OrderDetail?.phenologyCount}} دوره رشد)  = 
-                                    </small>
                                     {{((OrderDetail?.packageBaseAmount||0) * (SelectedField?.area||0) * OrderDetail?.phenologyCount)|number:"0.0-0"}}
                                     <small>تومان</small>
                                 </span>

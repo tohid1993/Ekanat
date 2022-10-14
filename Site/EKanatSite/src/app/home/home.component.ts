@@ -20,12 +20,18 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.raychatInterval = setInterval(()=>{
       const raychat = document.getElementById('raychatBtn');
       if(raychat){
-        raychat.style.bottom = '70px';
-        raychat.style.right = '-15px';
+
+        if(window.innerWidth>=768){
+          raychat.style.bottom = '30px';
+          raychat.style.right = '0px';
+        }else{
+          raychat.style.bottom = '100px';
+          raychat.style.right = '-30px';
+        }
+
         this.destroyRaychatInterval();
       }
     },1000)

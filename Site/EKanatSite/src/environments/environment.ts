@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiRoot:"https://ekanat.ir/api/",
+  apiRoot:"https://demo.ekanat.ir/api/",
   eeRoot:"http://ee.ekanat.ir:3000/"
 
 };
