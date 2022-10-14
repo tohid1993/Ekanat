@@ -1,0 +1,43 @@
+<app-page-breadcrumb
+  [pageTitle]="'لیست تراکنش های بانکی'"
+  [backUrl]="''"
+></app-page-breadcrumb>
+
+<div class="container-fluid">
+    <div class="table-responsive mt_20px">
+        <table class="table_fn no_wrap hover">
+            <thead>
+                <tr>
+                    <th>مبلغ پرداختی</th>
+                    <th>تاریخ سفارش</th>
+                    <th>نوع سرویس</th>
+                    <th>تاریخ شروع</th>
+                    <th>تاریخ پایان</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of TransactionsList">
+
+                    <td data-label="مبلغ پرداختی">
+                        {{item.amount|number}} <small>ریال</small>
+                    </td>
+                    <td data-label="تاریخ سفارش">
+                        {{item.orderDateTime}}
+                    </td>
+                    <td data-label="نوع سرویس">
+                        پکیج استادارد برای "{{item.fieldName}}"
+                    </td>
+                    <td data-label="تاریخ شروع">
+                        {{item.packageStartDate}}
+                    </td>
+                    <td data-label="تاریخ پایان">
+                        {{item.packageEndDate}}
+                    </td>
+                </tr>
+                <tr *ngIf="TransactionsList.length==0">
+                    <td colspan="5" class="text-center">موردی یافت نشد</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
