@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -6,12 +7,15 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
-
+  @ViewChild('services',{static:true}) services!:ElementRef
+  @ViewChild('about',{static:true}) about!:ElementRef
+  @ViewChild('contactus',{static:true}) contactus!:ElementRef
+  
+  
   @ViewChild('videoplayer',{static:true}) videoplayer!:ElementRef;
-
   raychatInterval:any;
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngAfterViewInit(): void {
     const media = this.videoplayer.nativeElement;
@@ -35,6 +39,7 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
         this.destroyRaychatInterval();
       }
     },1000)
+
   }
 
   ngOnDestroy(): void {
@@ -49,4 +54,22 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
     clearInterval(this.raychatInterval)
   }
 
+  openModal(key:string) {
+    switch (key) {
+      case 'services':
+        this.modalService.open(this.services, { size: 'xl' });
+        break;
+
+      case 'about':
+        this.modalService.open(this.about, { size: 'lg' });
+        break;
+
+      case 'contactus':
+        this.modalService.open(this.contactus, { size: 'xl' });
+        break;
+  
+      default:
+        break;
+    }
+  }
 }

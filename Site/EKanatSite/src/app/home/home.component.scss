@@ -89,6 +89,9 @@
             color: $Primary_100;
             transition: 0.3s all;
             padding: 12px 0;
+            border: none;
+            background-color: transparent;
+            outline: none;
 
             &.panel_link{
                 svg{
