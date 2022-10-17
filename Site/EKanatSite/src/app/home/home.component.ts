@@ -15,6 +15,9 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
   @ViewChild('videoplayer',{static:true}) videoplayer!:ElementRef;
   raychatInterval:any;
 
+  isDotCom:boolean = false;
+  isDotIr:boolean = false;
+
   constructor(private modalService: NgbModal) { }
 
   ngAfterViewInit(): void {
@@ -24,6 +27,9 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
   }
 
   ngOnInit(): void {
+    if(window.location.host=="ekanat.ir") this.isDotIr = true;
+    if(window.location.host=="ekanat.com") this.isDotCom = true;
+    
     this.raychatInterval = setInterval(()=>{
       const raychat = document.getElementById('raychatBtn');
       if(raychat){

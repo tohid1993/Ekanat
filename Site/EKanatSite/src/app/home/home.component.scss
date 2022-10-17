@@ -229,3 +229,21 @@
         bottom: 55px;
     }
 }
+
+.enamad_wrapper {
+    position: fixed;
+    right: 30px;
+    top: 40px;
+    width: 80px;
+    height: 80px;
+
+    a{
+        width: 100%;
+        display: block;
+
+        img{
+            width: 100%;
+        }
+        
+    }
+}
