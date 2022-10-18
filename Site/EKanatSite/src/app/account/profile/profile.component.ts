@@ -44,7 +44,7 @@ export class ProfileComponent implements OnInit {
         countryId:new FormControl(null,[]),
         provinceId:new FormControl(null,[]),
         cityId:new FormControl(null,[]),
-        villageId:new FormControl(null,[]),
+        villageName:new FormControl(null,[]),
         address:new FormControl(null,[])
       }
     )
@@ -118,17 +118,17 @@ export class ProfileComponent implements OnInit {
     this.CitiesList = this.ProvincesList.find(c=>c.id == this.ProfileForm.value.provinceId).cities;
   }
 
-  LoadVillagsList(resetField:boolean = true){
-    if(resetField)
-      this.ProfileForm.controls['villageId'].setValue(null);
-    this.VillagesList = this.CitiesList.find(c=>c.id == this.ProfileForm.value.cityId).villages;
-  }
+  // LoadVillagsList(resetField:boolean = true){
+  //   if(resetField)
+  //     this.ProfileForm.controls['villageId'].setValue(null);
+  //   this.VillagesList = this.CitiesList.find(c=>c.id == this.ProfileForm.value.cityId).villages;
+  // }
 
 
   setAddressDetails(){
     if(this.ProfileForm.value.countryId) this.LoadProvincesList(false);
     if(this.ProfileForm.value.provinceId) this.LoadCitiesList(false);
-    if(this.ProfileForm.value.cityId) this.LoadVillagsList(false);
+    // if(this.ProfileForm.value.cityId) this.LoadVillagsList(false);
   }
 
   getCountryCodes(){

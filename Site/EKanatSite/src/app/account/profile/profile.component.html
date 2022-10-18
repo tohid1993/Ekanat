@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-12 col-md-6 mt-3">
                         <label for="cityId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شهر</label>
-                        <select class="form-control form-control-lg bu_2_text bu_2_text_mobile" (change)="LoadVillagsList()"
+                        <select class="form-control form-control-lg bu_2_text bu_2_text_mobile"
                             formControlName="cityId" id="cityId">
                             <option [ngValue]="city.id" *ngFor="let city of CitiesList">{{city.title}}</option>
                         </select>
@@ -81,11 +81,9 @@
 
                     </div>
                     <div class="col-12 col-md-6 mt-3">
-                        <label for="villageId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">روستا</label>
-                        <select class="form-control form-control-lg bu_2_text bu_2_text_mobile" formControlName="villageId" id="villageId">
-                            <option [ngValue]="village.id" *ngFor="let village of VillagesList">{{village.title}}</option>
-                        </select>
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','villageId')">وارد کردن این فیلد الزامی میباشد</small>
+                        <label for="villageName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">روستا</label>
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="villageName"  autocomplete="off">
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','villageName')">وارد کردن این فیلد الزامی میباشد</small>
 
                     </div>
                     <div class="col-12 mt-3">
