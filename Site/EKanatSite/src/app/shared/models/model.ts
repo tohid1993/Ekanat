@@ -71,6 +71,10 @@ export enum IndicatorsTypes{
     // savi = 11
 }
 
+export enum ChartsTypes{
+    ndvi = 1,
+}
+
 export class FieldDetailViewModel
 {
     id!:number;

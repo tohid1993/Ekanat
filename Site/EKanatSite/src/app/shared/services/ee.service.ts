@@ -50,4 +50,15 @@ export class EeService {
 
     return latlng;
   }
+
+  getChart(fieldId:number,cords:any[],type:number){
+    let date = new Date().toISOString();
+    let dateString = date.split('T')[0]
+    return this.gService.post("v1/Fields/GetChart",{
+      fieldId: fieldId,
+      type: type,
+      cords:cords,
+      toDate: dateString
+    },{})
+  }
 }

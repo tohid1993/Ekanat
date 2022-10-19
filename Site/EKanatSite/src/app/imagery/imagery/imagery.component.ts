@@ -5,7 +5,7 @@ import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
 import * as GeoSearch from 'leaflet-geosearch'
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AnalysViewModel, DateModel, FieldDetailViewModel, IndicatorsTypes } from 'src/app/shared/models/model';
+import { AnalysViewModel, ChartsTypes, DateModel, FieldDetailViewModel, IndicatorsTypes } from 'src/app/shared/models/model';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
 import { FieldService } from 'src/app/shared/services/field.service';
@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { EChartsOption } from 'echarts';
 
 @Component({
   selector: 'app-imagery',
@@ -23,6 +24,9 @@ import Swal from 'sweetalert2';
 export class ImageryComponent implements OnInit , AfterViewInit {
   @ViewChild('TaskDetailModal' , {static:true}) TaskDetailModal:ElementRef|undefined;
   @ViewChild('AnalyzDetailModal' , {static:true}) AnalyzDetailModal:ElementRef|undefined;
+  @ViewChild('ChartModal' , {static:true}) ChartModal:ElementRef|undefined;
+
+  
 
   map: Leaflet.Map|undefined;
   drawnItems:any;
@@ -35,6 +39,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   toDate!:DateModel;
 
   SelectedCategory:number = 0;
+  SelectedChartCategory:number = 0;
 
   showFieldDetails:boolean = true;
 
@@ -42,6 +47,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   selectedIndicator!:IndicatorsTypes;
 
   IndicatorsTypes=IndicatorsTypes;
+  ChartsTypes = ChartsTypes;
 
   windowWidth:number = window.innerWidth;
 
@@ -57,7 +63,9 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   hasPackage:boolean = false;
 
+  options1: EChartsOption = {};
 
+  showCharts:boolean = false;
 
   constructor(
     private eeService:EeService,
@@ -542,6 +550,101 @@ export class ImageryComponent implements OnInit , AfterViewInit {
         }
       })
     }
+  }
+
+  getCharts(type:ChartsTypes){
+    let cords = this.eeService.getLatLngFromXYarray(this.fieldDetail.polygon);
+    this.spinner.show();
+    this.eeService.getChart(this.fieldId, cords , 1)
+      .subscribe({
+        next:(res:any)=>{
+          if(res.isSuccess){
+            this.spinner.hide();
+
+            this.generateCharts(res.data.data)
+            this.modalService.open(this.ChartModal, { size:'xl' , scrollable: true });
+
+          }
+        }
+      })
+  }
+
+  generateCharts(res:any){
+    // const prLabel:string[] = [];
+    // const prValue:number[] = [];
+
+    const tLabel:string[] = [];
+    const tValue:number[] = [];
+
+    // res.pr.forEach((item:any) => {
+    //   prLabel.push(this.dateTimeService.toJalaliDate(item[0]));
+    //   prValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
+    // });
+
+
+    res.forEach((item:any) => {
+      tLabel.push(this.dateTimeService.toJalaliDate(item[0]));
+      tValue.push(item[1]);
+    });
+
+
+    this.showCharts = true
+
+
+    this.options1 = {
+      textStyle:{
+        fontFamily:'Vazir',
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        },
+        // <span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} میلی متر
+        formatter: "<strong>{b}</strong><br>{a0}: {c0}", //{a1}: {c1}<br>
+        textStyle:{
+            fontFamily:'Vazir',
+            align:'right',
+            
+        }
+      },
+      legend: {
+        data: ['NDVI Chart'],
+        top: '0px'
+      },
+      grid: {
+        left: '2%',
+        right: '2%',
+        bottom: '2%',
+        top:'10%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          boundaryGap: false,
+          data: tLabel
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: 'NDVI Chart',
+          type: 'line',
+          areaStyle: { opacity:0 },
+          data: tValue
+        }
+      ]
+    };
+
+
   }
 }
 
