@@ -553,6 +553,11 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   getCharts(type:ChartsTypes){
+    if(!this.hasPackage){
+      this.showPackageAlert()
+      return
+    }
+
     let cords = this.eeService.getLatLngFromXYarray(this.fieldDetail.polygon);
     this.spinner.show();
     this.eeService.getChart(this.fieldId, cords , 1)
@@ -570,6 +575,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   generateCharts(res:any){
+
+
     // const prLabel:string[] = [];
     // const prValue:number[] = [];
 
