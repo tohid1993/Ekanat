@@ -118,7 +118,7 @@
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">مبلغ</span>
                                 <span>
-                                    {{((OrderDetail?.packageBaseAmount||0) * (SelectedField?.area||0) * OrderDetail?.phenologyCount)|number:"0.0-0"}}
+                                    {{((OrderDetail?.totalAmount || '0') - (OrderDetail?.taxAmount || '0'))|number:"0.0-0"}}
                                     <small>تومان</small>
                                 </span>
                             </li>
