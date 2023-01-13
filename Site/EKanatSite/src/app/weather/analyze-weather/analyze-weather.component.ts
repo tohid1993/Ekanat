@@ -6,6 +6,7 @@ import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import Swal from 'sweetalert2';
+import {TranslateService} from "../../shared/services/traslate.service";
 
 
 @Component({
@@ -23,18 +24,38 @@ export class AnalyzeWeatherComponent implements OnInit {
 
     showCharts:boolean = false;
 
+    translateUnsub:any
+
+    lowTemporaryLabel:string = ''
+    highTemporaryLabel:string = ''
+    millimeterLabel:string = ''
 
     constructor(
       private gService:GeneralService,
       private eeService:EeService,
       private dateTimeService:DateTimeService,
       private spinner: NgxSpinnerService,
-      private router:Router
+      private router:Router,
+      private translateService:TranslateService
     ) { }
   
-    ngOnInit(): void {    
-      if(this.hasPackage)  
+    ngOnInit(): void {
+      this.translateUnsub = this.translateService.data.subscribe({
+        next:(data)=>{
+          this.millimeterLabel = data['millimeter']
+          this.lowTemporaryLabel = data['lowTemporary']
+          this.highTemporaryLabel = data['highTemporary']
+        }
+      })
+
+      if(this.hasPackage)
         this.getPastWeather();
+    }
+
+    ngOnDestroy(): void {
+      if(this.translateUnsub){
+        this.translateUnsub.unsubscribe()
+      }
     }
 
     getPastWeather(){
@@ -119,7 +140,7 @@ export class AnalyzeWeatherComponent implements OnInit {
               }
             },
 
-            formatter: "<span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} میلی متر",
+            formatter: "<span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} " + this.millimeterLabel,
             textStyle:{
                 fontFamily:'Vazir',
                 align:'right',
@@ -160,7 +181,6 @@ export class AnalyzeWeatherComponent implements OnInit {
               backgroundColor: '#6a7985'
             }
           },
-          // <span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} میلی متر
           formatter: "<strong>{b}</strong><br>{a1}: {c1}<br>{a0}: {c0}",
           textStyle:{
               fontFamily:'Vazir',
@@ -169,7 +189,7 @@ export class AnalyzeWeatherComponent implements OnInit {
           }
         },
         legend: {
-          data: ['کمترین دما','بیشترین دما'],
+          data: [this.lowTemporaryLabel,this.highTemporaryLabel],
           top: '0px'
         },
         grid: {
@@ -193,13 +213,13 @@ export class AnalyzeWeatherComponent implements OnInit {
         ],
         series: [
           {
-            name: 'کمترین دما',
+            name: this.lowTemporaryLabel,
             type: 'line',
             areaStyle: { opacity:0 },
             data: tMinValue
           },
           {
-            name: 'بیشترین دما',
+            name: this.highTemporaryLabel,
             type: 'line',
             stack: 'counts',
             areaStyle: { opacity:0 },

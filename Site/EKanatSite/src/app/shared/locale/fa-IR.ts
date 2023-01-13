@@ -72,5 +72,30 @@ export const faIRLocate = {
     notFoundGrowthPeriod:'دوره رشدی یافت نشد',
     to:'الــــی',
     callToSupportForProductGrowthPeriod:'برای این محصول در استان شما دوره ی رشدی تعریف نشده است، لطفا با شماره 09304916440 تماس بگیرید',
-    packageDescriptionTemplate:'کاربر گرامی، خدمات پایش برای زمین "text1" از تاریخ "text2" تا تاریخ "text3"  قابل فعالسازی میباشد و گزارش تحلیل زمین "text1" از تاریخ "text4" تا تاریخ "text5" طی یک هفته اتی در میز کار زمین شما قابل مشاهده خواهد بود.'
+    packageDescriptionTemplate:'کاربر گرامی، خدمات پایش برای زمین "text1" از تاریخ "text2" تا تاریخ "text3"  قابل فعالسازی میباشد و گزارش تحلیل زمین "text1" از تاریخ "text4" تا تاریخ "text5" طی یک هفته اتی در میز کار زمین شما قابل مشاهده خواهد بود.',
+
+    fieldMeteorology:'هواشناسی زمین کشاورزی',
+    selectFieldForMeteorology:'برای استعلام وضعیت هواشناسی زمین های کشاورزی، یکی از زمین های خود را انتخاب نمایید',
+    nextDaysWeather:'آب و هوای روزهای آینده',
+
+    buyPlane:'خرید پکیج',
+    day:'روز',
+    hour:'ساعت',
+    temporary:'دما',
+    wind:'باد',
+    humidity:'رطوبت',
+    cloudCover:'پوشش ابری',
+    rainfall:'بارندگی',
+    chanceOfRain:'احتمال بارندگی',
+
+    currentWeather:'آب و هوای فعلی',
+    weatherFor24H:'آب و هوای 24 ساعت بعد',
+    rainfallInPastMonth:' میزان بارش در یک ماه اخیر',
+    temporaryChangeInPastMonth:'تغییرات دما در یک ماه اخیر',
+
+    highTemporary:'بالاترین دما',
+    lowTemporary:'پایین ترین دما',
+    millimeter:'میلی متر',
+
+
 }

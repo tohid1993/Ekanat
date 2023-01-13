@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -14,7 +14,7 @@ import {TranslateService} from "../../shared/services/traslate.service";
   templateUrl: './package-invoice.component.html',
   styleUrls: ['./package-invoice.component.scss']
 })
-export class PackageInvoiceComponent implements OnInit {
+export class PackageInvoiceComponent implements OnInit, OnDestroy {
   
   @ViewChild('fieldsModal' , {static:true}) fieldsModal:ElementRef|undefined;
   SelectedField:FieldDetailViewModel|undefined;
@@ -209,6 +209,12 @@ export class PackageInvoiceComponent implements OnInit {
           }
         }
       })
+  }
+
+  ngOnDestroy(): void {
+    if(this.translateUnsub){
+      this.translateUnsub.unsubscribe()
+    }
   }
 
 }
