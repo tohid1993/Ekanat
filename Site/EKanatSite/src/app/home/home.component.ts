@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {TranslateService} from "../shared/services/traslate.service";
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,16 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
   isDotCom:boolean = false;
   isDotIr:boolean = false;
 
-  constructor(private modalService: NgbModal) { }
+  kanatImageryPortalRightItems:string[] = []
+  kanatImageryPortalLeftItems:string[] = []
+  advantagesOfUsingThisSystem:string[] = []
+
+  translateUnsub:any;
+
+  constructor(
+      private modalService: NgbModal,
+      private trasnlateService:TranslateService
+  ) { }
 
   ngAfterViewInit(): void {
     const media = this.videoplayer.nativeElement;
@@ -29,7 +39,16 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
   ngOnInit(): void {
     if(window.location.host=="ekanat.ir") this.isDotIr = true;
     if(window.location.host=="ekanat.com") this.isDotCom = true;
-    
+
+    this.translateUnsub = this.trasnlateService.data.subscribe({
+      next:(data)=>{
+        this.kanatImageryPortalRightItems = data['kanatImageryPortalRightItems'].split('%%')
+        this.kanatImageryPortalLeftItems = data['kanatImageryPortalLeftItems'].split('%%')
+        this.advantagesOfUsingThisSystem = data['advantagesOfUsingThisSystem'].split('%%')
+      }
+    })
+
+
     this.raychatInterval = setInterval(()=>{
       const raychat = document.getElementById('raychatBtn');
       if(raychat){
@@ -54,6 +73,10 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
       raychat.style.bottom = '';
       raychat.style.right = '';
     }
+
+    if(this.translateUnsub){
+      this.translateUnsub.unsubscribe()
+    }
   }
 
   destroyRaychatInterval(){
@@ -77,5 +100,9 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
       default:
         break;
     }
+  }
+
+  changeLang(){
+    this.trasnlateService.init('enUS')
   }
 }

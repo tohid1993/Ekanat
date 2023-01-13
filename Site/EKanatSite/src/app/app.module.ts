@@ -20,6 +20,7 @@ import { UserService } from './shared/services/user.service';
 import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { PaymentService } from './shared/services/payment.service';
+import {TranslatePipe} from "./shared/pipe/translate.pipe";
 
 export function tokenGetter() {
   return localStorage.getItem("user_token");
@@ -30,7 +31,8 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    TranslatePipe
   ],
   imports: [
     BrowserModule,

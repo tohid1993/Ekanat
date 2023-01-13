@@ -1,17 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { NgbModal, NgbModalConfig, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { NgxEchartsModule } from 'ngx-echarts';
-import { ToastrModule } from 'ngx-toastr';
+import {CommonModule} from '@angular/common';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import {NgbModal, NgbModalConfig, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {NgxEchartsModule} from 'ngx-echarts';
+import {ToastrModule} from 'ngx-toastr';
 
-import { FieldSvgComponent } from './field-svg/field-svg.component';
-import { PageBreadcrumbComponent } from './page-breadcrumb/page-breadcrumb.component';
-import { FieldService } from './services/field.service';
-import { TokenInterceptor } from './services/token-interceptor.service';
+import {FieldSvgComponent} from './field-svg/field-svg.component';
+import {PageBreadcrumbComponent} from './page-breadcrumb/page-breadcrumb.component';
+import {FieldService} from './services/field.service';
+import {TokenInterceptor} from './services/token-interceptor.service';
+import {TranslatePipe} from "./pipe/translate.pipe";
+import {TranslateService} from "./services/traslate.service";
 
 
 @NgModule({
@@ -46,11 +48,12 @@ import { TokenInterceptor } from './services/token-interceptor.service';
     NgSelectModule,
     ReactiveFormsModule,
   ],
-  providers:[
+  providers: [
     FieldService,
-    NgbModalConfig, 
+    NgbModalConfig,
     NgbModal,
     TokenInterceptor,
+    TranslateService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
