@@ -13,13 +13,12 @@ import {PageBreadcrumbComponent} from './page-breadcrumb/page-breadcrumb.compone
 import {FieldService} from './services/field.service';
 import {TokenInterceptor} from './services/token-interceptor.service';
 import {TranslatePipe} from "./pipe/translate.pipe";
-import {TranslateService} from "./services/traslate.service";
-
 
 @NgModule({
   declarations: [
     PageBreadcrumbComponent,
-    FieldSvgComponent
+    FieldSvgComponent,
+      TranslatePipe
   ],
   imports: [
     CommonModule,
@@ -36,9 +35,9 @@ import {TranslateService} from "./services/traslate.service";
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
     }),
-    NgbModule,
+    NgbModule
   ],
-  exports:[
+  exports: [
     PageBreadcrumbComponent,
     FieldSvgComponent,
     HttpClientModule,
@@ -47,13 +46,13 @@ import {TranslateService} from "./services/traslate.service";
     FormsModule,
     NgSelectModule,
     ReactiveFormsModule,
+      TranslatePipe
   ],
   providers: [
     FieldService,
     NgbModalConfig,
     NgbModal,
     TokenInterceptor,
-    TranslateService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

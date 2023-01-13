@@ -38,21 +38,11 @@
 
                     <div class="w-100">
                         <div class="tasks_list_wrapper" *ngIf="SelectedDay && SelectedDayTasks.length>0">
-                            <!-- <div class="day_number_wrapper">
-                              <img src="./assets/images/icons/calendar.png" width="45" alt="">
-                              <div class="d-inline-flex flex-column me-3">
-                                <span id="day_number">{{SelectedDay.day}}</span>
-                                <span id="day_name">
-                                  {{getSelectedDateByFormat(this.dateTime.modelToString(SelectedDay))}}
-                                </span>
-                              </div>
-                            </div> -->
-              
                             <ul class="tasks_list mb-3">
-                              <h6>لیست فعالیت ها</h6>
+                              <h6>{{'tasksList'|translate}}</h6>
                               <li class="item bu_3_text bu_3_text_mobile " *ngFor="let item of SelectedDayTasks">
                                 <span class="title" (click)="showTaskDetails(item)"
-                                  [style]="'--task-color:'+item.colorCode">{{item.activityGroupName}} - زمین "{{item.fieldName}}"</span>
+                                  [style]="'--task-color:'+item.colorCode">{{item.activityGroupName}} - {{'field'|translate}} "{{item.fieldName}}"</span>
                               </li>  
                             </ul>
                         </div>
@@ -70,13 +60,13 @@
                             </div>
                             <div class="detail">
                                 <h3 class="field_title heading_level_4 primary_text_mobile Primary_100_text mb-2">{{field.name}}</h3>
-                                <h6 class="cultivated_crop bu_2_text bu_3_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} هکتار</h6>
+                                <h6 class="cultivated_crop bu_2_text bu_3_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} {{'hectares'|translate}}</h6>
                             </div>
                         </div>
                         <div class="field_actions col-12 col-md-auto col-lg-12 col-xl-auto text-start mt-2 mt-md-0 mt-lg-2 mt-xl-0">
-                            <button (click)="goToWeatherPage(field.id)" class="btn btn-outline-success btn-sm small_btn my-1 me-1" >هواشناسی</button>
-                            <a [routerLink]="['/fields/imagery/analytics',field.id]" class="btn btn-outline-success btn-sm small_btn my-1 me-1">بررسی زمین</a>
-                            <a [routerLink]="['/fields/imagery/tasks',field.id,field.name]" class="btn btn-outline-success btn-sm small_btn my-1 me-1">ثبت فعالیت</a>
+                            <button (click)="goToWeatherPage(field.id)" class="btn btn-outline-success btn-sm small_btn my-1 me-1" >{{'meteorology'|translate}}</button>
+                            <a [routerLink]="['/fields/imagery/analytics',field.id]" class="btn btn-outline-success btn-sm small_btn my-1 me-1">{{'fieldImagery'|translate}}</a>
+                            <a [routerLink]="['/fields/imagery/tasks',field.id,field.name]" class="btn btn-outline-success btn-sm small_btn my-1 me-1">{{'submitTask'|translate}}</a>
                         </div>
                     </div>
                 </div>
@@ -84,7 +74,7 @@
                     <button class="btn btn-sm" 
                         [ngClass]="{'btn-outline-danger':minLength==5 , 'btn-danger':minLength>5}" 
                         (click)="toggleShowList()">
-                        {{minLength==5?'مشاهده همه':'بستن لیست'}}
+                        {{(minLength==5?'seeAll':'collapseList')|translate}}
                     </button>
                 </div>
             </div>

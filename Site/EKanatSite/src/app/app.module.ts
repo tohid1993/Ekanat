@@ -20,7 +20,7 @@ import { UserService } from './shared/services/user.service';
 import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { PaymentService } from './shared/services/payment.service';
-import {TranslatePipe} from "./shared/pipe/translate.pipe";
+import {TranslateService} from "./shared/services/traslate.service";
 
 export function tokenGetter() {
   return localStorage.getItem("user_token");
@@ -28,53 +28,55 @@ export function tokenGetter() {
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    HomeComponent,
-    TranslatePipe
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    SharedModule,
-    NgxSpinnerModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        // allowedDomains: ["example.com"],
-        // disallowedRoutes: ["http://example.com/examplebadroute/"],
-      },
-    }),
-  ],
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        HomeComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        SharedModule,
+        NgxSpinnerModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                // allowedDomains: ["example.com"],
+                // disallowedRoutes: ["http://example.com/examplebadroute/"],
+            },
+        }),
+    ],
 
-  providers: [
-    UserService,
-    FileService,
-    GeneralService,
-    AuthGuard,
-    AuthService,
-    DateTimeService,
-    LocationService,
-    PaymentService,
-    {
-      provide:"BASE_URL",
-      useValue:environment.apiRoot
-    },
-    {
-      provide:"EE_URL",
-      useValue:environment.eeRoot
-    },
-    {
-      provide:"environment",
-      useValue:environment
-    }
+    providers: [
+        UserService,
+        FileService,
+        GeneralService,
+        AuthGuard,
+        AuthService,
+        DateTimeService,
+        LocationService,
+        PaymentService,
+        TranslateService,
+        {
+            provide: "BASE_URL",
+            useValue: environment.apiRoot
+        },
+        {
+            provide: "EE_URL",
+            useValue: environment.eeRoot
+        },
+        {
+            provide: "environment",
+            useValue: environment
+        }
 
-  ],
-  bootstrap: [AppComponent]
+    ],
+    exports: [
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
