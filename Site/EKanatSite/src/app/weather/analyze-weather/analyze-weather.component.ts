@@ -29,6 +29,9 @@ export class AnalyzeWeatherComponent implements OnInit {
     lowTemporaryLabel:string = ''
     highTemporaryLabel:string = ''
     millimeterLabel:string = ''
+    needPackageMessage:string = ''
+    dismissLabel:string = ''
+    buyPackageLabel:string = ''
 
     constructor(
       private gService:GeneralService,
@@ -45,6 +48,9 @@ export class AnalyzeWeatherComponent implements OnInit {
           this.millimeterLabel = data['millimeter']
           this.lowTemporaryLabel = data['lowTemporary']
           this.highTemporaryLabel = data['highTemporary']
+          this.needPackageMessage = data['needPackageMessage']
+          this.dismissLabel = data['dismissLabel']
+          this.buyPackageLabel = data['buyPlane']
         }
       })
 
@@ -234,10 +240,10 @@ export class AnalyzeWeatherComponent implements OnInit {
       if(!this.hasPackage){
         Swal.fire({
           // title:"",
-          text:"برای دسترسی به امکانات بیشتر از جمله تحلیل شاخص ها و وضعیت آب و هوایی و ... ، باید برای این زمین کشاورزی پکیج استاندارد خریداری شود",
+          text:this.needPackageMessage,
           icon:"warning",
-          cancelButtonText:"متوجه شدم",
-          confirmButtonText:"خرید پکیج",
+          cancelButtonText:this.dismissLabel,
+          confirmButtonText:this.buyPackageLabel,
           showCancelButton:true
         }).then((result) => {
           if (result.isConfirmed) {

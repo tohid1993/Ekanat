@@ -96,6 +96,8 @@ export const faIRLocate = {
     highTemporary:'بالاترین دما',
     lowTemporary:'پایین ترین دما',
     millimeter:'میلی متر',
+    needPackageMessage:'برای دسترسی به امکانات بیشتر از جمله تحلیل شاخص ها و وضعیت آب و هوایی و ... ، باید برای این زمین کشاورزی پکیج استاندارد خریداری شود',
+    dismissLabel:'متوجه شدم',
 
 
 }
