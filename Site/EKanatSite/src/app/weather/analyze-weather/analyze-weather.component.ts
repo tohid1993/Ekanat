@@ -45,12 +45,12 @@ export class AnalyzeWeatherComponent implements OnInit {
     ngOnInit(): void {
       this.translateUnsub = this.translateService.data.subscribe({
         next:(data)=>{
-          this.millimeterLabel = data['millimeter']
-          this.lowTemporaryLabel = data['lowTemporary']
-          this.highTemporaryLabel = data['highTemporary']
-          this.needPackageMessage = data['needPackageMessage']
-          this.dismissLabel = data['dismissLabel']
-          this.buyPackageLabel = data['buyPlane']
+          this.millimeterLabel = data['millimeter'] || 'millimeter'
+          this.lowTemporaryLabel = data['lowTemporary'] || 'lowTemporary'
+          this.highTemporaryLabel = data['highTemporary'] || 'highTemporary'
+          this.needPackageMessage = data['needPackageMessage'] || 'needPackageMessage'
+          this.dismissLabel = data['dismissLabel'] || 'dismissLabel'
+          this.buyPackageLabel = data['buyPlane'] || 'buyPlane'
         }
       })
 

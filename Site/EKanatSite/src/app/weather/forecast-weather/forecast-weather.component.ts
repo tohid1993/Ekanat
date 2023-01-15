@@ -32,9 +32,9 @@ export class ForecastWeatherComponent implements OnInit , OnDestroy {
   ngOnInit(): void {
     this.translateUnsub = this.translateService.data.subscribe({
       next:(data)=>{
-        this.needPackageMessage = data['needPackageMessage']
-        this.dismissLabel = data['dismissLabel']
-        this.buyPackageLabel = data['buyPlane']
+        this.needPackageMessage = data['needPackageMessage'] || 'needPackageMessage'
+        this.dismissLabel = data['dismissLabel'] || 'dismissLabel'
+        this.buyPackageLabel = data['buyPlane'] || 'buyPlane'
       }
     })
   }

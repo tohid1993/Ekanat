@@ -52,8 +52,8 @@ export class PackageInvoiceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.translateUnsub = this.translateService.data.subscribe({
       next:(data)=>{
-        this.callToSupportForProductGrowthPeriod = data['callToSupportForProductGrowthPeriod']
-        this.packageDescriptionTemplate = data['packageDescriptionTemplate']
+        this.callToSupportForProductGrowthPeriod = data['callToSupportForProductGrowthPeriod'] || 'callToSupportForProductGrowthPeriod'
+        this.packageDescriptionTemplate = data['packageDescriptionTemplate'] || 'packageDescriptionTemplate'
       }
     })
 

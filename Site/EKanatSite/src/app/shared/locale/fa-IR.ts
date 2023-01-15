@@ -50,11 +50,19 @@ export const faIRLocate = {
     detail:'مشخصات',
     invoice:'پیش فاکتور',
     fieldInformation:'اطلاعات زمین',
+    fieldDetails:'مشخصات زمین',
     fieldName:'نام زمین',
     productName:'نام محصول',
+    currentProductName:'محصول فعلی زمین',
+    pastProductName:'محصول قبلی زمین',
     fieldArea:'مساحت زمین',
     cultivationDate:'تاریخ کشت',
+    currentProductCultivationDate:'تاریخ کاشت محصول فعلی',
     growthPeriod:'دوره رشد',
+    pastProductHarvestDate:'تاریخ برداشت محصول قبلی',
+    irrigationMethod:'روش آبیاری',
+    everyFewDays:'از چند روز یکبار',
+    irrigationPeriod:'مدت زمان دوره آبیاری',
 
     serviceDetail:'جزئیات سرویس',
     serviceType:'نوع سرویس',
@@ -98,6 +106,66 @@ export const faIRLocate = {
     millimeter:'میلی متر',
     needPackageMessage:'برای دسترسی به امکانات بیشتر از جمله تحلیل شاخص ها و وضعیت آب و هوایی و ... ، باید برای این زمین کشاورزی پکیج استاندارد خریداری شود',
     dismissLabel:'متوجه شدم',
+
+    slogan:'کانات، نگرشی نوین بر زمین',
+    loginToAccount:'ورود به حساب کاربری',
+    changeMobileNumber:'تغییر شماره',
+    mobileNumber:'شماره موبایل',
+    notFound:'یافت نشد',
+    verificationCode:'کد اعتبار سنجی',
+    resendCode:'ارسال مجدد',
+    receiveVerificationCode:'دریافت کد اعتبار سنجی',
+
+    slide1_title:'ثبت زمین',
+    slide1_subtitle:'با ترسیم دستی یا پیمایش محیط زمین و ثبت نقاط، محدوده زمین خود را ثبت کنید',
+    slide2_title:'پایش زمین',
+    slide2_subtitle:'وضعیت مزرعه یا باغ خود را با دیدگاهی جدید ببینید',
+    slide3_title:'مدیریت بهینه مزرعه',
+    slide3_subtitle:'تحلیل ها و راهکارهای کارشناسان را دریافت کنید و زمین خود را به بهترین شکل مدیریت کنید',
+
+
+    editProfile:'ویرایش پروفایل',
+    chooseImage:'انتخاب تصویر',
+    fieldRequiredErrorMessage:'وارد کردن این فیلد الزامی میباشد',
+
+    saveInformation:'ذخیره اطلاعات',
+    address:'آدرس',
+    village:'روستا',
+    city:'شهر',
+    province:'استان',
+    country:'کشور',
+    email:'ایمیل',
+    lastName:'نام خانوادگی',
+    firstName:'نام',
+    optional:'اختیاری',
+
+    profileUpdated:'پروفایل با موفقیت ویرایش شد',
+
+    myFieldsList:'لیست زمین های من',
+
+    yesLabel:'بله',
+    noLabel:'خیر',
+    fieldRemoveSuccessMessage:'زمین با موفقیت حذف شد',
+    fieldRemoveAlertTemplate:'آیا مطمن به حذف زمین "fieldName" میباشد؟',
+
+    landArea:'محدوده زمین',
+    chooseFile:'انتخاب فایل',
+    changeMethod:'تغییر روش',
+    saveAndContinue:'ادامه و ثبت مشخصات',
+
+    saveField:'ذخیره و ثبت زمین',
+    previousStep:'مرحله قبل',
+
+    chooseMethod:'انتخاب روش',
+    fieldSelectChooseMethod:'نحوه انتخاب زمین روی نقشه را انتخاب نمایید',
+
+
+    walkingAroundField:'قدم زدن دور زمین مورد نظر',
+    uploadFieldFile:'بارگذاری فایل زمین',
+    drawPolygon:'رسم چند ضلعی روی نقشه'
+
+
+
 
 
 }
