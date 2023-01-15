@@ -23,17 +23,5 @@ export class AuthGuard {
         }
 
         return true;
-        
-        // let data = route.data;
-        // // گرفتن لیست مجوزهای کاربر از سرویس
-        // let sections  = this.startup.getPermissons;
-        // //گرفتن مجوز مربوطه
-        // let permission = sections[data.section] ? sections[data.section][data.action] : null;
-        // if(!permission || permission==0){
-        //     this.router.navigate(['/error',403]);
-        // }else{
-        //     return true;
-        // }
-       
     }
 }

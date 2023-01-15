@@ -255,9 +255,9 @@ export class TasksComponent implements OnInit {
      icon:'warning',
      text: this.translateService.translate('removeFileAlertMessage').replace('"fileName"',file.title),
      showCancelButton:true,
-     cancelButtonText:"خیر",
+     cancelButtonText:this.translateService.translate('noLabel'),
      showConfirmButton:true,
-     confirmButtonText:'بله'
+     confirmButtonText:this.translateService.translate('yesLabel')
     }).
      then(res=>{
        if(res.isConfirmed){

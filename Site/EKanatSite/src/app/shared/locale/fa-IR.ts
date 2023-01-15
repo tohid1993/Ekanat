@@ -232,6 +232,10 @@ export const faIRLocate = {
     standardPlanItem6:'پشتیبانی توسط کارشناسان مجرب کشاورزی',
     callWith:'تماس با',
     postalCode:'کد پستی',
-    existingProducts:'محصولات موجود'
-
+    existingProducts:'محصولات موجود',
+    unCompletedProfile:'پروفایل تکمیل نشده',
+    unCompletedProfileAlert:'برای ادامه فرایند و استفاده از قسمت های مختلف برنامه ، لطفا پروفایل خود را تکمیل نمایید',
+    completeProfile:'تکمیل پروفایل',
+    notAllowPreviousMonthData:'امکان مشاهده برای ماه های قبل وجود ندارد',
+    pleaseWait:'لطفا منتظر بمانید...'
 }

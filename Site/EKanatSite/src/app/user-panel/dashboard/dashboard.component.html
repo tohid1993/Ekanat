@@ -107,23 +107,23 @@
 <ng-template #TaskDetailModal let-modal let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h6 class="modal-title" id="modal-basic-title">
-          جزئیات فعالیت
+          {{'taskDetails'|translate}}
         </h6>
         <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
         <div class="mb-3">
-            <label class="form-label">نام زمین</label>
+            <label class="form-label">{{'fieldName'|translate}}</label>
             <div class="form-control">{{TaskDetail?.fieldName}}</div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label">تاریخ فعالیت</label>
+          <label class="form-label">{{'taskDate'|translate}}</label>
           <div class="form-control">{{TaskDetail?.dateTime?.substring(0,10)}}</div>
         </div>
   
         <div class="mb-3">
-          <label class="form-label">نوع فعالیت</label>
+          <label class="form-label">{{'activityType'|translate}}</label>
           <div class="form-control">{{TaskDetail?.activityGroupName}}</div>
         </div>
   
@@ -134,18 +134,18 @@
   
         <div class="row mb-3" *ngIf="TaskDetail?.value">
           <div class="col-6">
-            <label class="form-label">مقدار</label>
+            <label class="form-label">{{'amount'|translate}}</label>
             <div class="form-control">{{TaskDetail?.value}}</div>
           </div>
           <div class="col-6" *ngIf="TaskDetail?.valueUnit">
-            <label class="form-label">واحد اندازه گیری</label>
-            <div class="form-control" *ngIf="TaskDetail?.valueUnit==1">لیتر</div>
-            <div class="form-control" *ngIf="TaskDetail?.valueUnit==2">کیلوگرم</div>
+            <label class="form-label">{{'measurementUnit'|translate}}</label>
+            <div class="form-control" *ngIf="TaskDetail?.valueUnit==1">{{'liter'|translate}}</div>
+            <div class="form-control" *ngIf="TaskDetail?.valueUnit==2">{{'kilogram'|translate}}</div>
           </div>
         </div>
   
         <div class="mb-3" *ngIf="TaskDetail?.description">
-          <label class="form-label">توضیحات</label>
+          <label class="form-label">{{'description'|translate}}</label>
           <div class="form-control overflow-hidden">{{TaskDetail?.description}}</div>
   
         </div>

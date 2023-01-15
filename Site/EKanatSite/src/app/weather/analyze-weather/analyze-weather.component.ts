@@ -126,7 +126,7 @@ export class AnalyzeWeatherComponent implements OnInit {
           fontFamily:'Vazir',
         },
         legend: {
-          data: ['بارندگی'],
+          data: [this.translateService.translate('rainfall')],
           align: 'left',
 
         },

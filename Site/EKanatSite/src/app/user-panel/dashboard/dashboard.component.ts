@@ -5,6 +5,7 @@ import { DateModel, FieldsListVM } from 'src/app/shared/models/model';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { FieldService } from 'src/app/shared/services/field.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
+import { TranslateService } from 'src/app/shared/services/traslate.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,6 +33,7 @@ export class DashboardComponent implements OnInit {
     public dateTime:DateTimeService,
     private gService:GeneralService,
     private modalService: NgbModal,
+    private translateService:TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class DashboardComponent implements OnInit {
 
     if(this.startMonth.year == changeTo.year && this.startMonth.month == (changeTo.month+1))
     {
-      this.gService.showWarningToastr("امکان مشاهده برای ماه های قبل وجود ندارد");
+      this.gService.showWarningToastr(this.translateService.translate('notAllowPreviousMonthData'));
       return;
     }
 
