@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as Leaflet from 'leaflet';
 import "leaflet-draw";
@@ -18,6 +18,7 @@ import "src/assets/js/L.KML.js";
 import Swal from 'sweetalert2';
 import { GestureHandling } from "leaflet-gesture-handling";
 import { LocationService } from 'src/app/shared/services/location.service';
+import {TranslateService} from "../../shared/services/traslate.service";
 
 
 @Component({
@@ -26,7 +27,7 @@ import { LocationService } from 'src/app/shared/services/location.service';
   styleUrls: ['./add-field.component.scss'],
 })
 
-export class AddFieldComponent implements OnInit {
+export class AddFieldComponent implements OnInit , OnDestroy {
 
   @ViewChild('methodModal' , {static:true}) methodModal:ElementRef|undefined;
 
@@ -92,6 +93,7 @@ export class AddFieldComponent implements OnInit {
   CountriesList: any[] = [];
   ProvincesList: any[] = [];
 
+
   constructor(
     config: NgbModalConfig, 
     private modalService: NgbModal,
@@ -102,6 +104,7 @@ export class AddFieldComponent implements OnInit {
     private dateTimeService:DateTimeService,
     private spinner:NgxSpinnerService,
     private locationService:LocationService,
+    private translateService:TranslateService
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -126,7 +129,12 @@ export class AddFieldComponent implements OnInit {
   }
 
 
+  ngOnDestroy(): void {
+
+  }
+
   ngOnInit(): void {
+
     this.getCountriesList();
     this.getFieldProductsList();
     this.openMethodModal();
@@ -143,11 +151,10 @@ export class AddFieldComponent implements OnInit {
       iconSize: [50, 75],
     });
 
-
     const search = new (GeoSearch.GeoSearchControl as any)({
       provider: new GeoSearch.OpenStreetMapProvider(),
-      notFoundMessage: 'موردی یافت نشد',
-      searchLabel:'نام شهر، روستا، منطقه',
+      notFoundMessage: this.translateService.translate('notFound'),
+      searchLabel: this.translateService.translate('searchYourRegion'),
       style:'bar',
       marker:{
         icon : marker
@@ -171,21 +178,12 @@ export class AddFieldComponent implements OnInit {
 
     this.map.addLayer(satilate);
 
-    var baseMaps = {
-      "نمای خیابان": osm,
-      "نمای ماهواره ای": satilate
-    };
+    let baseMaps:any = {}
 
+    baseMaps[this.translateService.translate('streetMapView')] = osm
+    baseMaps[this.translateService.translate('satelliteMapView')] = satilate
 
-
-    var layerControl = Leaflet.control.layers(baseMaps,{},{position:'bottomleft'}).addTo(this.map);
-
-    // Leaflet.tileLayer('http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}', {
-    //     // subdomains:['mt0','mt1','mt2','mt3'],
-    //     maxZoom: 20,
-    //     attribution: 'EKANAT.COM ❤️'
-    // }).addTo(this.map);
-
+    let layerControl = Leaflet.control.layers(baseMaps,{},{position:'bottomleft'}).addTo(this.map);
 
 
     this.drawnItems = Leaflet.featureGroup().addTo(this.map);
@@ -269,7 +267,6 @@ export class AddFieldComponent implements OnInit {
         (res:any)=>{
           if(res.isSuccess)
             this.FieldProductsList = res.data;
-            // this.FieldProductsList.push({id:0 , title:"سایر"});
       })
   }
 
@@ -312,9 +309,6 @@ export class AddFieldComponent implements OnInit {
     let fileType = this.file.name.split('.');
     fileType = fileType[fileType.length-1];
 
-    // console.log(fileType);
-    // console.log(this.file);
-
     if(fileType == "zip")
       this.readShpFile(this.file);
 
@@ -355,7 +349,7 @@ export class AddFieldComponent implements OnInit {
    }
   }
 
-  // ایجاد چند ضلعی با استفاده از geoJson
+  // generate polygon geoJson
   addPolygonToMap(states:any){
     if(this.map){
       this.drawnItems.clearLayers();
@@ -366,7 +360,8 @@ export class AddFieldComponent implements OnInit {
       })
 
       let geoJSON = Leaflet.geoJSON(states).addTo(this.drawnItems);
-      geoJSON.bindTooltip("درحال محاسبه مساحت ..." , {direction:"right" , permanent:true}).openTooltip();
+
+      geoJSON.bindTooltip(this.translateService.translate('calculating') , {direction:"right" , permanent:true}).openTooltip();
       this.map.fitBounds(geoJSON.getBounds());
 
 
@@ -383,62 +378,22 @@ export class AddFieldComponent implements OnInit {
           next(res) {
             let area = Math.round((((+res.data.area)/10000) + Number.EPSILON) * 100) / 100;
 
-            // if(area>=self.minHA && area<=self.maxHA){
             if(res.data.isValid){
               self.FieldArea = area;
               self.FieldCoordinates = coords;
-              geoJSON.bindTooltip(area.toString()+" هکتار " , {direction:'right' , permanent:true}).openTooltip();
+              geoJSON.bindTooltip(area.toString()+ " " + self.translateService.translate('hectares') , {direction:'right' , permanent:true}).openTooltip();
             }else{
 
-                Swal.fire({
+              let title = self.translateService.translate('calculatedFieldArea').replace('"fieldArea"',area.toString())
+
+              Swal.fire({
                   icon:"warning",
-                  title:"زمین انتخابی شما: " + area + " هکتار ",
+                  title: title,
                   text:res.data.errorMessage,
-                  confirmButtonText:"متوجه شدم"
+                  confirmButtonText: self.translateService.translate('dismissLabel')
                 })
 
-              // if(area<self.minHA){
-              //   Swal.fire({
-              //     icon:"warning",
-              //     title:"زمین انتخابی نا معتبر است",
-              //     text:`کاربر گرامی، مساحت زمین انتخابی شما ${area} هکتار می‌باشد. مساحت زمین برای ثبت باید بیش از ${self.minHA} هکتار باشد`,
-              //     confirmButtonText:"متوجه شدم"
-              //   })
-              // }
-
-              // if(area>self.remainingHA && area<=self.LimitHA){
-              //   Swal.fire({
-              //     icon:"warning",
-              //     title:"زمین انتخابی نا معتبر است",
-              //     text:`کاربر گرامی، مساحت باقیمانده مجاز شما برای ثبت زمین ${self.remainingHA} هکتار می‌باشد. با فعالسازی خدمات پایش بر روی زمین‌های ثبت شده خود می‌توانید مساحت باقیمانده مجاز را افزایش دهید`,
-              //     confirmButtonText:"خرید پکیج",
-              //     cancelButtonText:"متوجه شدم",
-              //     showCancelButton:true
-              //   }).then((result) => {
-              //     if (result.isConfirmed) {
-              //       self.router.navigate(['/package/list']);
-              //     }
-              //   })
-              // }
-
-              // if(area>self.LimitHA){
-              //   Swal.fire({
-              //     icon:"warning",
-              //     title:"زمین انتخابی نا معتبر است",
-              //     text:`کاربر گرامی،مساحت زمین انتخابی شما ${area} هکتار می‌باشد. جهت دریافت خدمات پایش برای زمین‌های بالای 100 هکتار با شماره 09304916440 تماس بگیرید`,
-              //     confirmButtonText:"خرید پکیج",
-              //     cancelButtonText:"متوجه شدم",
-              //     showCancelButton:true
-              //   }).then((result) => {
-              //     if (result.isConfirmed) {
-              //       self.router.navigate(['/package/list']);
-              //     }
-              //   })
-              // }
-
-
-
-              self.drawnItems.clearLayers();
+                self.drawnItems.clearLayers();
             }
 
           },
@@ -526,7 +481,7 @@ export class AddFieldComponent implements OnInit {
     this.fieldService.saveField(this.AddFieldForm.value)
       .subscribe({
         next(){
-          self.gService.showSuccessToastr("زمین با موفقیت ثبت شد");
+          self.gService.showSuccessToastr(self.translateService.translate('newFieldAddSuccessFull'));
           self.router.navigate(['/fields']);
           self.spinner.hide();
         }
@@ -567,11 +522,12 @@ export class AddFieldComponent implements OnInit {
       navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
     } else {
       Swal.fire({
-        text:"این قابلیت در مرورگر شما پشتیبانی نمیشود، لطفا از یک مرورگر بروز استفاده نمایید",
+        text: this.translateService.translate('browserNotSupported'),
         icon:"warning"
       }) 
     }
   }
+
   
   showPosition(position:any) {
     if(this.map){
@@ -579,30 +535,31 @@ export class AddFieldComponent implements OnInit {
       this.map.setView([position.coords.latitude,position.coords.longitude],18);
     }
   }
+
   
   showError(error:any) {
     switch(error.code) {
       case error.PERMISSION_DENIED:
         Swal.fire({
-          text:"شما مجوز دسترسی به مکان یابی را لغو کرده اید",
+          text: this.translateService.translate('notPermissionToLocationService'),
           icon:"error"
         }) 
         break;
       case error.POSITION_UNAVAILABLE:
         Swal.fire({
-          text:"اطلاعاتی یافت نشد",
+          text:this.translateService.translate('notFound'),
           icon:"error"
         }) 
         break;
       case error.TIMEOUT:
         Swal.fire({
-          text:"اطلاعاتی یافت نشد، مجددا تلاش نمایید",
+          text:this.translateService.translate('notFoundTryAgain'),
           icon:"error"
         }) 
         break;
       case error.UNKNOWN_ERROR:
         Swal.fire({
-          text:"خطایی رخ داد ، مجددا تلاش نمایید",
+          text:this.translateService.translate('errorOccurredTryAgain'),
           icon:"error"
         }) 
         break;

@@ -26,4 +26,10 @@ export class TranslateService {
 
         this.data.next(localeData)
     }
+
+    translate(key: string): string {
+        let text:string = ''
+        text = this.data.getValue()[key] || key
+        return text
+    }
 }

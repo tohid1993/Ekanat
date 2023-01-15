@@ -9,6 +9,7 @@ import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { FileService } from 'src/app/shared/services/file.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import Swal from 'sweetalert2';
+import {TranslateService} from "../../shared/services/traslate.service";
 
 @Component({
   selector: 'app-tasks',
@@ -75,7 +76,8 @@ export class TasksComponent implements OnInit {
     config: NgbModalConfig, 
     private modalService: NgbModal,
     private gService:GeneralService,
-    public fileService:FileService
+    public fileService:FileService,
+    private translateService:TranslateService
   ) {
     this.route.params.subscribe(
       params=>{
@@ -209,7 +211,7 @@ export class TasksComponent implements OnInit {
             if(res.isSuccess){
               this.getSubmitedItemsList();
               this.TaskForm.reset();
-              this.gService.showSuccessToastr('فعالیت با موفقیت ثبت شد');
+              this.gService.showSuccessToastr(this.translateService.translate('taskCreatedSuccessfully'));
               this.modalService.dismissAll();
               this.inProcess = false;
             }
@@ -226,11 +228,11 @@ export class TasksComponent implements OnInit {
   removeTask(task:any){
    Swal.fire({
     icon:'warning',
-    text:`آیا از حذف فعالیت ${task.activityGroupName} مطمن هستید؟`,
+    text: this.translateService.translate('removeActivityGroupNameAlertMessage').replace('"activityGroupName"',task.activityGroupName),
     showCancelButton:true,
-    cancelButtonText:"خیر",
+    cancelButtonText:this.translateService.translate('noLabel'),
     showConfirmButton:true,
-    confirmButtonText:'بله'
+    confirmButtonText:this.translateService.translate('yesLabel')
    }).
     then(res=>{
       if(res.isConfirmed){
@@ -238,7 +240,7 @@ export class TasksComponent implements OnInit {
           .subscribe({
             next:(res:any)=>{
               if(res.isSuccess){
-                this.gService.showSuccessToastr("فعالیت با موفقیت حذف شد");
+                this.gService.showSuccessToastr(this.translateService.translate('taskRemovedSuccessfully'));
                 this.getSubmitedItemsList();
               }
             }
@@ -251,7 +253,7 @@ export class TasksComponent implements OnInit {
   removeFile(file:any){
     Swal.fire({
      icon:'warning',
-     text:`آیا از حذف فایل ${file.title} مطمن هستید؟`,
+     text: this.translateService.translate('removeFileAlertMessage').replace('"fileName"',file.title),
      showCancelButton:true,
      cancelButtonText:"خیر",
      showConfirmButton:true,
@@ -263,7 +265,7 @@ export class TasksComponent implements OnInit {
            .subscribe({
              next:(res:any)=>{
                if(res.isSuccess){
-                 this.gService.showSuccessToastr("فایل با موفقیت حذف شد");
+                 this.gService.showSuccessToastr(this.translateService.translate('fileRemovedSuccessfully'));
                  this.getSubmitedItemsList();
                }
              }
@@ -320,7 +322,7 @@ export class TasksComponent implements OnInit {
             if(res.isSuccess){
               this.getSubmitedItemsList();
               this.ImageForm.reset();
-              this.gService.showSuccessToastr('تصویر با موفقیت ثبت شد');
+              this.gService.showSuccessToastr(this.translateService.translate('imageCreatedSuccessfully'));
               this.modalService.dismissAll();
               this.inProcess = false;
             }

@@ -30,11 +30,6 @@ export class PackageInvoiceComponent implements OnInit, OnDestroy {
   taxPercent:number = 9;
   OrderDetail:any;
 
-  translateUnsub:any
-
-  callToSupportForProductGrowthPeriod:string = ''
-  packageDescriptionTemplate:string = ''
-
   constructor(
     config: NgbModalConfig, 
     private modalService: NgbModal,
@@ -50,13 +45,6 @@ export class PackageInvoiceComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.translateUnsub = this.translateService.data.subscribe({
-      next:(data)=>{
-        this.callToSupportForProductGrowthPeriod = data['callToSupportForProductGrowthPeriod'] || 'callToSupportForProductGrowthPeriod'
-        this.packageDescriptionTemplate = data['packageDescriptionTemplate'] || 'packageDescriptionTemplate'
-      }
-    })
-
     this.getFields();
   }
 
@@ -124,7 +112,7 @@ export class PackageInvoiceComponent implements OnInit, OnDestroy {
             if(this.FieldPhenologiesList.length==0){
               Swal.fire({
                 icon:"info",
-                text:this.callToSupportForProductGrowthPeriod
+                text:this.translateService.translate('callToSupportForProductGrowthPeriod')
               })
             }else{
               this.SubmitPlaceOrder();
@@ -176,7 +164,7 @@ export class PackageInvoiceComponent implements OnInit, OnDestroy {
       let startPeriod = new Date(_startPeriod).getTime();
 
       if(orderDate-cultivationDate>0 && orderDate-startPeriod>0){
-        let text:string = this.packageDescriptionTemplate;
+        let text:string = this.translateService.translate('packageDescriptionTemplate')
         text = text.replace('"text1"',`«${this.SelectedField.name}»`)
         text = text.replace('"text1"',`«${this.SelectedField.name}»`)
         text = text.replace('"text2"',`<span dir="ltr" class="d-inline-block">«${this.OrderDetail.packageStartDate}»</span>`)
@@ -212,9 +200,7 @@ export class PackageInvoiceComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if(this.translateUnsub){
-      this.translateUnsub.unsubscribe()
-    }
+
   }
 
 }
