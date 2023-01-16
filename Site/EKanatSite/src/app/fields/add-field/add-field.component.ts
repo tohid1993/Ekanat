@@ -198,7 +198,12 @@ export class AddFieldComponent implements OnInit {
         edit:false
       },
       draw: {
-        circle:false,
+        circle:{
+          showRadius:true,
+          shapeOptions:{
+            className:'test'
+          }
+        },
         circlemarker:false,
         marker:false,
         polyline:false,
@@ -222,11 +227,10 @@ export class AddFieldComponent implements OnInit {
         marker:false,
         polyline:false,
         rectangle:false,
-        polygon: false
+        polygon: false,
       }
     });
 
-    
 
     this.map.addControl(drawControlFull);
 
@@ -234,7 +238,16 @@ export class AddFieldComponent implements OnInit {
     let self = this;
 
     this.map.on(Leaflet.Draw.Event.CREATED, function (event:any) {
-      self.addPolygonToMap(event.layer.toGeoJSON())
+      if(event.layerType==='circle'){
+        const json = event.layer.toGeoJSON();
+        if (event.layer instanceof Leaflet.Circle) {
+          json.properties.radius = event.layer.getRadius();
+        }
+        self.addCircleShapeToMap(json)
+      }
+      if(event.layerType==='polygon'){
+        self.addPolygonToMap(event.layer.toGeoJSON())
+      }
     })
 
 
@@ -371,6 +384,23 @@ export class AddFieldComponent implements OnInit {
 
 
       this.checkValidArea(coords , geoJSON);
+    }
+  }
+
+  // ایجاد چند ضلعی با استفاده از geoJson
+  addCircleShapeToMap(states:any){
+    if(this.map){
+      this.drawnItems.clearLayers();
+
+      let coords = this.GetCoordinates(states);
+
+      let geoJSON = Leaflet.geoJSON(states).addTo(this.drawnItems);
+      let circle = new Leaflet.Circle([coords[1],coords[0]], states.properties.radius ).addTo(this.drawnItems);
+      geoJSON.bindTooltip("درحال محاسبه مساحت ..." , {direction:"right" , permanent:true }).openTooltip();
+
+      this.map.fitBounds(circle.getBounds())
+
+      // this.checkValidArea(coords , geoJSON);
     }
   }
 
