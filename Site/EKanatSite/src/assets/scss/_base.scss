@@ -1,6 +1,11 @@
 html , body{
-    font-family: $DefaultFontFamily , sans-serif;
     background-color: $LightGray_1;
+    font-family: $DefaultFontFamily , sans-serif;
+}
+html{
+    body.latin{
+        font-family: $DefaultLatinFontFamily , sans-serif;
+    }
 }
 
 a{

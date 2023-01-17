@@ -46,10 +46,20 @@ export class ForecastWeatherComponent implements OnInit , OnDestroy {
   }
 
   getTime(timeStamp:number){
-    let date =
-      this.dateTimeService.toJalaliDateTimeCustomFormat(
-        this.dateTimeService.timeStampToDateTime(timeStamp*1000) , "M/D/YYYY HH:mm:ss" , "dddd D MMM YYYY"
-      );        
+    let date:string = ""
+
+    if(this.translateService.calendarType === 'Shamsi'){
+      date =
+          this.dateTimeService.toJalaliDateTimeCustomFormat(
+              this.dateTimeService.timeStampToDateTime(timeStamp*1000) , "M/D/YYYY HH:mm:ss" , "dddd D MMM YYYY - HH:mm"
+          );
+    }
+    if(this.translateService.calendarType === 'Georgian'){
+      date =
+          this.dateTimeService.toGeorgianDateTimeCustomFormat(
+              this.dateTimeService.timeStampToDateTime(timeStamp*1000) , "M/D/YYYY HH:mm:ss" , "dddd MMM D YYYY - HH:mm"
+          );
+    }
 
     return date;
   }

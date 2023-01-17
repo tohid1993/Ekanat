@@ -26,13 +26,6 @@ export class AnalyzeWeatherComponent implements OnInit {
 
     translateUnsub:any
 
-    lowTemporaryLabel:string = ''
-    highTemporaryLabel:string = ''
-    millimeterLabel:string = ''
-    needPackageMessage:string = ''
-    dismissLabel:string = ''
-    buyPackageLabel:string = ''
-
     constructor(
       private gService:GeneralService,
       private eeService:EeService,
@@ -43,25 +36,12 @@ export class AnalyzeWeatherComponent implements OnInit {
     ) { }
   
     ngOnInit(): void {
-      this.translateUnsub = this.translateService.data.subscribe({
-        next:(data)=>{
-          this.millimeterLabel = data['millimeter'] || 'millimeter'
-          this.lowTemporaryLabel = data['lowTemporary'] || 'lowTemporary'
-          this.highTemporaryLabel = data['highTemporary'] || 'highTemporary'
-          this.needPackageMessage = data['needPackageMessage'] || 'needPackageMessage'
-          this.dismissLabel = data['dismissLabel'] || 'dismissLabel'
-          this.buyPackageLabel = data['buyPlane'] || 'buyPlane'
-        }
-      })
-
       if(this.hasPackage)
         this.getPastWeather();
     }
 
     ngOnDestroy(): void {
-      if(this.translateUnsub){
-        this.translateUnsub.unsubscribe()
-      }
+
     }
 
     getPastWeather(){
@@ -103,17 +83,13 @@ export class AnalyzeWeatherComponent implements OnInit {
       const tMaxValue:number[] = [];
 
       res.pr.forEach((item:any) => {
-        console.log(this.dateTimeService.toJalaliDate(item[0]));
-        
-        prLabel.push(this.dateTimeService.toJalaliDate(item[0]));
+        prLabel.push(this.translateService.calendarType === 'Shamsi'? this.dateTimeService.toJalaliDate(item[0]) : item[0]);
         prValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
       });
 
 
       res.tMax.forEach((item:any) => {
-        console.log(this.dateTimeService.toJalaliDate(item[0]));
-        
-        tLabel.push(this.dateTimeService.toJalaliDate(item[0]));
+        tLabel.push(this.translateService.calendarType === 'Shamsi'? this.dateTimeService.toJalaliDate(item[0]) : item[0]);
         tMaxValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
       });
 
@@ -146,7 +122,7 @@ export class AnalyzeWeatherComponent implements OnInit {
               }
             },
 
-            formatter: "<span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} " + this.millimeterLabel,
+            formatter: "<span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} " + this.translateService.translate('millimeter'),
             textStyle:{
                 fontFamily:'Vazir',
                 align:'right',
@@ -195,7 +171,7 @@ export class AnalyzeWeatherComponent implements OnInit {
           }
         },
         legend: {
-          data: [this.lowTemporaryLabel,this.highTemporaryLabel],
+          data: [this.translateService.translate('lowTemporary') , this.translateService.translate('highTemporary')],
           top: '0px'
         },
         grid: {
@@ -219,13 +195,13 @@ export class AnalyzeWeatherComponent implements OnInit {
         ],
         series: [
           {
-            name: this.lowTemporaryLabel,
+            name: this.translateService.translate('lowTemporary'),
             type: 'line',
             areaStyle: { opacity:0 },
             data: tMinValue
           },
           {
-            name: this.highTemporaryLabel,
+            name: this.translateService.translate('highTemporary'),
             type: 'line',
             stack: 'counts',
             areaStyle: { opacity:0 },
@@ -239,11 +215,10 @@ export class AnalyzeWeatherComponent implements OnInit {
     showPackageAlert(){
       if(!this.hasPackage){
         Swal.fire({
-          // title:"",
-          text:this.needPackageMessage,
+          text:this.translateService.translate('needPackageMessage'),
           icon:"warning",
-          cancelButtonText:this.dismissLabel,
-          confirmButtonText:this.buyPackageLabel,
+          cancelButtonText:this.translateService.translate('dismissLabel'),
+          confirmButtonText:this.translateService.translate('buyPlane'),
           showCancelButton:true
         }).then((result) => {
           if (result.isConfirmed) {

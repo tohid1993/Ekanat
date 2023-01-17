@@ -77,7 +77,7 @@ export class TasksComponent implements OnInit {
     private modalService: NgbModal,
     private gService:GeneralService,
     public fileService:FileService,
-    private translateService:TranslateService
+    public translateService:TranslateService
   ) {
     this.route.params.subscribe(
       params=>{
@@ -96,9 +96,23 @@ export class TasksComponent implements OnInit {
   }
 
   setStartEndDates(){
-    this.firstDayDate = this.dateTime.toGeorgianDate(this.dateTime.modelToString({year:this.SelectedDay.year , month:this.SelectedDay.month , day:1}))
-    this.endDayDate = this.dateTime.toGeorgianDate(this.dateTime.modelToString({year:this.SelectedDay.year , month:this.SelectedDay.month , day:(this.SelectedDay.month<=6?31:30)}))
+    this.firstDayDate = this.checkAndConvertToGeorgian({year:this.SelectedDay.year , month:this.SelectedDay.month , day:1})
+    this.endDayDate = this.checkAndConvertToGeorgian(
+        {
+          year:this.SelectedDay.year ,
+          month:this.SelectedDay.month ,
+          day: this.translateService.calendarType==='Shamsi'? (this.SelectedDay.month<=6?31:30) : new Date(this.SelectedDay.year, this.SelectedDay.month, 0).getDate()
+        })
     this.getSubmitedItemsList();
+  }
+
+  /***
+   * convert to Georgian
+   * @param date
+   */
+  checkAndConvertToGeorgian(date:DateModel){
+    let dateString = this.dateTime.modelToString(date)
+    return this.translateService.calendarType === 'Shamsi' ? this.dateTime.toGeorgianDate(dateString) : dateString
   }
 
   navigate(number: number) {
@@ -116,23 +130,25 @@ export class TasksComponent implements OnInit {
   }
 
   dayHasTask(date:DateModel){
-    let gDate = this.dateTime.toJalaliDate(this.dateTime.toGeorgianDate(date.year+"-"+date.month+"-"+date.day));
+    let gDate = this.dateTime.toJalaliDate(this.checkAndConvertToGeorgian(date));
     let tasks = this.SubmitedTasksList.filter((task:any)=>(task.dateTime.substring(0,10)==gDate));
-    
+
     return tasks;
   }
 
   dayHasImage(date:DateModel){
-    let gDate = this.dateTime.toJalaliDate(this.dateTime.toGeorgianDate(date.year+"-"+date.month+"-"+date.day));
+    let gDate = this.dateTime.toJalaliDate(this.checkAndConvertToGeorgian(date));
     let images = this.SubmitedImagesList.filter((image:any)=>(image.takeFileDateTime.substring(0,10)==gDate));
-    
+
     return images;
   }
 
 
   getSelectedDateByFormat(date:string){
-    
-    return this.dateTime.toJalaliDateTimeCustomFormat(this.dateTime.toGeorgianDate(date) , 'YYYY-MM-DD' , 'MMM YYYY, dddd');
+
+    return this.translateService.calendarType==='Shamsi'?
+              this.dateTime.toJalaliDateTimeCustomFormat(this.dateTime.toGeorgianDate(date) , 'YYYY-MM-DD' , 'MMM YYYY, dddd'):
+              this.dateTime.toGeorgianDateTimeCustomFormat(date , 'YYYY-MM-DD' , 'MMM YYYY, dddd');
   }
 
 

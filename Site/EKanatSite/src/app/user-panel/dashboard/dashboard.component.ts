@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbDatepicker, NgbDatepickerI18n, NgbModal, NgbToast } from '@ng-bootstrap/ng-bootstrap';
-import { DateModel, FieldsListVM } from 'src/app/shared/models/model';
-import { DateTimeService } from 'src/app/shared/services/dateTime.service';
-import { FieldService } from 'src/app/shared/services/field.service';
-import { GeneralService } from 'src/app/shared/services/general.service';
-import { TranslateService } from 'src/app/shared/services/traslate.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbDatepicker, NgbDatepickerI18n, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DateModel, FieldsListVM} from 'src/app/shared/models/model';
+import {DateTimeService} from 'src/app/shared/services/dateTime.service';
+import {FieldService} from 'src/app/shared/services/field.service';
+import {GeneralService} from 'src/app/shared/services/general.service';
+import {TranslateService} from 'src/app/shared/services/traslate.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
     public dateTime:DateTimeService,
     private gService:GeneralService,
     private modalService: NgbModal,
-    private translateService:TranslateService
+    public translateService:TranslateService,
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +70,7 @@ export class DashboardComponent implements OnInit {
 
     let changeTo = calendar.getNext(state.firstDate, 'm', number)
 
-    if(this.startMonth.year == changeTo.year && this.startMonth.month == (changeTo.month+1))
+    if(this.startMonth.year > changeTo.year || (this.startMonth.year == changeTo.year && this.startMonth.month == (changeTo.month+1)))
     {
       this.gService.showWarningToastr(this.translateService.translate('notAllowPreviousMonthData'));
       return;
@@ -90,22 +90,31 @@ export class DashboardComponent implements OnInit {
   dayChanged(date:DateModel){
     this.SelectedDay = date;
     this.SelectedDayTasks = this.dayHasTask(date); 
-    // this.SelectedDayImages = this.dayHasImage(date); 
   }
 
   setStartEndDates(){
-    this.firstDayDate = this.dateTime.toGeorgianDate(this.dateTime.modelToString({year:this.SelectedDay.year , month:this.SelectedDay.month , day:1}))
-    this.endDayDate = this.dateTime.toGeorgianDate(this.dateTime.modelToString({year:this.SelectedDay.year , month:this.SelectedDay.month , day:(this.SelectedDay.month<=6?31:30)}))
+    this.firstDayDate = this.checkAndConvertToGeorgian({year:this.SelectedDay.year , month:this.SelectedDay.month , day:1})
+    this.endDayDate = this.checkAndConvertToGeorgian(
+  {
+        year:this.SelectedDay.year ,
+        month:this.SelectedDay.month ,
+        day: this.translateService.calendarType==='Shamsi'? (this.SelectedDay.month<=6?31:30) : new Date(this.SelectedDay.year, this.SelectedDay.month, 0).getDate()
+    })
     this.getSubmitedItemsList();
   }
 
-  getSelectedDateByFormat(date:string){
-    
-    return this.dateTime.toJalaliDateTimeCustomFormat(this.dateTime.toGeorgianDate(date) , 'YYYY-MM-DD' , 'MMM YYYY, dddd');
+  /***
+   * convert to Georgian
+   * @param date
+   */
+  checkAndConvertToGeorgian(date:DateModel){
+    let dateString = this.dateTime.modelToString(date)
+    return this.translateService.calendarType === 'Shamsi' ? this.dateTime.toGeorgianDate(dateString) : dateString
   }
+  
 
   dayHasTask(date:DateModel){
-    let gDate = this.dateTime.toJalaliDate(this.dateTime.toGeorgianDate(date.year+"-"+date.month+"-"+date.day));
+    let gDate = this.dateTime.toJalaliDate(this.checkAndConvertToGeorgian(date));
     let tasks = this.SubmitedTasksList.filter((task:any)=>(task.dateTime.substring(0,10)==gDate));
     
     return tasks;

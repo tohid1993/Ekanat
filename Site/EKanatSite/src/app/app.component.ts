@@ -20,10 +20,12 @@ export class NgbDatepickerI18nPersian extends NgbDatepickerI18n {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [
-    {provide: NgbCalendar, useClass: NgbCalendarPersian},
-    {provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nPersian}
-  ]
+  providers:
+      (localStorage.getItem('siteLang')||'faIR')==='faIR'?
+      [
+        {provide: NgbCalendar, useClass: NgbCalendarPersian},
+        {provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nPersian}
+      ]:[]
 })
 export class AppComponent implements OnInit {
   title = 'EKanatSite';

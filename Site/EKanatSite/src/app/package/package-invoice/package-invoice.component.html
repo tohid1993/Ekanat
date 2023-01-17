@@ -48,7 +48,7 @@
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                 <span class="fw-bold">{{'cultivationDate'|translate}} </span>
-                                <span dir="ltr">{{SelectedField.cultivationDate}}</span>
+                                <span dir="ltr">{{translateService.calendarType==='Shamsi' ? SelectedField.cultivationDate : dateTimeService.toGeorgianDate(SelectedField.cultivationDate)}}</span>
                             </li>
 
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-start justify-content-between">
@@ -56,9 +56,9 @@
                                 <div>
                                     <table class="growth_period">
                                         <tr *ngFor="let item of FieldPhenologiesList">
-                                            <td>{{item.startDate}} </td>
+                                            <td>{{translateService.calendarType==='Shamsi' ? item.startDate : dateTimeService.toGeorgianDate(item.startDate)}} </td>
                                             <td>{{'to'|translate}}</td>
-                                            <td>{{item.endDate}}</td>
+                                            <td>{{translateService.calendarType==='Shamsi' ? item.endDate : dateTimeService.toGeorgianDate(item.endDate)}}</td>
                                         </tr>
                                         <tr *ngIf="FieldPhenologiesList.length==0"><td>{{'notFoundGrowthPeriod'|translate}}</td></tr>
                                     </table>
@@ -90,15 +90,15 @@
                             <ng-container *ngIf="OrderDetail">
                                 <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                     <span class="fw-bold">{{'serviceStartDate'|translate}} </span>
-                                    <span>{{OrderDetail?.packageStartDate}}</span>
+                                    <span>{{translateService.calendarType==='Shamsi' ? (OrderDetail?.packageStartDate) : dateTimeService.toGeorgianDate(OrderDetail?.packageStartDate)}}</span>
                                 </li>
                                 <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                     <span class="fw-bold">{{'serviceEndDate'|translate}} </span>
-                                    <span>{{OrderDetail?.packageEndDate}}</span>
+                                    <span>{{translateService.calendarType==='Shamsi' ? (OrderDetail?.packageEndDate) : dateTimeService.toGeorgianDate(OrderDetail?.packageEndDate)}}</span>
                                 </li>
                                 <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
                                     <span class="fw-bold">{{'orderDate'|translate}}</span>
-                                    <span>{{OrderDetail?.orderDate}}</span>
+                                    <span>{{translateService.calendarType==='Shamsi' ? (OrderDetail?.orderDate) : dateTimeService.toGeorgianDate(OrderDetail?.orderDate)}}</span>
                                 </li>
                             </ng-container>
                         </ul>

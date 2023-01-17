@@ -104,7 +104,7 @@ export class AddFieldComponent implements OnInit , OnDestroy {
     private dateTimeService:DateTimeService,
     private spinner:NgxSpinnerService,
     private locationService:LocationService,
-    private translateService:TranslateService
+    public translateService:TranslateService
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -493,19 +493,25 @@ export class AddFieldComponent implements OnInit , OnDestroy {
     switch (key) {
       case 'cultivationDate':
         this.AddFieldForm.controls['cultivationDate'].setValue(
-          this.dateTimeService.toGeorgianDate(this.cultivationDate.year+"-"+this.cultivationDate.month+"-"+this.cultivationDate.day)
+      this.translateService.calendarType === 'Shamsi'?
+                this.dateTimeService.toGeorgianDate(this.cultivationDate.year+"-"+this.cultivationDate.month+"-"+this.cultivationDate.day) :
+                (this.cultivationDate.year+"-"+this.cultivationDate.month+"-"+this.cultivationDate.day)
         );
         break;
 
     case 'harvestDate':
       this.AddFieldForm.controls['harvestDate'].setValue(
-        this.dateTimeService.toGeorgianDate(this.harvestDate.year+"-"+this.harvestDate.month+"-"+this.harvestDate.day)
+      this.translateService.calendarType === 'Shamsi'?
+              this.dateTimeService.toGeorgianDate(this.harvestDate.year+"-"+this.harvestDate.month+"-"+this.harvestDate.day):
+              (this.harvestDate.year+"-"+this.harvestDate.month+"-"+this.harvestDate.day)
       );
       break;
 
     case 'fertilizationDate':
       this.AddFieldForm.controls['fertilizationDate'].setValue(
-        this.dateTimeService.toGeorgianDate(this.fertilizationDate.year+"-"+this.fertilizationDate.month+"-"+this.fertilizationDate.day)
+      this.translateService.calendarType === 'Shamsi'?
+              this.dateTimeService.toGeorgianDate(this.fertilizationDate.year+"-"+this.fertilizationDate.month+"-"+this.fertilizationDate.day):
+              (this.fertilizationDate.year+"-"+this.fertilizationDate.month+"-"+this.fertilizationDate.day)
       );
       break;
     

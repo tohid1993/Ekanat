@@ -22,16 +22,16 @@
                         {{item.amount|number}} <small>{{'rial'|translate}}</small>
                     </td>
                     <td attr.data-label="{{'orderDate'|translate}}">
-                        {{item.orderDateTime}}
+                        {{translateService.calendarType==='Shamsi'?item.orderDateTime:dateTime.toGeorgianDate(item.orderDateTime)}}
                     </td>
                     <td attr.data-label="{{'serviceType'|translate}}">
                         {{'standardPackage'|translate}} "{{item.fieldName}}"
                     </td>
                     <td attr.data-label="{{'serviceStartDate'|translate}}">
-                        {{item.packageStartDate}}
+                        {{translateService.calendarType==='Shamsi'?item.packageStartDate:dateTime.toGeorgianDate(item.packageStartDate)}}
                     </td>
                     <td attr.data-label="{{'serviceEndDate'|translate}}">
-                        {{item.packageEndDate}}
+                        {{translateService.calendarType==='Shamsi'?item.packageEndDate:dateTime.toGeorgianDate(item.packageEndDate)}}
                     </td>
                 </tr>
                 <tr *ngIf="TransactionsList.length==0">

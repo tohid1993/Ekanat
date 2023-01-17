@@ -36,10 +36,10 @@ export class PackageInvoiceComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private fieldService:FieldService,
     private paymentService:PaymentService,
-    private dateTimeService:DateTimeService,
+    public dateTimeService:DateTimeService,
     private router:Router,
     private route:ActivatedRoute,
-    private translateService:TranslateService
+    public translateService:TranslateService
   ) {
     this.route.queryParams.subscribe(params=>{this.fieldId = params['fieldId']})
   }
@@ -167,10 +167,10 @@ export class PackageInvoiceComponent implements OnInit, OnDestroy {
         let text:string = this.translateService.translate('packageDescriptionTemplate')
         text = text.replace('"text1"',`«${this.SelectedField.name}»`)
         text = text.replace('"text1"',`«${this.SelectedField.name}»`)
-        text = text.replace('"text2"',`<span dir="ltr" class="d-inline-block">«${this.OrderDetail.packageStartDate}»</span>`)
-        text = text.replace('"text3"',`<span dir="ltr" class="d-inline-block">«${this.OrderDetail.packageEndDate}»</span>`)
-        text = text.replace('"text4"',`<span dir="ltr" class="d-inline-block">«${this.OrderDetail.packageStartDate}»</span>`)
-        text = text.replace('"text5"',`<span dir="ltr" class="d-inline-block">«${this.OrderDetail.orderDate}»</span>`)
+        text = text.replace('"text2"',`<span dir="ltr" class="d-inline-block">«${this.translateService.calendarType === 'Shamsi' ? this.OrderDetail.packageStartDate : this.dateTimeService.toGeorgianDate(this.OrderDetail.packageStartDate)}»</span>`)
+        text = text.replace('"text3"',`<span dir="ltr" class="d-inline-block">«${this.translateService.calendarType === 'Shamsi' ? this.OrderDetail.packageEndDate : this.dateTimeService.toGeorgianDate(this.OrderDetail.packageEndDate)}»</span>`)
+        text = text.replace('"text4"',`<span dir="ltr" class="d-inline-block">«${this.translateService.calendarType === 'Shamsi' ? this.OrderDetail.packageStartDate : this.dateTimeService.toGeorgianDate(this.OrderDetail.packageStartDate)}»</span>`)
+        text = text.replace('"text5"',`<span dir="ltr" class="d-inline-block">«${this.translateService.calendarType === 'Shamsi' ? this.OrderDetail.orderDate : this.dateTimeService.toGeorgianDate(this.OrderDetail.orderDate)}»</span>`)
 
         Swal.fire({
           html:text,

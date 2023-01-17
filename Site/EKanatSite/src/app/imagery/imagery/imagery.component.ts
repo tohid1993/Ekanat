@@ -78,7 +78,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     private gService:GeneralService,
     private modalService: NgbModal,
     private router:Router,
-    private translateService:TranslateService
+    public translateService:TranslateService
   ) {
     this.route.params.subscribe(
       params=>{
@@ -205,8 +205,13 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     this.beforeIndicatorProcess();
     this.spinner.show();
 
-    let fromDate = this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.fromDate));
-    let toDate = this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate));
+    let fromDate = this.translateService.calendarType==='Shamsi'?
+        this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.fromDate)) :
+        this.dateTimeService.modelToString(this.fromDate);
+
+    let toDate = this.translateService.calendarType==='Shamsi'?
+        this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate)) :
+        this.dateTimeService.modelToString(this.toDate);
 
     let self = this;
 

@@ -197,6 +197,8 @@
 .indicators_wrapper{
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: visible;
 
     .dates_wrapper{
         background-color: #eaeeea;

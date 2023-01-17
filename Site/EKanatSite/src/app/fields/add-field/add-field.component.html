@@ -223,7 +223,7 @@
                   readonly
                   [minDate]="harvestDate"
                   [placement]="'bottom'"
-                  [firstDayOfWeek]="6"
+                  [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1"
                   [ngModelOptions]="{ standalone: true }"
                   name="dp"
                   ngbDatepicker
@@ -302,7 +302,7 @@
                   readonly
                   [maxDate]="cultivationDate"
                   [placement]="'bottom'"
-                  [firstDayOfWeek]="6"
+                  [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1"
                   [ngModelOptions]="{ standalone: true }"
                   name="dp"
                   ngbDatepicker
