@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Leaflet from 'leaflet';
 import "leaflet-draw";
@@ -15,6 +15,9 @@ import { GeneralService } from 'src/app/shared/services/general.service';
 import { NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { EChartsOption } from 'echarts';
+import { liveQuery } from 'dexie';
+import { db } from '../../../db/indexedDB';
+
 
 @Component({
   selector: 'app-imagery',
@@ -66,6 +69,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   options1: EChartsOption = {};
 
   showCharts:boolean = false;
+
+  fieldIndexedDBId:number | undefined
 
   constructor(
     private eeService:EeService,
@@ -136,6 +141,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
           self.getForecastWeather();
           self.addPolygonToMap(self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon));
           self.spinner.hide();
+
+          self.checkAndGetFieldDBId().finally()
         }
       })
   }
@@ -194,17 +201,35 @@ export class ImageryComponent implements OnInit , AfterViewInit {
  * @param key indicator type
  * @param imageIndex image index
  */
-  getIndicators(key:IndicatorsTypes,imageIndex:number=-1){
+  async getIndicators(key:IndicatorsTypes,imageIndex:number=-1,date:string = ''){
     if(!this.hasPackage && key != IndicatorsTypes.ndvi){
       this.showPackageAlert()
       return
     }
     if(!key) return;
     this.beforeIndicatorProcess();
-    this.spinner.show();
 
     let fromDate = this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.fromDate));
     let toDate = this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate));
+
+    this.spinner.show();
+
+    // check and get saved image from indexedDB
+    const image = await this.getImageFromDB(key,date)
+    if(image){
+      this.indicatorDetails.imageBase64 = image.imageBase64
+      this.indicatorDetails.imageUrl = image.imageUrl
+      this.indicatorDetails.legendRange = image.legendRange
+      this.indicatorDetails.imageIndex = imageIndex
+
+      this.addImageToMap(
+          "data:image/png;base64,"+this.indicatorDetails.imageBase64,
+          this.eeService.getLatLngFromXYarray(this.fieldDetail.polygon)
+      );
+      this.selectedIndicator = key;
+      this.spinner.hide()
+      return;
+    }
 
     let self = this;
 
@@ -224,6 +249,14 @@ export class ImageryComponent implements OnInit , AfterViewInit {
               "data:image/png;base64,"+self.indicatorDetails.imageBase64,
               self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon)
             );
+
+            self.addImageToDB(
+                key ,
+                res.data.dates[res.data.imageIndex],
+                self.indicatorDetails.imageBase64,
+                self.indicatorDetails.imageUrl,
+                self.indicatorDetails.legendRange
+            ).finally()
           }else{
             self.toastr.error("تصویری برای این بازه زمانی یافت نشد");
           }
@@ -335,8 +368,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
             document.getElementById('tooltip_value')!!.style.top = (my - 45) + 'px';
             document.getElementById('tooltip_value')!!.style.left = (mx) + 'px';
 
-            // console.log(value,this.indicatorDetails.legendRange[0] ,this.indicatorDetails.legendRange[1]);
-            
+
             if(value>=this.indicatorDetails.legendRange[0] && value<=this.indicatorDetails.legendRange[1]){
               
               document.getElementById('tooltip_value')!!.innerText = value.toString();
@@ -650,8 +682,59 @@ export class ImageryComponent implements OnInit , AfterViewInit {
         }
       ]
     };
+  }
 
 
+
+  // چک  و بررسی اینکه آیا این فیلد به دیتا بیس اضافه شده یا نه
+  async checkAndGetFieldDBId(){
+    const fields = await db.fieldsList.toArray()
+    const field = fields.find(f => f.fieldId === this.fieldDetail.id)
+    if (field) {
+      this.fieldIndexedDBId = field.id
+    } else {
+      this.fieldIndexedDBId = await this.addFieldToIndexDB()
+    }
+  }
+
+  //  اضافه کردن فیلد به دیتا بیس و برگرداندن شناسه آن
+  async addFieldToIndexDB() {
+    const fieldDBId = await db.fieldsList.add({
+      fieldId: this.fieldDetail.id,
+      name: this.fieldDetail.name,
+    });
+
+    return fieldDBId
+  }
+
+  // اضافه کردن عکس شاخص به دیتابیس
+  async addImageToDB(indicator:number , imageDate:string , imageBase64:string , imageUrl:string , legendRange:Array<Number>) {
+    const image = await this.getImageFromDB(indicator,imageDate)
+    if (image) return
+
+    await db.imagesList.add({
+      fieldDBId: this.fieldIndexedDBId || 0,
+      indicator:indicator,
+      imageDate:imageDate,
+      imageBase64:imageBase64,
+      imageUrl:imageUrl,
+      legendRange:legendRange
+    });
+  }
+
+  // بازیابی عکس از دیتابیس
+  async getImageFromDB(indicator:number,imageDate:string) {
+    const image = await db.imagesList
+                  .where({
+                    fieldDBId:this.fieldIndexedDBId,
+                    indicator:indicator,
+                    imageDate:imageDate
+                  })
+                  .first();
+
+    if(image)
+      return image
+    return null
   }
 }
 
