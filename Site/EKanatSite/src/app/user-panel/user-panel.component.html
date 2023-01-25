@@ -1,8 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-light user_sidebar">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><img src="./assets/images/logo.png" alt=""></a>
-
       <div ngbDropdown class="d-inline-flex align-items-center justify-content-center me-auto" *ngIf="windowWidth<992">
+        <div ngbDropdown class="d-inline-block ms-2">
+          <button type="button" class="btn btn-outline-dark"  ngbDropdownToggle>
+            {{translateService?.locate?.substring(0,2)?.toUpperCase()}}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="langDropDown">
+            <button ngbDropdownItem (click)="changeLang('enUS')" >{{'enUS'|translate}}</button>
+            <button ngbDropdownItem (click)="changeLang('faIR')">{{'faIR'|translate}}</button>
+          </div>
+        </div>
         <button type="button" class="ghost_btn small_btn" id="account_btn_dropdown_mobile" ngbDropdownToggle>
           <img [src]="(userService.UserHomeInfo|async)?.image || profileAvatar" alt="">
         </button>
@@ -91,7 +99,17 @@
           <img src="./assets/images/icons/enamad.png" height="30" alt="">
         </a>
       </div> -->
+
       <div class="col-auto me-auto">
+        <div ngbDropdown class="d-inline-block ms-2">
+          <button type="button" class="btn btn-outline-dark" id="langDropDown" ngbDropdownToggle>
+            {{translateService?.locate?.substring(0,2)?.toUpperCase()}}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="langDropDown">
+            <button ngbDropdownItem (click)="changeLang('enUS')" >{{'enUS'|translate}}</button>
+            <button ngbDropdownItem (click)="changeLang('faIR')">{{'faIR'|translate}}</button>
+          </div>
+        </div>
         <div ngbDropdown class="d-inline-block">
           <button type="button" class="ghost_btn small_btn" id="account_btn_dropdown" ngbDropdownToggle>
             <img [src]="(userService.UserHomeInfo|async)?.image || profileAvatar" alt="">

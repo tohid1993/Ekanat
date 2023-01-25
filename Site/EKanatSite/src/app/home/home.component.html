@@ -2,9 +2,17 @@
     <video autoplay muted loop id="landingVideo" #videoplayer>
         <source src="./assets/video/mainpage.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
-    </video>  
+    </video>
 
-    <span (click)="changeLang()">changeLang</span>
+    <div ngbDropdown class="d-inline-block ms-2" id="changeLanguage">
+        <button type="button" class="btn btn-outline-dark" id="langDropDown" ngbDropdownToggle>
+            {{translateService?.locate?.substring(0,2)?.toUpperCase()}}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="langDropDown">
+            <button ngbDropdownItem (click)="changeLang('enUS')" >{{'enUS'|translate}}</button>
+            <button ngbDropdownItem (click)="changeLang('faIR')">{{'faIR'|translate}}</button>
+        </div>
+    </div>
 
     <a href="" class="logo_link">
         <img src="./assets/images/logo-tp.png" width="70" height="70" class="logo" alt="">

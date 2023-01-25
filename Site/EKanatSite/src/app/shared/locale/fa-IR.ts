@@ -237,5 +237,7 @@ export const faIRLocate = {
     unCompletedProfileAlert:'برای ادامه فرایند و استفاده از قسمت های مختلف برنامه ، لطفا پروفایل خود را تکمیل نمایید',
     completeProfile:'تکمیل پروفایل',
     notAllowPreviousMonthData:'امکان مشاهده برای ماه های قبل وجود ندارد',
-    pleaseWait:'لطفا منتظر بمانید...'
+    pleaseWait:'لطفا منتظر بمانید...',
+    enUS:'EN - انگلیسی (ایالات متحده آمریکا)',
+    faIR:'FA - فارسی (ایران)',
 }

@@ -26,7 +26,7 @@ export class UserPanelComponent implements OnInit {
     private router:Router,
     public userService:UserService,
     private modalService: NgbModal,
-    private translateService:TranslateService
+    public translateService:TranslateService
   ) { }
 
 
@@ -90,5 +90,12 @@ export class UserPanelComponent implements OnInit {
 
   openRayChat(){
     (window as any).Raychat.open();
+  }
+
+  changeLang(lang:string){
+    this.translateService.init(lang)
+
+    window.location.reload()
+
   }
 }

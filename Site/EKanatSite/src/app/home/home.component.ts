@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
 
   constructor(
       private modalService: NgbModal,
-      private trasnlateService:TranslateService
+      public translateService:TranslateService
   ) { }
 
   ngAfterViewInit(): void {
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
     if(window.location.host=="ekanat.ir") this.isDotIr = true;
     if(window.location.host=="ekanat.com") this.isDotCom = true;
 
-    this.translateUnsub = this.trasnlateService.data.subscribe({
+    this.translateUnsub = this.translateService.data.subscribe({
       next:(data)=>{
         this.kanatImageryPortalRightItems = data['kanatImageryPortalRightItems'].split('%%')
         this.kanatImageryPortalLeftItems = data['kanatImageryPortalLeftItems'].split('%%')
@@ -102,7 +102,10 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
     }
   }
 
-  changeLang(){
-    this.trasnlateService.init('enUS')
+  changeLang(lang:string){
+    this.translateService.init(lang)
+
+    window.location.reload()
+
   }
 }
