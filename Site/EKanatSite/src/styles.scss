@@ -44,12 +44,17 @@
 }
 
 .leaflet-draw-draw-polygon{
-
     background-image: url(/assets/images/icons/polygon.png) !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: 75% !important;
+}
 
+.leaflet-draw-draw-circle{
+    background-image: url(/assets/images/icons/circle.svg) !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 70% !important;
 }
 
 .leaflet-draw-edit-remove{
@@ -345,4 +350,9 @@ ngb-modal-backdrop{
 
 .text-justify{
     text-align: justify;
+}
+
+
+img.leaflet-marker-icon{
+    display: none;
 }
