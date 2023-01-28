@@ -43,6 +43,7 @@
     "jquery": "^3.6.0",
     "leaflet": "^1.8.0",
     "leaflet-draw": "^1.0.4",
+    "leaflet-geodesy": "^0.2.1",
     "leaflet-geosearch": "^3.6.1",
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet-search": "^3.0.2",

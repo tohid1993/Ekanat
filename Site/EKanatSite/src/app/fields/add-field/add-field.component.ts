@@ -377,7 +377,6 @@ export class AddFieldComponent implements OnInit , OnDestroy {
       geoJSON.bindTooltip(this.translateService.translate('calculating') , {direction:"right" , permanent:true}).openTooltip();
       this.map.fitBounds(geoJSON.getBounds());
 
-
       this.checkValidArea(coords , geoJSON);
     }
   }
@@ -389,11 +388,16 @@ export class AddFieldComponent implements OnInit , OnDestroy {
 
       let coords = this.GetCoordinates(states);
 
-      let geoJSON = Leaflet.geoJSON(states).addTo(this.drawnItems);
-      let circle = new Leaflet.Circle([coords[1],coords[0]], states.properties.radius ).addTo(this.drawnItems);
-      geoJSON.bindTooltip("درحال محاسبه مساحت ..." , {direction:"right" , permanent:true }).openTooltip();
+      this.addPolygonToMap(
+          require('leaflet-geodesy').circle([coords[1],coords[0]], states.properties.radius, {parts:360}).toGeoJSON()
+      )
 
-      this.map.fitBounds(circle.getBounds())
+      // let geoJSON = Leaflet.geoJSON(states).addTo(this.drawnItems);
+      // let circle = new Leaflet.Circle([coords[1],coords[0]], states.properties.radius ).addTo(this.drawnItems);
+      // geoJSON.bindTooltip("درحال محاسبه مساحت ..." , {direction:"right" , permanent:true }).openTooltip();
+      //
+      // this.map.fitBounds(circle.getBounds())
+
 
       // this.checkValidArea(coords , geoJSON);
     }

@@ -211,13 +211,16 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     if(!key) return;
     this.beforeIndicatorProcess();
 
+    // let fromDate = this.dateTimeService.modelToString(this.fromDate)
+    // let toDate = this.dateTimeService.modelToString(this.toDate)
+
     let fromDate = this.translateService.calendarType==='Shamsi'?
-        this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.fromDate)) :
-        this.dateTimeService.modelToString(this.fromDate);
+        this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.fromDate)):
+        this.dateTimeService.modelToString(this.fromDate)
 
     let toDate = this.translateService.calendarType==='Shamsi'?
-        this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate)) :
-        this.dateTimeService.modelToString(this.toDate);
+        this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate)):
+        this.dateTimeService.modelToString(this.toDate)
 
     this.spinner.show();
 
@@ -292,14 +295,30 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     let fromDate = new Date(new Date().setMonth(toDate.getMonth() - 1));
 
 
+
+    // let fromDate = this.translateService.calendarType==='Shamsi'?
+    //     this.dateTimeService.modelToString(this.fromDate):
+    //     this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.fromDate))
+    //
+    // let toDate = this.translateService.calendarType==='Shamsi'?
+    //     this.dateTimeService.modelToString(this.toDate):
+    //     this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate));
+
+
     if(!this.toDate){
-      let persianDate = this.dateTimeService.toJalaliDateTimeCustomFormat(toDate.toLocaleString(),"M/D/YYYY HH:mm:ss" , "YYYY-MM-DD");
-      this.toDate = this.dateTimeService.getDateModel(persianDate,'-')
+      let date = this.translateService.calendarType==='Shamsi'?
+                    this.dateTimeService.toJalaliDateTimeCustomFormat(toDate.toLocaleString(),"M/D/YYYY HH:mm:ss" , "YYYY-MM-DD"):
+                    this.dateTimeService.toGeorgianDateTimeCustomFormat(toDate.toLocaleString(),"M/D/YYYY HH:mm:ss" , "YYYY-MM-DD")
+      this.toDate = this.dateTimeService.getDateModel(date,'-')
     }
+
     if(!this.fromDate){
-      let persianDate = this.dateTimeService.toJalaliDateTimeCustomFormat(fromDate.toLocaleString(),"M/D/YYYY HH:mm:ss" , "YYYY-MM-DD");
-      this.fromDate = this.dateTimeService.getDateModel(persianDate,'-')
+      let date = this.translateService.calendarType==='Shamsi'?
+          this.dateTimeService.toJalaliDateTimeCustomFormat(fromDate.toLocaleString(),"M/D/YYYY HH:mm:ss" , "YYYY-MM-DD"):
+          this.dateTimeService.toGeorgianDateTimeCustomFormat(fromDate.toLocaleString(),"M/D/YYYY HH:mm:ss" , "YYYY-MM-DD")
+      this.fromDate = this.dateTimeService.getDateModel(date,'-')
     }
+
 
 
     if (this.map && this.imageLayer && this.map.hasLayer(this.imageLayer)) {
