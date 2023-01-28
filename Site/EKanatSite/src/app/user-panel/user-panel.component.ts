@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { TranslateService } from '../shared/services/traslate.service';
 import { UserService } from '../shared/services/user.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class UserPanelComponent implements OnInit {
   constructor(
     private router:Router,
     public userService:UserService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public translateService:TranslateService
   ) { }
 
 
@@ -45,9 +47,9 @@ export class UserPanelComponent implements OnInit {
         if(res && !res.profileCompeleted){
           Swal.fire({
             icon:"warning",
-            title:"پروفایل تکمیل نشده",
-            text:"برای ادامه فرایند و استفاده از قسمت های مختلف برنامه ، لطفا پروفایل خود را تکمیل نمایید",
-            confirmButtonText:"تکمیل پروفایل"
+            title: self.translateService.translate('unCompletedProfile'),
+            text: self.translateService.translate('unCompletedProfileAlert'),
+            confirmButtonText: self.translateService.translate('completeProfile')
           }).then((result) => {
             if (result.isConfirmed) {
               self.router.navigate(['/account/profile']);
@@ -88,5 +90,12 @@ export class UserPanelComponent implements OnInit {
 
   openRayChat(){
     (window as any).Raychat.open();
+  }
+
+  changeLang(lang:string){
+    this.translateService.init(lang)
+
+    window.location.reload()
+
   }
 }

@@ -9,9 +9,29 @@ ngb-datepicker{
         transform: rotate(180deg);
         color:  $Primary_100 !important;
     }
-    
+
     ngb-datepicker-month{
         direction: rtl;
+    }
+
+    .form-select{
+        font-family: $DefaultFontFamily !important;
+        font-size: 0.8rem !important;
+        padding: 0px !important;
+        background-position: right 3px center;
+    }
+
+    &.ltr{
+        ngb-datepicker-month{
+            direction: ltr;
+        }
+
+        .form-select{
+            font-family: $DefaultLatinFontFamily !important;
+            font-size: 0.8rem !important;
+            padding: 0px !important;
+            background-position: right 3px center;
+        }
     }
 
     .ngb-dp-arrow-btn{
@@ -40,11 +60,6 @@ ngb-datepicker{
     }
 
 
-    .form-select{
-        font-family: $DefaultFontFamily !important;
-        font-size: 0.8rem !important;
-        padding: 0px !important;
-        background-position: right 3px center;
-    }
+
 
 }

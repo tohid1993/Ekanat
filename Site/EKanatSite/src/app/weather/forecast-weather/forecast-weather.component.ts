@@ -1,14 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import Swal from 'sweetalert2';
+import {TranslateService} from "../../shared/services/traslate.service";
 
 @Component({
   selector: 'app-forecast-weather',
   templateUrl: './forecast-weather.component.html',
   styleUrls: ['./forecast-weather.component.scss']
 })
-export class ForecastWeatherComponent implements OnInit {
+export class ForecastWeatherComponent implements OnInit , OnDestroy {
 
   @Input("NextDaysWeather") NextDaysWeather:any|undefined;
   @Input("FieldId") FieldId:number|undefined;
@@ -16,19 +17,49 @@ export class ForecastWeatherComponent implements OnInit {
 
   Math=Math;
 
+  needPackageMessage:string = ''
+  dismissLabel:string = ''
+  buyPackageLabel:string = ''
+
+  translateUnsub:any
+
   constructor(
     private dateTimeService:DateTimeService,
-    private router:Router
+    private router:Router,
+    private translateService:TranslateService
   ) { }
 
   ngOnInit(): void {
+    this.translateUnsub = this.translateService.data.subscribe({
+      next:(data)=>{
+        this.needPackageMessage = data['needPackageMessage'] || 'needPackageMessage'
+        this.dismissLabel = data['dismissLabel'] || 'dismissLabel'
+        this.buyPackageLabel = data['buyPlane'] || 'buyPlane'
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    if(this.translateUnsub){
+      this.translateUnsub.unsubscribe()
+    }
   }
 
   getTime(timeStamp:number){
-    let date =
-      this.dateTimeService.toJalaliDateTimeCustomFormat(
-        this.dateTimeService.timeStampToDateTime(timeStamp*1000) , "M/D/YYYY HH:mm:ss" , "dddd D MMM YYYY"
-      );        
+    let date:string = ""
+
+    if(this.translateService.calendarType === 'Shamsi'){
+      date =
+          this.dateTimeService.toJalaliDateTimeCustomFormat(
+              this.dateTimeService.timeStampToDateTime(timeStamp*1000) , "M/D/YYYY HH:mm:ss" , "dddd D MMM YYYY - HH:mm"
+          );
+    }
+    if(this.translateService.calendarType === 'Georgian'){
+      date =
+          this.dateTimeService.toGeorgianDateTimeCustomFormat(
+              this.dateTimeService.timeStampToDateTime(timeStamp*1000) , "M/D/YYYY HH:mm:ss" , "dddd MMM D YYYY - HH:mm"
+          );
+    }
 
     return date;
   }
@@ -37,10 +68,10 @@ export class ForecastWeatherComponent implements OnInit {
     if(!this.hasPackage){
       Swal.fire({
         // title:"",
-        text:"برای دسترسی به امکانات بیشتر از جمله تحلیل شاخص ها و وضعیت آب و هوایی و ... ، باید برای این زمین کشاورزی پکیج استاندارد خریداری شود",
+        text:this.needPackageMessage,
         icon:"warning",
-        cancelButtonText:"متوجه شدم",
-        confirmButtonText:"خرید پکیج",
+        cancelButtonText:this.dismissLabel,
+        confirmButtonText:this.buyPackageLabel,
         showCancelButton:true
       }).then((result) => {
         if (result.isConfirmed) {

@@ -2,8 +2,18 @@
     <video autoplay muted loop id="landingVideo" #videoplayer>
         <source src="./assets/video/mainpage.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
-    </video>  
-    
+    </video>
+
+    <div ngbDropdown class="d-inline-block ms-2" id="changeLanguage">
+        <button type="button" class="btn btn-outline-dark" id="langDropDown" ngbDropdownToggle>
+            {{translateService?.locate?.substring(0,2)?.toUpperCase()}}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="langDropDown">
+            <button ngbDropdownItem (click)="changeLang('enUS')" >{{'enUS'|translate}}</button>
+            <button ngbDropdownItem (click)="changeLang('faIR')">{{'faIR'|translate}}</button>
+        </div>
+    </div>
+
     <a href="" class="logo_link">
         <img src="./assets/images/logo-tp.png" width="70" height="70" class="logo" alt="">
     </a>
@@ -49,7 +59,7 @@
                 <path fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z"/>
                 <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"/>
             </svg>
-            <span>خدمات</span>
+            <span>{{'services'|translate}}</span>
         </button>
 
         <a href="https://mega.nz/file/9mBxga4S#UCjBtRGnV2ojldZCeks5m1mEife8K2EMokF6jwlxqBw" target="_blank" class="link">
@@ -57,7 +67,7 @@
                 <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
                 <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
             </svg>
-            <span>اپ موبایل</span>
+            <span>{{'mobileApp'|translate}}</span>
         </a>
 
         <a [routerLink]="['/login']" class="link panel_link">
@@ -65,7 +75,7 @@
                 <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
                 <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
               </svg>
-            <span>پنل کاربری</span>
+            <span>{{'userPanel'|translate}}</span>
         </a>
 
         <!-- <a href="" class="logo_link">
@@ -76,14 +86,14 @@
                 <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                 <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"/>
             </svg>
-            <span>تماس با ما</span>
+            <span>{{'contactUs'|translate}}</span>
         </button>
         <button class="link" (click)="openModal('about')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text" viewBox="0 0 16 16">
                 <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                 <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
             </svg>
-            <span>درباره ما</span>
+            <span>{{'aboutUs'|translate}}</span>
         </button>
 
     </div>
@@ -113,48 +123,38 @@
 
 <ng-template #services let-modal>
     <div class="modal-header">
-      <h6 class="modal-title">خدمات ما</h6>
+      <h6 class="modal-title">{{'ourServices'|translate}}</h6>
       <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body px-md-5">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="heading_level_4 heading_level_4_mobile Primary_80_text mb-2">سامانه پایشگر کانات</h4>
-                    <div class="secondary_text secondary_text_mobile">
-                        سامانه تحت وب و اپلیکیشن موبایل کانات با پردازش تصاویر ماهواره ای و ارائه تحلیل های متخصصین کشاورزی، آماده ارائه خدمات کشاورزی دقیق به صورت همه روزه و 24 ساعته به کشاورزان عزیز می باشد.
-                    </div>
+                    <h4 class="heading_level_4 heading_level_4_mobile Primary_80_text mb-2">{{'kanatImageryPortal'|translate}}</h4>
+                    <div class="secondary_text secondary_text_mobile">{{'kanatImageryPortalDescription'|translate}}</div>
                     <div class="row my-2">
                         <div class="col-12 col-md-6">
                             <ul class="my-2">
-                                <li class="mb-2">پایش سبزینگی و تراکم محصولات</li>
-                                <li class="mb-2">پایش وضعیت تغذیه ای محصولات</li>
-                                <li class="mb-2">پایش آفات و بیماری های گیاهی</li>
-                                <li class="mb-2">پایش وضعیت آبی محصولات</li>
-                                <li class="mb-2">ارائه خدمات هواشناسی کشاورزی</li>
-                                <li class="mb-2">بررسی وضعیت و دوره ی رشد محصول</li>
+                                <li class="mb-2" *ngFor="let item of kanatImageryPortalRightItems">{{item}}</li>
                             </ul>
                         </div>
                         <div class="col-12 col-md-6 mt-3 mt-md-0">
                             <ul class="my-2">
-                                <li class="mb-2">بررسی تغییرات کاربری اراضی</li>
-                                <li class="mb-2">برآورد خسارت و مدلسازی آتش سوزی جنگل ها</li>
-                                <li class="mb-2">برآورد خسارت  ناشی از سیل و زلزله </li>
+                                <li class="mb-2" *ngFor="let item of kanatImageryPortalLeftItems">{{item}}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-7">
-                    <h6 class="mt-4 primary_text primary_text_mobile Primary_80_text">مزایای استفاده از این سامانه</h6>
+                    <h6 class="mt-4 primary_text primary_text_mobile Primary_80_text">{{'advantagesTitle'|translate}}</h6>
                     <ul class="mb-0 mt-3 mb-5 px-2" style="list-style: none;">
-                        <li class="mb-2"><img width="25" class="ms-2" src="./assets/images/icons/feature/1.svg" alt=""> پوشش سراسری زمین</li>
-                        <li class="mb-2"><img width="25" class="ms-2" src="./assets/images/icons/feature/2.svg" alt=""> عدم نیاز به حضور میدانی</li>
-                        <li class="mb-2"><img width="25" class="ms-2" src="./assets/images/icons/feature/3.svg" alt=""> مدیریت منابع و هزینه ها</li>
-                        <li class="mb-2"><img width="25" class="ms-2" src="./assets/images/icons/feature/4.svg" alt=""> پردازش خودکار و سریع</li>
-                        <li class="mb-2"><img width="25" class="ms-2" src="./assets/images/icons/feature/5.svg" alt=""> دسترسی به داده های مختلف</li>
-                        <li class="mb-2"><img width="25" class="ms-2" src="./assets/images/icons/feature/6.svg" alt=""> پایش متناوب زمین های کشاورزی</li>
+                        <li class="mb-2" *ngFor="let item of advantagesOfUsingThisSystem;let index=index">
+                            <img width="25" class="ms-2" [src]="'./assets/images/icons/feature/'+(index+1)+'.svg'" alt="">
+                            {{item}}
+                        </li>
                     </ul>
-                    
+
+
                 </div>
                 <div class="col-12 col-md-5 col-lg-4">
                     <img src="./assets/images/miz-kar.png" class="w-100" alt="">
@@ -167,28 +167,26 @@
 
 <ng-template #about let-modal>
     <div class="modal-header">
-      <h6 class="modal-title">درباره ما</h6>
+      <h6 class="modal-title">{{'aboutUs'|translate}}</h6>
       <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body px-md-5">
             <div class="row">
                 <div class="col-12">
-                    <div class="bu_1_text bu_1_text_mobile text-justify fw-normal">
-                        شرکت فناور ویرا پایش مزرعه با نام تجاری کانات (KANAT) در سال 1399 تأسیس گردید و از فروردین 1400 به عنوان شرکت فناور در پارک علم و فناوری استان آذربایجان شرقی ثبت شد و فعالیت خود را استمرار بخشید. تیم کانات فعالیت فناورانه خود را با گروهی از متخصصان سنجش از دور، فتوگرامتری، کشاورزی، هوافضا و هوش مصنوعی آغاز نمود. ما در تیم کانات با بهره گیری از علم سنجش از دور، علوم داده و هوش مصنوعی در تحلیل داده ها و تصاویر هوایی و ماهواره ای، در تلاش هستیم تا به کشاورزان در مدیریت بهینه زمین های خود کمک کنیم.
-                    </div>
+                    <div class="bu_1_text bu_1_text_mobile text-justify fw-normal">{{'aboutUsText'|translate}}</div>
                 
                     <div class="row alig-items-center justify-content-center mt-4">
                         <div class="col-12 col-md-4 my-2 px-4 text-center">
                             <img src="./assets/images/park.png" class="mx-auto" height="80" alt="">
-                            <h6 class="bu_3_text bu_3_text_mobile mt-2">پارک علم و فناوری آذربایجان شرقی</h6>
+                            <h6 class="bu_3_text bu_3_text_mobile mt-2">{{'tabrizPark'|translate}}</h6>
                         </div>
                         <div class="col-12 col-md-4 my-2 px-4 text-center">
                             <img src="./assets/images/aras.jpg" class="mx-auto" height="80" alt="">
-                            <h6 class="bu_3_text bu_3_text_mobile mt-2">مرکز رشد ارس</h6>
+                            <h6 class="bu_3_text bu_3_text_mobile mt-2">{{'arasRoshd'|translate}}</h6>
                         </div>
                         <div class="col-12 col-md-4 my-2 px-4 text-center">
                             <img src="./assets/images/artan.jpg" class="mx-auto" height="80" alt="">
-                            <h6 class="bu_3_text bu_3_text_mobile mt-2">مجموعه آرتان</h6>
+                            <h6 class="bu_3_text bu_3_text_mobile mt-2">{{'artanComplex'|translate}}</h6>
                         </div>
                     </div>
                 </div>
@@ -200,7 +198,7 @@
 
 <ng-template #contactus let-modal>
     <div class="modal-header">
-      <h6 class="modal-title">تماس با ما</h6>
+      <h6 class="modal-title">{{'contactUs'|translate}}</h6>
       <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
@@ -215,9 +213,7 @@
                             <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/>
                             <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/>
                         </svg>
-                        <div class="bu_2_text bu_2_text_mobile Primary_100_text pe-1 col">
-                            تبریز، جاده ائل گلی، فلکه خیام، 35 متری سینا، کوچه رز، ساختمان مرکز نوآوری پارک علم و فناوری ، طبقه 2
-                        </div>
+                        <div class="bu_2_text bu_2_text_mobile Primary_100_text pe-1 col">{{'companyAddress'|translate}}</div>
                     </div>
                     <div class="row align-items-center mt-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone-inbound col-auto" viewBox="0 0 16 16">

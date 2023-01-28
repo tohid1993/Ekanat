@@ -1,17 +1,18 @@
 
-<app-page-breadcrumb [pageTitle]="'فعالیت های روزانه ' + '('+fieldName+')'" [backUrl]="'/fields/imagery/analytics/'+fieldId"></app-page-breadcrumb>
+<app-page-breadcrumb [pageTitle]="('dailyTasks'|translate) + ' ('+fieldName+') '" [backUrl]="'/fields/imagery/analytics/'+fieldId"></app-page-breadcrumb>
 
 <div class="container-fluid">
     <div class="tasks_wrapper">
 
         <div class="row">
           <div class="col-12 col-md-7">
-                <ngb-datepicker class="calendar_wrapper" [dayTemplate]="calendarDay"
+                <ngb-datepicker [class]="['calendar_wrapper',translateService.calendarDir]"
+                                [dayTemplate]="calendarDay"
                                 #dp
                                 [displayMonths]="1"
                                 [outsideDays]="'hidden'"
                                 [weekdays]="true"
-                                [firstDayOfWeek]="6"
+                                [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1"
                                 navigation="none">
               
                   <ng-template ngbDatepickerContent>
@@ -19,13 +20,13 @@
                     <div *ngFor="let month of dp.state.months">
                         <div class="row p-2">
                             <div class="col-auto d-inline-flex align-items-center">
-                                <button type="button" class="secondary_btn small_btn only_icon" (click)="navigate(-1);">
+                                <button type="button" class="secondary_btn small_btn only_icon" (click)="translateService.calendarType === 'Shamsi'? navigate(-1) : navigate(1)">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
                                         <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
                                     </svg>
                                 </button>
                                 <div class="current_month">{{ i18n.getMonthShortName(month.month) }} {{ month.year }}</div>
-                                <button type="button" class="secondary_btn small_btn only_icon" (click)="navigate(1)">
+                                <button type="button" class="secondary_btn small_btn only_icon" (click)="translateService.calendarType === 'Shamsi'? navigate(1) : navigate(-1)">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
                                         <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/>
                                     </svg>
@@ -53,7 +54,7 @@
               </div>
 
               <ul class="tasks_list mb-3" *ngIf="SelectedDayTasks.length>0">
-                <h6>لیست فعالیت ها</h6>
+                <h6>{{'tasksList'|translate}}</h6>
                 <li class="item bu_3_text bu_3_text_mobile " *ngFor="let item of SelectedDayTasks">
                   <button class="ghost_btn align-middle small_btn only_icon ms-2" (click)="removeTask(item)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
@@ -66,7 +67,7 @@
               </ul>
 
               <ul class="tasks_list mb-3" *ngIf="SelectedDayImages.length>0">
-                <h6>لیست تصاویر</h6>
+                <h6>{{'imagesList'|translate}}</h6>
                 <li class="item bu_3_text bu_3_text_mobile " *ngFor="let item of SelectedDayImages">
                   <button class="ghost_btn align-middle small_btn only_icon ms-2" (click)="removeFile(item)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
@@ -83,14 +84,14 @@
                     <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
                     <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
                   </svg>
-                  ثبت فعالیت جدید
+                  {{'createNewTask'|translate}}
                 </button>
                 <button class="secondary_btn small_btn px-3" (click)="goToNewImage()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-card-image ms-2" viewBox="0 0 16 16">
                     <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                     <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
                   </svg>
-                  ثبت تصویر جدید
+                  {{'submitNewImage'|translate}}
                 </button>
               </div>
             </div>
@@ -125,42 +126,39 @@
 <ng-template #newTaskModal let-modal let-c="close" let-d="dismiss">
   <div class="modal-header">
       <h6 class="modal-title" id="modal-basic-title">
-        ثبت فعالیت برای تاریخ <strong dir="ltr">{{dateTime.modelToString(SelectedDay)}}</strong>
+        {{'createTaskForDate'|translate}} <strong dir="ltr">{{dateTime.modelToString(SelectedDay)}}</strong>
       </h6>
       <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
     <form [formGroup]="TaskForm" (ngSubmit)="sendTask()" #FormDir="ngForm" novalidate>
       <div class="mb-3">
-        <label class="form-label">نوع فعالیت</label>
+        <label class="form-label">{{'activityType'|translate}}</label>
         <select class="form-control" formControlName="activityGroupId" (change)="getTaskFields()">
-          <option [ngValue]="null" disabled selected>انتخاب نمایید...</option>
-  
-          <!-- <optgroup [label]="'نام دسته'" *ngFor="let task of ActivityList"> -->
-            <option [ngValue]="activity.id" *ngFor="let activity of ActivityList">{{activity?.title}}</option>
-          <!-- </optgroup> -->
+          <option [ngValue]="null" disabled selected>{{'selectItem'|translate}}</option>
+          <option [ngValue]="activity.id" *ngFor="let activity of ActivityList">{{activity?.title}}</option>
         </select>
       </div>
-  
+
       <div class="mb-3" *ngIf="SelectedActivity?.types?.length>0">
         <label class="form-label">{{SelectedActivity?.typeTitle}}</label>
         <select class="form-control" formControlName="activityGroupTypeId">
-          <option [ngValue]="null" disabled selected>انتخاب نمایید...</option>
+          <option [ngValue]="null" disabled selected>{{'selectItem'|translate}}</option>
           <option [ngValue]="item.id" *ngFor="let item of SelectedActivity?.types">{{item.title}}</option>
         </select>
       </div>
 
       <div class="row mb-3">
         <div class="col-6" *ngIf="SelectedActivity?.hasValue">
-          <label class="form-label">مقدار</label>
+          <label class="form-label">{{'amount'|translate}}</label>
           <input type="text" class="form-control" formControlName="value">
         </div>
         <div class="col-6" *ngIf="SelectedActivity?.hasValueUnit">
-          <label class="form-label">واحد اندازه گیری</label>
+          <label class="form-label">{{'measurementUnit'|translate}}</label>
           <select class="form-control" formControlName="valueUnit">
-            <option [ngValue]="null" disabled selected>انتخاب نمایید...</option>
-            <option [ngValue]="1">لیتر</option>
-            <option [ngValue]="2">کیلوگرم</option>
+            <option [ngValue]="null" disabled selected>{{'selectItem'|translate}}</option>
+            <option [ngValue]="1">{{'liter'|translate}}</option>
+            <option [ngValue]="2">{{'kilogram'|translate}}</option>
           </select>
         </div>
       </div>
@@ -169,13 +167,13 @@
 
 
       <div class="mb-3" *ngIf="TaskForm.value.activityGroupId">
-        <label class="form-label">توضیحات <small class="text-danger">(اختیاری)</small></label>
+        <label class="form-label">{{'description'|translate}} <small class="text-danger">({{'optional'|translate}})</small></label>
         <textarea maxlength="250" class="form-control" rows="4" formControlName="description"></textarea>
       </div>
   
       <div class="d-flex justify-content-between">
         <button class="secondary_btn small_btn px-5" [disabled]="inProcess">
-          ذخیره فعالیت
+          {{'saveTask'|translate}}
         </button>
       </div>
     </form>
@@ -188,7 +186,7 @@
 <ng-template #newImageModal let-modal let-c="close" let-d="dismiss">
   <div class="modal-header">
       <h6 class="modal-title" id="modal-basic-title">
-        ثبت تصویر برای تاریخ <strong dir="ltr">{{dateTime.modelToString(SelectedDay)}}</strong>
+        {{'uploadImageForDate'|translate}} <strong dir="ltr">{{dateTime.modelToString(SelectedDay)}}</strong>
       </h6>
       <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
@@ -203,24 +201,24 @@
                 accept='.jpg,.jpeg,.png'
                 (change)="fileService.fileOnSelect($event,ImageForm.controls['file'],true)">
             <label for="field_image_file" class="field_image_file_btn">
-                <span>انتخاب تصویر</span>
+                <span>{{'chooseImage'|translate}}</span>
             </label>
         </div>
       </div>
       
       <div class="mb-3">
-        <label class="form-label">عنوان تصویر</label>
+        <label class="form-label">{{'imageName'|translate}}</label>
         <input class="form-control" formControlName="title">
       </div>
   
       <div class="mb-3">
-        <label class="form-label">توضیحات <small class="text-danger">(اختیاری)</small></label>
+        <label class="form-label">{{'description'|translate}} <small class="text-danger">({{'optional'|translate}})</small></label>
         <textarea maxlength="250" class="form-control" rows="4" formControlName="description"></textarea>
       </div>
   
       <div class="d-flex justify-content-between">
         <button class="secondary_btn small_btn px-5" [disabled]="inProcess">
-          ارسال تصویر
+          {{'sendImage'|translate}}
         </button>
       </div>
     </form>
@@ -231,18 +229,24 @@
 <ng-template #TaskDetailModal let-modal let-c="close" let-d="dismiss">
   <div class="modal-header">
       <h6 class="modal-title" id="modal-basic-title">
-        جزئیات فعالیت
+        {{'taskDetails'|translate}}
       </h6>
       <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
       <div class="mb-3">
-        <label class="form-label">تاریخ فعالیت</label>
-        <div class="form-control">{{TaskDetail?.dateTime?.substring(0,10)}}</div>
+        <label class="form-label">{{'taskDate'|translate}}</label>
+        <div class="form-control">
+            {{
+                translateService.calendarType==='Shamsi'?
+                TaskDetail?.dateTime?.substring(0,10) :
+                dateTime.toGeorgianDate(TaskDetail?.dateTime?.substring(0,10))
+            }}
+        </div>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">نوع فعالیت</label>
+        <label class="form-label">{{'activityType'|translate}}</label>
         <div class="form-control">{{TaskDetail?.activityGroupName}}</div>
       </div>
 
@@ -253,18 +257,18 @@
 
       <div class="row mb-3" *ngIf="TaskDetail?.value">
         <div class="col-6">
-          <label class="form-label">مقدار</label>
+          <label class="form-label">{{'amount'|translate}}</label>
           <div class="form-control">{{TaskDetail?.value}}</div>
         </div>
         <div class="col-6" *ngIf="TaskDetail?.valueUnit">
-          <label class="form-label">واحد اندازه گیری</label>
-          <div class="form-control" *ngIf="TaskDetail?.valueUnit==1">لیتر</div>
-          <div class="form-control" *ngIf="TaskDetail?.valueUnit==2">کیلوگرم</div>
+          <label class="form-label">{{'measurementUnit'|translate}}</label>
+          <div class="form-control" *ngIf="TaskDetail?.valueUnit==1">{{'liter'|translate}}</div>
+          <div class="form-control" *ngIf="TaskDetail?.valueUnit==2">{{'kilogram'|translate}}</div>
         </div>
       </div>
 
       <div class="mb-3" *ngIf="TaskDetail?.description">
-        <label class="form-label">توضیحات</label>
+        <label class="form-label">{{'description'|translate}}</label>
         <div class="form-control overflow-hidden">{{TaskDetail?.description}}</div>
 
       </div>
@@ -275,7 +279,7 @@
 <ng-template #ImageDetailModal let-modal let-c="close" let-d="dismiss">
   <div class="modal-header">
       <h6 class="modal-title" id="modal-basic-title">
-        جزئیات تصویر
+        {{'imageDetails'|translate}}
       </h6>
       <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
@@ -283,22 +287,28 @@
 
 
       <div class="mb-3">
-        <label class="form-label">عنوان تصویر</label>
+        <label class="form-label">{{'imageName'|translate}}</label>
         <div class="form-control">{{ImageDetail?.title}}</div>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">تاریخ تهیه تصویر</label>
-        <div class="form-control">{{ImageDetail?.takeFileDateTime?.substring(0,10)}}</div>
+        <label class="form-label">{{'imageTakeDate'|translate}}</label>
+        <div class="form-control">
+            {{
+                translateService.calendarType==='Shamsi'?
+                    ImageDetail?.takeFileDateTime?.substring(0,10) :
+                    dateTime.toGeorgianDate(ImageDetail?.takeFileDateTime?.substring(0,10))
+            }}
+        </div>
       </div>
 
       <div class="mb-3" *ngIf="ImageDetail?.description">
-        <label class="form-label">توضیحات</label>
+        <label class="form-label">{{'description'|translate}}</label>
         <div class="form-control overflow-hidden">{{ImageDetail?.description}}</div>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">تصویر</label>
+        <label class="form-label">{{'image'|translate}}</label>
         <img [src]="ImageDetail?.file" class="w-100" alt="">
       </div>
   </div>

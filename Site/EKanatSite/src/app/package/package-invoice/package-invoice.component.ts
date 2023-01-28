@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -7,13 +7,14 @@ import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { FieldService } from 'src/app/shared/services/field.service';
 import { PaymentService } from 'src/app/shared/services/payment.service';
 import Swal from 'sweetalert2';
+import {TranslateService} from "../../shared/services/traslate.service";
 
 @Component({
   selector: 'app-package-invoice',
   templateUrl: './package-invoice.component.html',
   styleUrls: ['./package-invoice.component.scss']
 })
-export class PackageInvoiceComponent implements OnInit {
+export class PackageInvoiceComponent implements OnInit, OnDestroy {
   
   @ViewChild('fieldsModal' , {static:true}) fieldsModal:ElementRef|undefined;
   SelectedField:FieldDetailViewModel|undefined;
@@ -35,9 +36,10 @@ export class PackageInvoiceComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private fieldService:FieldService,
     private paymentService:PaymentService,
-    private dateTimeService:DateTimeService,
+    public dateTimeService:DateTimeService,
     private router:Router,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    public translateService:TranslateService
   ) {
     this.route.queryParams.subscribe(params=>{this.fieldId = params['fieldId']})
   }
@@ -110,7 +112,7 @@ export class PackageInvoiceComponent implements OnInit {
             if(this.FieldPhenologiesList.length==0){
               Swal.fire({
                 icon:"info",
-                text:"برای این محصول در استان شما دوره ی رشدی تعریف نشده است، لطفا با شماره 09304916440 تماس بگیرید"
+                text:this.translateService.translate('callToSupportForProductGrowthPeriod')
               })
             }else{
               this.SubmitPlaceOrder();
@@ -162,22 +164,19 @@ export class PackageInvoiceComponent implements OnInit {
       let startPeriod = new Date(_startPeriod).getTime();
 
       if(orderDate-cultivationDate>0 && orderDate-startPeriod>0){
+        let text:string = this.translateService.translate('packageDescriptionTemplate')
+        text = text.replace('"text1"',`«${this.SelectedField.name}»`)
+        text = text.replace('"text1"',`«${this.SelectedField.name}»`)
+        text = text.replace('"text2"',`<span dir="ltr" class="d-inline-block">«${this.translateService.calendarType === 'Shamsi' ? this.OrderDetail.packageStartDate : this.dateTimeService.toGeorgianDate(this.OrderDetail.packageStartDate)}»</span>`)
+        text = text.replace('"text3"',`<span dir="ltr" class="d-inline-block">«${this.translateService.calendarType === 'Shamsi' ? this.OrderDetail.packageEndDate : this.dateTimeService.toGeorgianDate(this.OrderDetail.packageEndDate)}»</span>`)
+        text = text.replace('"text4"',`<span dir="ltr" class="d-inline-block">«${this.translateService.calendarType === 'Shamsi' ? this.OrderDetail.packageStartDate : this.dateTimeService.toGeorgianDate(this.OrderDetail.packageStartDate)}»</span>`)
+        text = text.replace('"text5"',`<span dir="ltr" class="d-inline-block">«${this.translateService.calendarType === 'Shamsi' ? this.OrderDetail.orderDate : this.dateTimeService.toGeorgianDate(this.OrderDetail.orderDate)}»</span>`)
+
         Swal.fire({
-          html:` کاربر گرامی، خدمات پایش برای زمین 
-          «${this.SelectedField.name}» 
-          از تاریخ 
-          <span dir="ltr" class="d-inline-block">${this.OrderDetail.packageStartDate}</span> 
-          تا تاریخ 
-          <span dir="ltr" class="d-inline-block">${this.OrderDetail.packageEndDate}</span> 
-          قابل فعالسازی میباشد و گزارش تحلیل زمین 
-          «${this.SelectedField.name}» 
-          از تاریخ 
-          <span dir="ltr" class="d-inline-block">${this.OrderDetail.packageStartDate}</span> 
-          تا تاریخ 
-          <span dir="ltr" class="d-inline-block">${this.OrderDetail.orderDate}</span> 
-          طی یک هفته اتی در میز کار زمین شما قابل مشاهده خواهد بود.`,
+          html:text,
           icon:'info'
         })
+
       }
     }
   }
@@ -198,6 +197,10 @@ export class PackageInvoiceComponent implements OnInit {
           }
         }
       })
+  }
+
+  ngOnDestroy(): void {
+
   }
 
 }

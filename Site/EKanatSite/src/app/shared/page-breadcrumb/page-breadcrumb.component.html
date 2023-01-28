@@ -2,7 +2,7 @@
     <h2 class="page_title heading_level_4 heading_level_4_mobile">
         {{pageTitle}}
         
-        <a *ngIf="backUrl" [routerLink]="[backUrl]">بازگشت</a>
+        <a *ngIf="backUrl" [routerLink]="[backUrl]">{{'back'|translate}}</a>
         <ng-content></ng-content>
     </h2>
 </div>

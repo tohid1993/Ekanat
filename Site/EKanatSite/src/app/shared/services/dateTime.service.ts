@@ -63,6 +63,19 @@ export class DateTimeService {
 
 
   /**
+   * تبدیل تاریخ و ساعت به میلادی
+   * @param date تاریخ و ساعت به صورت استرینگ
+   */
+  toGeorgianDateTimeCustomFormat(date:string , format:string = "YYYY-M-D HH:mm:ss" , outPutFormat:string = "YYYY/M/D HH:mm:ss")
+  {
+    let dt =  moment(date, format)
+        .locale('en')
+        .format(outPutFormat);
+    return dt;
+  }
+
+
+  /**
    * تبدیل تاریخ به میلادی
    * @param date تاریخ شمسی به صورت استرینگ
    */

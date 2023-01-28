@@ -1,5 +1,5 @@
 <app-page-breadcrumb
-  [pageTitle]="'لیست تراکنش های بانکی'"
+  [pageTitle]="'bankTransactionsList'|translate"
   [backUrl]="''"
 ></app-page-breadcrumb>
 
@@ -8,34 +8,34 @@
         <table class="table_fn no_wrap hover">
             <thead>
                 <tr>
-                    <th>مبلغ پرداختی</th>
-                    <th>تاریخ سفارش</th>
-                    <th>نوع سرویس</th>
-                    <th>تاریخ شروع</th>
-                    <th>تاریخ پایان</th>
+                    <th>{{'paidAmount'|translate}}</th>
+                    <th>{{'orderDate'|translate}}</th>
+                    <th>{{'serviceType'|translate}}</th>
+                    <th>{{'serviceStartDate'|translate}}</th>
+                    <th>{{'serviceEndDate'|translate}}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let item of TransactionsList">
 
-                    <td data-label="مبلغ پرداختی">
-                        {{item.amount|number}} <small>ریال</small>
+                    <td attr.data-label="{{'paidAmount'|translate}}">
+                        {{item.amount|number}} <small>{{'rial'|translate}}</small>
                     </td>
-                    <td data-label="تاریخ سفارش">
-                        {{item.orderDateTime}}
+                    <td attr.data-label="{{'orderDate'|translate}}">
+                        {{translateService.calendarType==='Shamsi'?item.orderDateTime:dateTime.toGeorgianDate(item.orderDateTime)}}
                     </td>
-                    <td data-label="نوع سرویس">
-                        پکیج استادارد برای "{{item.fieldName}}"
+                    <td attr.data-label="{{'serviceType'|translate}}">
+                        {{'standardPackage'|translate}} "{{item.fieldName}}"
                     </td>
-                    <td data-label="تاریخ شروع">
-                        {{item.packageStartDate}}
+                    <td attr.data-label="{{'serviceStartDate'|translate}}">
+                        {{translateService.calendarType==='Shamsi'?item.packageStartDate:dateTime.toGeorgianDate(item.packageStartDate)}}
                     </td>
-                    <td data-label="تاریخ پایان">
-                        {{item.packageEndDate}}
+                    <td attr.data-label="{{'serviceEndDate'|translate}}">
+                        {{translateService.calendarType==='Shamsi'?item.packageEndDate:dateTime.toGeorgianDate(item.packageEndDate)}}
                     </td>
                 </tr>
                 <tr *ngIf="TransactionsList.length==0">
-                    <td colspan="5" class="text-center">موردی یافت نشد</td>
+                    <td colspan="5" class="text-center">{{'notFound'|translate}}</td>
                 </tr>
             </tbody>
         </table>

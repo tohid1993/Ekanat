@@ -15,6 +15,7 @@ import { GeneralService } from 'src/app/shared/services/general.service';
 import { NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { EChartsOption } from 'echarts';
+import {TranslateService} from "../../shared/services/traslate.service";
 import { liveQuery } from 'dexie';
 import { db } from '../../../db/indexedDB';
 
@@ -81,7 +82,8 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     private toastr:ToastrService,
     private gService:GeneralService,
     private modalService: NgbModal,
-    private router:Router
+    private router:Router,
+    public translateService:TranslateService
   ) {
     this.route.params.subscribe(
       params=>{
@@ -197,7 +199,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
 
 /**
- * دریافت عکس شاخص
+ * recive indicator image
  * @param key indicator type
  * @param imageIndex image index
  */
@@ -209,8 +211,13 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     if(!key) return;
     this.beforeIndicatorProcess();
 
-    let fromDate = this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.fromDate));
-    let toDate = this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate));
+    let fromDate = this.translateService.calendarType==='Shamsi'?
+        this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.fromDate)) :
+        this.dateTimeService.modelToString(this.fromDate);
+
+    let toDate = this.translateService.calendarType==='Shamsi'?
+        this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate)) :
+        this.dateTimeService.modelToString(this.toDate);
 
     this.spinner.show();
 
@@ -258,7 +265,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
                 self.indicatorDetails.legendRange
             ).finally()
           }else{
-            self.toastr.error("تصویری برای این بازه زمانی یافت نشد");
+            self.toastr.error(self.translateService.translate('noImageFoundForThisTimeFrame'));
           }
 
           self.spinner.hide();
@@ -279,7 +286,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
 
-  // عملیات های قبل از درخواست شاخص ها
+  // pre operations before request indicator
   beforeIndicatorProcess(){
     let toDate = new Date(new Date().setDate(new Date().getDate()));
     let fromDate = new Date(new Date().setMonth(toDate.getMonth() - 1));
@@ -303,7 +310,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
 
-  // ایجاد چند ضلعی با استفاده از geoJson
+  // generate polygon by geoJson
   addPolygonToMap(coordinates:any){
     if(this.map){
       if(this.drawnItems)
@@ -323,7 +330,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
 
-  // اضافه کردن تصویر شاخص به نقشه
+  // add indicator image to map
   addImageToMap(imageUrl:string,cords:any[]){
 
     this.loadEECanvas(imageUrl);
@@ -407,7 +414,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   context2:any;
   colors:any[] = [];
 
-  // بارگیری تصویر شاخص
+  // load indicator image
   loadEECanvas(imgUrl:string){
     const eeImg = new Image();
     eeImg.crossOrigin = "Anonymous";
@@ -427,7 +434,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     eeImg.src = imgUrl;
   }
 
-  // بارگیری راهنما
+  // load legend image
   loadLegend(imgUrl:string){
     const legendImg = new Image();
     legendImg.crossOrigin = "Anonymous";
@@ -455,7 +462,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
 
-  // گرفتن مقدار شاخص
+  // get indicator point value
   getValueOfPoint(x:number,y:number){
     try {
       let color = this.getRGBA(x,y,'ee');
@@ -463,24 +470,14 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       let finalValueOfPoint = undefined;
 
       if(index>=0){
-          // let value = ((this.colors.length/2)-index)/(this.colors.length/2);
           let value = ((index/(this.colors.length-1)) * (this.indicatorDetails.legendRange[1] - this.indicatorDetails.legendRange[0])) + this.indicatorDetails.legendRange[0];
-          // let mode = value*100%5
-          // let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
-
-          finalValueOfPoint = value.toFixed(2); //finalValue;
+          finalValueOfPoint = value.toFixed(2); ;
       }else{
           let flag = false;
           for(let index = 0 ; index<this.colors.length ; index++) {
               if(this.isNeighborColor(this.colors[index],color,30)){
-
-                  // let value = ((this.colors.length/2)-index)/(this.colors.length/2);
                   let value = ((index/(this.colors.length-1)) * (this.indicatorDetails.legendRange[1] - this.indicatorDetails.legendRange[0])) + this.indicatorDetails.legendRange[0];
-                  // let mode = value*100%5
-                  // let finalValue = (mode>3)? ((value*100)+(5-mode))/100 : ((value*100)-mode)/100;
-
-                  finalValueOfPoint = value.toFixed(2) //finalValue;
-
+                  finalValueOfPoint = value.toFixed(2);
                   flag = true;
                   break;
               }
@@ -490,8 +487,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
               finalValueOfPoint = undefined;
           }
       }
-      console.log(finalValueOfPoint);
-      
+
       return finalValueOfPoint;
     } catch (error) {
       return -2;
@@ -499,19 +495,19 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
 
-  // گرفتن رنگ یک نقطه
+  // take point color
   getRGBA(x:number,y:number,img:string):any{
     try {
       const {data} = img=='legend'? this.context2.getImageData(x,y, 1, 1) : this.context.getImageData(x,y, 1, 1);;
-      var color = Array.from(data);
+      let color = Array.from(data);
       return color;
     } catch (error) {
-
+      console.log(error)
     }
   }
 
 
-  // تشخیص نزدیکترین رنگ
+  // get neariest color
   isNeighborColor(color1:number[], color2:number[], tolerance:number) {
     if(tolerance == undefined) {
         tolerance = 32;
@@ -570,11 +566,10 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   showPackageAlert(){
     if(!this.hasPackage){
       Swal.fire({
-        // title:"",
-        text:"برای دسترسی به امکانات بیشتر از جمله تحلیل شاخص ها و وضعیت آب و هوایی و ... ، باید برای این زمین کشاورزی پکیج استاندارد خریداری شود",
+        text:this.translateService.translate('needPackageMessage'),
         icon:"warning",
-        cancelButtonText:"متوجه شدم",
-        confirmButtonText:"خرید پکیج",
+        cancelButtonText: this.translateService.translate('dismissLabel'),
+        confirmButtonText: this.translateService.translate('buyPlane'),
         showCancelButton:true
       }).then((result) => {
         if (result.isConfirmed) {
@@ -607,28 +602,15 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   generateCharts(res:any){
-
-
-    // const prLabel:string[] = [];
-    // const prValue:number[] = [];
-
     const tLabel:string[] = [];
     const tValue:number[] = [];
-
-    // res.pr.forEach((item:any) => {
-    //   prLabel.push(this.dateTimeService.toJalaliDate(item[0]));
-    //   prValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
-    // });
-
 
     res.forEach((item:any) => {
       tLabel.push(this.dateTimeService.toJalaliDate(item[0]));
       tValue.push(item[1]);
     });
 
-
     this.showCharts = true
-
 
     this.options1 = {
       textStyle:{
@@ -642,8 +624,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
             backgroundColor: '#6a7985'
           }
         },
-        // <span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} میلی متر
-        formatter: "<strong>{b}</strong><br>{a0}: {c0}", //{a1}: {c1}<br>
+        formatter: "<strong>{b}</strong><br>{a0}: {c0}",
         textStyle:{
             fontFamily:'Vazir',
             align:'right',

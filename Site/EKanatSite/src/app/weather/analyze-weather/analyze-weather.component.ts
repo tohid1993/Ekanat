@@ -6,6 +6,7 @@ import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { EeService } from 'src/app/shared/services/ee.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import Swal from 'sweetalert2';
+import {TranslateService} from "../../shared/services/traslate.service";
 
 
 @Component({
@@ -23,18 +24,24 @@ export class AnalyzeWeatherComponent implements OnInit {
 
     showCharts:boolean = false;
 
+    translateUnsub:any
 
     constructor(
       private gService:GeneralService,
       private eeService:EeService,
       private dateTimeService:DateTimeService,
       private spinner: NgxSpinnerService,
-      private router:Router
+      private router:Router,
+      private translateService:TranslateService
     ) { }
   
-    ngOnInit(): void {    
-      if(this.hasPackage)  
+    ngOnInit(): void {
+      if(this.hasPackage)
         this.getPastWeather();
+    }
+
+    ngOnDestroy(): void {
+
     }
 
     getPastWeather(){
@@ -76,17 +83,13 @@ export class AnalyzeWeatherComponent implements OnInit {
       const tMaxValue:number[] = [];
 
       res.pr.forEach((item:any) => {
-        console.log(this.dateTimeService.toJalaliDate(item[0]));
-        
-        prLabel.push(this.dateTimeService.toJalaliDate(item[0]));
+        prLabel.push(this.translateService.calendarType === 'Shamsi'? this.dateTimeService.toJalaliDate(item[0]) : item[0]);
         prValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
       });
 
 
       res.tMax.forEach((item:any) => {
-        console.log(this.dateTimeService.toJalaliDate(item[0]));
-        
-        tLabel.push(this.dateTimeService.toJalaliDate(item[0]));
+        tLabel.push(this.translateService.calendarType === 'Shamsi'? this.dateTimeService.toJalaliDate(item[0]) : item[0]);
         tMaxValue.push(Math.round((item[1] + Number.EPSILON) * 100) / 100);
       });
 
@@ -99,7 +102,7 @@ export class AnalyzeWeatherComponent implements OnInit {
           fontFamily:'Vazir',
         },
         legend: {
-          data: ['بارندگی'],
+          data: [this.translateService.translate('rainfall')],
           align: 'left',
 
         },
@@ -119,7 +122,7 @@ export class AnalyzeWeatherComponent implements OnInit {
               }
             },
 
-            formatter: "<span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} میلی متر",
+            formatter: "<span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} " + this.translateService.translate('millimeter'),
             textStyle:{
                 fontFamily:'Vazir',
                 align:'right',
@@ -160,7 +163,6 @@ export class AnalyzeWeatherComponent implements OnInit {
               backgroundColor: '#6a7985'
             }
           },
-          // <span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} میلی متر
           formatter: "<strong>{b}</strong><br>{a1}: {c1}<br>{a0}: {c0}",
           textStyle:{
               fontFamily:'Vazir',
@@ -169,7 +171,7 @@ export class AnalyzeWeatherComponent implements OnInit {
           }
         },
         legend: {
-          data: ['کمترین دما','بیشترین دما'],
+          data: [this.translateService.translate('lowTemporary') , this.translateService.translate('highTemporary')],
           top: '0px'
         },
         grid: {
@@ -193,13 +195,13 @@ export class AnalyzeWeatherComponent implements OnInit {
         ],
         series: [
           {
-            name: 'کمترین دما',
+            name: this.translateService.translate('lowTemporary'),
             type: 'line',
             areaStyle: { opacity:0 },
             data: tMinValue
           },
           {
-            name: 'بیشترین دما',
+            name: this.translateService.translate('highTemporary'),
             type: 'line',
             stack: 'counts',
             areaStyle: { opacity:0 },
@@ -213,11 +215,10 @@ export class AnalyzeWeatherComponent implements OnInit {
     showPackageAlert(){
       if(!this.hasPackage){
         Swal.fire({
-          // title:"",
-          text:"برای دسترسی به امکانات بیشتر از جمله تحلیل شاخص ها و وضعیت آب و هوایی و ... ، باید برای این زمین کشاورزی پکیج استاندارد خریداری شود",
+          text:this.translateService.translate('needPackageMessage'),
           icon:"warning",
-          cancelButtonText:"متوجه شدم",
-          confirmButtonText:"خرید پکیج",
+          cancelButtonText:this.translateService.translate('dismissLabel'),
+          confirmButtonText:this.translateService.translate('buyPlane'),
           showCancelButton:true
         }).then((result) => {
           if (result.isConfirmed) {
