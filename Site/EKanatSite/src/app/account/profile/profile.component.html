@@ -1,4 +1,4 @@
-<app-page-breadcrumb [pageTitle]="'ویرایش پروفایل'" [backUrl]="'/dashboard'"></app-page-breadcrumb>
+<app-page-breadcrumb [pageTitle]="'editProfile'|translate" [backUrl]="'/dashboard'"></app-page-breadcrumb>
 
 <div class="container-fluid">
     <div class="profile_form_wrapper pb-5">
@@ -14,89 +14,76 @@
                                 accept='.jpg,.jpeg,.png'
                                 (change)="fileService.fileOnSelect($event,ProfileForm.controls['image'],true)">
                             <label for="profile_image_file" class="profile_image_file_btn">
-                                <span>انتخاب تصویر</span>
+                                <span>{{'chooseImage'|translate}}</span>
                             </label>
                         </div>
                     </div>
     
     
                     <div class="col-12 col-md-6 mt-3">
-                        <label for="firstName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نام</label>
+                        <label for="firstName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'firstName'|translate}}</label>
                         <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="firstName" dir="rtl" id="firstName" autocomplete="off">
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','firstName')">وارد کردن این فیلد الزامی میباشد</small>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','firstName')">{{'fieldRequiredErrorMessage'|translate}}</small>
                     </div>
                     <div class="col-12 col-md-6 mt-3">
-                        <label for="lastName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">نام خانوادگی</label>
+                        <label for="lastName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'lastName'|translate}}</label>
                         <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="lastName" dir="rtl" id="lastName" autocomplete="off">
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','lastName')">وارد کردن این فیلد الزامی میباشد</small>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','lastName')">{{'fieldRequiredErrorMessage'|translate}}</small>
                     </div>
                     <div class="col-12 col-md-6 mt-3">
-                        <label for="email" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">ایمیل <small>(اختیاری)</small></label>
+                        <label for="email" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'email'|translate}} <small>({{'optional'|translate}})</small></label>
                         <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="email" dir="ltr" id="email" autocomplete="off">
                     </div>
                     <div class="col-12 col-md-6 mt-3">
-                        <label for="mobile" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شماره موبایل</label>
+                        <label for="mobile" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'mobileNumber'|translate}}</label>
                         <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" readonly [value]="findCountryCode() + (ProfileForm.value.userName || '')" dir="ltr" id="mobile" autocomplete="off">
                     </div>
 
 
-                    <!-- <div class="col-12 col-md-6 mt-3">
-                        <label for="nationalCode" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">کد ملی <small>(اختیاری)</small></label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="nationalCode" dir="rtl" id="nationalCode" maxlength="10" autocomplete="off">
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','nationalCode')">وارد کردن این فیلد الزامی میباشد</small>
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('pattern','nationalCode')">ورودی نامعتبر است</small>
-                    </div> -->
-                    <!-- <div class="col-12 col-md-6 mt-3">
-                        <label for="phone" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شماره تلفن <small>(اختیاری)</small></label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="phone" dir="rtl" id="phone" autocomplete="off">
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','phone')">وارد کردن این فیلد الزامی میباشد</small>
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('pattern','phone')">ورودی نامعتبر است</small>
-                    </div> -->
-
                     <div class="col-12 col-md-6 mt-3">
-                        <label for="countryId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">کشور</label>
+                        <label for="countryId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'country'|translate}}</label>
                         <select class="form-control form-control-lg bu_2_text bu_2_text_mobile" (change)="LoadProvincesList()"
                             formControlName="countryId" id="countryId">
                             <option [ngValue]="country.id" *ngFor="let country of CountriesList">{{country.title}}</option>
                         </select>
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','countryId')">وارد کردن این فیلد الزامی میباشد</small>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','countryId')">{{'fieldRequiredErrorMessage'|translate}}</small>
 
                     </div>
                     <div class="col-12 col-md-6 mt-3">
-                        <label for="provinceId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">استان</label>
+                        <label for="provinceId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'province'|translate}}</label>
                         <select class="form-control form-control-lg bu_2_text bu_2_text_mobile" (change)="LoadCitiesList()"
                             formControlName="provinceId" id="provinceId">
                             <option [ngValue]="province.id" *ngFor="let province of ProvincesList">{{province.title}}</option>
                         </select>
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','provinceId')">وارد کردن این فیلد الزامی میباشد</small>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','provinceId')">{{'fieldRequiredErrorMessage'|translate}}</small>
 
                     </div>
                     <div class="col-12 col-md-6 mt-3">
-                        <label for="cityId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">شهر</label>
+                        <label for="cityId" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'city'|translate}}</label>
                         <select class="form-control form-control-lg bu_2_text bu_2_text_mobile"
                             formControlName="cityId" id="cityId">
                             <option [ngValue]="city.id" *ngFor="let city of CitiesList">{{city.title}}</option>
                         </select>
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','cityId')">وارد کردن این فیلد الزامی میباشد</small>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','cityId')">{{'fieldRequiredErrorMessage'|translate}}</small>
 
                     </div>
                     <div class="col-12 col-md-6 mt-3">
-                        <label for="villageName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">روستا</label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="villageName"  autocomplete="off">
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','villageName')">وارد کردن این فیلد الزامی میباشد</small>
+                        <label for="villageName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'village'|translate}}</label>
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" id="villageName" formControlName="villageName"  autocomplete="off">
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','villageName')">{{'fieldRequiredErrorMessage'|translate}}</small>
 
                     </div>
                     <div class="col-12 mt-3">
-                        <label for="address" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">آدرس</label>
+                        <label for="address" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'address'|translate}}</label>
                         <textarea class="form-control form-control-lg bu_2_text bu_2_text_mobile" formControlName="address" id="address">
                         </textarea>
-                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','address')">وارد کردن این فیلد الزامی میباشد</small>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','address')">{{'fieldRequiredErrorMessage'|translate}}</small>
 
                     </div>
     
                     <div class="col-12 mt-3 row px-0">
                         <div class="col-auto px-0 me-auto">
-                            <button type="submit" class="primary_btn medium_btn">ذخیره پروفایل</button>
+                            <button type="submit" class="primary_btn medium_btn">{{'saveInformation'|translate}}</button>
                         </div>
                     </div>
                 </div>

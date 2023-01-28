@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { DateTimeService } from 'src/app/shared/services/dateTime.service';
+import {TranslateService} from "../../shared/services/traslate.service";
 
 @Component({
   selector: 'app-current-weather',
@@ -17,17 +17,24 @@ export class CurrentWeatherComponent implements OnInit {
   CurrentDateTime:string|undefined;
 
   constructor(
-    private dateTimeService:DateTimeService
+    private dateTimeService:DateTimeService,
+    private translateService:TranslateService
   ) { }
 
   ngOnInit(): void {
-    this.CurrentDateTime =
-      this.dateTimeService.toJalaliDateTimeCustomFormat(
-      this.dateTimeService.timeStampToDateTime(this.CurrentWeather.dt*1000) , "M/D/YYYY HH:mm:ss" , "dddd D MMM YYYY - HH:mm"
-    );
+    if(this.translateService.calendarType === 'Shamsi'){
+      this.CurrentDateTime =
+          this.dateTimeService.toJalaliDateTimeCustomFormat(
+              this.dateTimeService.timeStampToDateTime(this.CurrentWeather.dt*1000) , "M/D/YYYY HH:mm:ss" , "dddd D MMM YYYY - HH:mm"
+          );
+    }
+    if(this.translateService.calendarType === 'Georgian'){
+      this.CurrentDateTime =
+          this.dateTimeService.toGeorgianDateTimeCustomFormat(
+              this.dateTimeService.timeStampToDateTime(this.CurrentWeather.dt*1000) , "M/D/YYYY HH:mm:ss" , "dddd MMM D YYYY - HH:mm"
+          );
+    }
   }
-
-
 
   getTime(timeStamp:number){
     let time = new Date(timeStamp*1000);

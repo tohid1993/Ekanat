@@ -6,6 +6,7 @@ import { FileService } from 'src/app/shared/services/file.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { LocationService } from 'src/app/shared/services/location.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import {TranslateService} from "../../shared/services/traslate.service";
 
 @Component({
   selector: 'app-profile',
@@ -29,7 +30,8 @@ export class ProfileComponent implements OnInit {
     private userService:UserService,
     private spinner:NgxSpinnerService,
     private locationService:LocationService,
-    private gService:GeneralService
+    private gService:GeneralService,
+    private translateService:TranslateService
   ) {
     this.ProfileForm = new FormGroup(
       {
@@ -101,7 +103,14 @@ export class ProfileComponent implements OnInit {
       complete(){
           self.userService.loadUserDetails();
           self.spinner.hide();
-          self.gService.showSuccessToastr("پروفایل با موفقیت ویرایش شد");
+
+          self.translateService.data.subscribe({
+              next:(data)=>{
+                  self.gService.showSuccessToastr(data['profileUpdated'] || 'profileUpdated');
+              }
+          })
+
+
       }
     })
   }
@@ -126,6 +135,7 @@ export class ProfileComponent implements OnInit {
 
 
   setAddressDetails(){
+    if(this.CountriesList.length===0) return
     if(this.ProfileForm.value.countryId) this.LoadProvincesList(false);
     if(this.ProfileForm.value.provinceId) this.LoadCitiesList(false);
     // if(this.ProfileForm.value.cityId) this.LoadVillagsList(false);

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneralService } from 'src/app/shared/services/general.service';
+import {TranslateService} from "../../shared/services/traslate.service";
+import {DateTimeService} from "../../shared/services/dateTime.service";
 
 @Component({
   selector: 'app-transactions-list',
@@ -11,7 +13,9 @@ export class TransactionsListComponent implements OnInit {
   TransactionsList:any[] = [];
 
   constructor(
-    private gService:GeneralService
+    private gService:GeneralService,
+    public translateService:TranslateService,
+    public dateTime:DateTimeService
   ){}
 
   ngOnInit(): void {

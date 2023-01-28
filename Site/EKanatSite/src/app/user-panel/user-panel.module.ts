@@ -5,6 +5,8 @@ import { AuthGuard } from '../shared/services/auth-guard.service';
 import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserPanelComponent } from './user-panel.component';
+import {TranslatePipe} from "../shared/pipe/translate.pipe";
+import {AppModule} from "../app.module";
 
 const routes: Routes = [
 
@@ -35,7 +37,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes ),
+    RouterModule.forChild(routes),
     SharedModule,
   ]
 })

@@ -9,6 +9,7 @@ import { DateTimeService } from 'src/app/shared/services/dateTime.service';
 import { FileService } from 'src/app/shared/services/file.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import Swal from 'sweetalert2';
+import {TranslateService} from "../../shared/services/traslate.service";
 
 @Component({
   selector: 'app-tasks',
@@ -75,7 +76,8 @@ export class TasksComponent implements OnInit {
     config: NgbModalConfig, 
     private modalService: NgbModal,
     private gService:GeneralService,
-    public fileService:FileService
+    public fileService:FileService,
+    public translateService:TranslateService
   ) {
     this.route.params.subscribe(
       params=>{
@@ -94,9 +96,23 @@ export class TasksComponent implements OnInit {
   }
 
   setStartEndDates(){
-    this.firstDayDate = this.dateTime.toGeorgianDate(this.dateTime.modelToString({year:this.SelectedDay.year , month:this.SelectedDay.month , day:1}))
-    this.endDayDate = this.dateTime.toGeorgianDate(this.dateTime.modelToString({year:this.SelectedDay.year , month:this.SelectedDay.month , day:(this.SelectedDay.month<=6?31:30)}))
+    this.firstDayDate = this.checkAndConvertToGeorgian({year:this.SelectedDay.year , month:this.SelectedDay.month , day:1})
+    this.endDayDate = this.checkAndConvertToGeorgian(
+        {
+          year:this.SelectedDay.year ,
+          month:this.SelectedDay.month ,
+          day: this.translateService.calendarType==='Shamsi'? (this.SelectedDay.month<=6?31:30) : new Date(this.SelectedDay.year, this.SelectedDay.month, 0).getDate()
+        })
     this.getSubmitedItemsList();
+  }
+
+  /***
+   * convert to Georgian
+   * @param date
+   */
+  checkAndConvertToGeorgian(date:DateModel){
+    let dateString = this.dateTime.modelToString(date)
+    return this.translateService.calendarType === 'Shamsi' ? this.dateTime.toGeorgianDate(dateString) : dateString
   }
 
   navigate(number: number) {
@@ -114,23 +130,25 @@ export class TasksComponent implements OnInit {
   }
 
   dayHasTask(date:DateModel){
-    let gDate = this.dateTime.toJalaliDate(this.dateTime.toGeorgianDate(date.year+"-"+date.month+"-"+date.day));
+    let gDate = this.dateTime.toJalaliDate(this.checkAndConvertToGeorgian(date));
     let tasks = this.SubmitedTasksList.filter((task:any)=>(task.dateTime.substring(0,10)==gDate));
-    
+
     return tasks;
   }
 
   dayHasImage(date:DateModel){
-    let gDate = this.dateTime.toJalaliDate(this.dateTime.toGeorgianDate(date.year+"-"+date.month+"-"+date.day));
+    let gDate = this.dateTime.toJalaliDate(this.checkAndConvertToGeorgian(date));
     let images = this.SubmitedImagesList.filter((image:any)=>(image.takeFileDateTime.substring(0,10)==gDate));
-    
+
     return images;
   }
 
 
   getSelectedDateByFormat(date:string){
-    
-    return this.dateTime.toJalaliDateTimeCustomFormat(this.dateTime.toGeorgianDate(date) , 'YYYY-MM-DD' , 'MMM YYYY, dddd');
+
+    return this.translateService.calendarType==='Shamsi'?
+              this.dateTime.toJalaliDateTimeCustomFormat(this.dateTime.toGeorgianDate(date) , 'YYYY-MM-DD' , 'MMM YYYY, dddd'):
+              this.dateTime.toGeorgianDateTimeCustomFormat(date , 'YYYY-MM-DD' , 'MMM YYYY, dddd');
   }
 
 
@@ -209,7 +227,7 @@ export class TasksComponent implements OnInit {
             if(res.isSuccess){
               this.getSubmitedItemsList();
               this.TaskForm.reset();
-              this.gService.showSuccessToastr('فعالیت با موفقیت ثبت شد');
+              this.gService.showSuccessToastr(this.translateService.translate('taskCreatedSuccessfully'));
               this.modalService.dismissAll();
               this.inProcess = false;
             }
@@ -226,11 +244,11 @@ export class TasksComponent implements OnInit {
   removeTask(task:any){
    Swal.fire({
     icon:'warning',
-    text:`آیا از حذف فعالیت ${task.activityGroupName} مطمن هستید؟`,
+    text: this.translateService.translate('removeActivityGroupNameAlertMessage').replace('"activityGroupName"',task.activityGroupName),
     showCancelButton:true,
-    cancelButtonText:"خیر",
+    cancelButtonText:this.translateService.translate('noLabel'),
     showConfirmButton:true,
-    confirmButtonText:'بله'
+    confirmButtonText:this.translateService.translate('yesLabel')
    }).
     then(res=>{
       if(res.isConfirmed){
@@ -238,7 +256,7 @@ export class TasksComponent implements OnInit {
           .subscribe({
             next:(res:any)=>{
               if(res.isSuccess){
-                this.gService.showSuccessToastr("فعالیت با موفقیت حذف شد");
+                this.gService.showSuccessToastr(this.translateService.translate('taskRemovedSuccessfully'));
                 this.getSubmitedItemsList();
               }
             }
@@ -251,11 +269,11 @@ export class TasksComponent implements OnInit {
   removeFile(file:any){
     Swal.fire({
      icon:'warning',
-     text:`آیا از حذف فایل ${file.title} مطمن هستید؟`,
+     text: this.translateService.translate('removeFileAlertMessage').replace('"fileName"',file.title),
      showCancelButton:true,
-     cancelButtonText:"خیر",
+     cancelButtonText:this.translateService.translate('noLabel'),
      showConfirmButton:true,
-     confirmButtonText:'بله'
+     confirmButtonText:this.translateService.translate('yesLabel')
     }).
      then(res=>{
        if(res.isConfirmed){
@@ -263,7 +281,7 @@ export class TasksComponent implements OnInit {
            .subscribe({
              next:(res:any)=>{
                if(res.isSuccess){
-                 this.gService.showSuccessToastr("فایل با موفقیت حذف شد");
+                 this.gService.showSuccessToastr(this.translateService.translate('fileRemovedSuccessfully'));
                  this.getSubmitedItemsList();
                }
              }
@@ -320,7 +338,7 @@ export class TasksComponent implements OnInit {
             if(res.isSuccess){
               this.getSubmitedItemsList();
               this.ImageForm.reset();
-              this.gService.showSuccessToastr('تصویر با موفقیت ثبت شد');
+              this.gService.showSuccessToastr(this.translateService.translate('imageCreatedSuccessfully'));
               this.modalService.dismissAll();
               this.inProcess = false;
             }

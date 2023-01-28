@@ -13,31 +13,12 @@ import { UserService } from '../shared/services/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  CarouselItems = [
-    {
-      title:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ ",
-      text:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده ",
-      imageUrl:"./assets/images/carousel/4.jpg"
-    },
-    {
-      title:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ ",
-      text:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده ",
-      imageUrl:"./assets/images/carousel/2.jpg"
-    },
-    {
-      title:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ ",
-      text:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده ",
-      imageUrl:"./assets/images/carousel/3.jpg"
-    }
-  
-  ];
-
   LoginForm:FormGroup;
 
   vCodeSent:boolean = false;
   retryRequestCode:boolean = false;
 
-  CountriesCodes:any[] = [{code:'+98',id:1,icon:'ir',title:'ایران'}];
+  CountriesCodes:any[] = [{code:'+98',id:1,icon:'ir',title:'Iran'}];
 
 
 
@@ -51,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.LoginForm = new FormGroup({
       mobile:new FormControl(null,[Validators.required , Validators.pattern("[\u06F1-\u06F9,1-9]{1}[\u06F0-\u06F9,0-9]{9}[\u06F0-\u06F9,0-9]*")]),
       code:new FormControl(null,[]),
-      countryCode:new FormControl("+98",[Validators.required]), // پیشفرض ایران 
+      countryCode:new FormControl("+98",[Validators.required]), // default Iran
     })
   }
 

@@ -5,9 +5,6 @@
 @import "./assets/scss/_importedStyles";
 
 
-
-
-
 .login_page_carousel{
     .carousel-inner{
         height: 100%;
@@ -266,6 +263,24 @@ ngb-modal-backdrop{
 
             &:hover{
                 background-color: $Green_25;
+            }
+        }
+    }
+
+    &.ltr{
+        .ngb-dp-weekday{
+            &:not(:last-child){
+                border-left: unset;
+                border-right: 1px solid $Primary_20;
+            }
+        }
+
+        .ngb-dp-week {
+            .ngb-dp-day {
+                &:not(:last-child) {
+                    border-right: 1px solid $Primary_20;
+                    border-left: unset;
+                }
             }
         }
     }

@@ -5,8 +5,8 @@
                 <ngb-panel [disabled]="!hasPackage">
                   <ng-template ngbPanelTitle>
                     <span class="primary_text primary_text_mobile text-center">
-                      میزان بارش در یک ماه اخیر
-                      <span class="btn btn-sm btn-warning py-0 me-1" *ngIf="!hasPackage">خرید پکیج</span>
+                     {{'rainfallInPastMonth'|translate}}
+                      <span class="btn btn-sm btn-warning py-0 me-1" *ngIf="!hasPackage">{{'buyPlane'|translate}}</span>
                     </span>
                   </ng-template>
                   <ng-template ngbPanelContent>
@@ -22,8 +22,8 @@
                 <ngb-panel [disabled]="!hasPackage">
                     <ng-template ngbPanelTitle>
                         <span class="primary_text primary_text_mobile text-center">
-                          تغییرات دما در یک ماه اخیر
-                          <span class="btn btn-sm btn-warning py-0 me-1" *ngIf="!hasPackage">خرید پکیج</span>
+                          {{'temporaryChangeInPastMonth'|translate}}
+                          <span class="btn btn-sm btn-warning py-0 me-1" *ngIf="!hasPackage">{{'buyPlane'|translate}}</span>
                         </span> 
                     </ng-template>
                     <ng-template ngbPanelContent>

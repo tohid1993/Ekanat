@@ -1,10 +1,10 @@
-<app-page-breadcrumb [pageTitle]="'خرید پکیج استاندارد'">
+<app-page-breadcrumb [pageTitle]="'buyStandardPackage'|translate">
     <button class="text-white border btn-sm border-white bg-transparent h6 m-0 p-2 rounded text-nowrap" (click)="openFieldsModal()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="d-none d-sm-inline-block bi bi-pin-map ms-1" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z"/>
             <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"/>
           </svg> 
-        انتخاب زمین 
+       {{'selectField'|translate}}
     </button>
 </app-page-breadcrumb>
 
@@ -12,12 +12,12 @@
 <div class="container-fluid">
     <div class="card text-center" *ngIf="!isChanged">
         <div class="card-header">
-          خرید پکیج استاندارد
+          {{'buyStandardPackage'|translate}}
         </div>
         <div class="card-body">
-          <h5 class="card-title">پکیج استاندارد برای زمین کشاورزی</h5>
-          <p class="card-text">برای خرید پکیج استاندارد برای زمین های کشاورزی، یکی از زمین های خود را انتخاب نمایید</p>
-          <button class="primary_btn small_btn" (click)="openFieldsModal()">انتخاب زمین</button>
+          <h5 class="card-title">{{'standardPackageForField'|translate}}</h5>
+          <p class="card-text">{{'selectFieldForPackage'|translate}}</p>
+          <button class="primary_btn small_btn" (click)="openFieldsModal()">{{'selectField'|translate}}</button>
         </div>
     </div>
 
@@ -26,55 +26,45 @@
             <div class="col-12 col-lg-6 mb-3">
                 <div class="box h-100">
                     <div class="box_header text-center mb-3">
-                        <h4 class="primary_text primary_text_mobile Primary_100_text mb-3">مشخصات</h4>
+                        <h4 class="primary_text primary_text_mobile Primary_100_text mb-3">{{'detail'|translate}}</h4>
                         <figure>
                             <img src="./assets/images/icons/detail.png" height="40" alt="">
                         </figure>
                     </div>
                     <div class="box_body">
-                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">اطلاعات زمین</h6>
+                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">{{'fieldInformation'|translate}}</h6>
                         <ul class="list-group list-group-flush p-0 mb-3">
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">نام زمین </span>
+                                <span class="fw-bold">{{'fieldName'|translate}} </span>
                                 <span>{{SelectedField.name}}</span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">نام محصول </span>
+                                <span class="fw-bold">{{'productName'|translate}} </span>
                                 <span>{{SelectedField.productName}}</span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">مساحت زمین </span>
-                                <span>{{SelectedField.area}} هکتار</span>
+                                <span class="fw-bold">{{'fieldArea'|translate}} </span>
+                                <span>{{SelectedField.area}} {{'hectares'|translate}}</span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">تاریخ کشت </span>
-                                <span dir="ltr">{{SelectedField.cultivationDate}}</span>
+                                <span class="fw-bold">{{'cultivationDate'|translate}} </span>
+                                <span dir="ltr">{{translateService.calendarType==='Shamsi' ? SelectedField.cultivationDate : dateTimeService.toGeorgianDate(SelectedField.cultivationDate)}}</span>
                             </li>
 
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-start justify-content-between">
-                                <span class="fw-bold">دوره رشد </span>
+                                <span class="fw-bold">{{'growthPeriod'|translate}} </span>
                                 <div>
                                     <table class="growth_period">
                                         <tr *ngFor="let item of FieldPhenologiesList">
-                                            <td>{{item.startDate}} </td>
-                                            <td>الــــی</td>
-                                            <td>{{item.endDate}}</td>
+                                            <td>{{translateService.calendarType==='Shamsi' ? item.startDate : dateTimeService.toGeorgianDate(item.startDate)}} </td>
+                                            <td>{{'to'|translate}}</td>
+                                            <td>{{translateService.calendarType==='Shamsi' ? item.endDate : dateTimeService.toGeorgianDate(item.endDate)}}</td>
                                         </tr>
-                                        <tr *ngIf="FieldPhenologiesList.length==0"><td>دوره رشدی یافت نشد</td></tr>
+                                        <tr *ngIf="FieldPhenologiesList.length==0"><td>{{'notFoundGrowthPeriod'|translate}}</td></tr>
                                     </table>
                                 </div>
                             </li>
                         </ul>
-
-                        <!-- <ng-container *ngIf="FieldPhenologiesList.length>0">
-                            <h4 class="secondary_text secondary_text_mobile Primary_80_text mb-2">تعداد خرید دوره رشد</h4>
-                            <div class="d-flex align-items-center justify-content-start selectGrowthPeriod flex-wrap">
-                                <button class="btn btn-sm me-1 my-1 px-3" *ngFor="let item of MaxPeriodCount" [disabled]="PeriodCount==item"
-                                    (click)="PeriodCount=item;SubmitPlaceOrder();" [ngClass]="{'btn-outline-success':PeriodCount!=item,'btn-success':PeriodCount==item}">
-                                    {{item}} دوره رشد
-                                </button>
-                            </div>
-                        </ng-container> -->
                     </div>
 
                 </div>
@@ -83,61 +73,61 @@
             <div class="col-12 col-lg-6 mb-3">
                 <div class="box h-100">
                     <div class="box_header text-center mb-3">
-                        <h4 class="primary_text primary_text_mobile Primary_100_text mb-3">پیش فاکتور</h4>
+                        <h4 class="primary_text primary_text_mobile Primary_100_text mb-3">{{'invoice'|translate}}</h4>
                         <figure>
                             <img src="./assets/images/icons/invoice.png" height="40" alt="">
                         </figure>
                     </div>
                     <div class="box_body">
-                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">جزئیات سرویس</h6>
+                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">{{'serviceDetail'|translate}}</h6>
                         <ul class="list-group list-group-flush p-0 mb-4">
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">نوع سرویس</span>
-                                <span> استاندارد</span>
+                                <span class="fw-bold">{{'serviceType'|translate}}</span>
+                                <span> {{'standard'|translate}}</span>
                             </li>
 
                             
                             <ng-container *ngIf="OrderDetail">
                                 <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                    <span class="fw-bold">تاریخ شروع سرویس </span>
-                                    <span>{{OrderDetail?.packageStartDate}}</span>
+                                    <span class="fw-bold">{{'serviceStartDate'|translate}} </span>
+                                    <span>{{translateService.calendarType==='Shamsi' ? (OrderDetail?.packageStartDate) : dateTimeService.toGeorgianDate(OrderDetail?.packageStartDate)}}</span>
                                 </li>
                                 <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                    <span class="fw-bold">تاریخ انقضای سرویس </span>
-                                    <span>{{OrderDetail?.packageEndDate}}</span>
+                                    <span class="fw-bold">{{'serviceEndDate'|translate}} </span>
+                                    <span>{{translateService.calendarType==='Shamsi' ? (OrderDetail?.packageEndDate) : dateTimeService.toGeorgianDate(OrderDetail?.packageEndDate)}}</span>
                                 </li>
                                 <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                    <span class="fw-bold">تاریخ ثبت سفارش </span>
-                                    <span>{{OrderDetail?.orderDate}}</span>
+                                    <span class="fw-bold">{{'orderDate'|translate}}</span>
+                                    <span>{{translateService.calendarType==='Shamsi' ? (OrderDetail?.orderDate) : dateTimeService.toGeorgianDate(OrderDetail?.orderDate)}}</span>
                                 </li>
                             </ng-container>
                         </ul>
-                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">جزئیات پرداخت</h6>
+                        <h6 class="secondary_text secondary_text_mobile Primary_80_text mb-2">{{'paymentDetail'|translate}}</h6>
                         <ul class="list-group list-group-flush p-0 mb-3">
 
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">مبلغ</span>
+                                <span class="fw-bold">{{'price'|translate}}</span>
                                 <span>
                                     {{((OrderDetail?.totalAmount || '0') - (OrderDetail?.taxAmount || '0'))|number:"0.0-0"}}
-                                    <small>تومان</small>
+                                    <small>{{'toman'|translate}}</small>
                                 </span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item bg-transparent d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">ارزش افزوده</span>
-                                <span>{{(OrderDetail?.taxAmount || '0')|number:"0.0-0"}} <small>تومان</small></span>
+                                <span class="fw-bold">{{'tax'|translate}}</span>
+                                <span>{{(OrderDetail?.taxAmount || '0')|number:"0.0-0"}} <small>{{'toman'|translate}}</small></span>
                             </li>
                             <li class="bu_3_text bu_3_text_mobile list-group-item d-flex align-items-center justify-content-between RoyalBlue_10_bg">
-                                <span class="fw-bold">مبلغ قابل پرداخت</span>
-                                <span class="fw-bold">{{(OrderDetail?.totalAmount || '0')|number:"0.0-0"}} <small>تومان</small></span>
+                                <span class="fw-bold">{{'priceToPay'|translate}}</span>
+                                <span class="fw-bold">{{(OrderDetail?.totalAmount || '0')|number:"0.0-0"}} <small>{{'toman'|translate}}</small></span>
                             </li>
                         </ul>
 
                         <div class="text-center">
                             <button class="primary_btn medium_btn" (click)="goToPayment()" *ngIf="PeriodCount"
-                                [disabled]="!OrderDetail?.orderId">ادامه و پرداخت آنلاین</button>
+                                [disabled]="!OrderDetail?.orderId">{{'continueAndPay'|translate}}</button>
 
                             <button class="btn btn-danger medium_btn" *ngIf="!PeriodCount"
-                                disabled>تعداد دوره رشد را انتخاب کنید</button>
+                                disabled>{{'selectGrowthPeriodCount'|translate}}</button>
                         </div>
                     </div>
                     <!-- <div class="box_footer text-center pt-3 row">
@@ -153,19 +143,19 @@
 
 <ng-template #fieldsModal let-modal let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <h6 class="modal-title" id="modal-basic-title">انتخاب زمین</h6>
+        <h6 class="modal-title" id="modal-basic-title">{{'selectField'|translate}}</h6>
         <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
         <div class="draw_methods py-3 px-4">
-            <div class="title heading_level_4 heading_level_4_mobile text-center">یکی از زمین های کشاورزی را جهت خرید پکیج استاندارد انتخاب نمایید</div>
+            <div class="title heading_level_4 heading_level_4_mobile text-center">{{'selectFieldForPackage'|translate}}</div>
             <div class="row g-3 fields_wrapper mt-3 justify-content-center">
                 <ng-container *ngFor="let field of FieldsList;let index = index">
                     <div class="col-12 col-sm-6 col-xl-4" (click)="choaseFieldModal(field)" *ngIf="!field.hasPackage">
                         <div class="field_item" [ngClass]="{'hasPackage':field.hasPackage}">
                             <div class="detail">
                                 <h3 class="field_title heading_level_4 heading_level_4_mobile Primary_100_text mb-3">{{field.name}}</h3>
-                                <h6 class="cultivated_crop bu_2_text bu_2_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} هکتار</h6>
+                                <h6 class="cultivated_crop bu_2_text bu_2_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} {{'hectares'|translate}}</h6>
                             </div>
             
                             <div class="field_polygon">
@@ -177,7 +167,7 @@
 
                 <div class="col-12 text-center mt-3">
                     <a (click)="goToAddNewField()" class="primary_btn">
-                        افزودن زمین جدید
+                        {{'addNewField'|translate}}
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-plus-lg me-2" viewBox="0 0 16 16">
                             <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                         </svg>

@@ -1,12 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-light user_sidebar">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><img src="./assets/images/logo.png" alt=""></a>
-
       <div ngbDropdown class="d-inline-flex align-items-center justify-content-center me-auto" *ngIf="windowWidth<992">
-        <!-- <a (click)="open(content)" class="d-inline-block bu_3_text bu_3_text_mobile my-1 ms-2" >
-          <img src="./assets/images/icons/enamad.png" height="30" alt="">
-        </a> -->
-
+        <div ngbDropdown class="d-inline-block ms-2">
+          <button type="button" class="btn btn-outline-dark"  ngbDropdownToggle>
+            {{translateService?.locate?.substring(0,2)?.toUpperCase()}}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="langDropDown">
+            <button ngbDropdownItem (click)="changeLang('enUS')" >{{'enUS'|translate}}</button>
+            <button ngbDropdownItem (click)="changeLang('faIR')">{{'faIR'|translate}}</button>
+          </div>
+        </div>
         <button type="button" class="ghost_btn small_btn" id="account_btn_dropdown_mobile" ngbDropdownToggle>
           <img [src]="(userService.UserHomeInfo|async)?.image || profileAvatar" alt="">
         </button>
@@ -17,21 +21,21 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ms-1 bi bi-person" viewBox="0 0 16 16">
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
             </svg>
-            پروفایل
+            {{'profile'|translate}}
           </a>
           <a ngbDropdownItem class="bu_3_text bu_3_text_mobile py-2" [routerLink]="['/transactions/list']">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ms-1 bi bi-credit-card" viewBox="0 0 16 16">
               <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
               <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
             </svg>
-            تراکنش های بانکی
+            {{'bankTransactions'|translate}}
           </a>
           <button ngbDropdownItem class="bu_3_text bu_3_text_mobile py-2" (click)="logOut()">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ms-1 bi bi-box-arrow-right" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
               <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
             </svg>
-            خروج از حساب
+            {{'logout'|translate}}
           </button>
         </div>
         
@@ -46,38 +50,38 @@
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/dashboard']" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
                 <img src="./assets/images/icons/dashboard.svg" alt="">
-                میز کار من
+                {{'dashboard'|translate}}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/fields']" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
                 <img src="./assets/images/icons/field.svg" alt="">
-                زمین های من
+                {{'myFields'|translate}}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/weather']" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
                 <img src="./assets/images/icons/weather.svg" alt="">
-                هواشناسی
+                {{'meteorology'|translate}}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/package']" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
                 <img src="./assets/images/icons/chart.svg" alt="">
-                ارتقای سرویس
+                {{'upgradeAccount'|translate}}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/shopingcenters']" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
                 <img src="./assets/images/icons/shop.svg" alt="">
-                مراکز فروش کود و سم 
+                {{'shoppingCenter'|translate}}
             </a>
           </li>
           <li class="nav-item mt-auto supportBtn" *ngIf="showSupportBtn">
             <a class="nav-link" (click)="openRayChat()" aria-current="page">
                 <span id="new_message_count" *ngIf="newMessageCount">{{newMessageCount}}</span>
                 <img src="./assets/images/icons/support.svg" alt="">
-                پشتیبانی
+                {{'support'|translate}}
             </a>
           </li>
         </ul>
@@ -95,7 +99,17 @@
           <img src="./assets/images/icons/enamad.png" height="30" alt="">
         </a>
       </div> -->
+
       <div class="col-auto me-auto">
+        <div ngbDropdown class="d-inline-block ms-2">
+          <button type="button" class="btn btn-outline-dark" id="langDropDown" ngbDropdownToggle>
+            {{translateService?.locate?.substring(0,2)?.toUpperCase()}}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="langDropDown">
+            <button ngbDropdownItem (click)="changeLang('enUS')" >{{'enUS'|translate}}</button>
+            <button ngbDropdownItem (click)="changeLang('faIR')">{{'faIR'|translate}}</button>
+          </div>
+        </div>
         <div ngbDropdown class="d-inline-block">
           <button type="button" class="ghost_btn small_btn" id="account_btn_dropdown" ngbDropdownToggle>
             <img [src]="(userService.UserHomeInfo|async)?.image || profileAvatar" alt="">
@@ -106,21 +120,21 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ms-1 bi bi-person" viewBox="0 0 16 16">
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
               </svg>
-              پروفایل
+              {{'profile'|translate}}
             </a>
             <a ngbDropdownItem class="bu_3_text bu_3_text_mobile py-2" [routerLink]="['/transactions/list']">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ms-1 bi bi-credit-card" viewBox="0 0 16 16">
                 <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
                 <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
               </svg>
-              تراکنش های بانکی
+              {{'bankTransactions'|translate}}
             </a>
             <button ngbDropdownItem class="bu_3_text bu_3_text_mobile py-2" (click)="logOut()">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ms-1 bi bi-box-arrow-right" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
                 <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
               </svg>
-              خروج از حساب
+              {{'logout'|translate}}
             </button>
           </div>
         </div>
@@ -134,15 +148,3 @@
 <div class="content_wrapper">
   <router-outlet></router-outlet>
 </div>
-
-
-<!-- <ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">مجوزها</h4>
-    <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body text-center">
-    <a referrerpolicy="origin" *ngIf="isDotIr" target="_blank" href="https://trustseal.enamad.ir/?id=300607&amp;Code=h10Zv2SZ6fl2U5dnUrnH"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=300607&amp;Code=h10Zv2SZ6fl2U5dnUrnH" alt="" style="cursor:pointer" id="h10Zv2SZ6fl2U5dnUrnH"></a>
-    <a referrerpolicy="origin" *ngIf="isDotCom" target="_blank" href="https://trustseal.enamad.ir/?id=301828&amp;Code=SjhbIOvQvsZMIYJs29La"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=301828&amp;Code=SjhbIOvQvsZMIYJs29La" alt="" style="cursor:pointer" id="SjhbIOvQvsZMIYJs29La"></a>
-  </div>
-</ng-template> -->
