@@ -225,6 +225,7 @@
                   [placement]="'bottom'"
                   [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1"
                   [ngModelOptions]="{ standalone: true }"
+                  [datepickerClass]="translateService.calendarType==='Shamsi'?'rtl':'ltr'"
                   name="dp"
                   ngbDatepicker
                   #d1="ngbDatepicker"
@@ -304,6 +305,7 @@
                   [placement]="'bottom'"
                   [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1"
                   [ngModelOptions]="{ standalone: true }"
+                  [datepickerClass]="translateService.calendarType==='Shamsi'?'rtl':'ltr'"
                   name="dp"
                   ngbDatepicker
                   #d2="ngbDatepicker"

@@ -31,17 +31,35 @@
     fill: #37b7a0;
 }
 
-.leaflet-control-layers-base{
-    font-family: $DefaultFontFamily;
-    text-align: right;
-    direction: rtl;
+[dir='rtl']{
+    .leaflet-control-layers-base{
+        font-family: $DefaultFontFamily;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .leaflet-tooltip{
+        font-family: $DefaultFontFamily;
+        direction: rtl;
+        font-weight: 400;
+    }
 }
 
-.leaflet-tooltip{
-    font-family: $DefaultFontFamily;
-    direction: rtl;
-    font-weight: 400;
+[dir='ltr']{
+    .leaflet-control-layers-base{
+        font-family: $DefaultLatinFontFamily;
+        text-align: left;
+        direction: ltr;
+    }
+
+    .leaflet-tooltip{
+        font-family: $DefaultLatinFontFamily;
+        direction: ltr;
+        font-weight: 400;
+    }
 }
+
+
 
 .leaflet-draw-draw-polygon{
     background-image: url(/assets/images/icons/polygon.png) !important;

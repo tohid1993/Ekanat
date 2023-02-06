@@ -37,7 +37,7 @@ export const faIRLocate = {
     back:'بازگشت',
     selectField:'انتخاب زمین',
     selectFieldForPackage:'یکی از زمین های کشاورزی را جهت خرید پکیج استاندارد انتخاب نمایید',
-    addNewField:'افزودن فیلد جدید',
+    addNewField:'افزودن زمین جدید',
     buyStandardPackage:'خرید پکیج استاندارد',
     standardPackageForField:'پکیج استاندارد برای زمین کشاورزی',
     detail:'مشخصات',
