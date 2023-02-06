@@ -147,7 +147,7 @@ export class AddFieldComponent implements OnInit , OnDestroy {
 
 
     let marker = Leaflet.icon({
-      iconUrl: './assets/images/icons/map-pin.svg',
+      iconUrl: './assets/images/icons/mappin-kanat-vpm-artan1100-0106.svg',
       iconSize: [50, 75],
     });
 

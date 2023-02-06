@@ -354,7 +354,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
     this.loadEECanvas(imageUrl);
     if(this.colors.length==0)
-      this.loadLegend('./assets/images/legend.jpg');
+      this.loadLegend('./assets/images/legend-kanat-vpm-artan1100-0106.jpg');
 
     let imageBounds:any[] = this.getImageBounds(cords);
 
