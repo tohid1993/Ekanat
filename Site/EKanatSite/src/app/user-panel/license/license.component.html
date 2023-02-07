@@ -8,9 +8,9 @@
 <!--        <a referrerpolicy="origin" *ngIf="isDotCom" target="_blank" href="https://trustseal.enamad.ir/?id=301828&amp;Code=SjhbIOvQvsZMIYJs29La"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=301828&amp;Code=SjhbIOvQvsZMIYJs29La" alt="" style="cursor:pointer" id="SjhbIOvQvsZMIYJs29La"></a>-->
     </div>
 </div>
-<div class="license_toggle"  (click)="showLicense = !showLicense" >
+<div class="license_toggle"  (click)="showLicense = !showLicense" *ngIf="!showLicense">
     <img src="./assets/images/icons/samandehi-kanat-vpm-artan1100-0106.png" width="22">
 <!--    <img src="./assets/images/icons/enamad-kanat-vpm-artan1100-0106.png" width="28">-->
-    <span>مجوزها</span>
+    <span>{{'license'|translate}}</span>
 </div>
 

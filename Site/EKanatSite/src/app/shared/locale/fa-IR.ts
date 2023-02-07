@@ -240,4 +240,5 @@ export const faIRLocate = {
     pleaseWait:'لطفا منتظر بمانید...',
     enUS:'EN - انگلیسی (ایالات متحده آمریکا)',
     faIR:'FA - فارسی (ایران)',
+    license:'مجوزها'
 }

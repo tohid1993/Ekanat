@@ -240,4 +240,5 @@ export const enUSLocate = {
     pleaseWait:'Please wait...',
     enUS:'EN - English (United States)',
     faIR:'FA - Farsi (Iran)',
+    license:'Certifcates'
 }
