@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserPanelComponent } from './user-panel.component';
 import {TranslatePipe} from "../shared/pipe/translate.pipe";
 import {AppModule} from "../app.module";
+import { LicenseComponent } from './license/license.component';
 
 const routes: Routes = [
 
@@ -33,7 +34,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     DashboardComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    LicenseComponent
   ],
   imports: [
     CommonModule,
