@@ -66,7 +66,7 @@
                     </div>
                     <div class="new_analytics" *ngIf="AnalyzList?.length>0">
                         <h4 class="bd_1_text bd_1_text_mobile White_text">{{'agriculturalExpertAnalysis'|translate}}</h4>
-                        <div class="unread_analytics pe-2">
+                        <div class="unread_analytics ps-2">
                             <button class="White_text border-0 bg-transparent caption_text d-block mt-2 mb-1 analyz_item_btn"
                                 *ngFor="let item of AnalyzList" title="{{item.title}}" (click)="ShowAnalyzDetail(item.id)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
@@ -81,7 +81,7 @@
                 <div class="ahead_tasks mt-xl-auto col-12 col-md-6 col-xl-12" >
                     <ng-container *ngIf="SubmitedTasksList.length>0">
                         <h4 class="bd_1_text bd_1_text_mobile Dark_80_text">{{'nextTasks'|translate}}</h4>
-                        <div class="tasks pe-2 mb-3">
+                        <div class="tasks ps-2 mb-3">
                             <button (click)="showTaskDetails(task)"
                                 *ngFor="let task of SubmitedTasksList"
                                 class="Dark_70_text border-0 bg-transparent caption_text d-block mt-2 mb-1">
@@ -116,7 +116,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
                     </svg>
-                    <span  class="me-1 bu_3_text bu_3_text_mobile">{{fieldDetail.name}}</span>
+                    <span  class="ms-1 bu_3_text bu_3_text_mobile">{{fieldDetail.name}}</span>
                 </span>
             </button>
             <div class="imagery_content_wrapper h-100">
@@ -146,7 +146,7 @@
                     <div class="scrollable">
                         <button class="date" type="button" [ngClass]="{'active':index == indicatorDetails?.imageIndex}"
                             *ngFor="let date of indicatorDetails?.dates;let index = index" (click)="getIndicators(selectedIndicator,index,date)">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-broadcast ms-1" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-broadcast me-1" viewBox="0 0 16 16">
                                     <path d="M3.05 3.05a7 7 0 0 0 0 9.9.5.5 0 0 1-.707.707 8 8 0 0 1 0-11.314.5.5 0 0 1 .707.707zm2.122 2.122a4 4 0 0 0 0 5.656.5.5 0 1 1-.708.708 5 5 0 0 1 0-7.072.5.5 0 0 1 .708.708zm5.656-.708a.5.5 0 0 1 .708 0 5 5 0 0 1 0 7.072.5.5 0 1 1-.708-.708 4 4 0 0 0 0-5.656.5.5 0 0 1 0-.708zm2.122-2.12a.5.5 0 0 1 .707 0 8 8 0 0 1 0 11.313.5.5 0 0 1-.707-.707 7 7 0 0 0 0-9.9.5.5 0 0 1 0-.707zM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
                                 </svg>
                                 {{translateService.calendarType === 'Shamsi'? dateTimeService.toJalaliDate(date) : date}}
@@ -200,7 +200,7 @@
                         <div class="indicators_list">
                             <div class="input_wrapper mb-2">
                                 <input type="radio" name="plant_charts" id="ndvi_chart" (click)="getCharts(ChartsTypes.ndvi)">
-                                <label for="ndvi_chart" class="me-2 bd_2_text bd_2_text_mobile">{{'chart'|translate}} NDVI</label>
+                                <label for="ndvi_chart" class="ms-2 bd_2_text bd_2_text_mobile">{{'chart'|translate}} NDVI</label>
                             </div>
                         </div>
                     </div>
@@ -215,15 +215,15 @@
                         <div class="indicators_list">
                             <div class="input_wrapper mb-2">
                                 <input type="radio" name="plant_indicators" id="ndvi" (click)="getIndicators(IndicatorsTypes.ndvi)">
-                                <label for="ndvi" class="me-2 bd_2_text bd_2_text_mobile">{{'ndviLabel'|translate}}</label>
+                                <label for="ndvi" class="ms-2 bd_2_text bd_2_text_mobile">{{'ndviLabel'|translate}}</label>
                             </div>
                             <div class="input_wrapper mb-2">
                                 <input type="radio" name="plant_indicators" id="reci" (click)="getIndicators(IndicatorsTypes.reci)">
-                                <label for="reci" class="me-2 bd_2_text bd_2_text_mobile">{{'reciLabel'|translate}}</label>
+                                <label for="reci" class="ms-2 bd_2_text bd_2_text_mobile">{{'reciLabel'|translate}}</label>
                             </div>
                             <div class="input_wrapper mb-2">
                                 <input type="radio" name="plant_indicators" id="msavi" (click)="getIndicators(IndicatorsTypes.msavi)">
-                                <label for="msavi" class="me-2 bd_2_text bd_2_text_mobile">{{'msaviLabel'|translate}}</label>
+                                <label for="msavi" class="ms-2 bd_2_text bd_2_text_mobile">{{'msaviLabel'|translate}}</label>
                             </div>
                         </div>
                     </div>
@@ -234,11 +234,11 @@
                         <div class="indicators_list">
                             <div class="input_wrapper mb-2">
                                 <input type="radio" name="plant_indicators" id="ndwi" (click)="getIndicators(IndicatorsTypes.ndwi)">
-                                <label for="ndwi" class="me-2 bd_2_text bd_2_text_mobile">{{'ndwiLabel'|translate}}</label>
+                                <label for="ndwi" class="ms-2 bd_2_text bd_2_text_mobile">{{'ndwiLabel'|translate}}</label>
                             </div>
                             <div class="input_wrapper mb-2">
                                 <input type="radio" name="plant_indicators" id="ndmi" (click)="getIndicators(IndicatorsTypes.ndmi)">
-                                <label for="ndmi" class="me-2 bd_2_text bd_2_text_mobile">{{'ndmiLabel'|translate}}</label>
+                                <label for="ndmi" class="ms-2 bd_2_text bd_2_text_mobile">{{'ndmiLabel'|translate}}</label>
                             </div>
                         </div>
                     </div>
@@ -249,7 +249,7 @@
                         <div class="indicators_list">
                             <div class="input_wrapper mb-2">
                                 <input type="radio" name="plant_indicators" id="ndre" (click)="getIndicators(IndicatorsTypes.ndre)">
-                                <label for="ndre" class="me-2 bd_2_text bd_2_text_mobile">{{'ndreLabel'|translate}}</label>
+                                <label for="ndre" class="ms-2 bd_2_text bd_2_text_mobile">{{'ndreLabel'|translate}}</label>
                             </div>
                         </div>
                     </div>
@@ -260,7 +260,7 @@
                         <div class="indicators_list">
                             <div class="input_wrapper mb-2">
                                 <input type="radio" name="plant_indicators" id="sipi" (click)="getIndicators(IndicatorsTypes.sipi)">
-                                <label for="sipi" class="me-2 bd_2_text bd_2_text_mobile">{{'sipiLabel'|translate}}</label>
+                                <label for="sipi" class="ms-2 bd_2_text bd_2_text_mobile">{{'sipiLabel'|translate}}</label>
                             </div>
                         </div>
                     </div>
@@ -279,7 +279,7 @@
         <h6 class="modal-title" id="modal-basic-title">
           {{'taskDetails'|translate}}
         </h6>
-        <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        <button type="button" class="btn-close ms-auto me-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
         <div class="mb-3">
@@ -325,7 +325,7 @@
         <h6 class="modal-title" id="modal-basic-title">
            {{'agriculturalExpertAnalysisDetails'|translate}}
         </h6>
-        <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        <button type="button" class="btn-close ms-auto me-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
         <div class="container analyz_detail_wrapper">
@@ -379,7 +379,7 @@
         <h6 class="modal-title" id="modal-basic-title">
             {{'indicatorChart'|translate}} ndvi
         </h6>
-        <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        <button type="button" class="btn-close ms-auto me-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
         <div class="py-2">

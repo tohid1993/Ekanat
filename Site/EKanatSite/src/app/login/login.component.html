@@ -55,22 +55,22 @@
                         formControlName="countryCode"
                         >
                             <ng-template ng-label-tmp let-item="item">
-                              <span class="d-block text-start">
+                              <span class="d-block text-end">
                                 <small dir="ltr" class="align-text-bottom">{{item.code}}</small> 
-                                <img height="15" width="15" class="me-2" [src]="'./assets/images/flags/4x3/'+item.icon+'.svg'"/>
+                                <img height="15" width="15" class="ms-2" [src]="'./assets/images/flags/4x3/'+item.icon+'.svg'"/>
                               </span>
                             </ng-template>
                             <ng-template ng-option-tmp let-item="item">
-                              <span class="d-block text-start">
+                              <span class="d-block text-end">
                                 <small dir="ltr" class="align-text-bottom">{{item.code}}</small> 
-                                <img height="15" width="15" class="me-2" [src]="'./assets/images/flags/4x3/'+item.icon+'.svg'"/>
+                                <img height="15" width="15" class="ms-2" [src]="'./assets/images/flags/4x3/'+item.icon+'.svg'"/>
                               </span>
                             </ng-template>
                     </ng-select>
                 </div>
                 <input
                     type="text"
-                    class="form-control form-control-lg text-start"
+                    class="form-control form-control-lg text-end"
                     [readonly]="vCodeSent"
                     [maxLength]="10"
                     placeholder="912×××××××"

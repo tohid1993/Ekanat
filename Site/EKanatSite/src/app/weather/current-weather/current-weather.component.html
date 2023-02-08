@@ -14,22 +14,22 @@
                     {{Math.round(CurrentWeather?.temp)}} <span class="unit">°C</span>
                 </div>
                 <div class="weather_conditions row mt-1 g-4">
-                    <div class="wind d-inline-flex flex-column align-items-center justify-content-center col-6 px-1 text-end">
+                    <div class="wind d-inline-flex flex-column align-items-center justify-content-center col-6 px-1 text-start">
                         <span class="label bu_3_text bu_3_text_mobile fw-bold">{{'wind'|translate}}</span>
                         <span class="value bd_2_text mt-2" dir="ltr">{{CurrentWeather?.wind_speed || 0}} m/s 
                             <i class="wind_direction" [ngStyle]="{'transform': 'rotate('+(CurrentWeather?.wind_deg || 0)+'deg)'}"></i>
                         </span>
                     </div>
-                    <div class="humidity d-inline-flex flex-column align-items-center justify-content-center col-6 px-1 text-end">
+                    <div class="humidity d-inline-flex flex-column align-items-center justify-content-center col-6 px-1 text-start">
                         <span class="label bu_3_text bu_3_text_mobile fw-bold">{{'humidity'|translate}}</span>
                         <span class="value bd_2_text mt-2" dir="ltr">{{CurrentWeather?.humidity || 0}} %</span>
                     </div>
 
-                    <div class="cloud_cover d-inline-flex flex-column align-items-center justify-content-center col-6 px-1 text-end">
+                    <div class="cloud_cover d-inline-flex flex-column align-items-center justify-content-center col-6 px-1 text-start">
                         <span class="label bu_3_text bu_3_text_mobile fw-bold">{{'cloudCover'|translate}}</span>
                         <span class="value bd_2_text mt-2" dir="ltr">{{CurrentWeather?.clouds || 0}} %</span>
                     </div>
-                    <div class="rainfall d-inline-flex flex-column align-items-center justify-content-center col-6 px-1 text-end">
+                    <div class="rainfall d-inline-flex flex-column align-items-center justify-content-center col-6 px-1 text-start">
                         <span class="label bu_3_text bu_3_text_mobile fw-bold">{{'rainfall'|translate}}</span>
                         <span class="value bd_2_text mt-2" dir="ltr">
                             {{CurrentWeather?.rain ? CurrentWeather.rain['1h'] : (CurrentWeather?.snow ? CurrentWeather.snow['1h'] : 0)}}
@@ -105,7 +105,7 @@
                             <td>
                                 <ng-container *ngIf="item.weather[0].main.toLowerCase().indexOf('rain')>=0">
                                     {{item.rain['1h']}} mm
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#15957d" class="ms-1 bi bi-droplet" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#15957d" class="me-1 bi bi-droplet" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10a5 5 0 0 0 10 0c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z"/>
                                         <path fill-rule="evenodd" d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z"/>
                                     </svg>
@@ -113,7 +113,7 @@
 
                                 <ng-container *ngIf="item.weather[0].main.toLowerCase().indexOf('snow')>=0">
                                     {{item.snow['1h']}} mm
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#15957d" class="ms-1 bi bi-snow" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#15957d" class="me-1 bi bi-snow" viewBox="0 0 16 16">
                                         <path d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793V8.866l-3.4 1.963-.496 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.884-.237a.5.5 0 1 1 .26-.966l1.848.495L7 8 3.6 6.037l-1.85.495a.5.5 0 0 1-.258-.966l.883-.237-1.12-.646a.5.5 0 1 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849L7.5 7.134V3.207L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 1 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v3.927l3.4-1.963.496-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495L9 8l3.4 1.963 1.849-.495a.5.5 0 0 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-3.4-1.963v3.927l1.353 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5z"/>
                                     </svg>
                                 </ng-container>

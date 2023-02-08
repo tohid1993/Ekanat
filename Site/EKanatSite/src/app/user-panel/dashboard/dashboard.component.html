@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-lg-5 ps-lg-0">
+        <div class="col-12 col-lg-5 pe-lg-0">
             <div class="row g-3 mt-1">
                 <div class="col-12">
                     <ngb-datepicker [class]="['calendar_wrapper',translateService.calendarDir]" [dayTemplate]="calendarDay"
@@ -16,14 +16,14 @@
                             <div *ngFor="let month of dp.state.months">
                                 <div class="row p-2">
                                     <div class="col-auto d-inline-flex align-items-center">
-                                        <button type="button" class="secondary_btn small_btn only_icon"
+                                        <button type="button" class="secondary_btn small_btn only_icon" [ngClass]="translateService.siteDir==='rtl'?'order-1':'order-3'"
                                             (click)="translateService.calendarType === 'Shamsi'? navigate(-1) : navigate(1)">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
                                                 <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
                                             </svg>
                                         </button>
-                                        <div class="current_month">{{ i18n.getMonthShortName(month.month) }} {{ month.year }}</div>
-                                        <button type="button" class="secondary_btn small_btn only_icon"
+                                        <div class="current_month order-2">{{ i18n.getMonthShortName(month.month) }} {{ month.year }}</div>
+                                        <button type="button" class="secondary_btn small_btn only_icon" [ngClass]="translateService.siteDir==='rtl'?'order-3':'order-1'"
                                             (click)="translateService.calendarType === 'Shamsi'? navigate(1) : navigate(-1)">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
                                                 <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/>
@@ -57,7 +57,7 @@
                 <div class="col-12" *ngFor="let field of FieldsList|slice:0:minLength;let index = index">
                     <div class="field_item d-flex p-2 row mx-0" [ngClass]="{'hasPackage':field.hasPackage}">
                         <div class="field_details col-12 col-md col-lg-12 col-xl d-flex align-items-center">
-                            <div class="field_polygon ms-3">
+                            <div class="field_polygon me-3">
                                 <app-field-svg [cordinates]="field.polygon"></app-field-svg>
                             </div>
                             <div class="detail">
@@ -65,10 +65,10 @@
                                 <h6 class="cultivated_crop bu_2_text bu_3_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} {{'hectares'|translate}}</h6>
                             </div>
                         </div>
-                        <div class="field_actions col-12 col-md-auto col-lg-12 col-xl-auto text-start mt-2 mt-md-0 mt-lg-2 mt-xl-0">
-                            <button (click)="goToWeatherPage(field.id)" class="btn btn-outline-success btn-sm small_btn my-1 me-1" >{{'meteorology'|translate}}</button>
-                            <a [routerLink]="['/fields/imagery/analytics',field.id]" class="btn btn-outline-success btn-sm small_btn my-1 me-1">{{'fieldImagery'|translate}}</a>
-                            <a [routerLink]="['/fields/imagery/tasks',field.id,field.name]" class="btn btn-outline-success btn-sm small_btn my-1 me-1">{{'submitTask'|translate}}</a>
+                        <div class="field_actions col-12 col-md-auto col-lg-12 col-xl-auto text-end mt-2 mt-md-0 mt-lg-2 mt-xl-0">
+                            <button (click)="goToWeatherPage(field.id)" class="btn btn-outline-success btn-sm small_btn my-1 ms-1" >{{'meteorology'|translate}}</button>
+                            <a [routerLink]="['/fields/imagery/analytics',field.id]" class="btn btn-outline-success btn-sm small_btn my-1 ms-1">{{'fieldImagery'|translate}}</a>
+                            <a [routerLink]="['/fields/imagery/tasks',field.id,field.name]" class="btn btn-outline-success btn-sm small_btn my-1 ms-1">{{'submitTask'|translate}}</a>
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
         <h6 class="modal-title" id="modal-basic-title">
           {{'taskDetails'|translate}}
         </h6>
-        <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        <button type="button" class="btn-close ms-auto me-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
         <div class="mb-3">

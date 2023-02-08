@@ -10,20 +10,20 @@
         <table class="table table-striped table-hover">
             <tbody>
                 <tr>
-                    <th class="py-3 text-end">{{'orderId'|translate}}</th>
-                    <td class="py-3 text-start" dir="ltr">{{orderDetail?.orderId}}</td>
+                    <th class="py-3 text-start">{{'orderId'|translate}}</th>
+                    <td class="py-3 text-end" dir="ltr">{{orderDetail?.orderId}}</td>
                 </tr>
                 <tr>
-                    <th class="py-3 text-end">{{'refId'|translate}}</th>
-                    <td class="py-3 text-start" dir="ltr">{{orderDetail?.refId}}</td>
+                    <th class="py-3 text-start">{{'refId'|translate}}</th>
+                    <td class="py-3 text-end" dir="ltr">{{orderDetail?.refId}}</td>
                 </tr>
                 <tr>
-                    <th class="py-3 text-end">{{'paymentDate'|translate}}</th>
-                    <td class="py-3 text-start" dir="ltr">{{orderDetail?.dateTime}}</td>
+                    <th class="py-3 text-start">{{'paymentDate'|translate}}</th>
+                    <td class="py-3 text-end" dir="ltr">{{orderDetail?.dateTime}}</td>
                 </tr>
                 <tr>
-                    <th class="py-3 text-end">{{'paidAmount'|translate}}</th>
-                    <td class="py-3 text-start" dir="ltr">{{orderDetail?.amount|number:"0.0-0"}} <small>{{'rial'|translate}}</small></td>
+                    <th class="py-3 text-start">{{'paidAmount'|translate}}</th>
+                    <td class="py-3 text-end" dir="ltr">{{orderDetail?.amount|number:"0.0-0"}} <small>{{'rial'|translate}}</small></td>
                 </tr>
             </tbody>
         </table>
