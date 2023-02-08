@@ -18,7 +18,7 @@ export class UserPanelComponent implements OnInit {
   newMessageCount:string|null = "";
   showSupportBtn:boolean = false;
 
-  profileAvatar:string = "./assets/images/users/avatar.png";
+  profileAvatar:string = "./assets/images/users/avatar-profile-kanat-vpm-artan1100-0106.png";
   isDotCom:boolean = false;
   isDotIr:boolean = false;
 

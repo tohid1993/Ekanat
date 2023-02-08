@@ -62,21 +62,21 @@
 
 
 .leaflet-draw-draw-polygon{
-    background-image: url(/assets/images/icons/polygon.png) !important;
+    background-image: url(/src/assets/images/icons/polygon-kanat-vpm-artan1100-0106.png) !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: 75% !important;
 }
 
 .leaflet-draw-draw-circle{
-    background-image: url(/assets/images/icons/circle.svg) !important;
+    background-image: url(/src/assets/images/icons/circle-kanat-vpm-artan1100-0106.svg) !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: 70% !important;
 }
 
 .leaflet-draw-edit-remove{
-    background-image: url(/assets/images/icons/eraser.png) !important;
+    background-image: url(/src/assets/images/icons/eraser-kanat-vpm-artan1100-0106.png) !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: 75% !important;
@@ -341,7 +341,7 @@ ngb-modal-backdrop{
             justify-content: center;
             margin: 0 auto;
             object-position: center;
-            background-image: url(/assets/images/icons/shape.png);
+            background-image: url(/src/assets/images/icons/shape-kanat-vpm-artan1100-0106.png);
             background-size: contain;
         }
     }
