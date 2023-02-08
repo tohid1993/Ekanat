@@ -8,6 +8,7 @@ import { retry, catchError } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GeneralService } from './general.service';
 import { AuthService } from './auth.service';
+import {TranslateService} from "./traslate.service";
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
     constructor(
       private spinner: NgxSpinnerService,
       private gService:GeneralService,
+      private translateService:TranslateService,
       private auth:AuthService
     ) {      
     }
@@ -23,7 +25,8 @@ export class TokenInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.auth.getToken()}`,
+            Authorization: `Bearer ${this.auth.getToken()}`,
+            Lang: this.translateService.locate || 'faIR'
         }
       });
 

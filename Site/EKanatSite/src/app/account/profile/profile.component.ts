@@ -7,6 +7,7 @@ import { GeneralService } from 'src/app/shared/services/general.service';
 import { LocationService } from 'src/app/shared/services/location.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import {TranslateService} from "../../shared/services/traslate.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +32,8 @@ export class ProfileComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private locationService:LocationService,
     private gService:GeneralService,
-    private translateService:TranslateService
+    private translateService:TranslateService,
+    private router:Router
   ) {
     this.ProfileForm = new FormGroup(
       {
@@ -104,13 +106,8 @@ export class ProfileComponent implements OnInit {
           self.userService.loadUserDetails();
           self.spinner.hide();
 
-          self.translateService.data.subscribe({
-              next:(data)=>{
-                  self.gService.showSuccessToastr(data['profileUpdated'] || 'profileUpdated');
-              }
-          })
-
-
+          self.gService.showSuccessToastr(self.translateService.translate('profileUpdated'));
+          self.router.navigate(['/dashboard'])
       }
     })
   }
