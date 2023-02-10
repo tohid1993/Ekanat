@@ -129,6 +129,7 @@ export class TasksComponent implements OnInit {
     this.datepicker.navigateTo(calendar.getToday());
   }
 
+
   dayHasTask(date:DateModel){
     let gDate = this.dateTime.toJalaliDate(this.checkAndConvertToGeorgian(date));
     let tasks = this.SubmitedTasksList.filter((task:any)=>(task.dateTime.substring(0,10)==gDate));
@@ -145,7 +146,6 @@ export class TasksComponent implements OnInit {
 
 
   getSelectedDateByFormat(date:string){
-
     return this.translateService.calendarType==='Shamsi'?
               this.dateTime.toJalaliDateTimeCustomFormat(this.dateTime.toGeorgianDate(date) , 'YYYY-MM-DD' , 'MMM YYYY, dddd'):
               this.dateTime.toGeorgianDateTimeCustomFormat(date , 'YYYY-MM-DD' , 'MMM YYYY, dddd');

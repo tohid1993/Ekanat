@@ -24,6 +24,14 @@ a{
     margin-left: auto;
 }
 
+.ltr{
+    direction: ltr !important;
+}
+
+.rotate-180{
+    transform: rotate(180deg);
+}
+
 // .raychat_automessage_preview_container{
 //     display: none !important;
 // }

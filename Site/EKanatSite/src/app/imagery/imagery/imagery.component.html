@@ -4,7 +4,8 @@
 
 <div class="container-fluid" id="imagery_wrapper">
     <div class="row g-3 pb-2 overflow-hidden">
-        <div class="col-12 col-md-12 col-xl-3 " [ngStyle]="{'max-height':colsHeight}" *ngIf="showFieldDetails || windowWidth<1200">
+        <div class="col-12 col-md-12 col-xl-3" [ngClass]="translateService.siteDir==='rtl'?'order-1':'order-3'"
+             [ngStyle]="{'max-height':colsHeight}" *ngIf="showFieldDetails || windowWidth<1200">
             <div class="field_details_wrapper h-100 overflow-auto row w-100 mx-auto">
                 <div class="col-12 col-md-6 col-xl-12 px-0">
                     <div class="field_detail" *ngIf="fieldDetail">
@@ -26,7 +27,7 @@
                     </div>
                     <div class="field_detail mt-2" *ngIf="fieldDetail?.hasPackage">
                         <div class="d-flex">
-                            <figure class="package_icon">
+                            <figure class="package_icon me-3">
                                 <img src="../../../assets/images/icons/permium-kanat-vpm-artan1100-0106.png" width="30" height="30" alt="">
                             </figure>
                             <div class="flex-grow-1">
@@ -56,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="text-center d-flex align-items-center" >
-                                <i class="wind_direction" [ngStyle]="{'transform': 'rotate('+(CurrentWeather?.wind_deg || 0)+'deg)'}"></i>
+                                <i class="wind_direction me-2" [ngStyle]="{'transform': 'rotate('+(CurrentWeather?.wind_deg || 0)+'deg)'}"></i>
                                 <div>
                                     <div class="bu_3_text bu_3_text_mobile">{{'windDirection'|translate}}</div>
                                     <strong dir="ltr" class="caption_text caption_text_mobile">{{CurrentWeather?.wind_speed || 0}} m/s </strong>
@@ -103,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8 col-xl-6 position-relative"
+        <div class="col-12 col-md-8 col-xl-6 position-relative order-2"
             [ngStyle]="{'max-height':colsHeight}"
             [ngClass]="{'col-xl-6':(showFieldDetails && windowWidth>=1200) ,
                          'col-xl-9':(!showFieldDetails && windowWidth>=1200)}">
@@ -113,7 +114,9 @@
                     <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
                 </svg>
                 <span *ngIf="!showFieldDetails">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                         height="24" fill="currentColor"
+                         class="bi bi-arrow-left-short" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
                     </svg>
                     <span  class="ms-1 bu_3_text bu_3_text_mobile">{{fieldDetail.name}}</span>
@@ -155,13 +158,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-4 col-xl-3 " [ngStyle]="{'max-height':colsHeight}">
+        <div class="col-12 col-md-4 col-xl-3"
+             [ngClass]="translateService.siteDir==='rtl'?'order-3':'order-1'"
+             [ngStyle]="{'max-height':colsHeight}">
             <div class="indicators_wrapper h-100">
                 <div class="dates_wrapper">
                     <div class="col-12 mb-2">
-                        <label for="fromDate" class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">{{'fromDate'|translate}}</label>
-                        <div class="input-group" dir="ltr">
-                            <input class="form-control border-secondary bu_3_text bu_3_text_mobile" [datepickerClass]="translateService.calendarType==='Shamsi'?'rtl':'ltr'"
+                        <label class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">{{'fromDate'|translate}}</label>
+                        <div class="input-group">
+                            <input class="form-control border-secondary bu_3_text bu_3_text_mobile text-start" dir="ltr"
+                                   [datepickerClass]="translateService.calendarType==='Shamsi'?'rtl':'ltr'"
                                    placeholder="{{'imageryFromDate'|translate}}" [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1" [ngModelOptions]="{standalone: true}"
                                    name="dp" ngbDatepicker #d="ngbDatepicker" [maxDate]="toDate" [(ngModel)]="fromDate" > <!--(ngModelChange)="getIndicators(selectedIndicator)"-->
                             <button class="btn btn-outline-secondary bg-light" (click)="d.toggle()" type="button">
@@ -173,9 +179,10 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <label for="toDate" class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">{{'toDate'|translate}}</label>
-                        <div class="input-group" dir="ltr">
-                            <input class="form-control border-secondary bu_3_text bu_3_text_mobile" [datepickerClass]="translateService.calendarType==='Shamsi'?'rtl':'ltr'"
+                        <label class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">{{'toDate'|translate}}</label>
+                        <div class="input-group">
+                            <input class="form-control border-secondary bu_3_text bu_3_text_mobile text-start" dir="ltr"
+                                   [datepickerClass]="translateService.calendarType==='Shamsi'?'rtl':'ltr'"
                                    placeholder="{{'imageryFromDate'|translate}}" [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1" [ngModelOptions]="{standalone: true}"
                                    name="dp" ngbDatepicker #d1="ngbDatepicker" [minDate]="fromDate" [(ngModel)]="toDate" > <!--(ngModelChange)="getIndicators(selectedIndicator)"-->
                             <button class="btn btn-outline-secondary bg-light calendar" (click)="d1.toggle()" type="button">

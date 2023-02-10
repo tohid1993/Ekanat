@@ -188,7 +188,7 @@ export const enUSLocate = {
     image:'Image',
     agriculturalLandMonitoring:' Crop field monitoring',
     tempDegree:'Temperature',
-    windDirection:'Wind directionد',
+    windDirection:'Wind direction',
     agriculturalExpertAnalysis:'Agricultural expert report',
     nextTasks:'Activity  to do',
     show:'Show',

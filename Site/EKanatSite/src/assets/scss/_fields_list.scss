@@ -40,20 +40,41 @@
             .remove_btn{
                 display: none;
             }
-            &::before{
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 40px;
-                height: 40px;
-                background-color: #ff9d3f;
-                content: "";
-                z-index: 3;
-                background-image: url(/assets/images/icons/permium-kanat-vpm-artan1100-0106.png);
-                background-size: 16px;
-                background-repeat: no-repeat;
-                clip-path: polygon(100% 0, 0% 100%, 0 0);
-                background-position: top 2px left 4px;
+
+            &.left{
+                &::before{
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 40px;
+                    height: 40px;
+                    background-color: #ff9d3f;
+                    content: "";
+                    z-index: 3;
+                    background-image: url(/assets/images/icons/permium-kanat-vpm-artan1100-0106.png);
+                    background-size: 16px;
+                    background-repeat: no-repeat;
+                    clip-path: polygon(100% 0, 0% 100%, 0 0);
+                    background-position: top 2px left 4px;
+                }
+            }
+
+            &.right{
+                &::before{
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: 40px;
+                    height: 40px;
+                    background-color: #ff9d3f;
+                    content: "";
+                    z-index: 3;
+                    background-image: url(/assets/images/icons/permium-kanat-vpm-artan1100-0106.png);
+                    background-size: 16px;
+                    background-repeat: no-repeat;
+                    clip-path: polygon(100% 0, 0 0, 100% 100%);
+                    background-position: top 2px right 4px;
+                }
             }
         }
     }

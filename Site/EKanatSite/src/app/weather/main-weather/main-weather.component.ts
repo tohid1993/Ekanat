@@ -5,6 +5,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FieldsListVM } from 'src/app/shared/models/model';
 import { FieldService } from 'src/app/shared/services/field.service';
+import {TranslateService} from "../../shared/services/traslate.service";
 
 @Component({
   selector: 'app-main-weather',
@@ -32,7 +33,8 @@ export class MainWeatherComponent implements OnInit {
     private fieldService:FieldService,
     private http:HttpClient,
     private spinner: NgxSpinnerService,
-    private router:Router
+    private router:Router,
+    public translateService:TranslateService
   ) {
     // config.backdrop = 'static';
     config.keyboard = false;

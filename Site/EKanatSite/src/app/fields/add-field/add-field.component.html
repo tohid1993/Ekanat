@@ -68,9 +68,9 @@
         ><img src="../../../assets/images/icons/upload-kanat-vpm-artan1100-0106.png" alt="" />{{'chooseFile'|translate}}</label
       >
 
-      <div class="w-100 mt-3" dir="rtl">
-        <div class="row mx-0">
-          <div class="col-auto ml-auto pe-1">
+      <div class="w-100 mt-3">
+        <div class="row" [dir]="translateService.siteDir">
+          <div class="col-auto">
             <button
               type="button"
               class="secondary_btn medium_btn"
@@ -79,11 +79,12 @@
               {{'changeMethod'|translate}}
             </button>
           </div>
-          <div class="col-auto ps-0">
+          <div class="col-auto ms-auto">
             <button
               class="primary_btn medium_btn px-3"
               [disabled]="!FieldCoordinates"
               (click)="GoToNextStep()"
+              [ngClass]="translateService.siteDir"
             >
               {{'saveAndContinue'|translate}}
               <svg
@@ -93,6 +94,7 @@
                 fill="currentColor"
                 class="bi bi-arrow-left mx-2"
                 viewBox="0 0 16 16"
+                [ngClass]="{'rotate-180':translateService.siteDir==='ltr'}"
               >
                 <path
                   fill-rule="evenodd"
@@ -145,7 +147,7 @@
               <input
                 type="text"
                 class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start"
-                dir="rtl"
+                [dir]="translateService.siteDir"
                 id="fieldArea"
                 autocomplete="off"
                 readonly

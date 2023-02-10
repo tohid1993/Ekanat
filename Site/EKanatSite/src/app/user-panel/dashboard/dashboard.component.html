@@ -55,7 +55,7 @@
         <div class="col-12 col-lg-7">
             <div class="row g-3 fields_wrapper pb-3 mt-1">
                 <div class="col-12" *ngFor="let field of FieldsList|slice:0:minLength;let index = index">
-                    <div class="field_item d-flex p-2 row mx-0" [ngClass]="{'hasPackage':field.hasPackage}">
+                    <div class="field_item d-flex p-2 row mx-0" [ngClass]="[field.hasPackage?'hasPackage':'', translateService.siteDir==='ltr'?'right':'left']">
                         <div class="field_details col-12 col-md col-lg-12 col-xl d-flex align-items-center">
                             <div class="field_polygon me-3">
                                 <app-field-svg [cordinates]="field.polygon"></app-field-svg>
