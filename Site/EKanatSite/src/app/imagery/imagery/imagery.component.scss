@@ -114,7 +114,7 @@
                 font-weight: 400;
                 padding: 5px 11px 2px;
                 display: inline-block;
-                width: 115px;
+                min-width: 115px;
                 margin-bottom: 6px;
                 
                 &.active{

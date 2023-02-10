@@ -32,11 +32,11 @@
                     </div>
                     <div class="col-12 col-md-6 mt-3">
                         <label for="email" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'email'|translate}} <small>({{'optional'|translate}})</small></label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="email" dir="ltr" id="email" autocomplete="off">
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-left" formControlName="email" dir="ltr" id="email" autocomplete="off">
                     </div>
                     <div class="col-12 col-md-6 mt-3">
                         <label for="mobile" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'mobileNumber'|translate}}</label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" readonly [value]="findCountryCode() + (ProfileForm.value.userName || '')" dir="ltr" id="mobile" autocomplete="off">
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-left" readonly [value]="findCountryCode() + (ProfileForm.value.userName || '')" dir="ltr" id="mobile" autocomplete="off">
                     </div>
 
 

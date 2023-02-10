@@ -22,16 +22,19 @@ export class CurrentWeatherComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let today = this.dateTimeService.timeStampToDateTime(this.CurrentWeather.dt*1000)
+    today = today.toString().replace(' 24:',' 00:')
+
     if(this.translateService.calendarType === 'Shamsi'){
       this.CurrentDateTime =
           this.dateTimeService.toJalaliDateTimeCustomFormat(
-              this.dateTimeService.timeStampToDateTime(this.CurrentWeather.dt*1000) , "M/D/YYYY HH:mm:ss" , "dddd D MMM YYYY - HH:mm"
+              today , "M/D/YYYY HH:mm:ss" , "dddd D MMM YYYY - HH:mm"
           );
     }
     if(this.translateService.calendarType === 'Georgian'){
       this.CurrentDateTime =
           this.dateTimeService.toGeorgianDateTimeCustomFormat(
-              this.dateTimeService.timeStampToDateTime(this.CurrentWeather.dt*1000) , "M/D/YYYY HH:mm:ss" , "dddd MMM D YYYY - HH:mm"
+              today , "M/D/YYYY HH:mm:ss" , "dddd MMM D YYYY - HH:mm"
           );
     }
   }

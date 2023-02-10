@@ -633,7 +633,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
     this.options1 = {
       textStyle:{
-        fontFamily:'Vazir',
+        fontFamily: this.translateService.siteDir==='rtl'?'Vazir':'sofia',
       },
       tooltip: {
         trigger: 'axis',
@@ -645,7 +645,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
         },
         formatter: "<strong>{b}</strong><br>{a0}: {c0}",
         textStyle:{
-            fontFamily:'Vazir',
+            fontFamily: this.translateService.siteDir==='rtl'?'Vazir':'sofia',
             align:'right',
             
         }

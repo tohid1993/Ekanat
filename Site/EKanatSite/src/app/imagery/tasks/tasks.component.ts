@@ -103,6 +103,8 @@ export class TasksComponent implements OnInit {
           month:this.SelectedDay.month ,
           day: this.translateService.calendarType==='Shamsi'? (this.SelectedDay.month<=6?31:30) : new Date(this.SelectedDay.year, this.SelectedDay.month, 0).getDate()
         })
+
+      console.log(this.firstDayDate , this.endDayDate)
     this.getSubmitedItemsList();
   }
 
@@ -192,7 +194,9 @@ export class TasksComponent implements OnInit {
 
   goToNewTask(){
     this.TaskForm.controls['dateTime'].setValue(
-      this.dateTime.toGeorgianDate(this.dateTime.modelToString(this.SelectedDay))
+        this.translateService.calendarType==='Shamsi'?
+            this.dateTime.toGeorgianDate(this.dateTime.modelToString(this.SelectedDay)):
+            this.dateTime.modelToString(this.SelectedDay)
     );
     this.TaskForm.controls['fieldId'].setValue(+this.fieldId);
     this.modalService.open(this.newTaskModal , { centered: true , size: 'md'  });
@@ -200,7 +204,9 @@ export class TasksComponent implements OnInit {
 
   goToNewImage(){
     this.ImageForm.controls['takeFileDateTime'].setValue(
-      this.dateTime.toGeorgianDate(this.dateTime.modelToString(this.SelectedDay))
+        this.translateService.calendarType==='Shamsi'?
+            this.dateTime.toGeorgianDate(this.dateTime.modelToString(this.SelectedDay)):
+            this.dateTime.modelToString(this.SelectedDay)
     );
     this.ImageForm.controls['fieldId'].setValue(+this.fieldId);
     this.modalService.open(this.newImageModal , { centered: true , size: 'md'  });
