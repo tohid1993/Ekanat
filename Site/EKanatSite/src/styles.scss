@@ -1,9 +1,8 @@
-@import '~bootstrap/scss/bootstrap';
+//@import '~bootstrap/scss/bootstrap';
 @import "~leaflet/dist/leaflet.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~leaflet-geosearch/dist/geosearch.css";
 @import "./assets/scss/_importedStyles";
-
 
 .login_page_carousel{
     .carousel-inner{
@@ -31,34 +30,52 @@
     fill: #37b7a0;
 }
 
-.leaflet-control-layers-base{
-    font-family: $DefaultFontFamily;
-    text-align: right;
-    direction: rtl;
+[dir='rtl']{
+    .leaflet-control-layers-base{
+        font-family: $DefaultFontFamily;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .leaflet-tooltip{
+        font-family: $DefaultFontFamily;
+        direction: rtl;
+        font-weight: 400;
+    }
 }
 
-.leaflet-tooltip{
-    font-family: $DefaultFontFamily;
-    direction: rtl;
-    font-weight: 400;
+[dir='ltr']{
+    .leaflet-control-layers-base{
+        font-family: $DefaultLatinFontFamily;
+        text-align: left;
+        direction: ltr;
+    }
+
+    .leaflet-tooltip{
+        font-family: $DefaultLatinFontFamily;
+        direction: ltr;
+        font-weight: 400;
+    }
 }
+
+
 
 .leaflet-draw-draw-polygon{
-    background-image: url(/src/assets/images/icons/polygon-kanat-vpm-artan1100-0106.png) !important;
+    background-image: url(./assets/images/icons/polygon-kanat-vpm-artan1100-0106.png) !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: 75% !important;
 }
 
 .leaflet-draw-draw-circle{
-    background-image: url(/src/assets/images/icons/circle-kanat-vpm-artan1100-0106.svg) !important;
+    background-image: url(./assets/images/icons/circle-kanat-vpm-artan1100-0106.svg) !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: 70% !important;
 }
 
 .leaflet-draw-edit-remove{
-    background-image: url(/src/assets/images/icons/eraser-kanat-vpm-artan1100-0106.png) !important;
+    background-image: url(./assets/images/icons/eraser-kanat-vpm-artan1100-0106.png) !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: 75% !important;
@@ -298,9 +315,15 @@ ngb-modal-backdrop{
 }
 
 
+[dir='rtl']{
+    .accordion-button::after{
+        margin-right: auto;
+        margin-left: unset;
+        filter: hue-rotate(221deg);
+    }
+}
+
 .accordion-button::after{
-    margin-right: auto;
-    margin-left: unset;
     filter: hue-rotate(221deg);
 }
 

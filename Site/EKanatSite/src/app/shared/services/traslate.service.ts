@@ -7,6 +7,7 @@ export class TranslateService {
     locate:string = ''
     calendarType:string = 'Shamsi'  // 1 Shamsi   2 Georgian
     calendarDir:string = 'rtl'
+    siteDir:string = 'rtl'
     data:BehaviorSubject<any> = new BehaviorSubject<any>({});
 
     init(lang: string) {
@@ -20,12 +21,14 @@ export class TranslateService {
             case 'faIR':
                 this.calendarType = 'Shamsi'
                 this.calendarDir = 'rtl'
+                this.siteDir = 'rtl'
                 localeData = mainLocale.faIR
                 break;
 
             case 'enUS':
                 this.calendarType = 'Georgian'
                 this.calendarDir = 'ltr'
+                this.siteDir = 'ltr'
                 localeData = mainLocale.enUS
                 document.body.classList.add('latin')
                 break;
@@ -33,6 +36,7 @@ export class TranslateService {
             default:
                 localeData = mainLocale.faIR
                 this.calendarType = 'Shamsi'
+                this.siteDir = 'rtl'
                 this.calendarDir = 'rtl'
                 break;
         }

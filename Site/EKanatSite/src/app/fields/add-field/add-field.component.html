@@ -11,7 +11,7 @@
         width="16"
         height="16"
         fill="currentColor"
-        class="bi bi-bezier step_icon"
+        class="bi bi-bezier step_icon me-2 py-2"
         viewBox="0 0 16 16"
       >
         <path
@@ -31,7 +31,7 @@
         width="16"
         height="16"
         fill="currentColor"
-        class="bi bi-ui-checks-grid step_icon"
+        class="bi bi-ui-checks-grid step_icon me-2 py-2"
         viewBox="0 0 16 16"
       >
         <path
@@ -68,9 +68,9 @@
         ><img src="../../../assets/images/icons/upload-kanat-vpm-artan1100-0106.png" alt="" />{{'chooseFile'|translate}}</label
       >
 
-      <div class="w-100 mt-3" dir="rtl">
-        <div class="row">
-          <div class="col-auto ms-auto ps-1">
+      <div class="w-100 mt-3">
+        <div class="row" [dir]="translateService.siteDir">
+          <div class="col-auto">
             <button
               type="button"
               class="secondary_btn medium_btn"
@@ -79,11 +79,12 @@
               {{'changeMethod'|translate}}
             </button>
           </div>
-          <div class="col-auto pe-0">
+          <div class="col-auto ms-auto">
             <button
               class="primary_btn medium_btn px-3"
               [disabled]="!FieldCoordinates"
               (click)="GoToNextStep()"
+              [ngClass]="translateService.siteDir"
             >
               {{'saveAndContinue'|translate}}
               <svg
@@ -91,8 +92,9 @@
                 width="16"
                 height="16"
                 fill="currentColor"
-                class="bi bi-arrow-left me-2"
+                class="bi bi-arrow-left mx-2"
                 viewBox="0 0 16 16"
+                [ngClass]="{'rotate-180':translateService.siteDir==='ltr'}"
               >
                 <path
                   fill-rule="evenodd"
@@ -122,7 +124,7 @@
               >
               <input
                 type="text"
-                class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end"
+                class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start"
                 dir="rtl"
                 id="fieldName"
                 autocomplete="off"
@@ -144,8 +146,8 @@
               >
               <input
                 type="text"
-                class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end"
-                dir="rtl"
+                class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start"
+                [dir]="translateService.siteDir"
                 id="fieldArea"
                 autocomplete="off"
                 readonly
@@ -225,6 +227,7 @@
                   [placement]="'bottom'"
                   [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1"
                   [ngModelOptions]="{ standalone: true }"
+                  [datepickerClass]="translateService.calendarType==='Shamsi'?'rtl':'ltr'"
                   name="dp"
                   ngbDatepicker
                   #d1="ngbDatepicker"
@@ -304,6 +307,7 @@
                   [placement]="'bottom'"
                   [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1"
                   [ngModelOptions]="{ standalone: true }"
+                  [datepickerClass]="translateService.calendarType==='Shamsi'?'rtl':'ltr'"
                   name="dp"
                   ngbDatepicker
                   #d2="ngbDatepicker"
@@ -378,7 +382,7 @@
               >
               <input
                 type="text"
-                class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end"
+                class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start"
                 dir="rtl"
                 id="irrigationPeriod"
                 autocomplete="off"
@@ -395,7 +399,7 @@
             </div>
 
             <div class="col-12 mx-auto mb-4 row">
-              <div class="col-6 col-md-3 ps-1 pe-0">
+              <div class="col-6 col-md-3 pe-1 ps-0">
                 <button
                   type="button"
                   class="secondary_btn medium_btn w-100"
@@ -404,7 +408,7 @@
                   {{'previousStep'|translate}}
                 </button>
               </div>
-              <div class="col-6 col-md-3 ps-0 pe-1 me-auto">
+              <div class="col-6 col-md-3 pe-0 ps-1 ms-auto">
                 <button type="submit" class="primary_btn medium_btn px-1 w-100">
                   {{'saveField'|translate}}
                 </button>
@@ -422,7 +426,7 @@
     <h6 class="modal-title" id="modal-basic-title">{{'chooseMethod'|translate}}</h6>
     <button
       type="button"
-      class="btn-close me-auto ms-0"
+      class="btn-close ms-auto me-0"
       aria-label="Close"
       (click)="modal.dismiss('Cross click')"
     ></button>

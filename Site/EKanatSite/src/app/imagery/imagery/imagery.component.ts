@@ -97,9 +97,9 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   setHightOfImageryWrapper(){
-    (document.querySelector('#imagery_wrapper>.row') as HTMLElement).style.minHeight = "calc(100vh - 144px)";
+    (document.querySelector('#imagery_wrapper>.row') as HTMLElement).style.minHeight = "calc(100vh - 184px)";
 
-    this.colsHeight = "calc(100vh - 160px)";
+    this.colsHeight = "calc(100vh - 200px)";
   }
 
   @HostListener('window:resize', ['$event'])
@@ -633,7 +633,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
     this.options1 = {
       textStyle:{
-        fontFamily:'Vazir',
+        fontFamily: this.translateService.siteDir==='rtl'?'Vazir':'sofia',
       },
       tooltip: {
         trigger: 'axis',
@@ -645,7 +645,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
         },
         formatter: "<strong>{b}</strong><br>{a0}: {c0}",
         textStyle:{
-            fontFamily:'Vazir',
+            fontFamily: this.translateService.siteDir==='rtl'?'Vazir':'sofia',
             align:'right',
             
         }

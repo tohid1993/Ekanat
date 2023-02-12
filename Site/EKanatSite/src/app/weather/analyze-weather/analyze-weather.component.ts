@@ -99,7 +99,7 @@ export class AnalyzeWeatherComponent implements OnInit {
   
       this.options = {
         textStyle:{
-          fontFamily:'Vazir',
+          fontFamily: this.translateService.siteDir==='rtl'?'Vazir':'sofia',
         },
         legend: {
           data: [this.translateService.translate('rainfall')],
@@ -124,7 +124,7 @@ export class AnalyzeWeatherComponent implements OnInit {
 
             formatter: "<span class='Primary_80_text bu_2_text'>{b}:</span> &nbsp;&nbsp;{c} " + this.translateService.translate('millimeter'),
             textStyle:{
-                fontFamily:'Vazir',
+                fontFamily: this.translateService.siteDir==='rtl'?'Vazir':'sofia',
                 align:'right',
             }
                 
@@ -153,7 +153,7 @@ export class AnalyzeWeatherComponent implements OnInit {
 
       this.options1 = {
         textStyle:{
-          fontFamily:'Vazir',
+          fontFamily: this.translateService.siteDir==='rtl'?'Vazir':'sofia',
         },
         tooltip: {
           trigger: 'axis',
@@ -165,7 +165,7 @@ export class AnalyzeWeatherComponent implements OnInit {
           },
           formatter: "<strong>{b}</strong><br>{a1}: {c1}<br>{a0}: {c0}",
           textStyle:{
-              fontFamily:'Vazir',
+              fontFamily: this.translateService.siteDir==='rtl'?'Vazir':'sofia',
               align:'right',
               
           }

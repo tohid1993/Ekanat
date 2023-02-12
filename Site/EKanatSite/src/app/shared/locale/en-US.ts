@@ -188,7 +188,7 @@ export const enUSLocate = {
     image:'Image',
     agriculturalLandMonitoring:' Crop field monitoring',
     tempDegree:'Temperature',
-    windDirection:'Wind directionد',
+    windDirection:'Wind direction',
     agriculturalExpertAnalysis:'Agricultural expert report',
     nextTasks:'Activity  to do',
     show:'Show',
@@ -237,7 +237,7 @@ export const enUSLocate = {
     unCompletedProfileAlert:'To continue, please complete your profile',
     completeProfile:'Complete profile',
     notAllowPreviousMonthData:'It is not possible to view previous months',
-    pleaseWait:'Please wait...',
+    pleaseWait:'Please wait ...',
     enUS:'EN - English (United States)',
     faIR:'FA - Farsi (Iran)',
     license:'Certifcates'

@@ -22,21 +22,21 @@
     
                     <div class="col-12 col-md-6 mt-3">
                         <label for="firstName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'firstName'|translate}}</label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="firstName" dir="rtl" id="firstName" autocomplete="off">
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="firstName" dir="rtl" id="firstName" autocomplete="off">
                         <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','firstName')">{{'fieldRequiredErrorMessage'|translate}}</small>
                     </div>
                     <div class="col-12 col-md-6 mt-3">
                         <label for="lastName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'lastName'|translate}}</label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" formControlName="lastName" dir="rtl" id="lastName" autocomplete="off">
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="lastName" dir="rtl" id="lastName" autocomplete="off">
                         <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','lastName')">{{'fieldRequiredErrorMessage'|translate}}</small>
                     </div>
                     <div class="col-12 col-md-6 mt-3">
                         <label for="email" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'email'|translate}} <small>({{'optional'|translate}})</small></label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" formControlName="email" dir="ltr" id="email" autocomplete="off">
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-left" formControlName="email" dir="ltr" id="email" autocomplete="off">
                     </div>
                     <div class="col-12 col-md-6 mt-3">
                         <label for="mobile" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'mobileNumber'|translate}}</label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" readonly [value]="findCountryCode() + (ProfileForm.value.userName || '')" dir="ltr" id="mobile" autocomplete="off">
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-left" readonly [value]="findCountryCode() + (ProfileForm.value.userName || '')" dir="ltr" id="mobile" autocomplete="off">
                     </div>
 
 
@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-12 col-md-6 mt-3">
                         <label for="villageName" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'village'|translate}}</label>
-                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-end" id="villageName" formControlName="villageName"  autocomplete="off">
+                        <input type="text" class="form-control form-control-lg bu_2_text bu_2_text_mobile text-start" id="villageName" formControlName="villageName"  autocomplete="off">
                         <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','villageName')">{{'fieldRequiredErrorMessage'|translate}}</small>
 
                     </div>
@@ -82,7 +82,7 @@
                     </div>
     
                     <div class="col-12 mt-3 row px-0">
-                        <div class="col-auto px-0 me-auto">
+                        <div class="col-auto px-0 ms-auto">
                             <button type="submit" class="primary_btn medium_btn">{{'saveInformation'|translate}}</button>
                         </div>
                     </div>

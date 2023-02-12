@@ -24,7 +24,7 @@ export class FieldsComponent implements OnInit , OnDestroy {
     private fieldService:FieldService,
     private gService:GeneralService,
     private router:Router,
-    private translateService:TranslateService
+    public translateService:TranslateService
   ) { }
 
   ngOnDestroy(): void {

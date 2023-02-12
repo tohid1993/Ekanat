@@ -41,6 +41,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
       this.translateService.init(localStorage.getItem('siteLang') || this.siteLang)
 
+      document.querySelector("html")!.setAttribute('lang',this.translateService.locate.substring(0,2))
+      document.querySelector("html")!.setAttribute('dir',this.translateService.siteDir)
+
+      document.getElementById('bootstrap-style')!
+          .setAttribute('href',this.translateService.siteDir==='rtl'?'./assets/css/bootstrap.rtl.min.css':'./assets/css/bootstrap.min.css')
+
       this.userService.isAuth.subscribe
       ({
         next:(res:any)=>{

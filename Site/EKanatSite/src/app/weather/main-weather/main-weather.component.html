@@ -1,6 +1,6 @@
 <app-page-breadcrumb [pageTitle]="('meteorology'|translate) + ' ' + (SelectedField?.name? ' ('+SelectedField?.name+')':'')">
     <button class="text-white border btn-sm border-white bg-transparent h6 m-0 p-2 rounded text-nowrap" (click)="openFieldsModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="d-none d-sm-inline-block bi bi-pin-map ms-1" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="d-none d-sm-inline-block bi bi-pin-map me-1" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z"/>
             <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"/>
           </svg> 
@@ -36,7 +36,7 @@
 <ng-template #fieldsModal let-modal let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h6 class="modal-title" id="modal-basic-title">{{'selectField'|translate}}</h6>
-        <button type="button" class="btn-close me-auto ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        <button type="button" class="btn-close ms-auto me-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
         <div class="draw_methods py-3 px-4">
@@ -44,7 +44,7 @@
             <div class="row g-3 fields_wrapper mt-3 justify-content-center">
                 <div class="col-12 col-sm-6 col-xl-4" (click)="choaseFieldModal(field)"
                     *ngFor="let field of FieldsList;let index = index" >
-                    <div class="field_item" [ngClass]="{'hasPackage':field.hasPackage}">
+                    <div class="field_item" [ngClass]="[field.hasPackage?'hasPackage':'', translateService.siteDir==='ltr'?'right':'left']">
                         <div class="detail">
                             <h3 class="field_title heading_level_4 heading_level_4_mobile Primary_100_text mb-3">{{field.name}}</h3>
                             <h6 class="cultivated_crop bu_2_text bu_2_text_mobile Dark_80_text mb-0">{{field.productName}} - {{field.area}} {{'hectares'|translate}}</h6>
@@ -57,9 +57,9 @@
                 </div>
 
                 <div class="col-12 text-center mt-3">
-                    <a (click)="goToAddNewField()" class="primary_btn">
+                    <a (click)="goToAddNewField()" class="primary_btn" [ngClass]="translateService.siteDir">
                         {{'addNewField'|translate}}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-plus-lg me-2" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-plus-lg ms-2" viewBox="0 0 16 16">
                             <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                         </svg>
                     </a>

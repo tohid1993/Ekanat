@@ -1,3 +1,11 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate-pulse" [fullScreen] = "true"><p style="color: white" > لطفا منتظر بمانید... </p></ngx-spinner>
+<ngx-spinner
+        bdColor = "rgba(0, 0, 0, 0.8)"
+        size = "medium" color = "#fff"
+        type = "ball-clip-rotate-pulse"
+        [fullScreen] = "true">
+    <p style="color: white" >
+        {{'pleaseWait'|translate}}
+    </p>
+</ngx-spinner>
 
 <router-outlet></router-outlet>
