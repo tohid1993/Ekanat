@@ -43,8 +43,9 @@
                             <ul class="tasks_list mb-3">
                               <h6>{{'tasksList'|translate}}</h6>
                               <li class="item bu_3_text bu_3_text_mobile " *ngFor="let item of SelectedDayTasks">
-                                <span class="title" (click)="showTaskDetails(item)"
-                                  [style]="'--task-color:'+item.colorCode">{{item.activityGroupName}} - {{'field'|translate}} "{{item.fieldName}}"</span>
+                                <span class="title" (click)="showTaskDetails(item)" [style]="'--task-color:'+item.colorCode">
+                                    <span class="ps-2">{{item.activityGroupName}} - {{'field'|translate}} "{{item.fieldName}}"</span>
+                                </span>
                               </li>  
                             </ul>
                         </div>

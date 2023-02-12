@@ -8,6 +8,7 @@ import { UserPanelComponent } from './user-panel.component';
 import {TranslatePipe} from "../shared/pipe/translate.pipe";
 import {AppModule} from "../app.module";
 import { LicenseComponent } from './license/license.component';
+import { FooterComponent } from './footer/footer.component';
 
 const routes: Routes = [
 
@@ -35,7 +36,8 @@ const routes: Routes = [
   declarations: [
     DashboardComponent,
     UserPanelComponent,
-    LicenseComponent
+    LicenseComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,

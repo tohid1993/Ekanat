@@ -97,9 +97,9 @@ export class ImageryComponent implements OnInit , AfterViewInit {
   }
 
   setHightOfImageryWrapper(){
-    (document.querySelector('#imagery_wrapper>.row') as HTMLElement).style.minHeight = "calc(100vh - 144px)";
+    (document.querySelector('#imagery_wrapper>.row') as HTMLElement).style.minHeight = "calc(100vh - 184px)";
 
-    this.colsHeight = "calc(100vh - 160px)";
+    this.colsHeight = "calc(100vh - 200px)";
   }
 
   @HostListener('window:resize', ['$event'])

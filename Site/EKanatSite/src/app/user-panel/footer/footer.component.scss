@@ -1,0 +1,11 @@
+@import "vars";
+.footer{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40px;
+  background-color: $Dark_10;
+  padding: 4px 20px;
+  z-index: 1010;
+}

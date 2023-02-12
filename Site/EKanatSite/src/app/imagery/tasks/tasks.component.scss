@@ -43,18 +43,17 @@
                 position: relative;
                 display: block;
                 cursor: pointer;
-                
-                &::before{
-                    position: absolute;
-                    right: 0;
-                    width: 6px;
-                    top: 6px;
-                    bottom: 6px;
-                    display: block;
-                    content: "";
-                    border-radius: 4px;
-                    background-color: var(--task-color);
-                }
+
+               &::before{
+                   position: relative;
+                   width: 6px;
+                   height: 17px;
+                   display: inline-block;
+                   content: "";
+                   border-radius: 4px;
+                   background-color: var(--task-color);
+                   vertical-align: bottom;
+               }
            }
         }
     }
