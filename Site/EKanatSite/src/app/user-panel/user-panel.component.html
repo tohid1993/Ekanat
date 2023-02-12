@@ -3,7 +3,7 @@
       <a class="navbar-brand" href="#"><img src="../../assets/images/kanatlogo-kanat-vpm-artan1100-0106.png" alt=""></a>
       <div ngbDropdown class="d-inline-flex align-items-center justify-content-center ms-auto" *ngIf="windowWidth<992">
         <div ngbDropdown class="d-inline-block me-2">
-          <button type="button" class="btn btn-outline-dark"  ngbDropdownToggle>
+          <button type="button" class="btn btn-outline-dark btn-sm"  ngbDropdownToggle>
             {{translateService?.locate?.substring(0,2)?.toUpperCase()}}
           </button>
           <div ngbDropdownMenu aria-labelledby="langDropDown">
@@ -102,7 +102,7 @@
 
       <div class="col-auto mr-auto" dir="rtl">
         <div ngbDropdown class="d-inline-block mx-2">
-          <button type="button" class="btn btn-outline-dark" id="langDropDown" ngbDropdownToggle>
+          <button type="button" class="btn btn-outline-dark btn-sm" id="langDropDown" ngbDropdownToggle>
             {{translateService?.locate?.substring(0,2)?.toUpperCase()}}
           </button>
           <div ngbDropdownMenu aria-labelledby="langDropDown">
