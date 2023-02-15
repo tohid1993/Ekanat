@@ -622,14 +622,19 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
   generateCharts(res:any){
     const tLabel:string[] = [];
-    const tValue:number[] = [];
+    const minValue: number[] = [];
+    const meanValue: number[] = [];
+    const maxValue: number[] = [];
 
     res.forEach((item:any) => {
       tLabel.push(this.dateTimeService.toJalaliDate(item[0]));
-      tValue.push(item[1]);
+      maxValue.push(item[1][0]);
+      minValue.push(item[1][1]);
+      meanValue.push(item[1][2]);
     });
 
     this.showCharts = true
+
 
     this.options1 = {
       textStyle:{
@@ -643,7 +648,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
             backgroundColor: '#6a7985'
           }
         },
-        formatter: "<strong>{b}</strong><br>{a0}: {c0}",
+        formatter: "<strong>{b}</strong><br>{a1}: {c1}<br>{a0}: {c0}",
         textStyle:{
             fontFamily: this.translateService.siteDir==='rtl'?'Vazir':'sofia',
             align:'right',
@@ -651,7 +656,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
         }
       },
       legend: {
-        data: ['NDVI Chart'],
+        data: [this.translateService.translate('Max NDVI') , this.translateService.translate('Mean NDVI') , this.translateService.translate('Min NDVI')],
         top: '0px'
       },
       grid: {
@@ -675,13 +680,26 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       ],
       series: [
         {
-          name: 'NDVI Chart',
+          name: this.translateService.translate('Max NDVI'),
           type: 'line',
           areaStyle: { opacity:0 },
-          data: tValue
+          data: maxValue
+        },
+        {
+          name: this.translateService.translate('Mean NDVI'),
+          type: 'line',
+          areaStyle: { opacity:0 },
+          data: meanValue
+        },
+        {
+          name: this.translateService.translate('Min NDVI'),
+          type: 'line',
+          areaStyle: { opacity:0 },
+          data: minValue
         }
       ]
     };
+
   }
 
 
