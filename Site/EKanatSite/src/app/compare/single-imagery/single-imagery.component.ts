@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, TemplateRef} from '@angular/core';
 import * as Leaflet from "leaflet";
 import {GestureHandling} from "leaflet-gesture-handling";
 import {DateModel, FieldDetailViewModel, IndicatorsTypes} from "../../shared/models/model";
-import Swal from "sweetalert2";
 import {TranslateService} from "../../shared/services/traslate.service";
 import {DateTimeService} from "../../shared/services/dateTime.service";
 import {NgxSpinnerService} from "ngx-spinner";
@@ -10,6 +9,7 @@ import {db} from "../../../db/indexedDB";
 import {EeService} from "../../shared/services/ee.service";
 import {ToastrService} from "ngx-toastr";
 import {ActivatedRoute, Router} from "@angular/router";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-single-imagery',
@@ -27,12 +27,18 @@ export class SingleImageryComponent implements OnInit, OnChanges {
   @Input('zoom') zoom:number = 10
   @Input('fieldDetail') fieldDetail!:FieldDetailViewModel;
 
-  @Input('imageXY') imageXY!:[number,number,number]
+  @Input('imageXY') imageXY!:Array<number>
 
 
   @Output() latLngChange = new EventEmitter<[[string,string],number]>();
   @Output() zoomChange = new EventEmitter<[number,number]>();
-  @Output() imageXYchange = new EventEmitter<[number,number,number]>();
+  @Output() imageXYchange = new EventEmitter<Array<number>>();
+
+
+  dates:Array<string> = []
+
+
+  moveStarted:boolean = false
 
   transparency:number = 100;
   showLegend:boolean = false;
@@ -53,6 +59,38 @@ export class SingleImageryComponent implements OnInit, OnChanges {
 
   firstLoadingFieldDetail:boolean = true
 
+  IndicatorsList:any = [
+    {
+      group:'plantDensityAndGreenness',
+      items: [
+        ['ndviLabel', IndicatorsTypes.ndvi],
+        ['reciLabel', IndicatorsTypes.reci],
+        ['msaviLabel', IndicatorsTypes.msavi]
+      ]
+    },
+    {
+      group:'plantWaterStatus',
+      items: [
+        ['ndwiLabel', IndicatorsTypes.ndwi],
+        ['ndmiLabel', IndicatorsTypes.ndmi]
+      ]
+    },
+    {
+      group:'plantNutritionalStatus',
+      items: [
+        ['ndreLabel', IndicatorsTypes.ndre]
+      ]
+    },
+    {
+      group:'plantPestsDiseases',
+      items: [
+        ['sipiLabel', IndicatorsTypes.sipi]
+      ]
+    }
+  ]
+
+  inProcess:boolean = false
+
   constructor(
       public translateService:TranslateService,
       public dateTimeService:DateTimeService,
@@ -60,11 +98,11 @@ export class SingleImageryComponent implements OnInit, OnChanges {
       public eeService:EeService,
       public toastr:ToastrService,
       public router:Router,
-      public route:ActivatedRoute
+      public route:ActivatedRoute,
+      private modalService: NgbModal
   ) {
 
   }
-
 
   ngOnChanges() {
     if(this.map && this.changedMapIndex !== this.mapIndex){
@@ -75,19 +113,20 @@ export class SingleImageryComponent implements OnInit, OnChanges {
       this.map.setZoom(this.zoom)
 
     if(this.firstLoadingFieldDetail && this.fieldDetail){
+      this.firstLoadingFieldDetail = false
+
       this.addPolygonToMap(this.eeService.getLatLngFromXYarray(this.fieldDetail.polygon));
-      this.checkAndGetFieldDBId().finally()
-
-      setTimeout(()=>{
-        this.getIndicators(this.initType,-1,this.initDate)
-
-        this.firstLoadingFieldDetail = false
-
-      },100)
+      this.checkAndGetFieldDBId().finally(
+          ()=>{
+            setTimeout(()=>{
+              this.getIndicators(this.initType,-1,this.initDate)
+            },1000)
+          }
+      )
     }
 
-    if(this.imageXY && this.mapIndex !== this.imageXY[2]){
-      this.showTooltip(this.imageXY[0],this.imageXY[1])
+    if(this.imageXY){
+      this.showTooltip(this.imageXY)
     }
   }
 
@@ -115,9 +154,17 @@ export class SingleImageryComponent implements OnInit, OnChanges {
         this.changedMapIndex = this.mapIndex
       })
 
+      this.map.on("movestart", (e) => {
+          this.moveStarted = true
+      });
+
       this.map.on("move", (e) => {
         if(this.mapIndex !== this.changedMapIndex || this.firstLoadingFieldDetail) return
         this.latLngChange.emit([[e.target.getCenter().lat,e.target.getCenter().lng], this.mapIndex]);
+      });
+
+      this.map.on("moveend", (e) => {
+        this.moveStarted = false
       });
 
       this.map.on("zoom", (e) => {
@@ -127,6 +174,17 @@ export class SingleImageryComponent implements OnInit, OnChanges {
   }
 
 
+  getIndicatorName():string{
+    let title = '';
+    this.IndicatorsList.forEach((g:any)=>{
+      g.items.forEach((i:any)=>{
+        if(i[1] == this.initType)
+          title = i[0]
+      })
+    })
+
+    return title
+  }
 
   /**
    * recive indicator image
@@ -135,6 +193,9 @@ export class SingleImageryComponent implements OnInit, OnChanges {
    */
   async getIndicators(key:IndicatorsTypes,imageIndex:number=-1,date:string = ''){
     if(!key) return;
+    this.modalService.dismissAll();
+    this.inProcess = true
+
     this.beforeIndicatorProcess();
 
     // let fromDate = this.dateTimeService.modelToString(this.fromDate)
@@ -148,7 +209,6 @@ export class SingleImageryComponent implements OnInit, OnChanges {
         this.dateTimeService.toGeorgianDate(this.dateTimeService.modelToString(this.toDate)):
         this.dateTimeService.modelToString(this.toDate)
 
-    this.spinner.show();
 
     // check and get saved image from indexedDB
     const image = await this.getImageFromDB(key,date)
@@ -158,13 +218,14 @@ export class SingleImageryComponent implements OnInit, OnChanges {
       this.indicatorDetails.imageUrl = image.imageUrl
       this.indicatorDetails.legendRange = image.legendRange
       this.indicatorDetails.imageIndex = imageIndex
+      this.showLegend = true;
 
       this.addImageToMap(
           "data:image/png;base64,"+this.indicatorDetails.imageBase64,
           this.eeService.getLatLngFromXYarray(this.fieldDetail.polygon)
       );
       this.selectedIndicator = key;
-      this.spinner.hide()
+      this.inProcess = false
       return;
     }
 
@@ -187,6 +248,9 @@ export class SingleImageryComponent implements OnInit, OnChanges {
                 self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon)
             );
 
+            self.dates = res.data.dates
+            self.initDate = res.data.dates[res.data.imageIndex]
+            self.inProcess = false
             self.addImageToDB(
                 key ,
                 res.data.dates[res.data.imageIndex],
@@ -198,7 +262,6 @@ export class SingleImageryComponent implements OnInit, OnChanges {
             self.toastr.error(self.translateService.translate('noImageFoundForThisTimeFrame'));
           }
 
-          self.spinner.hide();
 
           // try {
           //   setTimeout(() => {
@@ -213,6 +276,17 @@ export class SingleImageryComponent implements OnInit, OnChanges {
     })
 
     this.selectedIndicator = key;
+  }
+
+
+  async getIndicatorsForDate(date:any){
+    try {
+      const index = this.dates.findIndex(d=>d === date.value)
+      await this.getIndicators(this.selectedIndicator,index,date.value)
+      this.initDate = date.value
+    } catch (e) {
+      
+    }
   }
 
 
@@ -310,26 +384,15 @@ export class SingleImageryComponent implements OnInit, OnChanges {
               var x = Math.round(imgWidth*px/layerWidth);
               var y = Math.round(imgHeight*py/layerHeight);
 
-              this.imageXYchange.emit([x,y,this.mapIndex]);
-
-
-              let value = this.getValueOfPoint(x,y);
-
-              value = value==undefined? -2:value;
-
               var mx = e.originalEvent.clientX,
                   my = e.originalEvent.clientY;
 
-              document.getElementById('tooltip_value_'+this.mapIndex)!!.style.top = (my - 45) + 'px';
-              document.getElementById('tooltip_value_'+this.mapIndex)!!.style.left = (mx) + 'px';
-
-
-              if(value>=this.indicatorDetails.legendRange[0] && value<=this.indicatorDetails.legendRange[1]){
-
-                document.getElementById('tooltip_value_'+this.mapIndex)!!.innerText = value.toString();
-                document.getElementById('tooltip_value_'+this.mapIndex)!!.style.display = "block";
-              }else{
-                document.getElementById('tooltip_value_'+this.mapIndex)!!.style.display = "none";
+              this.imageXYchange.emit([x,y,mx,my,this.mapIndex]);
+              if(this.moveStarted === false){
+                this.latLngChange.emit(
+                    [[this.map.getCenter().lat.toString(),this.map.getCenter().lng.toString()],
+                      this.mapIndex]
+                );
               }
             }
           }).on("mouseout",(e)=>{
@@ -520,8 +583,56 @@ export class SingleImageryComponent implements OnInit, OnChanges {
   }
 
 
-  showTooltip(x:number,y:number){
-    let value = this.getValueOfPoint(x,y);
-    console.log(value)
+  showTooltip(data:Array<number>){
+    if(!this.indicatorDetails || this.inProcess) return
+
+    let value = this.getValueOfPoint(data[0],data[1]);
+
+    let viewportOffset = document.getElementById('map_'+this.mapIndex)!!.getBoundingClientRect();
+    let left = viewportOffset.left;
+    let width = viewportOffset.width;
+    let top = viewportOffset.top;
+    let height = viewportOffset.height;
+
+    let yPos = 0
+    let xPos = 0
+
+    if(left <= data[2]){
+      if(left <= data[2] && data[2] <= (left + width)){
+        yPos = data[2]
+      }else{
+        yPos = data[2] - (left + width)
+      }
+    }else{
+      yPos = data[2] + left - 16
+    }
+
+    if(top <= data[3]){
+      if(top <= data[3] && data[3] <= (top + height)){
+        xPos = data[3]
+      }else{
+        xPos = data[3] - (top + height) + 91 - 16
+      }
+    }else{
+      xPos = data[3] + top - 91
+    }
+
+
+
+
+    document.getElementById('tooltip_value_'+this.mapIndex)!!.style.top = (xPos - 45) + 'px';
+    document.getElementById('tooltip_value_'+this.mapIndex)!!.style.left = (yPos - 35)+ 'px';
+
+    if(value>=this.indicatorDetails.legendRange[0] && value<=this.indicatorDetails.legendRange[1]){
+
+      document.getElementById('tooltip_value_'+this.mapIndex)!!.innerText = value.toString();
+      document.getElementById('tooltip_value_'+this.mapIndex)!!.style.display = "block";
+    }else{
+      document.getElementById('tooltip_value_'+this.mapIndex)!!.style.display = "none";
+    }
+  }
+
+  openFilterModal(content: TemplateRef<any>) {
+    this.modalService.open(content, { size: 'md' });
   }
 }

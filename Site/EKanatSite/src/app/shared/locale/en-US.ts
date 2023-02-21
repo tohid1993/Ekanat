@@ -240,5 +240,9 @@ export const enUSLocate = {
     pleaseWait:'Please wait ...',
     enUS:'EN - English (United States)',
     faIR:'FA - Farsi (Iran)',
-    license:'Certifcates'
+    license:'Certifcates',
+    compareIndicators:'Compare Indicators',
+    indicatorsFilter:'Indicators Filters',
+    imageryDate:'Imagery Date'
+
 }

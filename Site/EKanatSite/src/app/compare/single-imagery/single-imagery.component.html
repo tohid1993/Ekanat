@@ -1,4 +1,4 @@
-<div class="position-relative">
+<div class="position-relative h-100">
     <div class="imagery_content_wrapper h-100">
         <div [id]="'map_'+mapIndex" [ngClass]="'t'+transparency" dir="ltr"></div>
         <div class="imagery_legend" *ngIf="showLegend">
@@ -22,6 +22,20 @@
             <img src="../../../assets/images/legend-kanat-vpm-artan1100-0106.jpg" alt="">
             <span>{{indicatorDetails?.legendRange[0]}}</span>
         </div>
+        <div class="indicator_detail" (click)="openFilterModal(filter)">
+            <span [ngClass]="[translateService.siteDir === 'rtl' ? 'border-end pe-2':'border-start ps-2']">
+                {{translateService.calendarType === 'Shamsi'? dateTimeService.toJalaliDate(initDate) : initDate}}
+            </span>
+            <span [dir]="translateService.siteDir">
+                {{getIndicatorName()|translate}}
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                <path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
+            </svg>
+        </div>
+    </div>
+    <div class="inProcess" *ngIf="inProcess" [dir]="translateService.siteDir">
+        {{'pleaseWait'|translate}}
     </div>
 </div>
 
@@ -29,4 +43,76 @@
 
 <ng-template #popContent>
     <input type="range" class="transparency_range_slider" min="0" max="100" [(ngModel)]="transparency" />
+</ng-template>
+
+
+
+<ng-template #filter let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h6 class="modal-title">{{'indicatorsFilter'|translate}}</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body row">
+        <div class="col-6 mb-2">
+            <label class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">{{'fromDate'|translate}}</label>
+            <div class="input-group">
+                <input class="form-control border-secondary bu_3_text bu_3_text_mobile text-start" dir="ltr"
+                       [datepickerClass]="translateService.calendarType==='Shamsi'?'rtl':'ltr'"
+                       placeholder="{{'imageryFromDate'|translate}}" [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1" [ngModelOptions]="{standalone: true}"
+                       name="dp" ngbDatepicker #d3="ngbDatepicker" [maxDate]="toDate" [(ngModel)]="fromDate" > <!--(ngModelChange)="getIndicators(selectedIndicator)"-->
+                <button class="btn btn-outline-secondary bg-light" (click)="d3.toggle()" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#383440" class="bi bi-calendar-plus" viewBox="0 0 16 16">
+                        <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="col-6 mb-2">
+            <label class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">{{'toDate'|translate}}</label>
+            <div class="input-group">
+                <input class="form-control border-secondary bu_3_text bu_3_text_mobile text-start" dir="ltr"
+                       [datepickerClass]="translateService.calendarType==='Shamsi'?'rtl':'ltr'"
+                       placeholder="{{'imageryFromDate'|translate}}" [firstDayOfWeek]="translateService.calendarType==='Shamsi'?6:1" [ngModelOptions]="{standalone: true}"
+                       name="dp" ngbDatepicker #d4="ngbDatepicker" [minDate]="fromDate" [(ngModel)]="toDate" > <!--(ngModelChange)="getIndicators(selectedIndicator)"-->
+                <button class="btn btn-outline-secondary bg-light calendar" (click)="d4.toggle()" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#383440" class="bi bi-calendar-plus" viewBox="0 0 16 16">
+                        <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-12 mb-5" *ngIf="selectedIndicator">
+            <button class="primary_btn w-100 small_btn" (click)="getIndicators(selectedIndicator)">{{'reCalc'|translate}}</button>
+        </div>
+
+        <div class="col-12 mb-2">
+            <label class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">{{'indicatorsCategories'|translate}}</label>
+            <select class="form-select" [(ngModel)]="initType" (change)="getIndicators(initType)">
+
+                <optgroup *ngFor="let grp of IndicatorsList" label="{{grp.group|translate}}">
+                    <option [ngValue]="item[1]" *ngFor="let item of grp.items">{{item[0]|translate}}</option>
+                </optgroup>
+
+            </select>
+        </div>
+        <div class="col-12 mb-2">
+            <label class="bu_3_text bu_3_text_mobile Dark_70_text mb-1">{{'imageryDate'|translate}}</label>
+            <select class="form-select" [(ngModel)]="initDate" (change)="getIndicatorsForDate($event.target)">
+                <ng-container *ngIf="dates.length">
+                    <option [value]="date" *ngFor="let date of dates;let index = index">
+                        {{translateService.calendarType === 'Shamsi'? dateTimeService.toJalaliDate(date) : date}}
+                    </option>
+                </ng-container>
+                <ng-container *ngIf="dates.length==0">
+                    <option [value]="initDate">
+                        {{translateService.calendarType === 'Shamsi'? dateTimeService.toJalaliDate(initDate) : initDate}}
+                    </option>
+                </ng-container>
+
+            </select>
+        </div>
+    </div>
 </ng-template>

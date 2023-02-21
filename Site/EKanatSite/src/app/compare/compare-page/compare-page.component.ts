@@ -19,7 +19,7 @@ export class ComparePageComponent implements OnInit {
   generalLatLang:[string,string]  = ['38.0792', '46.2887']
   generalZoom:number  = 10
   changedFromIndex:number = -1;
-  generalImageXY!:[number,number,number];
+  generalImageXY!:Array<number>;
 
   fieldId!:number;
   fieldDetail!:FieldDetailViewModel;
@@ -47,7 +47,7 @@ export class ComparePageComponent implements OnInit {
     this.route.queryParams.subscribe(
         params=>{
           this.dates = params['dates'].split(',');
-          this.initIndicatorType = params['type'];
+          this.initIndicatorType = params['type'] as IndicatorsTypes;
         }
     )
   }
