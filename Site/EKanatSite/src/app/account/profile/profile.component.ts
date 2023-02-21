@@ -10,7 +10,7 @@ import {TranslateService} from "../../shared/services/traslate.service";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-profile',
+  selector: 'app-compare-page',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })

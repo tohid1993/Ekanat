@@ -9,6 +9,7 @@ const routes: Routes = [
   {path:'login' , component:LoginComponent},
   {path:'' , loadChildren: () => import('./user-panel/user-panel.module').then(m => m.UserPanelModule)},
   {path:'payment' , loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)},
+  {path:'compare' , loadChildren: () => import('./compare/compare.module').then(m => m.CompareModule)},
   {path:'**' , redirectTo:''},
 ];
 

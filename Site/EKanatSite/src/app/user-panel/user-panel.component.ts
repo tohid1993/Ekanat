@@ -18,7 +18,7 @@ export class UserPanelComponent implements OnInit {
   newMessageCount:string|null = "";
   showSupportBtn:boolean = false;
 
-  profileAvatar:string = "./assets/images/users/avatar-profile-kanat-vpm-artan1100-0106.png";
+  profileAvatar:string = "./assets/images/users/avatar-compare-page-kanat-vpm-artan1100-0106.png";
   isDotCom:boolean = false;
   isDotIr:boolean = false;
 
@@ -52,7 +52,7 @@ export class UserPanelComponent implements OnInit {
             confirmButtonText: self.translateService.translate('completeProfile')
           }).then((result) => {
             if (result.isConfirmed) {
-              self.router.navigate(['/account/profile']);
+              self.router.navigate(['/account/compare-page']);
             } 
           })
         }

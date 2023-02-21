@@ -108,7 +108,7 @@ export const enUSLocate = {
     slide2_subtitle:'Monitor your fields with satellite images',
     slide3_title:'Field Optimal management',
     slide3_subtitle:'Access experts analyzes and solutions to manage your field the best way',
-    editProfile:'Edit profile',
+    editProfile:'Edit compare-page',
     chooseImage:'Select image',
     fieldRequiredErrorMessage:'This field is required',
     saveInformation:'Save',
@@ -234,11 +234,15 @@ export const enUSLocate = {
     postalCode:'Postal code',
     existingProducts:'Available products',
     unCompletedProfile:'Profile not completed',
-    unCompletedProfileAlert:'To continue, please complete your profile',
-    completeProfile:'Complete profile',
+    unCompletedProfileAlert:'To continue, please complete your compare-page',
+    completeProfile:'Complete compare-page',
     notAllowPreviousMonthData:'It is not possible to view previous months',
     pleaseWait:'Please wait ...',
     enUS:'EN - English (United States)',
     faIR:'FA - Farsi (Iran)',
-    license:'Certifcates'
+    license:'Certifcates',
+    compareIndicators:'Compare Indicators',
+    indicatorsFilter:'Indicators Filters',
+    imageryDate:'Imagery Date'
+
 }

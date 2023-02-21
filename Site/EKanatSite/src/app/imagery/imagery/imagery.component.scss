@@ -75,9 +75,10 @@
         right: 16px;
         padding: 10px 10px 4px 10px;
         border-radius: 8px;
+        display: flex;
 
         div{
-            width: 100%;
+            width: calc(100% - 45px);
             white-space: nowrap;
             overflow-x: auto;
             display: flex;

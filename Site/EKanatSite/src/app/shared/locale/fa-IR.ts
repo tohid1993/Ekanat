@@ -240,5 +240,8 @@ export const faIRLocate = {
     pleaseWait:'لطفا منتظر بمانید...',
     enUS:'EN - انگلیسی (ایالات متحده آمریکا)',
     faIR:'FA - فارسی (ایران)',
-    license:'مجوزها'
+    license:'مجوزها',
+    compareIndicators:'مقایسه شاخص ها',
+    indicatorsFilter:'فیلتر شاخص ها',
+    imageryDate:'تاریخ شاخص'
 }

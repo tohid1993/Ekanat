@@ -754,5 +754,17 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       return image
     return null
   }
-}
 
+  goToCompare(){
+    const len = this.indicatorDetails.dates.length
+    this.router.navigate(
+        ['/compare/field',this.fieldId],
+        {
+                queryParams: {
+                    type: this.selectedIndicator,
+                    dates: `${this.indicatorDetails.dates[len-1]},${this.indicatorDetails.dates[len-2]}`
+                }
+              }
+        );
+  }
+}

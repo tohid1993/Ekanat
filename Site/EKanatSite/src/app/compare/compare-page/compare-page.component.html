@@ -1,0 +1,23 @@
+<app-page-breadcrumb
+        [backUrl]="'/fields/imagery/analytics/'+fieldId"
+        [pageTitle]="('compareIndicators'|translate) + (fieldDetail?' ('+fieldDetail.name+')':'')">
+
+</app-page-breadcrumb>
+
+<div class="compare_wrapper pt-0" dir="ltr">
+    <app-single-imagery
+            class="item"
+            *ngFor="let item of [1,2];let index=index"
+            [mapIndex]="index+1"
+            [changedMapIndex]="changedFromIndex"
+            [latLng]="generalLatLang"
+            [zoom]="generalZoom"
+            (latLngChange)="setNewLatLng($event)"
+            (zoomChange)="setNewZoom($event)"
+            [fieldDetail]="fieldDetail"
+            [initType]="+initIndicatorType"
+            [initDate]="dates[index]"
+            (imageXYchange)="setImageXY($event)"
+            [imageXY]="generalImageXY"
+    ></app-single-imagery>
+</div>
