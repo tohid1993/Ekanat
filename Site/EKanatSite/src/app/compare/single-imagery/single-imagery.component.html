@@ -18,9 +18,11 @@
                     </small>
                 </button>
             </div>
-            <span>{{indicatorDetails?.legendRange[1]}}</span>
-            <img src="../../../assets/images/legend-kanat-vpm-artan1100-0106.jpg" alt="">
-            <span>{{indicatorDetails?.legendRange[0]}}</span>
+            <ng-container *ngIf="indicatorDetails?.legendRange[0] != 0 || indicatorDetails?.legendRange[1] != 0">
+                <span>{{indicatorDetails?.legendRange[1]}}</span>
+                <img src="../../../assets/images/legend-kanat-vpm-artan1100-0106.jpg" alt="">
+                <span>{{indicatorDetails?.legendRange[0]}}</span>
+            </ng-container>
         </div>
         <div class="indicator_detail" (click)="openFilterModal(filter)">
             <span [ngClass]="[translateService.siteDir === 'rtl' ? 'border-end pe-2':'border-start ps-2']">

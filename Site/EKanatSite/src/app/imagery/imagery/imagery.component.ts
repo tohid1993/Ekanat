@@ -362,6 +362,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
     if(this.map){
       let obj = Leaflet.imageOverlay(imageUrl, imageBounds , {className:'addedImage',interactive:true}).addTo(this.map)
         .on('mousemove',(e)=>{
+          if(this.selectedIndicator === IndicatorsTypes.rgb) return;
           if(this.map){
 
             var pixelStart = this.map.latLngToLayerPoint(obj.getBounds().getNorthEast());

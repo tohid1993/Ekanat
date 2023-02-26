@@ -141,9 +141,11 @@
                             </small>
                         </button>
                     </div>
-                    <span>{{indicatorDetails?.legendRange[1]}}</span>
-                    <img src="../../../assets/images/legend-kanat-vpm-artan1100-0106.jpg" alt="">
-                    <span>{{indicatorDetails?.legendRange[0]}}</span>
+                    <ng-container *ngIf="indicatorDetails?.legendRange[0] != 0 || indicatorDetails?.legendRange[1] != 0">
+                        <span>{{indicatorDetails?.legendRange[1]}}</span>
+                        <img src="../../../assets/images/legend-kanat-vpm-artan1100-0106.jpg" alt="">
+                        <span>{{indicatorDetails?.legendRange[0]}}</span>
+                    </ng-container>
                 </div>
                 <div class="indicators_dates_wrapper" *ngIf="indicatorDetails?.dates">
                     <button class="secondary_btn small_btn mb-1"
@@ -278,6 +280,17 @@
                             <div class="input_wrapper mb-2">
                                 <input type="radio" name="plant_indicators" id="sipi" (click)="getIndicators(IndicatorsTypes.sipi)">
                                 <label for="sipi" class="ms-2 bd_2_text bd_2_text_mobile">{{'sipiLabel'|translate}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item" (click)="SelectedCategory = 5" [ngClass]="{'active':SelectedCategory==5}">
+                        <img src="../../../assets/images/icons/satellite-kanat-vpm-artan1100-0106.png" width="45" alt="">
+                        <span>{{'aerialImagery'|translate}}</span>
+
+                        <div class="indicators_list">
+                            <div class="input_wrapper mb-2">
+                                <input type="radio" name="plant_indicators" id="rgb" (click)="getIndicators(IndicatorsTypes.rgb)">
+                                <label for="rgb" class="ms-2 bd_2_text bd_2_text_mobile">{{'rgbLabel'|translate}}</label>
                             </div>
                         </div>
                     </div>

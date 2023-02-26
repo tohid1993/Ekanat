@@ -211,6 +211,8 @@ export const faIRLocate = {
     ndreLabel:'شاخص محتوای کلروفیل',
     plantPestsDiseases:'آفات و بیماریهای گیاهی',
     sipiLabel:'شاخص سلامت',
+    aerialImagery:'تصاویر هوایی',
+    rgbLabel:'تصویر RGB',
     type:'نوع',
     agriculturalExpertAnalysisDetails:' جزئیات تحلیل کارشناس کشاورزی',
     indicator:'شاخص',

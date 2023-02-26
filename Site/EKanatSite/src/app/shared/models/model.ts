@@ -54,21 +54,10 @@ export enum IndicatorsTypes{
     ndmi = 5,
 
     ndre = 6,
-    
-    sipi = 7
-    // ndvi = 1 ,
-    // ndre = 2,  
-    // reci = 3 , 
-    // sipi = 4,  
-    // vari = 5, 
-    // evi = 6, 
-    // arvi = 7,
 
-    // ndwi = 8,
-    // msi = 9,
+    sipi = 7,
+    rgb = 8,
 
-    // ndsi = 10,
-    // savi = 11
 }
 
 export enum ChartsTypes{

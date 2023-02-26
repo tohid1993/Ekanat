@@ -212,6 +212,8 @@ export const enUSLocate = {
     plantPestsDiseases:'Crop pests and diseases',
     sipiLabel:'Crop health index',
     type:'Type',
+    aerialImagery:'Aerial Imagery',
+    rgbLabel:'RGB Image',
     agriculturalExpertAnalysisDetails:' Agricultural expert report',
     indicator:'Index',
     attachedFiles:'Attachments',

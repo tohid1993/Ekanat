@@ -86,6 +86,12 @@ export class SingleImageryComponent implements OnInit, OnChanges {
       items: [
         ['sipiLabel', IndicatorsTypes.sipi]
       ]
+    },
+    {
+      group:'aerialImagery',
+      items: [
+        ['rgbLabel', IndicatorsTypes.rgb]
+      ]
     }
   ]
 
@@ -261,17 +267,10 @@ export class SingleImageryComponent implements OnInit, OnChanges {
           }else{
             self.toastr.error(self.translateService.translate('noImageFoundForThisTimeFrame'));
           }
-
-
-          // try {
-          //   setTimeout(() => {
-          //     (document.querySelector(".indicators_dates_wrapper .scrollable") as HTMLElement).scrollTo((self.indicatorDetails.imageIndex * 115),0)
-          //   }, 100);
-          // } catch (error) {
-          //
-          // }
         }
-
+      },
+      error(error:any){
+        self.inProcess = false
       }
     })
 
@@ -585,6 +584,7 @@ export class SingleImageryComponent implements OnInit, OnChanges {
 
   showTooltip(data:Array<number>){
     if(!this.indicatorDetails || this.inProcess) return
+    if(this.initType === IndicatorsTypes.rgb) return;
 
     let value = this.getValueOfPoint(data[0],data[1]);
 
