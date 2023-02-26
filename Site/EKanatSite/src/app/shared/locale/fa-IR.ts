@@ -243,5 +243,7 @@ export const faIRLocate = {
     license:'مجوزها',
     compareIndicators:'مقایسه شاخص ها',
     indicatorsFilter:'فیلتر شاخص ها',
-    imageryDate:'تاریخ شاخص'
+    imageryDate:'تاریخ شاخص',
+    updateSoon:'نسخه جدید بزودی بارگذاری خواهد شد.',
+    compare:'مقایسه'
 }

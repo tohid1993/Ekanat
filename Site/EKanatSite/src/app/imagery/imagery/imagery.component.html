@@ -146,13 +146,15 @@
                     <span>{{indicatorDetails?.legendRange[0]}}</span>
                 </div>
                 <div class="indicators_dates_wrapper" *ngIf="indicatorDetails?.dates">
-                    <button class="btn btn-sm btn-dark mb-1"
+                    <button class="secondary_btn small_btn mb-1"
                             (click)="goToCompare()"
                             [title]="'compareIndicators'|translate"
                             *ngIf="indicatorDetails?.dates?.length>1">
-                        <svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" fill="currentColor" class="bi bi-vr" viewBox="0 0 16 16">
-                            <path d="M3 12V4a1 1 0 0 1 1-1h2.5V2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5v-1H4a1 1 0 0 1-1-1zm6.5 1v1H12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H9.5v1H12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H9.5zM8 16a.5.5 0 0 1-.5-.5V.5a.5.5 0 0 1 1 0v15a.5.5 0 0 1-.5.5z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" style="transform: rotate(90deg)" width="20" height="20" fill="currentColor" class="bi bi-arrows-expand mx-1" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8ZM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2ZM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10Z"/>
                         </svg>
+
+                        {{'compare'|translate}}
                     </button>
                     <div class="scrollable">
                         <button class="date" type="button" [ngClass]="{'active':index == indicatorDetails?.imageIndex}"

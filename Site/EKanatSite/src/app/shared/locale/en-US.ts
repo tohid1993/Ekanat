@@ -243,6 +243,7 @@ export const enUSLocate = {
     license:'Certifcates',
     compareIndicators:'Compare Indicators',
     indicatorsFilter:'Indicators Filters',
-    imageryDate:'Imagery Date'
-
+    imageryDate:'Imagery Date',
+    updateSoon:'New version will be uploaded soon.',
+    compare:'compare'
 }

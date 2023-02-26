@@ -11,7 +11,8 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
   @ViewChild('services',{static:true}) services!:ElementRef
   @ViewChild('about',{static:true}) about!:ElementRef
   @ViewChild('contactus',{static:true}) contactus!:ElementRef
-  
+  @ViewChild('mobileApp',{static:true}) mobileApp!:ElementRef
+
   
   @ViewChild('videoplayer',{static:true}) videoplayer!:ElementRef;
   raychatInterval:any;
@@ -96,7 +97,11 @@ export class HomeComponent implements OnInit , AfterViewInit,OnDestroy {
       case 'contactus':
         this.modalService.open(this.contactus, { size: 'xl' });
         break;
-  
+
+      case 'mobileApp':
+        this.modalService.open(this.mobileApp, { size: 'md' });
+        break;
+
       default:
         break;
     }

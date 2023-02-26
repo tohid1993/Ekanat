@@ -62,13 +62,13 @@
             <span>{{'services'|translate}}</span>
         </button>
 
-        <a href="https://mega.nz/file/9mBxga4S#UCjBtRGnV2ojldZCeks5m1mEife8K2EMokF6jwlxqBw" target="_blank" class="link">
+        <button (click)="openModal('mobileApp')" class="link">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
                 <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
                 <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
             </svg>
             <span>{{'mobileApp'|translate}}</span>
-        </a>
+        </button>
 
         <a [routerLink]="['/login']" class="link panel_link">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
@@ -246,5 +246,21 @@
                     </div>
                 </div>
             </div>
+    </div>
+</ng-template>
+
+
+<ng-template #mobileApp let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title">{{'mobileApp'|translate}}</h6>
+        <button type="button" class="btn-close ms-auto me-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body px-md-5">
+        <div class="row">
+            <div class="col-12">
+               <h4 class="text-center py-5">{{'updateSoon'|translate}}</h4>
+            </div>
+
+        </div>
     </div>
 </ng-template>

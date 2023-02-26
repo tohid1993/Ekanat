@@ -762,7 +762,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
         {
                 queryParams: {
                     type: this.selectedIndicator,
-                    dates: `${this.indicatorDetails.dates[len-1]},${this.indicatorDetails.dates[len-2]}`
+                    // dates: `${this.indicatorDetails.dates[len-1]}}`
                 }
               }
         );

@@ -46,7 +46,7 @@ export class ComparePageComponent implements OnInit {
 
     this.route.queryParams.subscribe(
         params=>{
-          this.dates = params['dates'].split(',');
+          // this.dates = params['dates'].split(',');
           this.initIndicatorType = params['type'] as IndicatorsTypes;
         }
     )
