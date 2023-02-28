@@ -1,23 +1,27 @@
-import {AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as Leaflet from 'leaflet';
 import "leaflet-draw";
 // import "leaflet.gridlayer.googlemutant";
-import * as GeoSearch from 'leaflet-geosearch'
-import { NgxSpinnerService } from 'ngx-spinner';
-import { AnalysViewModel, ChartsTypes, DateModel, FieldDetailViewModel, IndicatorsTypes } from 'src/app/shared/models/model';
-import { DateTimeService } from 'src/app/shared/services/dateTime.service';
-import { EeService } from 'src/app/shared/services/ee.service';
-import { FieldService } from 'src/app/shared/services/field.service';
-import { GestureHandling } from "leaflet-gesture-handling";
-import { ToastrService } from 'ngx-toastr';
-import { GeneralService } from 'src/app/shared/services/general.service';
-import { NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {
+  AnalysViewModel,
+  ChartsTypes,
+  DateModel,
+  FieldDetailViewModel,
+  IndicatorsTypes
+} from 'src/app/shared/models/model';
+import {DateTimeService} from 'src/app/shared/services/dateTime.service';
+import {EeService} from 'src/app/shared/services/ee.service';
+import {FieldService} from 'src/app/shared/services/field.service';
+import {GestureHandling} from "leaflet-gesture-handling";
+import {ToastrService} from 'ngx-toastr';
+import {GeneralService} from 'src/app/shared/services/general.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { EChartsOption } from 'echarts';
+import {EChartsOption} from 'echarts';
 import {TranslateService} from "../../shared/services/traslate.service";
-import { liveQuery } from 'dexie';
-import { db } from '../../../db/indexedDB';
+import {db} from '../../../db/indexedDB';
 
 
 @Component({
@@ -232,9 +236,23 @@ export class ImageryComponent implements OnInit , AfterViewInit {
       this.indicatorDetails.legendRange = image.legendRange
       this.indicatorDetails.imageIndex = imageIndex
 
+
+      let newCoords = [];
+      if(this.selectedIndicator === IndicatorsTypes.rgb){
+        newCoords = [
+          {x:this.indicatorDetails.legendRange[0]-0.0055,y:this.indicatorDetails.legendRange[1]+0.0055},
+          {x:this.indicatorDetails.legendRange[0]+0.0055,y:this.indicatorDetails.legendRange[1]+0.0055},
+          {x:this.indicatorDetails.legendRange[0]+0.0055,y:this.indicatorDetails.legendRange[1]-0.0055},
+          {x:this.indicatorDetails.legendRange[0]-0.0055,y:this.indicatorDetails.legendRange[1]-0.0055},
+          {x:this.indicatorDetails.legendRange[0]-0.0055,y:this.indicatorDetails.legendRange[1]+0.0055}
+        ]
+      }else{
+        newCoords = this.fieldDetail.polygon
+      }
+
       this.addImageToMap(
           "data:image/png;base64,"+this.indicatorDetails.imageBase64,
-          this.eeService.getLatLngFromXYarray(this.fieldDetail.polygon)
+          this.eeService.getLatLngFromXYarray(newCoords)
       );
       this.selectedIndicator = key;
       this.spinner.hide()
@@ -255,9 +273,23 @@ export class ImageryComponent implements OnInit , AfterViewInit {
           if(res.data.imageBase64){
             self.showLegend = true;
             self.indicatorDetails = res.data;
+
+            let newCoords = [];
+            if(self.selectedIndicator === IndicatorsTypes.rgb){
+              newCoords = [
+                {x:res.data.legendRange[0]-0.0055,y:res.data.legendRange[1]+0.0055},
+                {x:res.data.legendRange[0]+0.0055,y:res.data.legendRange[1]+0.0055},
+                {x:res.data.legendRange[0]+0.0055,y:res.data.legendRange[1]-0.0055},
+                {x:res.data.legendRange[0]-0.0055,y:res.data.legendRange[1]-0.0055},
+                {x:res.data.legendRange[0]-0.0055,y:res.data.legendRange[1]+0.0055}
+              ]
+            }else{
+              newCoords = self.fieldDetail.polygon
+            }
+
             self.addImageToMap(
               "data:image/png;base64,"+self.indicatorDetails.imageBase64,
-              self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon)
+              self.eeService.getLatLngFromXYarray(newCoords)
             );
 
             self.addImageToDB(
@@ -360,7 +392,7 @@ export class ImageryComponent implements OnInit , AfterViewInit {
 
 
     if(this.map){
-      let obj = Leaflet.imageOverlay(imageUrl, imageBounds , {className:'addedImage',interactive:true}).addTo(this.map)
+      let obj = Leaflet.imageOverlay(imageUrl, imageBounds , {className:'addedImage'+(this.selectedIndicator==IndicatorsTypes.rgb?' rgb':''),interactive:true}).addTo(this.map)
         .on('mousemove',(e)=>{
           if(this.selectedIndicator === IndicatorsTypes.rgb) return;
           if(this.map){

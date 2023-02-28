@@ -27,7 +27,7 @@
 
 .leaflet-interactive{
     stroke: #2dd7b8;
-    fill: #37b7a0;
+    fill: transparent;
 }
 
 [dir='rtl']{
@@ -110,7 +110,7 @@ ngb-modal-backdrop{
 }
 
 
-.leaflet-image-layer.addedImage{
+.leaflet-image-layer.addedImage:not(.rgb){
     z-index: 300 !important;
     transition: 0.5s;
     opacity: 1;

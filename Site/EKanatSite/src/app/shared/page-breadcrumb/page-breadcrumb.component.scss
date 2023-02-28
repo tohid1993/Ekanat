@@ -12,6 +12,14 @@
         align-items: center;
         column-gap: 6px;
 
+        span{
+            display: inline-block;
+            width: calc(100% - 30px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         a{
             color: $White;
             font-size: 0.9rem;
@@ -20,4 +28,14 @@
     }
 
     margin: 1rem 0;
+}
+
+@media only screen and (max-width: 767px) {
+    .breadcrumb_wrapper {
+        .page_title {
+            span {
+                font-size: 14px;
+            }
+        }
+    }
 }

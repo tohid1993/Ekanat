@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
 import * as Leaflet from "leaflet";
 import {GestureHandling} from "leaflet-gesture-handling";
 import {DateModel, FieldDetailViewModel, IndicatorsTypes} from "../../shared/models/model";
@@ -16,7 +16,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: './single-imagery.component.html',
   styleUrls: ['./single-imagery.component.scss']
 })
-export class SingleImageryComponent implements OnInit, OnChanges {
+export class SingleImageryComponent implements OnInit, OnChanges , OnDestroy {
 
   @Input('initType') initType!:IndicatorsTypes
   @Input('initDate') initDate!:string
@@ -110,6 +110,14 @@ export class SingleImageryComponent implements OnInit, OnChanges {
 
   }
 
+  ngOnDestroy(): void {
+    try {
+      document.getElementById('raychatBtn')!.style.display = ''
+    }catch (e) {
+
+    }
+  }
+
   ngOnChanges() {
     if(this.map && this.changedMapIndex !== this.mapIndex){
       this.map.panTo(new Leaflet.LatLng(+this.latLng[0], +this.latLng[1]));
@@ -133,6 +141,12 @@ export class SingleImageryComponent implements OnInit, OnChanges {
 
     if(this.imageXY){
       this.showTooltip(this.imageXY)
+    }
+
+    try {
+      document.getElementById('raychatBtn')!.style.display = 'none'
+    }catch (e) {
+
     }
   }
 
@@ -226,9 +240,22 @@ export class SingleImageryComponent implements OnInit, OnChanges {
       this.indicatorDetails.imageIndex = imageIndex
       this.showLegend = true;
 
+      let newCoords = [];
+      if(this.selectedIndicator === IndicatorsTypes.rgb){
+        newCoords = [
+          {x:this.indicatorDetails.legendRange[0]-0.0055,y:this.indicatorDetails.legendRange[1]+0.0055},
+          {x:this.indicatorDetails.legendRange[0]+0.0055,y:this.indicatorDetails.legendRange[1]+0.0055},
+          {x:this.indicatorDetails.legendRange[0]+0.0055,y:this.indicatorDetails.legendRange[1]-0.0055},
+          {x:this.indicatorDetails.legendRange[0]-0.0055,y:this.indicatorDetails.legendRange[1]-0.0055},
+          {x:this.indicatorDetails.legendRange[0]-0.0055,y:this.indicatorDetails.legendRange[1]+0.0055}
+        ]
+      }else{
+        newCoords = this.fieldDetail.polygon
+      }
+
       this.addImageToMap(
           "data:image/png;base64,"+this.indicatorDetails.imageBase64,
-          this.eeService.getLatLngFromXYarray(this.fieldDetail.polygon)
+          this.eeService.getLatLngFromXYarray(newCoords)
       );
       this.selectedIndicator = key;
       this.inProcess = false
@@ -249,9 +276,25 @@ export class SingleImageryComponent implements OnInit, OnChanges {
           if(res.data.imageBase64){
             self.showLegend = true;
             self.indicatorDetails = res.data;
+
+
+            let newCoords = [];
+            if(self.selectedIndicator === IndicatorsTypes.rgb){
+              newCoords = [
+                {x:res.data.legendRange[0]-0.0055,y:res.data.legendRange[1]+0.0055},
+                {x:res.data.legendRange[0]+0.0055,y:res.data.legendRange[1]+0.0055},
+                {x:res.data.legendRange[0]+0.0055,y:res.data.legendRange[1]-0.0055},
+                {x:res.data.legendRange[0]-0.0055,y:res.data.legendRange[1]-0.0055},
+                {x:res.data.legendRange[0]-0.0055,y:res.data.legendRange[1]+0.0055}
+              ]
+            }else{
+              newCoords = self.fieldDetail.polygon
+            }
+
+
             self.addImageToMap(
                 "data:image/png;base64,"+self.indicatorDetails.imageBase64,
-                self.eeService.getLatLngFromXYarray(self.fieldDetail.polygon)
+                self.eeService.getLatLngFromXYarray(newCoords)
             );
 
             self.dates = res.data.dates
@@ -359,7 +402,7 @@ export class SingleImageryComponent implements OnInit, OnChanges {
 
 
     if(this.map){
-      let obj = Leaflet.imageOverlay(imageUrl, imageBounds , {className:'addedImage',interactive:true}).addTo(this.map)
+      let obj = Leaflet.imageOverlay(imageUrl, imageBounds , {className:'addedImage'+(this.selectedIndicator==IndicatorsTypes.rgb?' rgb':''),interactive:true}).addTo(this.map)
           .on('mousemove',(e)=>{
             if(this.map){
 
@@ -611,10 +654,10 @@ export class SingleImageryComponent implements OnInit, OnChanges {
       if(top <= data[3] && data[3] <= (top + height)){
         xPos = data[3]
       }else{
-        xPos = data[3] - (top + height) + 91 - 16
+        xPos = data[3] - (top + window.scrollY + height) + 91 - 16
       }
     }else{
-      xPos = data[3] + top - 91
+      xPos = data[3] + (top + window.scrollY) - 91
     }
 
 
