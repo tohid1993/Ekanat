@@ -59,31 +59,31 @@ export class AddFieldComponent implements OnInit , OnDestroy {
 
   IrrigationType = [
       {
-        title:'غرقابی',
+        title:'flooded',
         id: IrrigationType.Flooded
       },
       {
-        title:'فارو',
+        title:'furrow',
         id: IrrigationType.Furrow
       },
       {
-        title:'نواری',
+        title:'tip',
         id: IrrigationType.Tip
       },
       {
-        title:'بارانی',
+        title:'rainy',
         id: IrrigationType.Rainy
       },
       {
-        title:'قطره ای',
+        title:'drip',
         id: IrrigationType.Drip
       },
       {
-        title:'زیرزمینی',
+        title:'underground',
         id: IrrigationType.Underground
       },
       {
-        title:'دیم',
+        title:'rainfed',
         id: IrrigationType.Rainfed
       }
   ];

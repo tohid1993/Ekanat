@@ -221,7 +221,7 @@ export const enUSLocate = {
     noImageFoundForThisTimeFrame:'No image found for this  period',
     standardPlan:'Standard account',
     organizationPlan:'Organizational account',
-    standardPlanSubtitle:'Buying a package for you farm, you will benefit from the following services ',
+    standardPlanSubtitle:'Buying a package for your farm, you will benefit from the following services ',
     standardPlanItem1:'Continuous and quick monitoring of crop fields from sowing to harvesting using satellite and aerial data',
     standardPlanItem2:'Presenting maps and expert analyses on the following topics',
     standardPlanItem2Sub1: 'Crop density and greenness',
@@ -247,5 +247,20 @@ export const enUSLocate = {
     indicatorsFilter:'Indicators Filters',
     imageryDate:'Imagery Date',
     updateSoon:'New version will be uploaded soon.',
-    compare:'compare'
+    compare:'compare',
+
+
+    shop1:'Bagh Eram Aras, Agriculture company',
+    shop1Address:'Unit A7 , 7th Floor , ARK Tower , corner of fatemi Alley , Farabi Ave , Tabriz',
+    shop1Products:'Fertilizer، Pesticide، Seed، agrikem ، qualyfert ، merkez anadolu kimia',
+
+    sale:'sale',
+
+    flooded: 'Flooding irrigation ',
+    furrow: 'Furrow irrigation',
+    tip: 'Strip irrigation ',
+    rainy: 'Sprinkler irrigation',
+    drip: 'Drip irrigation',
+    underground: 'Hypogeal',
+    rainfed: 'Rainfed',
 }

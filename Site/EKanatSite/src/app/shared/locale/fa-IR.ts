@@ -247,5 +247,19 @@ export const faIRLocate = {
     indicatorsFilter:'فیلتر شاخص ها',
     imageryDate:'تاریخ شاخص',
     updateSoon:'نسخه جدید بزودی بارگذاری خواهد شد.',
-    compare:'مقایسه'
+    compare:'مقایسه',
+
+    shop1:'شرکت کشاورزی باغ ارم ارس',
+    shop1Address:'آذربایجان شرقی - تبریز، خیابان فارابی، نبش کوی فاطمی، برج ارک، طبقه هفتم واحد A7',
+    shop1Products:'کود، آفت کش، بذر، agrikem ، qualyfert ، merkez anadolu kimia',
+
+    sale:'واحد فروش',
+
+    flooded: 'غرقابی',
+    furrow: 'فارو',
+    tip: 'نواری ',
+    rainy: 'بارانی',
+    drip: 'قطره ای',
+    underground: 'زیرزمینی',
+    rainfed: 'دیم',
 }
