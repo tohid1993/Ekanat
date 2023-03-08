@@ -25,7 +25,8 @@ const routes: Routes = [
       {path:'shopingcenters' , canActivate: [AuthGuard] , loadChildren: () => import('../shoping-centers/shoping-centers.module').then(m => m.ShopingCentersModule)},
       {path:'payments' , canActivate: [AuthGuard] , loadChildren: () => import('../payment/payment.module').then(m => m.PaymentModule)},
       {path:'transactions' , canActivate: [AuthGuard] , loadChildren: () => import('../bank-transactions/bank-transactions.module').then(m => m.BankTransactionsModule)},
-      
+      {path:'consultation' , canActivate: [AuthGuard] , loadChildren: () => import('../consultation/consultation.module').then(m => m.ConsultationModule)},
+
       // {path:'**' , canActivate: [AuthGuard] , redirectTo:'dashboard'}
     ]
   }

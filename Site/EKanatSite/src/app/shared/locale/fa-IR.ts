@@ -262,4 +262,9 @@ export const faIRLocate = {
     drip: 'قطره ای',
     underground: 'زیرزمینی',
     rainfed: 'دیم',
+    consultationRequest:'درخواست مشاوره',
+    subject:'موضوع',
+    submitRequest:'ثبت درخواست',
+    file:'فایل ضمیمه'
+
 }

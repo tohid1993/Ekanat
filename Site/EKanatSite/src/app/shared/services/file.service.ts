@@ -184,6 +184,7 @@ export class FileService {
       res=>{
         if(res && res.length>0){
           files=res;
+          // event.target.value = files[0].fileName;
           if(isFormControl)
             control.setValue(files[0]);
           else

@@ -77,6 +77,12 @@
                 {{'shoppingCenter'|translate}}
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/consultation']" [routerLinkActive]="'active'" (click)="showMenu=false" aria-current="page">
+              <img src="../../assets/images/icons/consultation-kanat-vpm-artan1100-0106.svg" alt="">
+              {{'consultationRequest'|translate}}
+            </a>
+          </li>
           <li class="nav-item mt-auto supportBtn" *ngIf="showSupportBtn">
             <a class="nav-link" (click)="openRayChat()" aria-current="page">
                 <span id="new_message_count" *ngIf="newMessageCount">{{newMessageCount}}</span>

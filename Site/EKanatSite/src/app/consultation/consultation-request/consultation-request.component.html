@@ -1,0 +1,60 @@
+<app-page-breadcrumb
+  [pageTitle]="'consultationRequest'|translate"
+  [backUrl]="''"
+></app-page-breadcrumb>
+
+<div class="container-fluid">
+    <div class="consultation_form_wrapper pb-5">
+        <form class="consultation_form" [formGroup]="ConsultationForm"
+              (ngSubmit)="sendRequest()" novalidate #FormDir="ngForm">
+            <div class="container pt-3">
+                <div class="row">
+                    <div class="col-12 col-md-6 mt-3">
+                        <label class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'subject'|translate}}</label>
+                        <select class="form-control form-control-lg bu_2_text bu_2_text_mobile"
+                                formControlName="subjectId" id="subjectId">
+                            <option [ngValue]="item.id" *ngFor="let item of Subjects">{{item.title}}</option>
+                        </select>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','subjectId')">{{'fieldRequiredErrorMessage'|translate}}</small>
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <label class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'field'|translate}}</label>
+                        <select class="form-control form-control-lg bu_2_text bu_2_text_mobile"
+                                formControlName="fieldId" id="fieldId">
+                            <option [ngValue]="item.id" *ngFor="let item of Fields">{{item.name}}</option>
+                        </select>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','fieldId')">{{'fieldRequiredErrorMessage'|translate}}</small>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <label for="description" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">{{'description'|translate}}</label>
+                        <textarea class="form-control form-control-lg bu_2_text bu_2_text_mobile" rows="5" formControlName="description" id="description">
+                        </textarea>
+                        <small class="text-danger" *ngIf="FormDir.submitted && FormDir.hasError('required','description')">{{'fieldRequiredErrorMessage'|translate}}</small>
+                    </div>
+
+                    <div class="col-12 col-md-6 mt-3">
+                        <label for="file" class="bu_1_text bu_1_text_mobile Dark_70_text mb-1">
+                            {{'file'|translate}}
+
+                            <button class="btn-sm btn btn-danger" *ngIf="ConsultationForm.value.file.fileName"
+                                    (click)="clearFile($event)">حذف</button>
+                        </label>
+                        <input class="form-control form-control-lg bu_2_text bu_2_text_mobile" hidden
+                               (change)="fileService.fileOnSelect($event,ConsultationForm.controls['file'],true)"
+                               id="file" type="file" />
+                        <label for="file" class="form-control py-2">
+                            {{ConsultationForm.value.file? (ConsultationForm.value.file.fileName||('chooseFile'|translate)):('chooseFile'|translate)}}
+                        </label>
+                    </div>
+
+                    <div class="col-12 col-md-6 mt-3 row px-0 pt-md-4">
+                        <div class="col-auto px-0 ms-auto">
+                            <button type="submit" class="primary_btn medium_btn">{{'submitRequest'|translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

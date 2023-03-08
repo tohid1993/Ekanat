@@ -107,5 +107,13 @@ export class FieldService {
   deleteField(fieldId:number){
     return this.gService.delete({fieldId:fieldId},"v1/Fields/Delete")
   }
+
+  getConsultationSubjects(){
+      return this.gService.get("v1/Consultation/GetSubjectDropdown",{});
+  }
+
+    setConsultation(data:any){
+        return this.gService.post("v1/Consultation/Add",data,{});
+    }
 }
 

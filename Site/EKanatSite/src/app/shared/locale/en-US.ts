@@ -263,4 +263,10 @@ export const enUSLocate = {
     drip: 'Drip irrigation',
     underground: 'Hypogeal',
     rainfed: 'Rainfed',
+    consultationRequest:'Consultation Request',
+    subject:'subject',
+    submitRequest:'submit request',
+    file:'Attach File'
+
+
 }
