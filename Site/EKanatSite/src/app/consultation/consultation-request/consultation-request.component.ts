@@ -66,7 +66,10 @@ export class ConsultationRequestComponent implements OnInit {
             .subscribe({
                 complete(){
                     self.spinner.hide();
-                    self.ConsultationForm.reset()
+                    self.ConsultationForm.controls['subjectId'].setValue(null)
+                    self.ConsultationForm.controls['fieldId'].setValue(null)
+                    self.ConsultationForm.controls['description'].setValue(null)
+                    self.ConsultationForm.controls['file'].setValue(new FileViewModel())
                     self.gService.showSuccessToastr(self.translateService.translate('newConsultationSubmitted'));
                 }
             })
