@@ -266,7 +266,8 @@ export const enUSLocate = {
     consultationRequest:'Consultation Request',
     subject:'subject',
     submitRequest:'submit request',
-    file:'Attach File'
+    file:'Attach File',
+    newConsultationSubmitted:'The consultation request was successfully submitted'
 
 
 }

@@ -265,6 +265,7 @@ export const faIRLocate = {
     consultationRequest:'درخواست مشاوره',
     subject:'موضوع',
     submitRequest:'ثبت درخواست',
-    file:'فایل ضمیمه'
+    file:'فایل ضمیمه',
+    newConsultationSubmitted:'درخواست مشاوره با موفقیت ثبت شد'
 
 }
